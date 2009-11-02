@@ -1,19 +1,17 @@
 DESCRIPTION = "Skins for Enigma2"
 MAINTAINER = "Felix Domke <tmbinc@elitedvb.net>"
 
-SRCDATE = "20090303"
+SRCDATE = "20091103"
 
 PACKAGES_DYNAMIC = "enigma2-skin-*"
 
-# if you want experimental, use:
 REL_MAJOR="2"
 REL_MINOR="6"
-TAG = ""
+# if you want a 2.6-based release, use
+TAG = ";tag=${PN}_rel${REL_MAJOR}${REL_MINOR}"
 
-# if you want a 2.5-based release, use
-#REL_MAJOR="2"
-#REL_MINOR="5"
-#TAG = ";tag=${PN}_rel${REL_MAJOR}${REL_MINOR}"
+# if you want experimental, use:
+#TAG = ""
 
 PV = "${REL_MAJOR}.${REL_MINOR}cvs${SRCDATE}"
 
