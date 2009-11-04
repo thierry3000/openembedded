@@ -57,9 +57,13 @@ SRCDATE = "20091103"
 REL_MAJOR="2"
 REL_MINOR="6"
 
-# if you want experimental, use:
+# if you want upcoming release, use:
 #SUBDIR=
 #MODULE=trunk
+
+# if you want experimental, use:
+#SUBDIR=/branches
+#MODULE=enigma2_experimental
 
 # if you want a 2.6-based release, use
 SUBDIR=/branches
