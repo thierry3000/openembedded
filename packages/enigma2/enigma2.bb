@@ -52,19 +52,22 @@ RDEPENDS_enigma2-plugin-extensions-modem = "dreambox-modem-ppp-scripts"
 
 PN = "enigma2"
 PR = "r0"
-SRCDATE = "20090904"
+SRCDATE = "20091103"
 
-# if you want experimental, use:
 REL_MAJOR="2"
 REL_MINOR="6"
-SUBDIR=
-MODULE=trunk
 
-# if you want a 2.5-based release, use
-#REL_MAJOR="2"
-#REL_MINOR="5"
+# if you want upcoming release, use:
+#SUBDIR=
+#MODULE=trunk
+
+# if you want experimental, use:
 #SUBDIR=/branches
-#MODULE=enigma2_rel${REL_MAJOR}${REL_MINOR}
+#MODULE=enigma2_experimental
+
+# if you want a 2.6-based release, use
+SUBDIR=/branches
+MODULE=enigma2_rel${REL_MAJOR}${REL_MINOR}
 
 PV = "${REL_MAJOR}.${REL_MINOR}git${SRCDATE}"
 SRC_URI = "svn://git.opendreambox.org/enigma2${SUBDIR};module=${MODULE};date=${SRCDATE} \
