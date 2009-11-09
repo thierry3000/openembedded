@@ -88,6 +88,9 @@ MODEM_SUPPORT_R = "kernel-module-crc-ccitt kernel-module-ppp-async \
 	kernel-module-ppp-generic \
 	kernel-module-slhc update-modules"
 
+MODEM_SUPPORT_E2 = "dreambox-modem-ppp-scripts"
+MODEM_SUPPORT_E2_R = "${MODEM_SUPPORT_R} dreambox-modem-ppp-scripts enigma2-plugin-extensions-modem"
+
 WLAN_SUPPORT = "wireless-tools wlan-rt73 zd1211b wpa-supplicant"
 WLAN_SUPPORT_R = "enigma2-plugin-systemplugins-wirelesslan 	enigma2-plugin-systemplugins-networkwizard"
 
@@ -122,9 +125,9 @@ OPENDREAMBOX_COMMON_MACHINE_R_dm800 += "${OPENDREAMBOX_EXPERIMENTAL_R} ${WLAN_SU
 	enigma2-plugin-extensions-genuinedreambox"
 OPENDREAMBOX_COMMON_MACHINE_D_dm800 += "dreambox-tpmd"
 
-OPENDREAMBOX_COMMON_MACHINE_dm500hd += "${OPENDREAMBOX_V3_ONLY} ${OPENDREAMBOX_EXPERIMENTAL}"
+OPENDREAMBOX_COMMON_MACHINE_dm500hd += "${OPENDREAMBOX_V3_ONLY} ${OPENDREAMBOX_EXPERIMENTAL} ${MODEM_SUPPORT_E2}"
 OPENDREAMBOX_COMMON_MACHINE_R_dm500hd += "${OPENDREAMBOX_EXPERIMENTAL_R} enigma2-plugin-systemplugins-videomode \
-	enigma2-plugin-extensions-genuinedreambox"
+	enigma2-plugin-extensions-genuinedreambox ${MODEM_SUPPORT_E2_R}"
 OPENDREAMBOX_COMMON_MACHINE_D_dm500hd += "dreambox-tpmd"
 
 OPENDREAMBOX_COMMON_MACHINE_dm8000 += "${OPENDREAMBOX_V3_ONLY} ${OPENDREAMBOX_EXPERIMENTAL} ${WLAN_SUPPORT} ${WLAN_MADWIFI}"
