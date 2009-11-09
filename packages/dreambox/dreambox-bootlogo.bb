@@ -30,7 +30,6 @@ S = "${WORKDIR}/"
 
 MVI = "bootlogo backdrop bootlogo_wait"
 MVI_append_dm800 = " switchoff"
-MVI_append_dm500hd = " switchoff"
 
 do_install() {
 	install -d ${D}/boot
