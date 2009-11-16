@@ -49,3 +49,16 @@ Index: stblinux-2.6.12/arch/mips/brcmstb/lib/udivdi3.c
  {
    0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
    6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,
+Index: stblinux-2.6.12/include/asm/serial.h
+===================================================================
+--- stblinux-2.6.12-org/include/asm-mips/serial.h	2009-08-04 15:31:21.000000000 +0000
++++ stblinux-2.6.12/include/asm-mips/serial.h	2009-11-16 18:42:22.000000000 +0000
+@@ -128,7 +128,7 @@
+ #define BRCM_UART_PORT_DEFNS				\
+ 	_BRCM_16550_INIT(BRCM_SERIAL1_IRQ, BRCM_SERIAL1_BASE),		\
+ 	_BRCM_16550_INIT(BRCM_SERIAL2_IRQ, BRCM_SERIAL2_BASE),      \
+-	_BRCM_16550_INIT(BRCM_SERIAL3_IRQ, BRCM_SERIAL3_BASE),	
++	_BRCM_16550_INIT(0, BRCM_SERIAL3_BASE),	
+ 
+ #elif defined(CONFIG_MIPS_BCM7440) 
+ #define BRCM_UART_PORT_DEFNS                            \
