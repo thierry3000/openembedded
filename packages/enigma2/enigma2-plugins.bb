@@ -31,7 +31,7 @@ DEPENDS += "enigma2"
 
 def get_version_depends(bb, d):
 	if bb.data.getVar('REL_MINOR', d, 1) > '4':
-		return "python-pyopenssl"
+		return "python-pyopenssl python-gdata"
 	return ""
 
 python populate_packages_prepend () {
