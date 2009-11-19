@@ -53,7 +53,7 @@ RDEPENDS_enigma2-plugin-extensions-modem = "dreambox-modem-ppp-scripts"
 PN = "enigma2"
 PR = "r0"
 SRCDATE = "20091119"
-SRCREV = "956c6f8437c02e4ed885728752589d26a7fcb97e"
+SRCREV = "2833dc749d295f69f91482e858b13bdf5afb7310"
 
 REL_MAJOR="2"
 REL_MINOR="6"
