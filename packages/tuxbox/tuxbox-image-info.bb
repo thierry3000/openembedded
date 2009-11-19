@@ -2,14 +2,14 @@ DESCRIPTION = "/etc/image-version image information for tuxbox images"
 SECTION = "base"
 PRIORITY = "required"
 MAINTAINER = "Felix Domke <tmbinc@elitdvb.net>"
-PV = "0"
-PR = "r0"
+PV = "26"
+PR = "r1"
 LICENSE = "GPL"
 
 FILES_${PN} = "/etc/image-version"
 
 do_install () {
-	IMAGE_VERSION="261"
+	IMAGE_VERSION="${PV}${@bb.data.getVar('PR',d,1)[1:2]}"
 	IMAGE_DATE="$(date +%Y%m%d%H%M)"
 	IMAGE_TYPE="0"
 	mkdir -p ${D}/etc/
