@@ -9,7 +9,7 @@ LICENSE = "GPL"
 FILES_${PN} = "/etc/image-version"
 
 do_install () {
-	IMAGE_VERSION=`echo ${DISTRO_VERSION} | sed  's/\(.\)\.\(.\).\(.\)/\1\2\3/' `
+	IMAGE_VERSION="261"
 	IMAGE_DATE="$(date +%Y%m%d%H%M)"
 	IMAGE_TYPE="0"
 	mkdir -p ${D}/etc/
