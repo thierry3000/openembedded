@@ -1,20 +1,17 @@
 DESCRIPTION = "Additional plugins for Enigma2"
 MAINTAINER = "Felix Domke <tmbinc@elitedvb.net>"
 
-SRCDATE = "20091103"
-
 PACKAGES_DYNAMIC = "enigma2-plugin-*"
 
-REL_MAJOR="2"
-REL_MINOR="6"
+SRCDATE = "20091103"
 
-# if you want a 2.6-based release, use
-TAG = ";tag=${PN}_rel${REL_MAJOR}${REL_MINOR}"
+# if you want the 2.6.1 release, use
+#TAG = ";tag=enigma2-plugins_rel261"
+#PV = "2.6cvs${SRCDATE}"
 
 # if you want experimental, use:
-#TAG = ""
-
-PV = "${REL_MAJOR}.${REL_MINOR}cvs${SRCDATE}"
+TAG = ""
+PV = "experimental-cvs${SRCDATE}"
 
 SRC_URI = "cvs://anonymous@cvs.schwerkraft.elitedvb.net/cvsroot/enigma2-plugins;module=enigma2-plugins;method=pserver${TAG};date=${SRCDATE}"
 
@@ -26,13 +23,8 @@ inherit autotools
 
 S = "${WORKDIR}/enigma2-plugins"
 
-DEPENDS = "${@get_version_depends(bb, d)}"
+DEPENDS = "python-pyopenssl python-gdata"
 DEPENDS += "enigma2"
-
-def get_version_depends(bb, d):
-	if bb.data.getVar('REL_MINOR', d, 1) > '4':
-		return "python-pyopenssl python-gdata"
-	return ""
 
 python populate_packages_prepend () {
 	enigma2_plugindir = bb.data.expand('${libdir}/enigma2/python/Plugins', d)
