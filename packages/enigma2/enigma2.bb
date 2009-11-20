@@ -46,7 +46,6 @@ RREPLACES_enigma2-plugin-systemplugins-softwaremanager = "enigma2-plugin-systemp
 DESCRIPTION_append_enigma2-plugin-systemplugins-crashlogautosubmit = "automatically send crashlogs to Dream Multimedia"
 RDEPENDS_enigma2-plugin-systemplugins-crashlogautosubmit = "twisted-mail twisted-names python-compression python-mime python-email"
 DESCRIPTION_append_enigma2-plugin-systemplugins-cleanupwizard = "informs you on low internal memory on system startup."
-
 DESCRIPTION_append_enigma2-plugin-extenstions-modem = "opens a menu to connect to internet via builtin modem."
 RDEPENDS_enigma2-plugin-extensions-modem = "dreambox-modem-ppp-scripts"
 DESCRIPTION_append_enigma2-plugin-systemplugins-wirelesslan = "helps you configuring your wireless lan"
@@ -54,28 +53,38 @@ DESCRIPTION_append_enigma2-plugin-systemplugins-networkwizard = "provides easy s
 
 PN = "enigma2"
 PR = "r0"
-SRCDATE = "20091103"
 
-REL_MAJOR="2"
-REL_MINOR="6"
+SRCDATE = "20091120"
+#SRCDATE is NOT used by git to checkout a specific revision
+#but we need it to build a ipk package version
+#when you like to checkout a specific revision of e2 you need
+#have to specify a commit id or a tag name in SRCREV
 
 # if you want upcoming release, use:
-#SUBDIR=
-#MODULE=trunk
+####################################################
+#BRANCH = "master"
+#PV = "2.7git${SRCDATE}"
+####################################################
 
-# if you want experimental, use:
-#SUBDIR=/branches
-#MODULE=enigma2_experimental
+# if you want experimental use
+####################################################
+BRANCH = "experimental"
+PV = "experimental-git${SRCDATE}"
+SRCREV = ""
+####################################################
 
 # if you want a 2.6-based release, use
-SUBDIR=/branches
-MODULE=enigma2_rel${REL_MAJOR}${REL_MINOR}
+####################################################
+#BRANCH="2.6"
+#PV = "2.6git${SRCDATE}"
+# if you want 2.6.1 use
+#SRCREV = "407fc8d63356aa4a9e419b9815984a3743c3a70a"
+####################################################
 
-PV = "${REL_MAJOR}.${REL_MINOR}git${SRCDATE}"
-SRC_URI = "svn://git.opendreambox.org/enigma2${SUBDIR};module=${MODULE};date=${SRCDATE} \
+SRC_URI = "git://git.opendreambox.org/git/enigma2.git;protocol=git;branch=${BRANCH};tag=${SRCREV} \
            file://enigma2.sh"
 
-S = "${WORKDIR}/${MODULE}"
+S = "${WORKDIR}/git"
 
 FILES_${PN} += "${datadir}/fonts"
 FILES_${PN}-meta = "${datadir}/meta"
