@@ -1,3 +1,8 @@
+mknod -m 660 /dev/ttyS0 c 4 64
+mkdir /dev/tts
+mknod -m 660 /dev/tts/0 c 4 64
+mknod -m 660 /dev/tts/1 c 4 65
+
 echo 10 > /proc/progress
 [ -e /dev/dbox/oled0 ] && ln -s /dev/dbox/oled0 /dev/dbox/lcd0
 
