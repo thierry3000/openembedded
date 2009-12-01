@@ -92,6 +92,7 @@ MODEM_SUPPORT_E2 = "dreambox-modem-ppp-scripts"
 MODEM_SUPPORT_E2_R = "${MODEM_SUPPORT_R} dreambox-modem-ppp-scripts enigma2-plugin-extensions-modem"
 
 WLAN_SUPPORT = "wireless-tools wlan-rt73 zd1211b wpa-supplicant"
+WLAN_SUPPORT_dm8000 = "wireless-tools wpa-supplicant"
 WLAN_SUPPORT_R = "enigma2-plugin-systemplugins-wirelesslan 	enigma2-plugin-systemplugins-networkwizard"
 
 WLAN_MADWIFI = "madwifi-ng"

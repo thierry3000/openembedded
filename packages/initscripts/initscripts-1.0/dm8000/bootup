@@ -53,10 +53,6 @@ cat /etc/videomode > /proc/stb/video/videomode
 
 echo 20 > /proc/progress
 
-for mod in rt73 zd1211b; do
-	modprobe $mod
-done
-
 echo "loading madwifi modules"
 for x in wlan ath_rate; do
 	for mod in `ls /lib/modules/$(uname -r)/net | grep $x | cut -d . -f 0`; do
