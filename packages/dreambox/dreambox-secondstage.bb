@@ -8,7 +8,7 @@ PV_dm600pvr = "66"
 PV_dm500plus = "66"
 PV_dm8000 = "76"
 PV_dm800 = "75"
-PV_dm500hd = "70"
+PV_dm500hd = "76"
 PR = "r0"
 
 RDEPENDS_dm8000 = "dreambox-bootlogo (>=5.1-r3)"
