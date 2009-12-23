@@ -35,7 +35,8 @@ OPENDREAMBOX_EXPERIMENTAL_R = "enigma2-plugin-systemplugins-frontprocessorupgrad
 	enigma2-streamproxy ethtool \
 	enigma2-defaultservices \
 	twisted python-crypt python-crypto \
-	python-netserver python-pickle dreambox-blindscan-utils"
+	python-netserver python-pickle dreambox-blindscan-utils \
+	dreambox-meta"
 
 # legacy tuxbox stuff (enigma, plugins, ...)
 OPENDREAMBOX_TUXBOX = "enigma ipkgpl"
