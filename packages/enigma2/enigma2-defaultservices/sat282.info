@@ -2,7 +2,7 @@
 	<prerequisites>
 		<tag type="services" />
 		<bcastsystem type="DVB-S" />
-		<satellite type="282" />
+		<satellite type="284" />
 	</prerequisites>
 	
 	<info>
