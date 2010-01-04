@@ -55,7 +55,7 @@ DESCRIPTION_append_enigma2-plugin-systemplugins-networkwizard = "provides easy s
 PN = "enigma2"
 PR = "r0"
 
-SRCDATE = "20091120"
+SRCDATE = "20091202"
 #SRCDATE is NOT used by git to checkout a specific revision
 #but we need it to build a ipk package version
 #when you like to checkout a specific revision of e2 you need
@@ -64,23 +64,23 @@ SRCDATE = "20091120"
 # if you want upcoming release, use:
 ####################################################
 #BRANCH = "master"
-#PV = "2.7git${SRCDATE}"
+#PV = "2.8git${SRCDATE}"
 #SRCREV = ""
 ####################################################
 
 # if you want experimental use
 ####################################################
-BRANCH = "experimental"
-PV = "experimental-git${SRCDATE}"
-SRCREV = ""
+#BRANCH = "experimental"
+#PV = "experimental-git${SRCDATE}"
+#SRCREV = ""
 ####################################################
 
 # if you want a 2.6-based release, use
 ####################################################
-#BRANCH="2.6"
-#PV = "2.6git${SRCDATE}"
-# if you want 2.6.1 use
-#SRCREV = "407fc8d63356aa4a9e419b9815984a3743c3a70a"
+BRANCH="2.7"
+PV = "2.7git${SRCDATE}"
+# if you want 2.7.0 use
+SRCREV = "aa64f107516da5aaff79d6d096f8014f65ea3283"
 ####################################################
 
 SRC_URI = "git://git.opendreambox.org/git/enigma2.git;protocol=git;branch=${BRANCH};tag=${SRCREV} \
