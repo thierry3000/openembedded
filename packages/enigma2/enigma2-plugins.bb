@@ -6,12 +6,12 @@ PACKAGES_DYNAMIC = "enigma2-plugin-*"
 SRCDATE = "20100104"
 
 # if you want the 2.7.0 release, use
-TAG = ";tag=enigma2-plugins_rel27"
-PV = "2.7cvs${SRCDATE}"
+#TAG = ";tag=enigma2-plugins_rel27"
+#PV = "2.7cvs${SRCDATE}"
 
 # if you want experimental, use:
-#TAG = ""
-#PV = "experimental-cvs${SRCDATE}"
+TAG = ""
+PV = "experimental-cvs${SRCDATE}"
 
 SRC_URI = "cvs://anonymous@cvs.schwerkraft.elitedvb.net/cvsroot/enigma2-plugins;module=enigma2-plugins;method=pserver${TAG};date=${SRCDATE}"
 

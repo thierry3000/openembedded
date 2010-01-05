@@ -10,8 +10,8 @@ SRCDATE = "20100104"
 #PV = "2.7cvs${SRCDATE}"
 
 # if you want experimental, use:
-#TAG = ""
-#PV = "experimental-cvs${SRCDATE}"
+TAG = ""
+PV = "experimental-cvs${SRCDATE}"
 
 SRC_URI = "cvs://anonymous@cvs.schwerkraft.elitedvb.net/cvsroot/enigma2-skins;module=enigma2-skins;method=pserver${TAG};date=${SRCDATE}"
 FILES_${PN} += " /usr/share/enigma2 /usr/share/fonts "
