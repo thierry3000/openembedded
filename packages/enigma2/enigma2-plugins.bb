@@ -23,7 +23,7 @@ inherit autotools
 
 S = "${WORKDIR}/enigma2-plugins"
 
-DEPENDS = "python-pyopenssl python-gdata streamripper"
+DEPENDS = "python-pyopenssl python-gdata streamripper python-mutagen"
 DEPENDS += "enigma2"
 
 python populate_packages_prepend () {
