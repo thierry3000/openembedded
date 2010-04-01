@@ -32,6 +32,7 @@ OPENDREAMBOX_EXPERIMENTAL_R = "enigma2-plugin-systemplugins-frontprocessorupgrad
 	enigma2-plugin-extensions-pictureplayer \
 	enigma2-plugin-extensions-mediaplayer \
 	enigma2-plugin-systemplugins-hotplug \
+	enigma2-plugin-extensions-audiosync \
 	enigma2-streamproxy ethtool \
 	enigma2-defaultservices \
 	twisted python-crypt python-crypto \
