@@ -10,7 +10,7 @@ RDEPENDS = "python-codecs python-core python-lang python-re python-threading \
 	gst-plugin-id3demux gst-plugin-mad gst-plugin-ogg gst-plugin-playbin \
 	gst-plugin-typefindfunctions gst-plugin-audioconvert gst-plugin-audioresample \
 	gst-plugin-wavparse python-netclient gst-plugin-mpegstream gst-plugin-selector \
-	gst-plugin-flac gst-plugin-dvbmediasink gst-plugin-mpegdemux \
+	gst-plugin-flac gst-plugin-dvbmediasink gst-plugin-mpegdemux gst-plugin-dvdsub \
 	gst-plugin-souphttpsrc gst-plugin-mpegaudioparse gst-plugin-subparse \
 	gst-plugin-apetag gst-plugin-icydemux gst-plugin-autodetect \
 	glibc-gconv-iso8859-15 ethtool"
@@ -62,8 +62,8 @@ DESCRIPTION_append_enigma2-plugin-systemplugins-networkwizard = "provides easy s
 PN = "enigma2"
 PR = "r0"
 
-SRCDATE = "20101124"
-SRCDATE_vuplus = "20101124"
+SRCDATE = "20101204"
+SRCDATE_vuplus = "20101204"
 #SRCDATE is NOT used by git to checkout a specific revision
 #but we need it to build a ipk package version
 #when you like to checkout a specific revision of e2 you need
@@ -98,15 +98,17 @@ PV_vuplus = "experimental-git${SRCDATE}"
 SRCREV_vuplus = ""
 ####################################################
 
-
 SRC_URI = "git://git.opendreambox.org/git/enigma2.git;protocol=git;branch=${BRANCH};tag=${SRCREV}"
 
+#NOTE
+#enigma2_vuplus_mediaplayer.patch is for trick-play in media player
+#enigma2_vuplus_mediaplayer_unpause.patch is for bug-fixing in gstreamer 
 
 SRC_URI_bm750 = "git://archive.vuplus.com/git/enigma2.git;protocol=http;branch=${BRANCH};tag=${SRCREV} \
 	   file://enigma2_vuplus_duo.patch;patch=1;pnum=1 \
-	   file://enigma2_vuplus_swloop.patch;patch=1;pnum=1 \
            file://enigma2_vuplus_skin.patch;patch=1;pnum=1 \
            file://enigma2_vuplus_mediaplayer.patch;patch=1;pnum=1 \
+           file://enigma2_vuplus_mediaplayer_unpause.patch;patch=1;pnum=1 \
            file://MyriadPro-Regular.otf \
            file://MyriadPro-Semibold.otf \
            file://MyriadPro-SemiboldIt.otf \
@@ -115,10 +117,10 @@ SRC_URI_bm750 = "git://archive.vuplus.com/git/enigma2.git;protocol=http;branch=$
            file://number_key \
            "
 
-
 SRC_URI_vusolo = "git://archive.vuplus.com/git/enigma2.git;protocol=http;branch=${BRANCH};tag=${SRCREV} \
            file://enigma2_vuplus_skin.patch;patch=1;pnum=1 \
            file://enigma2_vuplus_mediaplayer.patch;patch=1;pnum=1 \
+           file://enigma2_vuplus_mediaplayer_unpause.patch;patch=1;pnum=1 \
            file://enigma2_vuplus_misc.patch;patch=1;pnum=1 \
            file://MyriadPro-Regular.otf \
            file://MyriadPro-Semibold.otf \
