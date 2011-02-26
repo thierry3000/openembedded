@@ -7,6 +7,7 @@ PV_dm7020 = "35"
 PV_dm600pvr = "66"
 PV_dm500plus = "66"
 PR = "r0"
+PR_dm7025 = "r0.1"
 
 RDEPENDS_${PN} = "dreambox-bootlogo (>= 7.0)"
 
@@ -26,53 +27,16 @@ do_stage() {
 	gzip -c ${S}/secondstage-${MACHINE}-${PV}.bin > ${STAGING_LIBDIR}/dreambox-secondstage/main.bin.gz
 }
 
-# the dm{800,8000,500hd,800se,7020hd} secondstage is already compressed (and encrypted)
-
-do_stage_dm800() {
+# secondstage >= 81 is already compressed
+do_stage_mipsel() {
 	install -d ${STAGING_LIBDIR}/dreambox-secondstage
 	cp ${S}/secondstage-${MACHINE}-${PV}.bin ${STAGING_LIBDIR}/dreambox-secondstage/main.bin.gz
 }
 
-do_install_dm800() {
+do_install_mipsel() {
 	install -d ${D}/tmp
 	install ${WORKDIR}/secondstage-${MACHINE}-${PV}.nfi ${D}/tmp/secondstage.nfi
 	install -m 0755 ${WORKDIR}/${WRITENFI} ${D}/tmp/writenfi
-}
-
-do_stage_dm8000() {
-	do_stage_dm800
-}
-
-do_install_dm8000() {
-	do_install_dm800
-}
-
-do_stage_dm500hd() {
-	do_stage_dm800
-}
-
-do_install_dm500hd() {
-	do_install_dm800
-}
-
-do_stage_dm800se() {
-	do_stage_dm8000
-}
-
-do_install_dm800se() {
-	do_install_dm800
-}
-
-do_stage_dm7020hd() {
-	do_stage_dm8000
-}
-
-do_install_dm7020hd() {
-	do_install_dm800
-}
-
-do_install_dm7025() {
-	do_install_dm800
 }
 
 FILES_${PN} = "/tmp"
