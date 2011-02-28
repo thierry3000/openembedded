@@ -3,11 +3,11 @@ SECTION = "base"
 PRIORITY = "required"
 MAINTAINER = "Felix Domke <tmbinc@elitedvb.net>"
 PV_mipsel = "82"
+PV_dm7025 = "83"
 PV_dm7020 = "35"
 PV_dm600pvr = "66"
 PV_dm500plus = "66"
 PR = "r0"
-PR_dm7025 = "r0.1"
 
 RDEPENDS_${PN} = "dreambox-bootlogo (>= 7.0)"
 
