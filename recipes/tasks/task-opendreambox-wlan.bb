@@ -1,7 +1,7 @@
 DESCRIPTION = "OpenDreambox: W-LAN Task for the OpenDreambox Distribution"
 SECTION = "opendreambox/base"
 LICENSE = "MIT"
-PR = "r4"
+PR = "r5"
 
 inherit task
 
@@ -63,6 +63,14 @@ RDEPENDS_${PN}_append_dm7020hd = "\
 
 RDEPENDS_${PN}_append_dm8000 = "\
   ${@base_contains('PREFERRED_VERSION_linux-dm8000', '2.6.18', 'task-opendreambox-madwifi', '${WLAN_CRYPTO_MODULES} ${WLAN_PCI_MODULES}', d)} \
+"
+
+DEPENDS_append_dm8000 = "\
+  ${@base_contains('PREFERRED_VERSION_linux-dm8000', '2.6.18', '${WLAN_USB_MODULES_LEGACY}', '${WLAN_CRYPTO_MODULES} ${WLAN_USB_MODULES}', d)} \
+"
+
+RSUGGESTS_${PN}_append_dm8000 = "\
+  ${@base_contains('PREFERRED_VERSION_linux-dm8000', '2.6.18', '${WLAN_USB_MODULES_LEGACY}', '${WLAN_CRYPTO_MODULES} ${WLAN_USB_MODULES}', d)} \
 "
 
 RDEPENDS_${PN}_append_dm7025 = "\
