@@ -9,7 +9,7 @@ inherit task
 # task-opendreambox-madwifi
 #
 DESCRIPTION_${PN} = "OpenDreambox: madwifi Support"
-DEPENDS_${PN} = "\
+DEPENDS = "\
   madwifi-ng \
 "
 

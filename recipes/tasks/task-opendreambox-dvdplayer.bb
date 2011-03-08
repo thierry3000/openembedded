@@ -9,7 +9,7 @@ inherit task
 # task-opendreambox-dvdplayer
 #
 DESCRIPTION_${PN} = "OpenDreambox: DVD-Player Support"
-DEPENDS_${PN} = "enigma2
+DEPENDS = "enigma2"
 RDEPENDS_${PN} = "\
   kernel-module-udf \
   kernel-module-isofs \

@@ -9,7 +9,7 @@ inherit task
 # task-opendreambox-wlan
 #
 DESCRIPTION_${PN} = "OpenDreambox: W-LAN Support"
-DEPENDS_${PN} = "enigma2-plugins"
+DEPENDS = "enigma2"
 RDEPENDS_${PN} = "\
   enigma2-plugin-systemplugins-wirelesslan \
   wireless-tools \
