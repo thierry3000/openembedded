@@ -3,7 +3,7 @@ require opkg_svn.bb
 DEPENDS = "curl"
 PROVIDES += "opkg"
 
-PR = "${INC_PR}.2"
+PR = "${INC_PR}.4"
 
 SRCREV = "${SRCREV_pn-opkg}"
 
@@ -21,6 +21,7 @@ PV_vuplus = "0.1.7+svnr${SRCPV}"
 SRC_URI_append_opendreambox = " \
 	file://remove_pyc_pyo_hack.patch;patch=1 \
 	file://r531-fix-remove.patch;patch=1 \
+	file://r599-fix-depmod.patch;patch=1 \
 "
 SRC_URI_append_vuplus = " \
 	file://remove_pyc_pyo_hack.patch;patch=1 \
