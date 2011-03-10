@@ -23,7 +23,7 @@ SRC_URI_append_vuplus = " \
            file://auto.network \
            file://autofs"
 
-PR = "${INC_PR}.1"
+PR = "${INC_PR}.2"
 
 inherit update-rc.d
 

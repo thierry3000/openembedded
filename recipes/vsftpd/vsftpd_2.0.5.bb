@@ -1,7 +1,7 @@
 DESCRIPTION = "Secure ftp daemon"
 SECTION = "console/network"
 LICENSE = "GPL"
-PR = "r3"
+PR = "r5"
 
 SRC_URI = "ftp://vsftpd.beasts.org/users/cevans/vsftpd-${PV}.tar.gz \
            file://makefile.patch;patch=1 \
@@ -47,9 +47,12 @@ do_install() {
 }
 
 pkg_postinst() {
+        if [ "x$D" != "x" ]; then
+                exit 1
+        fi
         addgroup ftp
         adduser --system --home /var/lib/ftp --no-create-home --ingroup ftp --disabled-password -s /bin/false ftp
-        mkdir -p ${D}${localstatedir}/share/empty
+        mkdir -p ${localstatedir}/share/empty
 }
 
 INITSCRIPT_NAME = "vsftpd"
