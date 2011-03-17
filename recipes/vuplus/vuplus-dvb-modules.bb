@@ -16,7 +16,7 @@ PV_bm750 = "${KV}"
 PV_vusolo = "${KV}"
 
 
-SRCDATE_bm750 = "20110208"
+SRCDATE_bm750 = "20110316"
 SRCDATE_vusolo = "20110208"
 
 
@@ -29,7 +29,8 @@ RDEPENDS_append_bm750 = " module-init-tools-depmod"
 RDEPENDS_append_vusolo = " module-init-tools-depmod"
 
 
-SRC_URI = "http://archive.vuplus.com/download/drivers/mbox-dvb-modules-${MACHINE}-${PV}-${PREFERRED_GCC_VERSION}-${SRCDATE}.tar.gz "
+#SRC_URI = "http://archive.vuplus.com/download/drivers/mbox-dvb-modules-${MACHINE}-${PV}-${PREFERRED_GCC_VERSION}-${SRCDATE}.tar.gz "
+SRC_URI = "http://archive.vuplus.com/download/drivers_test2/mbox-dvb-modules-${MACHINE}-${PV}-${PREFERRED_GCC_VERSION}-${SRCDATE}.tar.gz "
 
 S = "${WORKDIR}"
 
