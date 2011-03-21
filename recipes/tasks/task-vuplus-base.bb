@@ -41,6 +41,8 @@ VUPLUS_BASE_RECOMMENDS = "\
   openvpn \
   zeroconf \
 "
+VUPLUS_BASE_RECOMMENDS_append_vuuno = " vuplus-fpga-update"
+VUPLUS_BASE_RECOMMENDS_append_vuultimo = " vuplus-fpga-update"
 
 VUPLUS_BASE_OPTIONAL_RECOMMENDS = "\
   gdbserver \
