@@ -1,0 +1,14 @@
+diff --git a/autoresolution/src/plugin.py b/autoresolution/src/plugin.py
+old mode 100644
+new mode 100755
+index f034c06..0dee6ce
+--- a/autoresolution/src/plugin.py
++++ b/autoresolution/src/plugin.py
+@@ -302,6 +302,7 @@ class AutoResSetupMenu(Screen, ConfigListScreen):
+ 
+ 	def apply(self):
+ 		for x in self["config"].list:
++			x[1].onDeselect(self.session)
+ 			x[1].save()
+ 		self.close()
+ 
