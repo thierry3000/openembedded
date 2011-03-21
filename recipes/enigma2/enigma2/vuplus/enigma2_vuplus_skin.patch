@@ -1,8 +1,8 @@
 diff --git a/configure.ac b/configure.ac
-index 4902a9c..5c74eda 100644
+index c235888..9d2311b 100644
 --- a/configure.ac
 +++ b/configure.ac
-@@ -109,6 +109,16 @@ data/skin_default/menu/Makefile
+@@ -115,6 +115,16 @@ data/skin_default/menu/Makefile
  data/skin_default/icons/Makefile
  data/skin_default/buttons/Makefile
  data/skin_default/spinner/Makefile
@@ -21,7 +21,7 @@ index 4902a9c..5c74eda 100644
  lib/actions/Makefile
 diff --git a/data/750S/Makefile.am b/data/750S/Makefile.am
 new file mode 100644
-index 0000000..a516e82
+index 0000000..7ac9481
 --- /dev/null
 +++ b/data/750S/Makefile.am
 @@ -0,0 +1,6 @@
@@ -33,7 +33,7 @@ index 0000000..a516e82
 +	*.xml *.png
 diff --git a/data/750S/buttons/Makefile.am b/data/750S/buttons/Makefile.am
 new file mode 100644
-index 0000000..eb83d1c
+index 0000000..db2e817
 --- /dev/null
 +++ b/data/750S/buttons/Makefile.am
 @@ -0,0 +1,6 @@
@@ -45,7 +45,7 @@ index 0000000..eb83d1c
 +	*.png
 diff --git a/data/750S/countries/Makefile.am b/data/750S/countries/Makefile.am
 new file mode 100644
-index 0000000..4517ada
+index 0000000..9c4bf9a
 --- /dev/null
 +++ b/data/750S/countries/Makefile.am
 @@ -0,0 +1,6 @@
@@ -57,7 +57,7 @@ index 0000000..4517ada
 +	*.png
 diff --git a/data/750S/icons/Makefile.am b/data/750S/icons/Makefile.am
 new file mode 100644
-index 0000000..9277cc5
+index 0000000..4686688
 --- /dev/null
 +++ b/data/750S/icons/Makefile.am
 @@ -0,0 +1,6 @@
@@ -69,7 +69,7 @@ index 0000000..9277cc5
 +	*.png
 diff --git a/data/750S/menu/Makefile.am b/data/750S/menu/Makefile.am
 new file mode 100644
-index 0000000..ff165af
+index 0000000..20f24d9
 --- /dev/null
 +++ b/data/750S/menu/Makefile.am
 @@ -0,0 +1,6 @@
@@ -80,11 +80,11 @@ index 0000000..ff165af
 +install_DATA = \
 +	*.png
 diff --git a/data/750S/skin.xml b/data/750S/skin.xml
-new file mode 100755
-index 0000000..7be3bca
+new file mode 100644
+index 0000000..ad86b3f
 --- /dev/null
 +++ b/data/750S/skin.xml
-@@ -0,0 +1,2489 @@
+@@ -0,0 +1,2490 @@
 +<skin>
 +	<!-- VU+ skin (skin.xml)  -->
 +	<output id="0">
@@ -1088,6 +1088,7 @@ index 0000000..7be3bca
 +		<widget name="key_green" position="240,110" zPosition="1" size="115,40" font="Regular;20" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" />
 +		<widget name="key_yellow" position="380,110" zPosition="1" size="115,40" font="Regular;20" halign="center" valign="center" backgroundColor="#a08500" transparent="1" />
 +		<widget name="key_blue" position="520,110" zPosition="1" size="115,40" font="Regular;20" halign="center" valign="center" backgroundColor="#18188b" transparent="1" />
++		<widget name="waitingtext" position="80,160" size="555,328" zPosition="4" font="Regular;22" halign="center" valign="center" />
 +		<widget name="list" position="80,160" size="555,328" zPosition="2" scrollbarMode="showOnDemand" transparent="1" />
 +		<widget name="DescriptionBorder" pixmap="750S/border_eventinfo.png" position="75,388" zPosition="1" size="560,103" transparent="1" alphatest="on" />
 +		<widget source="Service" render="Label" position="80,390" zPosition="1" size="480,35" font="Regular;17" foregroundColor="#cccccc">
@@ -2583,10 +2584,10 @@ index 0eaa082..869a16e 100644
 +SUBDIRS = countries fonts defaults extensions keymaps skin_default 750S Vu_HD
  
  dist_pkgdata_DATA = \
-        defaultsatlists.xml \
+ 	defaultsatlists.xml \
 diff --git a/data/Vu_HD/Makefile.am b/data/Vu_HD/Makefile.am
 new file mode 100644
-index 0000000..ee39535
+index 0000000..dcdab6d
 --- /dev/null
 +++ b/data/Vu_HD/Makefile.am
 @@ -0,0 +1,6 @@
@@ -2598,7 +2599,7 @@ index 0000000..ee39535
 +	*.xml *.png
 diff --git a/data/Vu_HD/buttons/Makefile.am b/data/Vu_HD/buttons/Makefile.am
 new file mode 100644
-index 0000000..cd14ba2
+index 0000000..3da6ab8
 --- /dev/null
 +++ b/data/Vu_HD/buttons/Makefile.am
 @@ -0,0 +1,6 @@
@@ -2610,7 +2611,7 @@ index 0000000..cd14ba2
 +	*.png
 diff --git a/data/Vu_HD/countries/Makefile.am b/data/Vu_HD/countries/Makefile.am
 new file mode 100644
-index 0000000..9a025db
+index 0000000..68c6dc7
 --- /dev/null
 +++ b/data/Vu_HD/countries/Makefile.am
 @@ -0,0 +1,6 @@
@@ -2622,7 +2623,7 @@ index 0000000..9a025db
 +	*.png
 diff --git a/data/Vu_HD/icons/Makefile.am b/data/Vu_HD/icons/Makefile.am
 new file mode 100644
-index 0000000..0351458
+index 0000000..650c1e5
 --- /dev/null
 +++ b/data/Vu_HD/icons/Makefile.am
 @@ -0,0 +1,6 @@
@@ -2634,7 +2635,7 @@ index 0000000..0351458
 +	*.png
 diff --git a/data/Vu_HD/menu/Makefile.am b/data/Vu_HD/menu/Makefile.am
 new file mode 100644
-index 0000000..ed47ec9
+index 0000000..9d4f458
 --- /dev/null
 +++ b/data/Vu_HD/menu/Makefile.am
 @@ -0,0 +1,6 @@
@@ -2645,11 +2646,11 @@ index 0000000..ed47ec9
 +install_DATA = \
 +	*.png
 diff --git a/data/Vu_HD/skin.xml b/data/Vu_HD/skin.xml
-new file mode 100755
-index 0000000..555c0d6
+new file mode 100644
+index 0000000..eebb9f4
 --- /dev/null
 +++ b/data/Vu_HD/skin.xml
-@@ -0,0 +1,3036 @@
+@@ -0,0 +1,3037 @@
 +<skin>
 +	<!-- VU+ skin (skin.xml)  -->
 +	<output id="0">
@@ -3179,7 +3180,7 @@ index 0000000..555c0d6
 +		</widget>
 +	</screen>
 +	<!-- Channel selection - Radio -->
-+	<screen name="ChannelSelectionRadio" position="145, 55" size="990,610" flags="wfNoBorder" backgroundColor="transparent">
++	<screen name="ChannelSelectionRadio" position="145, 55" size="990,610" zPosition="-10" flags="wfNoBorder" backgroundColor="transparent">
 +		<ePixmap pixmap="Vu_HD/Bg_List.png" position="0,0" size="990,610" zPosition="-10" alphatest="on"  transparent="1" />
 +		<ePixmap pixmap="Vu_HD/icons/ico_Radio_title.png" position="44,37" size="38,34" alphatest="blend"  transparent="1" />
 +		<widget source="Title" render="Label" position="95,40" size="700,32" zPosition="3" font="Semiboldit;32" foregroundColor="#5d5d5d" backgroundColor="#27d8dee2" transparent="1" />
@@ -3718,6 +3719,7 @@ index 0000000..555c0d6
 +		<widget name="key_green" position="316,84" zPosition="1" size="182,20" font="Regular;20" halign="left" valign="center" foregroundColor="#1c1c1c" backgroundColor="#27ebebeb" transparent="1" />
 +		<widget name="key_yellow" position="543,84" zPosition="1" size="182,20" font="Regular;20" halign="left" valign="center" foregroundColor="#1c1c1c" backgroundColor="#27ebebeb" transparent="1" />
 +		<widget name="key_blue" position="770,84" zPosition="1" size="182,20" font="Regular;20" halign="left" valign="center" foregroundColor="#1c1c1c" backgroundColor="#27ebebeb" transparent="1" />
++		<widget name="waitingtext" position="60,150" size="860,375" zPosition="4" font="Regular;22" foregroundColor="#1c1c1c" backgroundColor="#27d8dee2" halign="center" valign="center" />
 +		<widget name="list" position="60,150" size="860,375" zPosition="2" scrollbarMode="showOnDemand" transparent="1" />
 +		<widget name="DescriptionBorder" position="80,430" size="800,150" zPosition="1" transparent="1" alphatest="on"/>
 +		<widget source="Service" render="Label" position="80,430" zPosition="1" size="640,22" font="Regular;20" foregroundColor="#3c3c3c" backgroundColor="#27aeaeae" transparent="1">
@@ -5687,7 +5689,7 @@ index 0000000..555c0d6
 +	</screen>
 +</skin>
 diff --git a/data/fonts/Makefile.am b/data/fonts/Makefile.am
-index 2f7e7c7..832b582 100644
+index 2f7e7c7..f81801a 100644
 --- a/data/fonts/Makefile.am
 +++ b/data/fonts/Makefile.am
 @@ -5,4 +5,7 @@ dist_install_DATA = \
@@ -5698,12 +5700,12 @@ index 2f7e7c7..832b582 100644
 +	tuxtxt.ttf \
 +	MyriadPro-Regular.otf \
 +	MyriadPro-Semibold.otf \
-+	MyriadPro-SemiboldIt.otf 
++	MyriadPro-SemiboldIt.otf
 diff --git a/data/skin.xml b/data/skin.xml
-index cde03f4..77c5f64 100755
+index ccd8eb7..9233610 100755
 --- a/data/skin.xml
 +++ b/data/skin.xml
-@@ -179,11 +179,10 @@
+@@ -150,11 +150,10 @@
  			<convert type="ConditionalShowHide" />
  		</widget>
  		<!-- Audio icon (is there multichannel audio?) -->
@@ -5717,10 +5719,10 @@ index cde03f4..77c5f64 100755
  		<ePixmap pixmap="skin_default/progress_bg.png" position="48,77" size="84,7" transparent="1" alphatest="on" />
  		<widget source="session.Event_Now" render="Progress" pixmap="skin_default/progress_small.png" position="50,78" zPosition="1" size="80,5" transparent="1">
 diff --git a/lib/gdi/epng.cpp b/lib/gdi/epng.cpp
-index 972a89d..2629ef8 100644
+index fd33298..d8c1982 100644
 --- a/lib/gdi/epng.cpp
 +++ b/lib/gdi/epng.cpp
-@@ -115,10 +115,71 @@ int loadPNG(ePtr<gPixmap> &result, const char *filename)
+@@ -116,10 +116,71 @@ int loadPNG(ePtr<gPixmap> &result, const char *filename)
  		}
  		surface->clut.start=0;
  		png_read_end(png_ptr, end_info);
@@ -5793,7 +5795,7 @@ index 972a89d..2629ef8 100644
  	png_destroy_read_struct(&png_ptr, &info_ptr,&end_info);
  	fclose(fp);
 diff --git a/lib/python/Screens/ChannelSelection.py b/lib/python/Screens/ChannelSelection.py
-index 7ddbcbf..46f96a9 100755
+index c07e349..97e6bd6 100755
 --- a/lib/python/Screens/ChannelSelection.py
 +++ b/lib/python/Screens/ChannelSelection.py
 @@ -2,6 +2,8 @@ from Tools.Profile import profile
@@ -5805,7 +5807,7 @@ index 7ddbcbf..46f96a9 100755
  from Components.ServiceList import ServiceList
  from Components.ActionMap import NumberActionMap, ActionMap, HelpableActionMap
  from Components.MenuList import MenuList
-@@ -703,6 +705,9 @@ class ChannelSelectionBase(Screen):
+@@ -713,6 +715,9 @@ class ChannelSelectionBase(Screen):
  		self["key_yellow"] = Button(_("Provider"))
  		self["key_blue"] = Button(_("Favourites"))
  
@@ -5815,7 +5817,7 @@ index 7ddbcbf..46f96a9 100755
  		self["list"] = ServiceList()
  		self.servicelist = self["list"]
  
-@@ -848,25 +853,51 @@ class ChannelSelectionBase(Screen):
+@@ -858,25 +863,51 @@ class ChannelSelectionBase(Screen):
  		pos = titleStr.find(']')
  		if pos == -1:
  			pos = titleStr.find(')')
@@ -5886,7 +5888,7 @@ index 7ddbcbf..46f96a9 100755
  	def moveUp(self):
  		self.servicelist.moveUp()
 diff --git a/lib/python/Screens/FixedMenu.py b/lib/python/Screens/FixedMenu.py
-index 0122346..add611b 100644
+index 0122346..c877a19 100644
 --- a/lib/python/Screens/FixedMenu.py
 +++ b/lib/python/Screens/FixedMenu.py
 @@ -20,3 +20,10 @@ class FixedMenu(Screen):
@@ -5899,7 +5901,7 @@ index 0122346..add611b 100644
 +		self["title1"] = StaticText('')
 +		self["title2"] = StaticText('')
 +		#
-+		
++
 diff --git a/lib/python/Screens/Menu.py b/lib/python/Screens/Menu.py
 index 2a8801c..20403d8 100755
 --- a/lib/python/Screens/Menu.py
@@ -5992,7 +5994,7 @@ index 2a8801c..20403d8 100755
  
  	def createSummary(self):
 diff --git a/skin.py b/skin.py
-index b490f73..bbd9ddd 100755
+index 19da203..f191530 100755
 --- a/skin.py
 +++ b/skin.py
 @@ -50,7 +50,7 @@ def loadSkin(name, scope = SCOPE_SKIN):

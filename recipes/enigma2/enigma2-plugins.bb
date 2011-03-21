@@ -4,8 +4,8 @@ MAINTAINER = "Felix Domke <tmbinc@elitedvb.net>"
 PACKAGES_DYNAMIC = "enigma2-plugin-*"
 
 # if you want experimental, use:
-SRCREV="643cde323453d3a608be112498835ee46e692266"
-SRCDATE="20110210"
+SRCREV="87fd2f1120962f553ecb1a88bbee46ed821df975"
+SRCDATE="20110215"
 BRANCH="master"
 PV = "experimental-git${SRCDATE}"
 
@@ -23,6 +23,7 @@ SRC_URI_append_vuplus = " \
 	   file://enigma2_plugins_mytube_tpm.patch;patch=1;pnum=1 \
 	   file://enigma2_plugins_webinterface_tpm.patch;patch=1;pnum=1 \
 	   file://enigma2_plugins_ac3lipsync_dolby.patch;patch=1;pnum=1 \
+	   file://enigma2_plugins_autoresolution_fix.patch;patch=1;pnum=1 \
            file://dreamboxweb.png \
            file://favicon.ico"
 

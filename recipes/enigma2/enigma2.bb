@@ -9,7 +9,7 @@ RDEPENDS = "python-codecs python-core python-lang python-re python-threading \
 	python-pickle gst-plugin-app \
 	gst-plugin-id3demux gst-plugin-mad gst-plugin-ogg gst-plugin-playbin \
 	gst-plugin-typefindfunctions gst-plugin-audioconvert gst-plugin-audioresample \
-	gst-plugin-wavparse python-netclient gst-plugin-mpegstream gst-plugin-selector \
+	gst-plugin-wavparse python-netclient gst-plugin-mpegstream \
 	gst-plugin-flac gst-plugin-dvbmediasink gst-plugin-mpegdemux gst-plugin-dvdsub \
 	gst-plugin-souphttpsrc gst-plugin-mpegaudioparse gst-plugin-subparse \
 	gst-plugin-apetag gst-plugin-icydemux gst-plugin-autodetect \
@@ -64,8 +64,8 @@ DESCRIPTION_append_enigma2-plugin-systemplugins-networkwizard = "provides easy s
 PN = "enigma2"
 PR = "r0"
 
-SRCDATE = "20101204"
-SRCDATE_vuplus = "20101204"
+SRCDATE = "20110217"
+SRCREV = "5e19a3f8a5e8ce8a4e2cb2b601a1b8ef3554e4be"
 #SRCDATE is NOT used by git to checkout a specific revision
 #but we need it to build a ipk package version
 #when you like to checkout a specific revision of e2 you need
@@ -75,7 +75,7 @@ SRCDATE_vuplus = "20101204"
 ####################################################
 BRANCH = "experimental"
 PV = "experimental-git${SRCDATE}"
-SRCREV = ""
+#SRCREV = ""
 ####################################################
 
 # if you want a 2.7-based release, use
@@ -101,6 +101,7 @@ SRCREV_vuplus = ""
 ####################################################
 
 SRC_URI = "git://git.opendreambox.org/git/enigma2.git;protocol=git;branch=${BRANCH};tag=${SRCREV}"
+SRC_URI_append_dm7025 = " file://7025_pvr_device_compatibility.diff;patch=1;pnum=1"
 
 # enigma2_vuplus_mediaplayer.patch is for trick-play in media player
 # enigma2_vuplus_mediaplayer_unpause.patch is for work-around of gstreamer bug 

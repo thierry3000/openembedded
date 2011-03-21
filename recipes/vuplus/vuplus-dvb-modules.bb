@@ -17,11 +17,10 @@ PV_vusolo = "${KV}"
 PV_vuuno = "${KV}"
 PV_vuultimo = "${KV}"
 
-
-SRCDATE_bm750 = "20110208"
-SRCDATE_vusolo = "20110208"
+SRCDATE_bm750 = "20110321"
+SRCDATE_vusolo = "20110321"
 SRCDATE_vuuno = "20110321"
-SRCDATE_vuultimo = "20110318"
+SRCDATE_vuultimo = "20110321"
 
 CHIPSET_bm750 = "7335"
 CHIPSET_vusolo = "7325"
