@@ -1,6 +1,7 @@
 require gst-plugins.inc
 
 SRC_URI_append_opendreambox = " file://samihack.patch;patch=1"
+SRC_URI_append_vuplus = " file://samihack.patch;patch=1"
 
 PR = "${INC_PR}.0"
 
