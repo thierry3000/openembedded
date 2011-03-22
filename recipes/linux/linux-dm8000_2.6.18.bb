@@ -12,11 +12,11 @@ SRC_URI += "\
 "
 
 pkg_preinst_kernel-image_dm8000 () {
-	if [ -d /proc/stb ] && `mount -o rw,remount /boot`; then
-		if [ ! -f /boot/secondstage.conf ] || [ `grep "legacy_flash_mapping" /boot/secondstage.conf | wc -l` -eq 0 ]; then
+	if [ -z "$D" ]; then
+		mountpoint -q /boot && mount -o rw,remount /boot;
+		if grep -q '^mtd3: 03c00000 ' /proc/mtd && ! grep -q '^legacy_flash_mapping=' /boot/secondstage.conf; then
 			echo "enable legacy flash mapping in secondstage.conf";
-			echo "legacy_flash_mapping=1;" > /boot/secondstage.conf;
+			echo "legacy_flash_mapping=1;" >> /boot/secondstage.conf;
 		fi;
 	fi;
-	true;
 }
