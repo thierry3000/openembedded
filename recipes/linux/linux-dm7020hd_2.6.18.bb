@@ -4,4 +4,6 @@ PR="${PR_INC}.0"
 
 SRC_URI += "\
 	file://linux-2.6.18-fix-serial.patch;patch=1 \
+	file://linux-2.6.18-256MB-nand-support.patch;patch=1 \
+	file://linux-2.6.18-big-summary.patch;patch=1 \
 "
