@@ -33,7 +33,7 @@ KERNEL_OBJECT_SUFFIX = "ko"
 
 
 do_configure_prepend() {
-        oe_machinstall -m 0644 ${WORKDIR}/bm750_defconfig ${S}/.config
+        oe_machinstall -m 0644 ${WORKDIR}/${MACHINE}_defconfig ${S}/.config
         if [ -d ${WORKDIR}/cdfs-${PV} ]; then
                 mv ${WORKDIR}/cdfs-${PV} ${S}/fs/cdfs
                 cd ${S} & patch -p0 < ${S}/fs/cdfs/patch.cdfs
