@@ -67,3 +67,11 @@ do_rootfs_append_bm750() {
 do_rootfs_append_vusolo() {
     generate_nfo
 }
+
+do_rootfs_append_vuuno() {
+    generate_nfo
+}
+
+do_rootfs_append_vuultimo() {
+    generate_nfo
+}

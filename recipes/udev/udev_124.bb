@@ -19,6 +19,8 @@ SRC_URI = "http://kernel.org/pub/linux/utils/kernel/hotplug/udev-${PV}.tar.gz \
 
 SRC_URI_append_bm750 = " file://50-udev-default.rules "
 SRC_URI_append_vusolo = " file://50-udev-default.rules "
+SRC_URI_append_vuuno = " file://50-udev-default.rules "
+SRC_URI_append_vuultimo = " file://50-udev-default.rules "
 SRC_URI_append_h2200 = " file://50-hostap_cs.rules "
 PACKAGE_ARCH_h2200 = "h2200"
 

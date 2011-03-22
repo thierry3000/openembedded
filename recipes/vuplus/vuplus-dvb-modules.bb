@@ -14,10 +14,18 @@ KV = "2.6.18-7.3"
 
 PV_bm750 = "${KV}"
 PV_vusolo = "${KV}"
-
+PV_vuuno = "${KV}"
+PV_vuultimo = "${KV}"
 
 SRCDATE_bm750 = "20110321"
 SRCDATE_vusolo = "20110321"
+SRCDATE_vuuno = "20110321"
+SRCDATE_vuultimo = "20110321"
+
+CHIPSET_bm750 = "7335"
+CHIPSET_vusolo = "7325"
+CHIPSET_vuuno = "7413"
+CHIPSET_vuultimo = "7413"
 
 
 RDEPENDS = "initscripts-vuplus kernel (${KV}) kernel-module-firmware-class kernel-module-input kernel-module-evdev kernel-module-i2c-core kernel-module-snd kernel-module-snd-pcm"
@@ -25,11 +33,13 @@ PR = "r19-${SRCDATE}"
 
 #hack
 DEPENDS = " module-init-tools"
-RDEPENDS_append_bm750 = " module-init-tools-depmod"
-RDEPENDS_append_vusolo = " module-init-tools-depmod"
+RDEPENDS_append_vuplus = " module-init-tools-depmod"
 
 
 SRC_URI = "http://archive.vuplus.com/download/drivers/mbox-dvb-modules-${MACHINE}-${PV}-${PREFERRED_GCC_VERSION}-${SRCDATE}.tar.gz "
+
+SRC_URI_vuuno = "http://archive.vuplus.com/download/drivers_beta/mbox-dvb-modules-${CHIPSET}-${PV}-${PREFERRED_GCC_VERSION}-${SRCDATE}.tar.gz "
+SRC_URI_vuultimo = "http://archive.vuplus.com/download/drivers_beta/mbox-dvb-modules-${CHIPSET}-${PV}-${PREFERRED_GCC_VERSION}-${SRCDATE}.tar.gz "
 
 S = "${WORKDIR}"
 

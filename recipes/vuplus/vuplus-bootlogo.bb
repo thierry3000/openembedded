@@ -6,12 +6,16 @@ LICENSE = "proprietary"
 IMAGES_VERSION = "1"
 BINARY_VERSION = "1"
 BINARY_VERSION_bm750 = "6"
+BINARY_VERSION_vuuno = "6"
+BINARY_VERSION_vuultimo = "6"
 
 PV = "${BINARY_VERSION}.${IMAGES_VERSION}"
 PR = "r3"
 
 
 SRC_URI = "file://bootlogo.mvi file://backdrop.mvi file://bootlogo_wait.mvi file://switchoff.mvi"
+SRC_URI_append_vuuno = " file://splash_cfe_auto.bin"
+SRC_URI_append_vuultimo = " file://splash_cfe_auto.bin"
 
 S = "${WORKDIR}/"
 
@@ -25,8 +29,35 @@ do_install() {
 	done;
 }
 
+do_install_vuuno() {
+	install -d ${D}/boot
+        install -d ${D}/usr/share
+        for i in ${MVI}; do
+                install -m 0755 ${S}/$i.mvi ${D}/usr/share/$i.mvi;
+                ln -sf /usr/share/$i.mvi ${D}/boot/$i.mvi;
+        done;
+        install -m 0755 ${S}/splash_cfe_auto.bin ${D}/boot/splash_cfe_auto.bin
+}
+do_install_vuultimo() {
+        install -d ${D}/boot
+        install -d ${D}/usr/share
+        for i in ${MVI}; do
+                install -m 0755 ${S}/$i.mvi ${D}/usr/share/$i.mvi;
+                ln -sf /usr/share/$i.mvi ${D}/boot/$i.mvi;
+        done;
+        install -m 0755 ${S}/splash_cfe_auto.bin ${D}/boot/splash_cfe_auto.bin
+}
 
-do_install_vuplus() {
+do_install_bm750() {
+	install -d ${D}/boot
+	install -d ${D}/usr/share
+	for i in ${MVI}; do
+		install -m 0755 ${S}/$i.mvi ${D}/usr/share/$i.mvi;
+		ln -sf /usr/share/$i.mvi ${D}/boot/$i.mvi;
+	done;
+}
+
+do_install_vusolo() {
 	install -d ${D}/boot
 	install -d ${D}/usr/share
 	for i in ${MVI}; do

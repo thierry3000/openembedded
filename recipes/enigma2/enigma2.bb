@@ -28,6 +28,8 @@ RDEPENDS_append_dm500hd = " ${GST_BASE_RDEPENDS} ${GST_DVD_RDEPENDS} gst-plugin-
 RDEPENDS_append_dm800se = " ${GST_BASE_RDEPENDS} ${GST_DVD_RDEPENDS} gst-plugin-avi"
 RDEPENDS_append_bm750 = " ${GST_BASE_RDEPENDS} ${GST_DVD_RDEPENDS} gst-plugin-avi"
 RDEPENDS_append_vusolo = " ${GST_BASE_RDEPENDS} ${GST_DVD_RDEPENDS} gst-plugin-avi"
+RDEPENDS_append_vuuno = " ${GST_BASE_RDEPENDS} ${GST_DVD_RDEPENDS} gst-plugin-avi"
+RDEPENDS_append_vuultimo = " ${GST_BASE_RDEPENDS} ${GST_DVD_RDEPENDS} gst-plugin-avi"
 RDEPENDS_append_dm7020hd = " ${GST_BASE_RDEPENDS} ${GST_DVD_RDEPENDS} gst-plugin-avi"
 
 # 'forward depends' - no two providers can have the same PACKAGES_DYNAMIC, however both
@@ -123,6 +125,34 @@ SRC_URI_vusolo = "git://archive.vuplus.com/git/enigma2.git;protocol=http;branch=
            file://enigma2_vuplus_mediaplayer.patch;patch=1;pnum=1 \
            file://enigma2_vuplus_mediaplayer_unpause.patch;patch=1;pnum=1 \
            file://enigma2_vuplus_misc.patch;patch=1;pnum=1 \
+           file://MyriadPro-Regular.otf \
+           file://MyriadPro-Semibold.otf \
+           file://MyriadPro-SemiboldIt.otf \
+           file://750S \
+           file://Vu_HD \
+           file://number_key \
+           "
+
+
+
+SRC_URI_vuuno = "git://archive.vuplus.com/git/enigma2.git;protocol=http;branch=${BRANCH};tag=${SRCREV} \
+	   file://enigma2_vuplus_duo.patch;patch=1;pnum=1 \
+           file://enigma2_vuplus_skin.patch;patch=1;pnum=1 \
+           file://enigma2_vuplus_mediaplayer.patch;patch=1;pnum=1 \
+           file://enigma2_vuplus_mediaplayer_unpause.patch;patch=1;pnum=1 \
+           file://MyriadPro-Regular.otf \
+           file://MyriadPro-Semibold.otf \
+           file://MyriadPro-SemiboldIt.otf \
+           file://750S \
+           file://Vu_HD \
+           file://number_key \
+           "
+
+SRC_URI_vuultimo = "git://archive.vuplus.com/git/enigma2.git;protocol=http;branch=${BRANCH};tag=${SRCREV} \
+	   file://enigma2_vuplus_duo.patch;patch=1;pnum=1 \
+           file://enigma2_vuplus_skin.patch;patch=1;pnum=1 \
+           file://enigma2_vuplus_mediaplayer.patch;patch=1;pnum=1 \
+           file://enigma2_vuplus_mediaplayer_unpause.patch;patch=1;pnum=1 \
            file://MyriadPro-Regular.otf \
            file://MyriadPro-Semibold.otf \
            file://MyriadPro-SemiboldIt.otf \
