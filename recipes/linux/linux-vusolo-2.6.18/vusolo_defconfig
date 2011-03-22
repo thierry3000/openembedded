@@ -1009,6 +1009,12 @@ CONFIG_FB=m
 # CONFIG_FB_VIRTUAL is not set
 
 #
+# Logo configuration
+#
+# CONFIG_LOGO is not set
+# CONFIG_BACKLIGHT_LCD_SUPPORT is not set
+
+#
 # Sound
 #
 CONFIG_SOUND=m
