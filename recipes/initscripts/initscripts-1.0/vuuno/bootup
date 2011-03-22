@@ -1,4 +1,4 @@
-for mod in sata_svw libata nls_base nls_cp437 nls_iso8859-1; do
+for mod in sata_svw libata; do
 	modprobe $mod
 done
 
@@ -13,9 +13,6 @@ done
 for mod in procmk dvb-bcm7413 brcmfb fpga_directc; do
         modprobe $mod
 done
-
-
-
 
 depmod -Ae
 echo 12 > /proc/progress
@@ -76,4 +73,3 @@ if [ -f /usr/local/bin/vucamd ];
 then /usr/local/bin/vucamd &
 fi
 
-/usr/bin/hotplug_br &
