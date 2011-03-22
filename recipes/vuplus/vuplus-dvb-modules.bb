@@ -19,8 +19,8 @@ PV_vuultimo = "${KV}"
 
 SRCDATE_bm750 = "20110321"
 SRCDATE_vusolo = "20110321"
-SRCDATE_vuuno = "20110321"
-SRCDATE_vuultimo = "20110321"
+SRCDATE_vuuno = "20110322"
+SRCDATE_vuultimo = "20110322"
 
 CHIPSET_bm750 = "7335"
 CHIPSET_vusolo = "7325"
@@ -38,8 +38,8 @@ RDEPENDS_append_vuplus = " module-init-tools-depmod"
 
 SRC_URI = "http://archive.vuplus.com/download/drivers/mbox-dvb-modules-${MACHINE}-${PV}-${PREFERRED_GCC_VERSION}-${SRCDATE}.tar.gz "
 
-SRC_URI_vuuno = "http://archive.vuplus.com/download/drivers_beta/vuplus-dvb-modules-${CHIPSET}-${PV}-${PREFERRED_GCC_VERSION}-${SRCDATE}.tar.gz "
-SRC_URI_vuultimo = "http://archive.vuplus.com/download/drivers_beta/vuplus-dvb-modules-${CHIPSET}-${PV}-${PREFERRED_GCC_VERSION}-${SRCDATE}.tar.gz "
+SRC_URI_vuuno = "http://archive.vuplus.com/download/drivers/beta/vuplus-dvb-modules-${CHIPSET}-${PV}-${PREFERRED_GCC_VERSION}-${SRCDATE}.tar.gz "
+SRC_URI_vuultimo = "http://archive.vuplus.com/download/drivers/beta/vuplus-dvb-modules-${CHIPSET}-${PV}-${PREFERRED_GCC_VERSION}-${SRCDATE}.tar.gz "
 
 S = "${WORKDIR}"
 
