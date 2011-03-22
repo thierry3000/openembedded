@@ -38,8 +38,8 @@ RDEPENDS_append_vuplus = " module-init-tools-depmod"
 
 SRC_URI = "http://archive.vuplus.com/download/drivers/mbox-dvb-modules-${MACHINE}-${PV}-${PREFERRED_GCC_VERSION}-${SRCDATE}.tar.gz "
 
-SRC_URI_vuuno = "http://archive.vuplus.com/download/drivers_beta/mbox-dvb-modules-${CHIPSET}-${PV}-${PREFERRED_GCC_VERSION}-${SRCDATE}.tar.gz "
-SRC_URI_vuultimo = "http://archive.vuplus.com/download/drivers_beta/mbox-dvb-modules-${CHIPSET}-${PV}-${PREFERRED_GCC_VERSION}-${SRCDATE}.tar.gz "
+SRC_URI_vuuno = "http://archive.vuplus.com/download/drivers_beta/vuplus-dvb-modules-${CHIPSET}-${PV}-${PREFERRED_GCC_VERSION}-${SRCDATE}.tar.gz "
+SRC_URI_vuultimo = "http://archive.vuplus.com/download/drivers_beta/vuplus-dvb-modules-${CHIPSET}-${PV}-${PREFERRED_GCC_VERSION}-${SRCDATE}.tar.gz "
 
 S = "${WORKDIR}"
 

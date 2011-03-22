@@ -108,7 +108,7 @@ SRC_URI_append_dm7025 = " file://7025_pvr_device_compatibility.diff;patch=1;pnum
 
 
 SRC_URI_bm750 = "git://archive.vuplus.com/git/enigma2.git;protocol=http;branch=${BRANCH};tag=${SRCREV} \
-	   file://enigma2_vuplus_duo.patch;patch=1;pnum=1 \
+	   file://enigma2_vuplus_vfd.patch;patch=1;pnum=1 \
            file://enigma2_vuplus_skin.patch;patch=1;pnum=1 \
            file://enigma2_vuplus_mediaplayer.patch;patch=1;pnum=1 \
            file://enigma2_vuplus_mediaplayer_unpause.patch;patch=1;pnum=1 \
@@ -136,7 +136,7 @@ SRC_URI_vusolo = "git://archive.vuplus.com/git/enigma2.git;protocol=http;branch=
 
 
 SRC_URI_vuuno = "git://archive.vuplus.com/git/enigma2.git;protocol=http;branch=${BRANCH};tag=${SRCREV} \
-	   file://enigma2_vuplus_duo.patch;patch=1;pnum=1 \
+	   file://enigma2_vuplus_vfd.patch;patch=1;pnum=1 \
            file://enigma2_vuplus_skin.patch;patch=1;pnum=1 \
            file://enigma2_vuplus_mediaplayer.patch;patch=1;pnum=1 \
            file://enigma2_vuplus_mediaplayer_unpause.patch;patch=1;pnum=1 \
@@ -149,7 +149,7 @@ SRC_URI_vuuno = "git://archive.vuplus.com/git/enigma2.git;protocol=http;branch=$
            "
 
 SRC_URI_vuultimo = "git://archive.vuplus.com/git/enigma2.git;protocol=http;branch=${BRANCH};tag=${SRCREV} \
-	   file://enigma2_vuplus_duo.patch;patch=1;pnum=1 \
+	   file://enigma2_vuplus_vfd.patch;patch=1;pnum=1 \
            file://enigma2_vuplus_skin.patch;patch=1;pnum=1 \
            file://enigma2_vuplus_mediaplayer.patch;patch=1;pnum=1 \
            file://enigma2_vuplus_mediaplayer_unpause.patch;patch=1;pnum=1 \

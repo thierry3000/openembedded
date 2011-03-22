@@ -8,22 +8,6 @@ index 4902a9c..4bd2117 100644
  AC_DEFINE(BUILD_VUPLUS,1,[Define to 1 for vuplus])
 +AC_DEFINE(BUILD_VUPLUS_DUO,1,[Define to 1 for duo])
  AC_OUTPUT
-diff --git a/lib/dvb/frontend.h b/lib/dvb/frontend.h
-index bef4a18..9aebc71 100644
---- a/lib/dvb/frontend.h
-+++ b/lib/dvb/frontend.h
-@@ -152,6 +152,11 @@ public:
- 	int closeFrontend(bool force=false, bool no_delayed=false);
- 	const char *getDescription() const { return m_description; }
- 	bool is_simulate() const { return m_simulate; }
-+
-+#ifdef BUILD_VUPLUS_DUO /* ikseong  */
-+	RESULT setLoopthrough(int onoff);
-+#endif
-+
- };
- 
- #endif // SWIG
 diff --git a/lib/gdi/glcddc.cpp b/lib/gdi/glcddc.cpp
 index 096705e..bcf0f5f 100755
 --- a/lib/gdi/glcddc.cpp

@@ -4,10 +4,7 @@ PRIORITY = "required"
 LICENSE = "proprietary"
 
 IMAGES_VERSION = "1"
-BINARY_VERSION = "1"
-BINARY_VERSION_bm750 = "6"
-BINARY_VERSION_vuuno = "6"
-BINARY_VERSION_vuultimo = "6"
+BINARY_VERSION = "7"
 
 PV = "${BINARY_VERSION}.${IMAGES_VERSION}"
 PR = "r3"
@@ -23,9 +20,10 @@ MVI = "bootlogo backdrop bootlogo_wait"
 
 do_install() {
 	install -d ${D}/boot
-	install -m 0755 ${S}/bootlogo-${MACHINE}-${BINARY_VERSION}.elf ${D}/boot/bootlogo.elf
+	install -d ${D}/usr/share
 	for i in ${MVI}; do
-		install -m 0755 ${S}/$i-${MACHINE}-${IMAGES_VERSION}.mvi ${D}/boot/$i.mvi;
+		install -m 0755 ${S}/$i.mvi ${D}/usr/share/$i.mvi;
+		ln -sf /usr/share/$i.mvi ${D}/boot/$i.mvi;
 	done;
 }
 
@@ -46,24 +44,6 @@ do_install_vuultimo() {
                 ln -sf /usr/share/$i.mvi ${D}/boot/$i.mvi;
         done;
         install -m 0755 ${S}/splash_cfe_auto.bin ${D}/boot/splash_cfe_auto.bin
-}
-
-do_install_bm750() {
-	install -d ${D}/boot
-	install -d ${D}/usr/share
-	for i in ${MVI}; do
-		install -m 0755 ${S}/$i.mvi ${D}/usr/share/$i.mvi;
-		ln -sf /usr/share/$i.mvi ${D}/boot/$i.mvi;
-	done;
-}
-
-do_install_vusolo() {
-	install -d ${D}/boot
-	install -d ${D}/usr/share
-	for i in ${MVI}; do
-		install -m 0755 ${S}/$i.mvi ${D}/usr/share/$i.mvi;
-		ln -sf /usr/share/$i.mvi ${D}/boot/$i.mvi;
-	done;
 }
 
 pkg_preinst() {
