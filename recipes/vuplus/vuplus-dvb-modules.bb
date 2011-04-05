@@ -19,8 +19,8 @@ PV_vuultimo = "${KV}"
 
 SRCDATE_bm750 = "20110321"
 SRCDATE_vusolo = "20110321"
-SRCDATE_vuuno = "20110322"
-SRCDATE_vuultimo = "20110322"
+SRCDATE_vuuno = "20110404"
+SRCDATE_vuultimo = "20110404"
 
 CHIPSET_bm750 = "7335"
 CHIPSET_vusolo = "7325"
