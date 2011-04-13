@@ -1,18 +1,12 @@
 DESCRIPTION = "create Dreambox NAND boot images"
 SECTION = "console/utils"
-MAINTAINER = "Felix Domke <tmbinc@elitedvb.net>"
-PV = "1.1"
-PR = "r2"
+LICENSE = "GPL"
 
-SRC_URI = "file://buildimage.c"
+PV="1.2"
+SRC_URI = "git://git.opendreambox.org/git/buildimage.git;protocol=git"
 
-inherit native
+SRCREV = "ceb57b73c8025f4caaf0a5ff2294d6c611466b6d"
+S = "${WORKDIR}/git"
 
-do_compile() {
-	cp ${WORKDIR}/buildimage.c .
-	${CXX} -I. -o buildimage buildimage.c
-}
+inherit autotools native
 
-do_stage() {
-	install -m 0755 buildimage ${STAGING_BINDIR}/
-}
