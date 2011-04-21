@@ -47,10 +47,11 @@ syncookies () {
     fi
 }
 
+PID=`pidof wpa_supplicant`
 wpa_supplicantcheck () {
-    if [ -e /var/run/wpa_supplicant ]; then
+    if [ ! -z "$PID" ]; then
         echo -n "disabling wpa_supplicant "
-        start-stop-daemon -K -x /usr/sbin/wpa_supplicant
+        start-stop-daemon -K -x wpa_supplicant
         # HACK: wpa_supplicant sometimes doesn't quit properly on SIGTERM.
         if [ -e /var/run/wpa_supplicant ]; then
         	echo -n "wpa_supplicant still running, force kill now.. "
@@ -75,24 +76,39 @@ doopt () {
     fi
 }
 
+remote_rootfs() {
+    if sed -n 's/^[^ ]* \([^ ]*\) \([^ ]*\) .*$/\1 \2/p' /proc/mounts |
+      grep -q "^/ nfs$"; then
+        return 0
+    elif sed -n 's/^[^ ]* \([^ ]*\) \([^ ]*\) .*$/\1 \2/p' /proc/mounts |
+      grep -q "^/ smbfs$"; then
+        return 0
+    else
+        return 1
+    fi
+}
+
 case "$1" in
     start)
-	doopt spoofprotect yes
-        doopt syncookies no
-        doopt ip_forward no
+	# /etc/sysctl.conf is preferred
+	if [ ! -f /etc/sysctl.conf ]; then
+	  doopt spoofprotect yes
+	  doopt syncookies no
+	  doopt ip_forward no
+	fi
 
         echo -n "Configuring network interfaces... "
-				wpa_supplicantcheck
-        ifup -a
+	if remote_rootfs; then
+	    ifup lo
+	else
+	    wpa_supplicantcheck
+	    ifup -a
+	fi
 	echo "done."
 	;;
     stop)
-        if sed -n 's/^[^ ]* \([^ ]*\) \([^ ]*\) .*$/\1 \2/p' /proc/mounts | 
-          grep -q "^/ nfs$"; then
-            echo "NOT deconfiguring network interfaces: / is an NFS mount"
-        elif sed -n 's/^[^ ]* \([^ ]*\) \([^ ]*\) .*$/\1 \2/p' /proc/mounts |  
-          grep -q "^/ smbfs$"; then
-            echo "NOT deconfiguring network interfaces: / is an SMB mount"
+	if remote_rootfs; then
+	    echo "NOT deconfiguring network interfaces: / is a remote filesystem"
 	elif sed -n 's/^[^ ]* \([^ ]*\) \([^ ]*\) .*$/\2/p' /proc/mounts | 
           grep -qE '^(nfs|smbfs|ncp|coda)$'; then
             echo "NOT deconfiguring network interfaces: network shares still mounted."

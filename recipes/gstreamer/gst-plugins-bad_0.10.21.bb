@@ -17,4 +17,5 @@ SRC_URI_append_opendreambox += " file://mpegpsdemux-speedup.diff;patch=1;pnum=0 
 "
 SRC_URI_append_vuplus += " file://mpegpsdemux-speedup.diff;patch=1;pnum=0 \
 				 file://mpegtsdemux-fix-bd-streamtype-detection.diff;patch=1;pnum=1 \
+				 file://audioparsers-change-rank.diff;patch=1;pnum=1 \
 "
