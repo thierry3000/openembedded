@@ -7,7 +7,7 @@ index cbf42f8..caebbb0 100644
  #===============================================================================
  def startServerInstance(session, ipaddress, port, useauth=False, l2k=None, usessl=False):
 -	if hw.get_device_name().lower() != "dm7025":
-+	if hw.get_device_name().lower() != "dm500hd":
++	if 0:
  		l3k = None		
  		l3c = tpm.getCert(eTPM.TPMD_DT_LEVEL3_CERT)
  		
@@ -16,7 +16,7 @@ index cbf42f8..caebbb0 100644
  	l2r = False
  	l2k = None
 -	if hw.get_device_name().lower() != "dm7025":		
-+	if hw.get_device_name().lower() != "dm500hd":		
++	if 0:		
  		l2c = tpm.getCert(eTPM.TPMD_DT_LEVEL2_CERT)
  		
  		if l2c is None:
@@ -25,7 +25,7 @@ index cbf42f8..caebbb0 100644
  	l2r = False
  	l2k = None
 -	if hw.get_device_name().lower() != "dm7025":		
-+	if hw.get_device_name().lower() != "dm500hd":		
++	if 0:		
  		l2c = tpm.getCert(eTPM.TPMD_DT_LEVEL2_CERT)
  		
  		if l2c is None:

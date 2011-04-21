@@ -1,6 +1,6 @@
 require avahi.inc
 
-PR = "r1"
+PR = "r2"
 
 DEPENDS += "intltool-native"
 
