@@ -5784,3 +5784,18 @@ Index: drivers/mtd/brcmnand/edu.c
 -
 -#endif // Batch mode
 -
+diff --git drivers/mtd/brcmnand/brcmnand_base.c drivers/mtd/brcmnand/brcmnand_base.c
+index 5a36909..8fc48fd 100644
+--- drivers/mtd/brcmnand/brcmnand_base.c
++++ drivers/mtd/brcmnand/brcmnand_base.c
+@@ -172,8 +172,8 @@ static brcmnand_chip_Id brcmnand_chips[] = {
+ 		.options = NAND_USE_FLASH_BBT, 		/* Use BBT on flash */
+ 		.idOptions = 0,
+ 				//| NAND_COMPLEX_OOB_WRITE	/* Write data together with OOB for write_oob */
+-		.timing1 = 0, //00070000,
+-		.timing2 = 0,
++		.timing1 = 0x4232222D,
++		.timing2 = 0x00000D94,
+ 		.ctrlVersion = 0, /* THT Verified on data-sheet 7/10/08: Allows 4 on main and 4 on OOB */
+ 	},
+ 
