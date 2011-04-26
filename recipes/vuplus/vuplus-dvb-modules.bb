@@ -17,10 +17,10 @@ PV_vusolo = "${KV}"
 PV_vuuno = "${KV}"
 PV_vuultimo = "${KV}"
 
-SRCDATE_bm750 = "20110425"
-SRCDATE_vusolo = "20110425"
-SRCDATE_vuuno = "20110425"
-SRCDATE_vuultimo = "20110425"
+SRCDATE_bm750 = "20110426"
+SRCDATE_vusolo = "20110426"
+SRCDATE_vuuno = "20110426"
+SRCDATE_vuultimo = "20110426"
 
 
 RDEPENDS = "initscripts-vuplus kernel (${KV}) kernel-module-firmware-class kernel-module-input kernel-module-evdev kernel-module-i2c-core kernel-module-snd kernel-module-snd-pcm"
