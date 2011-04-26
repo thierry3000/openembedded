@@ -181,9 +181,20 @@ index 6cea6bf..d1cddfd 100644
  bcm7XXX_nand_parts[0].size, bcm7XXX_nand_parts[0].offset);
  
 diff --git a/drivers/mtd/brcmnand/brcmnand_base.c b/drivers/mtd/brcmnand/brcmnand_base.c
-index 3bc428a..a43cb1f 100644
+index 3bc428a..294cdfc 100644
 --- a/drivers/mtd/brcmnand/brcmnand_base.c
 +++ b/drivers/mtd/brcmnand/brcmnand_base.c
+@@ -181,8 +181,8 @@ static brcmnand_chip_Id brcmnand_chips[] = {
+ 		.options = NAND_USE_FLASH_BBT, 		/* Use BBT on flash */
+ 		.idOptions = 0,
+ 				//| NAND_COMPLEX_OOB_WRITE	/* Write data together with OOB for write_oob */
+-		.timing1 = 0, //00070000,
+-		.timing2 = 0,
++		.timing1 = 0x4232222D,
++		.timing2 = 0x00000D94,
+ 		.nop=8,
+ 		.ctrlVersion = 0, /* THT Verified on data-sheet 7/10/08: Allows 4 on main and 4 on OOB */
+ 	},
 @@ -537,7 +537,7 @@ static brcmnand_chip_Id brcmnand_chips[] = {
  		.chipId = HYNIX_HY27UT088G2A,
  		.mafId = FLASHTYPE_HYNIX,
@@ -1968,18 +1979,3 @@ index 0753e22..6ccc89d 100755
  
  /* The maximum number of blocks to scan for a bbt */
  #define NAND_BBT_SCAN_MAXBLOCKS	4
-diff --git a/drivers/mtd/brcmnand/brcmnand_base.c b/drivers/mtd/brcmnand/brcmnand_base.c
-index 1b81152..3ec2d3e 100644
---- a/drivers/mtd/brcmnand/brcmnand_base.c
-+++ b/drivers/mtd/brcmnand/brcmnand_base.c
-@@ -181,8 +181,8 @@ static brcmnand_chip_Id brcmnand_chips[] = {
- 		.options = NAND_USE_FLASH_BBT, 		/* Use BBT on flash */
- 		.idOptions = 0,
- 				//| NAND_COMPLEX_OOB_WRITE	/* Write data together with OOB for write_oob */
--		.timing1 = 0, //00070000,
--		.timing2 = 0,
-+		.timing1 = 0x4232222D,
-+		.timing2 = 0x00000D94,
- 		.nop=8,
- 		.ctrlVersion = 0, /* THT Verified on data-sheet 7/10/08: Allows 4 on main and 4 on OOB */
- 	},
