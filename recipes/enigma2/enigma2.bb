@@ -104,14 +104,12 @@ SRC_URI = "git://git.opendreambox.org/git/enigma2.git;protocol=git;branch=${BRAN
 SRC_URI_append_dm7025 = " file://7025_pvr_device_compatibility.diff;patch=1;pnum=1"
 
 # enigma2_vuplus_mediaplayer.patch is for trick-play in media player
-# enigma2_vuplus_mediaplayer_unpause.patch is for work-around of gstreamer bug 
 
 
 SRC_URI_bm750 = "git://archive.vuplus.com/git/enigma2.git;protocol=http;branch=${BRANCH};tag=${SRCREV} \
 	   file://enigma2_vuplus_vfd.patch;patch=1;pnum=1 \
            file://enigma2_vuplus_skin.patch;patch=1;pnum=1 \
            file://enigma2_vuplus_mediaplayer.patch;patch=1;pnum=1 \
-           file://enigma2_vuplus_mediaplayer_unpause.patch;patch=1;pnum=1 \
            file://MyriadPro-Regular.otf \
            file://MyriadPro-Semibold.otf \
            file://MyriadPro-SemiboldIt.otf \
@@ -123,7 +121,6 @@ SRC_URI_bm750 = "git://archive.vuplus.com/git/enigma2.git;protocol=http;branch=$
 SRC_URI_vusolo = "git://archive.vuplus.com/git/enigma2.git;protocol=http;branch=${BRANCH};tag=${SRCREV} \
            file://enigma2_vuplus_skin.patch;patch=1;pnum=1 \
            file://enigma2_vuplus_mediaplayer.patch;patch=1;pnum=1 \
-           file://enigma2_vuplus_mediaplayer_unpause.patch;patch=1;pnum=1 \
            file://enigma2_vuplus_misc.patch;patch=1;pnum=1 \
            file://MyriadPro-Regular.otf \
            file://MyriadPro-Semibold.otf \
@@ -139,7 +136,6 @@ SRC_URI_vuuno = "git://archive.vuplus.com/git/enigma2.git;protocol=http;branch=$
 	   file://enigma2_vuplus_vfd.patch;patch=1;pnum=1 \
            file://enigma2_vuplus_skin.patch;patch=1;pnum=1 \
            file://enigma2_vuplus_mediaplayer.patch;patch=1;pnum=1 \
-           file://enigma2_vuplus_mediaplayer_unpause.patch;patch=1;pnum=1 \
            file://MyriadPro-Regular.otf \
            file://MyriadPro-Semibold.otf \
            file://MyriadPro-SemiboldIt.otf \
@@ -152,7 +148,6 @@ SRC_URI_vuultimo = "git://archive.vuplus.com/git/enigma2.git;protocol=http;branc
 	   file://enigma2_vuplus_vfd.patch;patch=1;pnum=1 \
            file://enigma2_vuplus_skin.patch;patch=1;pnum=1 \
            file://enigma2_vuplus_mediaplayer.patch;patch=1;pnum=1 \
-           file://enigma2_vuplus_mediaplayer_unpause.patch;patch=1;pnum=1 \
            file://MyriadPro-Regular.otf \
            file://MyriadPro-Semibold.otf \
            file://MyriadPro-SemiboldIt.otf \
