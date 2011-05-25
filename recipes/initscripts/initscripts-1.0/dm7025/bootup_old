@@ -33,7 +33,7 @@ echo 34 > /proc/progress
 hdparm -M 128 /dev/hda1
 
 echo 44 > /proc/progress
-for mod in xilleon dreambox_keyboard fp rt73 zd1211b 8712u rfmod; do
+for mod in xilleon dreambox_keyboard fp rt73 zd1211b 8712u rt3070 rfmod; do
 	modprobe $mod || /bin/true
 done
 
