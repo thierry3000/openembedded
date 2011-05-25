@@ -1,0 +1,7 @@
+<index>
+	<package details="driver_r8192cu.xml" name="Realtek r8192cu" needsRestart="Yes" packagename="r8192cu" shortdescription="driver for Realtek USB wireless devices">
+		<prerequisites>
+			<tag type="System" />
+		</prerequisites>
+	</package>
+</index>
