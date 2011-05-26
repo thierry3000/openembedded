@@ -16,6 +16,7 @@ SRC_URI = "hg://linuxtv.org/hg/;module=v4l-dvb;rev=${SRCREV} \
            file://localversion.patch;patch=1 \
            file://fix-strip.patch;patch=1 \
            file://build-fix.patch;patch=1 \
+           file://fix-get-property.patch;patch=1 \
 "
 
 S = "${WORKDIR}/v4l-dvb"

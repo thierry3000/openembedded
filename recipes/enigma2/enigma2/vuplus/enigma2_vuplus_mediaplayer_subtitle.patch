@@ -1,0 +1,104 @@
+diff --git a/lib/service/servicemp3.cpp b/lib/service/servicemp3.cpp
+index 7ce34c1..e620225 100755
+--- a/lib/service/servicemp3.cpp
++++ b/lib/service/servicemp3.cpp
+@@ -235,6 +235,8 @@ eServiceMP3::eServiceMP3(eServiceReference ref)
+ 	CONNECT(m_pump.recv_msg, eServiceMP3::gstPoll);
+ 	m_aspect = m_width = m_height = m_framerate = m_progressive = -1;
+ 
++	m_subs_behind_seek = 0;
++	m_block_sub = FALSE;
+ 	m_cur_rate=1.0;
+ 	m_state = stIdle;
+ 	eDebug("eServiceMP3::construct!");
+@@ -572,6 +574,7 @@ RESULT eServiceMP3::seekTo(pts_t to)
+ 	RESULT ret = -1;
+ 
+ 	if (m_gst_playbin) {
++		m_block_sub = TRUE;
+ 		eSingleLocker l(m_subs_to_pull_lock); // this is needed to dont handle incomming subtitles during seek!
+ 		if (!(ret = seekToImpl(to)))
+ 		{
+@@ -580,6 +583,13 @@ RESULT eServiceMP3::seekTo(pts_t to)
+ 			m_decoder_time_valid_state = 0;
+ 			m_subs_to_pull = 0;
+ 		}
++		m_block_sub = FALSE;
++	}
++	m_subs_to_pull+=m_subs_behind_seek;
++	while(m_subs_behind_seek)
++	{
++		m_pump.send(Message(2));
++		m_subs_behind_seek--;
+ 	}
+ 
+ 	return ret;
+@@ -593,6 +603,7 @@ RESULT eServiceMP3::trickSeek(gdouble ratio)
+ 	if (!ratio)
+ 		return seekRelative(0, 0);
+ 
++	m_block_sub = TRUE;
+ 	eSingleLocker l(m_subs_to_pull_lock);
+ 
+ 	GstEvent *s_event;
+@@ -632,6 +643,13 @@ RESULT eServiceMP3::trickSeek(gdouble ratio)
+ 	m_decoder_time_valid_state = 0;
+ 	m_subs_to_pull = 0;
+ 	m_cur_rate=ratio;
++	m_block_sub = FALSE;
++	m_subs_to_pull+=m_subs_behind_seek;
++	while(m_subs_behind_seek)
++	{
++		m_pump.send(Message(2));
++		m_subs_behind_seek--;
++	}
+ 	return 0;
+ }
+ 
+@@ -1572,10 +1590,17 @@ eAutoInitPtr<eServiceFactoryMP3> init_eServiceFactoryMP3(eAutoInitNumbers::servi
+ 
+ void eServiceMP3::gstCBsubtitleAvail(GstElement *appsink, gpointer user_data)
+ {
+-	eServiceMP3 *_this = (eServiceMP3*)user_data;	
+-	eSingleLocker l(_this->m_subs_to_pull_lock);
+-	++_this->m_subs_to_pull;
+-	_this->m_pump.send(Message(2));
++	eServiceMP3 *_this = (eServiceMP3*)user_data;
++	if(_this->m_block_sub != TRUE)
++	{
++		eSingleLocker l(_this->m_subs_to_pull_lock);
++		++_this->m_subs_to_pull;
++		_this->m_pump.send(Message(2));
++	}
++	else
++	{
++		_this->m_subs_behind_seek++;
++	}
+ }
+ 
+ void eServiceMP3::gstTextpadHasCAPS(GstPad *pad, GParamSpec * unused, gpointer user_data)
+@@ -1651,6 +1676,11 @@ void eServiceMP3::pullSubtitle()
+ 		{
+ 			GstBuffer *buffer;
+ 			{
++				if(m_block_sub == TRUE)
++				{
++					g_signal_emit_by_name (sink, "pull-buffer", &buffer);
++					return;
++				}
+ 				eSingleLocker l(m_subs_to_pull_lock);
+ 				--m_subs_to_pull;
+ 				g_signal_emit_by_name (sink, "pull-buffer", &buffer);
+diff --git a/lib/service/servicemp3.h b/lib/service/servicemp3.h
+index 07eb321..f6282bf 100755
+--- a/lib/service/servicemp3.h
++++ b/lib/service/servicemp3.h
+@@ -266,6 +266,8 @@ private:
+ 	std::string m_useragent;
+ 	RESULT trickSeek(gdouble ratio);
+ 	double m_cur_rate;
++	bool m_block_sub;
++	int m_subs_behind_seek;
+ };
+ 
+ #endif

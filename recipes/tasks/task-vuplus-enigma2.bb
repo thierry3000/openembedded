@@ -1,7 +1,7 @@
-DESCRIPTION = "Vuplus: Enigma2 Task for the Vuplus Distribution"
+DESCRIPTION = "Vuplus: E2 Task for the Vuplus Distribution"
 SECTION = "vuplus/base"
 LICENSE = "MIT"
-PR = "r1"
+PR = "r3"
 
 inherit task
 
@@ -20,7 +20,7 @@ PACKAGES = "\
 RPROVIDES_task-vuplus-enigma2 = "task-vuplus-ui"
 DESCRIPTION_task-vuplus-enigma2 = "Vuplus: Enigma2 Dependencies"
 RDEPENDS_task-vuplus-enigma2 = "\
-  dreambox-blindscan-utils \
+  vuplus-blindscan-utils \
   enigma2 \
   enigma2-defaultservices \
   enigma2-plugin-extensions-mediascanner \
@@ -47,6 +47,12 @@ RRECOMMENDS_task-vuplus-enigma2 = "\
 
 RDEPENDS_task-vuplus-enigma2_append_bm750 = "\
   enigma2-plugin-systemplugins-fancontrol \
+"
+RDEPENDS_task-vuplus-enigma2_append_vuuno = "\
+  enigma2-plugin-systemplugins-fpgaupgrade \
+"
+RDEPENDS_task-vuplus-enigma2_append_vuultimo = "\
+  enigma2-plugin-systemplugins-fpgaupgrade \
 "
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
