@@ -100,7 +100,7 @@ index 6cea6bf..d1cddfd 100644
 +};
 +
 +
-+static struct mtd_partition bcm7XXX_marusys_partition[] = 
++static struct mtd_partition bcm7XXX_vuplus_partition[] = 
 +{
 +        /* name         offset      size */
 +            { name: "rootfs",               offset: 0,              size:0x07400000 /* DEFAULT_ROOTFS_SIZE*/ },   /* rootfs is total nand size - 6 M Bytes. referr to cfe. bcm97335_devs.c */ 
@@ -118,7 +118,7 @@ index 6cea6bf..d1cddfd 100644
 +            {name: NULL, offset: 0, size: 0}
  };
  
-+static struct mtd_partition bcm7XXX_marusys_splash_partition[] = 
++static struct mtd_partition bcm7XXX_vuplus_splash_partition[] = 
 +{
 +        /* name         offset      size */
 +            { name: "rootfs",               offset: 0,              size:0x07200000 /* DEFAULT_ROOTFS_SIZE*/ },   /* rootfs is total nand size - 6 M Bytes. referr to cfe. bcm97335_devs.c */ 
@@ -148,7 +148,7 @@ index 6cea6bf..d1cddfd 100644
  #else
 -static struct mtd_partition* bcm7XXX_nand_parts = bcm7XXX_old_partition;
 +//static struct mtd_partition* bcm7XXX_nand_parts = bcm7XXX_old_partition;
-+static struct mtd_partition* bcm7XXX_nand_parts = bcm7XXX_marusys_splash_partition;
++static struct mtd_partition* bcm7XXX_nand_parts = bcm7XXX_vuplus_splash_partition;
 +
  #endif
  
