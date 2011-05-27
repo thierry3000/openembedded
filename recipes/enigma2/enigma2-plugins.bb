@@ -26,6 +26,7 @@ SRC_URI_append_vuplus = " \
 	   file://enigma2_plugins_ac3lipsync_dolby.patch;patch=1;pnum=1 \
 	   file://enigma2_plugins_autoresolution_fix.patch;patch=1;pnum=1 \
            file://dreamboxweb.png \
+           file://dreamboxwebtv.png \
            file://favicon.ico"
 
 FILES_${PN} += " /usr/share/enigma2 /usr/share/fonts "
@@ -80,6 +81,7 @@ do_unpack_append(){
 
 do_install_append_vuplus() {
 	install -m 0644 ${WORKDIR}/dreamboxweb.png ${D}/usr/lib/enigma2/python/Plugins/Extensions/WebInterface/web-data/img/
+	install -m 0644 ${WORKDIR}/dreamboxwebtv.png ${D}/usr/lib/enigma2/python/Plugins/Extensions/WebInterface/web-data/tpl/default/streaminterface/img
 	install -m 0644 ${WORKDIR}/favicon.ico ${D}/usr/lib/enigma2/python/Plugins/Extensions/WebInterface/web-data/img/
 }
 
