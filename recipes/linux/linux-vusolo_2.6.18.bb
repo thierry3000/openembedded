@@ -1,6 +1,6 @@
 require linux-vuplus-2.6.18.inc
 
-PR = "r13"
+PR = "r14"
 
 SRC_URI += "\
 	file://vusolo_defconfig \
