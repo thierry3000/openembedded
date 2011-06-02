@@ -106,7 +106,7 @@ SRC_URI_append_dm7025 = " file://7025_pvr_device_compatibility.diff;patch=1;pnum
 # enigma2_vuplus_mediaplayer.patch is for trick-play in media player
 
 
-SRC_URI_bm750 = "git://archive.vuplus.com/git/enigma2.git.5.9;protocol=http;branch=${BRANCH};tag=${SRCREV} \
+SRC_URI_bm750 = "git://archive.vuplus.com/git/enigma2.git;protocol=http;branch=${BRANCH};tag=${SRCREV} \
 	   file://enigma2_vuplus_vfd.patch;patch=1;pnum=1 \
            file://enigma2_vuplus_skin.patch;patch=1;pnum=1 \
            file://enigma2_vuplus_mediaplayer.patch;patch=1;pnum=1 \
@@ -120,7 +120,7 @@ SRC_URI_bm750 = "git://archive.vuplus.com/git/enigma2.git.5.9;protocol=http;bran
            file://number_key \
            "
 
-SRC_URI_vusolo = "git://archive.vuplus.com/git/enigma2.git.5.9;protocol=http;branch=${BRANCH};tag=${SRCREV} \
+SRC_URI_vusolo = "git://archive.vuplus.com/git/enigma2.git;protocol=http;branch=${BRANCH};tag=${SRCREV} \
            file://enigma2_vuplus_skin.patch;patch=1;pnum=1 \
            file://enigma2_vuplus_mediaplayer.patch;patch=1;pnum=1 \
 	   file://enigma2_vuplus_mediaplayer_subtitle.patch;patch=1;pnum=1 \
@@ -136,7 +136,7 @@ SRC_URI_vusolo = "git://archive.vuplus.com/git/enigma2.git.5.9;protocol=http;bra
 
 
 
-SRC_URI_vuuno = "git://archive.vuplus.com/git/enigma2.git.5.9;protocol=http;branch=${BRANCH};tag=${SRCREV} \
+SRC_URI_vuuno = "git://archive.vuplus.com/git/enigma2.git;protocol=http;branch=${BRANCH};tag=${SRCREV} \
 	   file://enigma2_vuplus_vfd.patch;patch=1;pnum=1 \
            file://enigma2_vuplus_skin.patch;patch=1;pnum=1 \
            file://enigma2_vuplus_mediaplayer.patch;patch=1;pnum=1 \
@@ -150,7 +150,7 @@ SRC_URI_vuuno = "git://archive.vuplus.com/git/enigma2.git.5.9;protocol=http;bran
            file://number_key \
            "
 
-SRC_URI_vuultimo = "git://archive.vuplus.com/git/enigma2.git.5.9;protocol=http;branch=${BRANCH};tag=${SRCREV} \
+SRC_URI_vuultimo = "git://archive.vuplus.com/git/enigma2.git;protocol=http;branch=${BRANCH};tag=${SRCREV} \
 	   file://enigma2_vuplus_vfd.patch;patch=1;pnum=1 \
            file://enigma2_vuplus_skin.patch;patch=1;pnum=1 \
            file://enigma2_vuplus_mediaplayer.patch;patch=1;pnum=1 \
