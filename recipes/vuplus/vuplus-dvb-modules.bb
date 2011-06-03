@@ -19,8 +19,8 @@ PV_vuultimo = "${KV}"
 
 SRCDATE_bm750 = "20110531"
 SRCDATE_vusolo = "20110531"
-SRCDATE_vuuno = "20110531"
-SRCDATE_vuultimo = "20110531"
+SRCDATE_vuuno = "20110603"
+SRCDATE_vuultimo = "20110603"
 
 
 RDEPENDS = "initscripts-vuplus kernel (${KV}) kernel-module-firmware-class kernel-module-input kernel-module-evdev kernel-module-i2c-core kernel-module-snd kernel-module-snd-pcm"
@@ -32,6 +32,8 @@ RDEPENDS_append_vuplus = " module-init-tools-depmod"
 
 
 SRC_URI = "http://archive.vuplus.com/download/drivers/vuplus-dvb-modules-${MACHINE}-${PV}-${PREFERRED_GCC_VERSION}-${SRCDATE}.tar.gz "
+SRC_URI_vuuno = "http://archive.vuplus.com/download/drivers/beta/vuplus-dvb-modules-${MACHINE}-${PV}-${PREFERRED_GCC_VERSION}-${SRCDATE}.tar.gz "
+SRC_URI_vuultimo = "http://archive.vuplus.com/download/drivers/beta/vuplus-dvb-modules-${MACHINE}-${PV}-${PREFERRED_GCC_VERSION}-${SRCDATE}.tar.gz "
 
 S = "${WORKDIR}"
 
