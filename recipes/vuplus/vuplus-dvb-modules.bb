@@ -19,7 +19,7 @@ PV_vuultimo = "${KV}"
 
 SRCDATE_bm750 = "20110531"
 SRCDATE_vusolo = "20110531"
-SRCDATE_vuuno = "20110614"
+SRCDATE_vuuno = "20110615"
 SRCDATE_vuultimo = "20110614"
 
 
