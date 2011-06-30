@@ -1,6 +1,6 @@
 require linux-vuplus-2.6.18.inc
 
-PR = "r12"
+PR = "r14"
 
 SRC_URI += "\
 	file://vuultimo_defconfig \

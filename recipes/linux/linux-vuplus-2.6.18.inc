@@ -16,6 +16,7 @@ SRC_URI = "http://archive.vuplus.com/download/stblinux-${KV}.tar.bz2 \
         file://linux-2.6.18-dvb-frontends.patch;patch=1;pnum=0 \
         file://linux-2.6.18-dvb-core.patch;patch=1;pnum=0 \
         file://dvb-include-2.6.18-5.3.patch;patch=1;pnum=0 \
+        file://linux_vuplus_ata.patch;patch=1;pnum=1 \
         "   
 
 SRC_URI += ${SRC_URI_GCC44_PATCH}
