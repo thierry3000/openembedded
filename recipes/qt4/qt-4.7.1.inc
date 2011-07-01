@@ -1,29 +1,26 @@
 DEFAULT_PREFERENCE = "-1"
 DEFAULT_PREFERENCE_opendreambox = "1"
+LICENSE = "LGPLv2.1 GPLv3"
 
-FILESPATHPKG .= ":qt-${PV}"
+FILESPATHPKG =. "qt-${PV}:"
 
-SRC_URI = "ftp://ftp.trolltech.com/qt/source/qt-everywhere-opensource-src-${PV}.tar.gz \
-           file://configure-conf_compiler-fix.patch;patch=1 \
-           file://0004-no-qmake.patch;patch=1 \
-           file://0006-freetype-host-includes.patch;patch=1 \
-	   file://0010-no-simpledecoration-example.patch;patch=1 \
-           file://0001-Added-Openembedded-crossarch-option.patch;patch=1 \
-           file://0002-Disable-tools-assistant.patch;patch=1 \
-           file://0003-Disable-examples-designer.patch;patch=1 \
-           file://0004-Disable-exaqmples-dbus-remotecontrolledcar.patch;patch=1 \
-           file://0005-Disable-examples-help.patch;patch=1 \
-           file://0007-Disable-demos-qtdemos.patch;patch=1 \
-           file://0008-Disable-examples-declarative.patch;patch=1 \
-           file://demos.browser.add.mediaservices.lib.patch;patch=1 \
-           file://add.xmlpatterns.lib.patch;patch=1 \
-           file://g++.conf \
-           file://linux.conf \
+SRC_URI = "\
+	ftp://ftp.trolltech.com/qt/source/qt-everywhere-opensource-src-${PV}.tar.gz \
+	file://blacklist-fraudulent-comodo-certificates-patch.diff;patch=1 \
+	file://0004-no-qmake.patch;patch=1 \
+	file://hack-out-pg2-4.7.0.patch;patch=1 \
+	file://0006-freetype-host-includes.patch;patch=1 \
+	file://0001-Added-Openembedded-crossarch-option.patch;patch=1 \
+	file://0010-phonon-gstreamer-rgb-endianess.patch;patch=1 \
+	file://webkit_r82142.patch;patch=1 \
+	file://g++.conf \
+	file://linux.conf \
            "
+# Set necessary variables in the profile
+SRC_URI += "file://qte.sh"
 
 S = "${WORKDIR}/qt-everywhere-opensource-src-${PV}"
 
-QT_LIB_NAMES += "QtDeclarative"
 FILES_${QT_BASE_NAME}-tools                += "${bindir}/qml"
 
 do_configure_prepend() {
@@ -67,8 +64,10 @@ do_install_append() {
 	for i in rcc uic moc ; do
 		install -m 0755 ${S}/bin/$i ${D}${bindir}/
 	done
+
+        #Append an E to the qtdemo file
+        if [ -n "${QT_LIBINFIX}" ] ; then
+                mv ${D}${bindir}/qtdemo ${D}${bindir}/qtdemo${QT_LIBINFIX}
+        fi
 }
 
-LICENSE = "LGPLv2.1 GPLv3"
-SRC_URI += " \
-            file://hack-out-pg_config.patch;patch=1"
