@@ -1,6 +1,9 @@
+DEFAULT_PREFERENCE = "-1"
+DEFAULT_PREFERENCE_opendreambox = "1"
+
 require qt4-embedded.inc
 
-PR = "${INC_PR}.0"
+PR = "${INC_PR}.1"
 
 QT_CONFIG_FLAGS_append_armv6 = " -no-neon "
 
