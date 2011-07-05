@@ -15,7 +15,9 @@ inherit autotools pkgconfig
 SRC_URI = "git://schwerkraft.elitedvb.net/dvbmediasink/dvbmediasink.git;protocol=git;branch=${BRANCH};tag=${SRCREV}"
 
 SRC_URI_append_vuplus = " \
-		file://fix_dvbaudiosink_async_opt.patch;patch=1;pnum=1"
+		file://fix_dvbaudiosink_async_opt.patch;patch=1;pnum=1 \
+		file://fix_dvbvideosink_dm8000_padtemplate.patch;patch=1;pnum=1 \
+		"
 
 S = "${WORKDIR}/git"
 
