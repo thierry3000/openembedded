@@ -10,7 +10,7 @@ SRCDATE="20110215"
 BRANCH="master"
 PV = "experimental-git${SRCDATE}"
 
-PR = "r1"
+PR = "r2"
 SRC_URI="git://schwerkraft.elitedvb.net/enigma2-plugins/enigma2-plugins.git;protocol=git;branch=${BRANCH};tag=${SRCREV}"
 
 EXTRA_OECONF = " \
