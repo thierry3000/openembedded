@@ -1,8 +1,8 @@
-DESCRIPTION = "Utilities for transponder blindscan"
+DESCRIPTION = "Utilities for transponder & dvb-s blindscan"
 SECTION = "base"
 PRIORITY = "optional"
 RDEPENDS = "ncurses"
-PV = "1.0"
+PV = "2.0"
 PR = "r0"
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
