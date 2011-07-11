@@ -17,8 +17,8 @@ PV_vusolo = "${KV}"
 PV_vuuno = "${KV}"
 PV_vuultimo = "${KV}"
 
-SRCDATE_bm750 = "20110531"
-SRCDATE_vusolo = "20110531"
+SRCDATE_bm750 = "20110708"
+SRCDATE_vusolo = "20110708"
 SRCDATE_vuuno = "20110708"
 SRCDATE_vuultimo = "20110708"
 
@@ -31,8 +31,7 @@ DEPENDS = " module-init-tools"
 RDEPENDS_append_vuplus = " module-init-tools-depmod"
 
 
-SRC_URI = "http://archive.vuplus.com/download/drivers/vuplus-dvb-modules-${MACHINE}-${PV}-${PREFERRED_GCC_VERSION}-${SRCDATE}.tar.gz "
-SRC_URI_vuuno = "http://archive.vuplus.com/download/drivers/beta/vuplus-dvb-modules-${MACHINE}-${PV}-${PREFERRED_GCC_VERSION}-${SRCDATE}.tar.gz "
+SRC_URI = "http://archive.vuplus.com/download/drivers/beta/vuplus-dvb-modules-${MACHINE}-${PV}-${PREFERRED_GCC_VERSION}-${SRCDATE}.tar.gz "
 SRC_URI_vuultimo = "http://archive.vuplus.com/download/drivers/beta/vuplus-dvb-modules-${MACHINE}-${PV}-${PREFERRED_GCC_VERSION}-${SRCDATE}.tar.gz "
 
 S = "${WORKDIR}"
