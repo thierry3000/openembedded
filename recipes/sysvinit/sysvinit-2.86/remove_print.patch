@@ -1,0 +1,19 @@
+diff --git a/src/init.c b/src/init.c
+index f577d63..1f5fac1 100644
+--- a/src/init.c
++++ b/src/init.c
+@@ -723,12 +723,14 @@ void console_stty(void)
+  */
+ void print(char *s)
+ {
++#if 0 //workaround for halt failure
+ 	int fd;
+ 
+ 	if ((fd = console_open(O_WRONLY|O_NOCTTY|O_NDELAY)) >= 0) {
+ 		write(fd, s, strlen(s));
+ 		close(fd);
+ 	}
++#endif
+ }
+ 
+ /*

@@ -3,7 +3,7 @@ HOMEPAGE = "http://www.perl.org/"
 SECTION = "libs"
 LICENSE = "Artistic|GPL"
 DEPENDS = "virtual/db-native gdbm-native"
-PR = "r15"
+PR = "r16"
 
 FILESDIR = "${@os.path.dirname(bb.data.getVar('FILE',d,1))}/perl-${PV}"
 
@@ -15,11 +15,14 @@ SRC_URI = "http://ftp.funet.fi/pub/CPAN/src/perl-${PV}.tar.gz \
            file://native-no-gdbminc.patch;patch=1 \
            file://native-perlinc.patch;patch=1 \
            file://makedepend-dash.patch;patch=1 \
+           file://ubuntu-11.04-multiarch.patch;patch=1 \
            file://asm-pageh-fix.patch;patch=1"
 
 S = "${WORKDIR}/perl-${PV}"
 
 inherit native
+
+export LD="${CC}"
 
 do_configure () {
     ./Configure \

@@ -1,0 +1,45 @@
+diff --git a/lib/python/Screens/NetworkSetup.py b/lib/python/Screens/NetworkSetup.py
+index 32b9f54..b31ba3a 100755
+--- a/lib/python/Screens/NetworkSetup.py
++++ b/lib/python/Screens/NetworkSetup.py
+@@ -60,7 +60,11 @@ class NetworkAdapterSelection(Screen,HelpableScreen):
+ 			"yellow": (self.setDefaultInterface, [_("Set interface as default Interface"),_("* Only available if more than one interface is active.")] ),
+ 			})
+ 
+-		self.adapters = [(iNetwork.getFriendlyAdapterName(x),x) for x in iNetwork.getAdapterList()]
++		self.adapters = []
++		self.adapterList = [(iNetwork.getFriendlyAdapterName(x),x) for x in iNetwork.getAdapterList()]
++		for x in self.adapterList:
++			if x[1].startswith('eth'):
++				self.adapters.append(x)
+ 
+ 		if not self.adapters:
+ 			self.adapters = [(iNetwork.getFriendlyAdapterName(x),x) for x in iNetwork.getConfiguredAdapters()]
+@@ -98,7 +102,12 @@ class NetworkAdapterSelection(Screen,HelpableScreen):
+ 			else:
+ 				interfacepng = LoadPixmap(resolveFilename(SCOPE_CURRENT_SKIN, "skin_default/icons/network_wireless.png"))
+ 
+-		num_configured_if = len(iNetwork.getConfiguredAdapters())
++#		num_configured_if = len(iNetwork.getConfiguredAdapters())
++		num_configured_if=0
++		for x in iNetwork.getConfiguredAdapters():
++			if x.startswith('eth'):
++				num_configured_if+=1
++
+ 		if num_configured_if >= 2:
+ 			if default is True:
+ 				defaultpng = LoadPixmap(cached=True, path=resolveFilename(SCOPE_CURRENT_SKIN, "skin_default/buttons/button_blue.png"))
+@@ -116,7 +125,12 @@ class NetworkAdapterSelection(Screen,HelpableScreen):
+ 	def updateList(self):
+ 		self.list = []
+ 		default_gw = None
+-		num_configured_if = len(iNetwork.getConfiguredAdapters())
++#		num_configured_if = len(iNetwork.getConfiguredAdapters())
++		num_configured_if=0
++		for x in iNetwork.getConfiguredAdapters():
++			if x.startswith('eth'):
++				num_configured_if+=1
++
+ 		if num_configured_if >= 2:
+ 			self["key_yellow"].setText(_("Default"))
+ 			self["introduction"].setText(self.defaulttext)
