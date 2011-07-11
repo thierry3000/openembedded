@@ -59,6 +59,8 @@ DESCRIPTION_append_enigma2-plugin-extenstions-modem = "opens a menu to connect t
 RDEPENDS_enigma2-plugin-extensions-modem = "dreambox-modem-ppp-scripts ppp"
 DESCRIPTION_append_enigma2-plugin-systemplugins-wirelesslan = "helps you configuring your wireless lan"
 RDEPENDS_enigma2-plugin-systemplugins-wirelesslan = "wpa-supplicant wireless-tools python-wifi"
+DESCRIPTION_append_enigma2-plugin-systemplugins-wirelesslansetup = "configure wireless lan"
+RDEPENDS_enigma2-plugin-systemplugins-wirelesslansetup = "wpa-supplicant wireless-tools python-wifi"
 DESCRIPTION_append_enigma2-plugin-systemplugins-networkwizard = "provides easy step by step network configuration"
 
 PN = "enigma2"
@@ -100,14 +102,13 @@ PV_vuplus = "experimental-git${SRCDATE}"
 SRCREV_vuplus = ""
 ####################################################
 
-SRC_URI = "git://git.opendreambox.org/git/enigma2.git;protocol=git;branch=${BRANCH};tag=${SRCREV}"
-SRC_URI_append_dm7025 = " file://7025_pvr_device_compatibility.diff;patch=1;pnum=1"
+#SRC_URI = "git://git.opendreambox.org/git/enigma2.git;protocol=git;branch=${BRANCH};tag=${SRCREV}"
+#SRC_URI_append_dm7025 = " file://7025_pvr_device_compatibility.diff;patch=1;pnum=1"
 
 # enigma2_vuplus_mediaplayer.patch is for trick-play in media player
 
 
-SRC_URI_bm750 = "git://archive.vuplus.com/git/enigma2.git;protocol=http;branch=${BRANCH};tag=${SRCREV} \
-	   file://enigma2_vuplus_vfd.patch;patch=1;pnum=1 \
+SRC_URI = "git://archive.vuplus.com/git/enigma2.git;protocol=http;branch=${BRANCH};tag=${SRCREV} \
            file://enigma2_vuplus_skin.patch;patch=1;pnum=1 \
            file://enigma2_vuplus_mediaplayer.patch;patch=1;pnum=1 \
 	   file://enigma2_vuplus_mediaplayer_subtitle.patch;patch=1;pnum=1 \
@@ -120,49 +121,13 @@ SRC_URI_bm750 = "git://archive.vuplus.com/git/enigma2.git;protocol=http;branch=$
            file://number_key \
            "
 
-SRC_URI_vusolo = "git://archive.vuplus.com/git/enigma2.git;protocol=http;branch=${BRANCH};tag=${SRCREV} \
-           file://enigma2_vuplus_skin.patch;patch=1;pnum=1 \
-           file://enigma2_vuplus_mediaplayer.patch;patch=1;pnum=1 \
-	   file://enigma2_vuplus_mediaplayer_subtitle.patch;patch=1;pnum=1 \
-           file://enigma2_vuplus_misc.patch;patch=1;pnum=1 \
-           file://enigma2_vuplus_remove_dreambox_enigma.patch;patch=1;pnum=1 \
-           file://MyriadPro-Regular.otf \
-           file://MyriadPro-Semibold.otf \
-           file://MyriadPro-SemiboldIt.otf \
-           file://750S \
-           file://Vu_HD \
-           file://number_key \
-           "
+SRC_URI_append_bm750 = " file://enigma2_vuplus_vfd.patch;patch=1;pnum=1"
+SRC_URI_append_vuuno = " file://enigma2_vuplus_vfd.patch;patch=1;pnum=1"
+SRC_URI_append_vuultimo = " file://enigma2_vuplus_vfd.patch;patch=1;pnum=1"
 
+SRC_URI_append_vusolo = " file://enigma2_vuplus_misc.patch;patch=1;pnum=1"
 
-
-SRC_URI_vuuno = "git://archive.vuplus.com/git/enigma2.git;protocol=http;branch=${BRANCH};tag=${SRCREV} \
-	   file://enigma2_vuplus_vfd.patch;patch=1;pnum=1 \
-           file://enigma2_vuplus_skin.patch;patch=1;pnum=1 \
-           file://enigma2_vuplus_mediaplayer.patch;patch=1;pnum=1 \
-	   file://enigma2_vuplus_mediaplayer_subtitle.patch;patch=1;pnum=1 \
-           file://enigma2_vuplus_remove_dreambox_enigma.patch;patch=1;pnum=1 \
-           file://MyriadPro-Regular.otf \
-           file://MyriadPro-Semibold.otf \
-           file://MyriadPro-SemiboldIt.otf \
-           file://750S \
-           file://Vu_HD \
-           file://number_key \
-           "
-
-SRC_URI_vuultimo = "git://archive.vuplus.com/git/enigma2.git;protocol=http;branch=${BRANCH};tag=${SRCREV} \
-	   file://enigma2_vuplus_vfd.patch;patch=1;pnum=1 \
-           file://enigma2_vuplus_skin.patch;patch=1;pnum=1 \
-           file://enigma2_vuplus_mediaplayer.patch;patch=1;pnum=1 \
-	   file://enigma2_vuplus_mediaplayer_subtitle.patch;patch=1;pnum=1 \
-           file://enigma2_vuplus_remove_dreambox_enigma.patch;patch=1;pnum=1 \
-           file://MyriadPro-Regular.otf \
-           file://MyriadPro-Semibold.otf \
-           file://MyriadPro-SemiboldIt.otf \
-           file://750S \
-           file://Vu_HD \
-           file://number_key \
-           "
+SRC_URI_append = " ${@base_contains("MACHINE_FEATURES", "vuwlan", "file://enigma2_vuplus_networksetup.patch;patch=1;pnum=1", "", d)}"
 
 def change_po():
         import os
