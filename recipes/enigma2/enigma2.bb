@@ -113,6 +113,7 @@ SRC_URI = "git://archive.vuplus.com/git/enigma2.git;protocol=http;branch=${BRANC
            file://enigma2_vuplus_mediaplayer.patch;patch=1;pnum=1 \
 	   file://enigma2_vuplus_mediaplayer_subtitle.patch;patch=1;pnum=1 \
            file://enigma2_vuplus_remove_dreambox_enigma.patch;patch=1;pnum=1 \
+           file://enigma2_vuplus_vfd_mode.patch;patch=1;pnum=1 \
            file://MyriadPro-Regular.otf \
            file://MyriadPro-Semibold.otf \
            file://MyriadPro-SemiboldIt.otf \
@@ -121,9 +122,8 @@ SRC_URI = "git://archive.vuplus.com/git/enigma2.git;protocol=http;branch=${BRANC
            file://number_key \
            "
 
-SRC_URI_append_bm750 = " file://enigma2_vuplus_vfd.patch;patch=1;pnum=1"
-SRC_URI_append_vuuno = " file://enigma2_vuplus_vfd.patch;patch=1;pnum=1"
-SRC_URI_append_vuultimo = " file://enigma2_vuplus_vfd.patch;patch=1;pnum=1"
+SRC_URI_append_bm750 = " file://enigma2_vuplus_textvfd.patch;patch=1;pnum=1"
+SRC_URI_append_vuuno = " file://enigma2_vuplus_textvfd.patch;patch=1;pnum=1"
 
 SRC_URI_append_vusolo = " file://enigma2_vuplus_misc.patch;patch=1;pnum=1"
 
@@ -184,6 +184,8 @@ do_compile_prepend_vuplus() {
 }
 
 EXTRA_OECONF = " \
+	${@base_contains("MACHINE_FEATURES", "display-text-vfd", "--with-display-text-vfd" , "", d)} \
+	${@base_contains("MACHINE_FEATURES", "display-graphic-vfd", "--with-display-graphic-vfd" , "", d)} \
         BUILD_SYS=${BUILD_SYS} \
         HOST_SYS=${HOST_SYS} \
         STAGING_INCDIR=${STAGING_INCDIR} \
