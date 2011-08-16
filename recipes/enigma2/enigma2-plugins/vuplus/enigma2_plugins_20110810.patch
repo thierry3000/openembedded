@@ -1,0 +1,1808 @@
+diff --git a/mytube/meta/plugin_mytube.xml b/mytube/meta/plugin_mytube.xml
+index eb2a0fd..56e1686 100644
+--- a/mytube/meta/plugin_mytube.xml
++++ b/mytube/meta/plugin_mytube.xml
+@@ -3,7 +3,8 @@
+                     <hardware type="dm8000" />
+                     <hardware type="dm800" />
+ 		    <hardware type="dm800se" />
+-                    <hardware type="dm500hd" />	
++                    <hardware type="dm500hd" />
++		    <hardware type="dm7020hd" />
+                     <tag type="Multimedia" />
+ 	  </prerequisites>
+           <info>
+diff --git a/mytube/po/de.po b/mytube/po/de.po
+index b487673..c56c84e 100644
+--- a/mytube/po/de.po
++++ b/mytube/po/de.po
+@@ -7,9 +7,9 @@ msgid ""
+ msgstr ""
+ "Project-Id-Version: tuxbox-enigma 0.0.1\n"
+ "Report-Msgid-Bugs-To: \n"
+-"POT-Creation-Date: 2009-05-29 17:38+0200\n"
+-"PO-Revision-Date: 2008-05-16 17:15+0100\n"
+-"Last-Translator: Stefan Pluecken <mladen.horvat@multimedia-labs.de>\n"
++"POT-Creation-Date: 2011-06-12 19:07+0100\n"
++"PO-Revision-Date: 2011-06-12 19:22+0100\n"
++"Last-Translator: JuSt611 <Software@Strasdas.de>\n"
+ "Language-Team: none\n"
+ "MIME-Version: 1.0\n"
+ "Content-Type: text/plain; charset=UTF-8\n"
+@@ -18,448 +18,690 @@ msgstr ""
+ "X-Poedit-Language: German\n"
+ "X-Poedit-Country: GERMANY\n"
+ "X-Poedit-SourceCharset: iso-8859-15\n"
++"X-Poedit-Basepath: .\n"
++"X-Poedit-SearchPath-0: ../src\n"
+ 
+-msgid " Results"
+-msgstr " Ergebnisse"
++#: ../src/MyTubeSearch.py:161
++#: ../src/plugin.py:52
++msgid "Relevance"
++msgstr "Relevanz"
+ 
+-msgid "Added: "
+-msgstr "Hinzugefügt: "
++#: ../src/MyTubeSearch.py:162
++#: ../src/plugin.py:53
++msgid "View Count"
++msgstr "Aufrufe"
+ 
+-msgid "All"
+-msgstr "Alle"
++#: ../src/MyTubeSearch.py:163
++#: ../src/plugin.py:54
++msgid "Published"
++msgstr "Veröffentlicht"
++
++#: ../src/MyTubeSearch.py:164
++#: ../src/plugin.py:55
++msgid "Rating"
++msgstr "Bewertung"
+ 
++#: ../src/MyTubeSearch.py:168
++#: ../src/plugin.py:59
+ msgid "All Time"
+-msgstr ""
++msgstr "Allzeit"
+ 
+-msgid "An error occured."
+-msgstr "Es ist ein Fehler aufgetreten."
++#: ../src/MyTubeSearch.py:169
++#: ../src/plugin.py:60
++msgid "This Month"
++msgstr "Diesen Monat"
+ 
+-msgid "Ascending"
+-msgstr "aufsteigend"
++#: ../src/MyTubeSearch.py:170
++#: ../src/plugin.py:61
++msgid "This Week"
++msgstr "Diese Woche"
+ 
+-msgid "Ask user"
+-msgstr "Nutzer fragen"
++#: ../src/MyTubeSearch.py:171
++#: ../src/plugin.py:62
++msgid "Today"
++msgstr "Heute"
+ 
+-msgid "Australia"
+-msgstr "Australien"
++#: ../src/MyTubeSearch.py:175
++#: ../src/plugin.py:66
++#: ../src/plugin.py:619
++#: ../src/plugin.py:625
++#: ../src/plugin.py:1743
++msgid "Yes"
++msgstr "Ja"
+ 
+-msgid "Author: "
+-msgstr "Author: "
++#: ../src/MyTubeSearch.py:176
++#: ../src/plugin.py:67
++#: ../src/plugin.py:620
++#: ../src/plugin.py:626
++msgid "No"
++msgstr "Nein"
+ 
++#: ../src/MyTubeSearch.py:180
++#: ../src/MyTubeSearch.py:200
++#: ../src/plugin.py:71
++#: ../src/plugin.py:91
++msgid "All"
++msgstr "Alle"
++
++#: ../src/MyTubeSearch.py:181
++#: ../src/plugin.py:72
++msgid "Film & Animation"
++msgstr "Film & Animation"
++
++#: ../src/MyTubeSearch.py:182
++#: ../src/plugin.py:73
+ msgid "Autos & Vehicles"
+ msgstr "Autos und Fahrzeuge"
+ 
+-msgid "Brazil"
+-msgstr "Brasilien"
++#: ../src/MyTubeSearch.py:183
++#: ../src/plugin.py:74
++msgid "Music"
++msgstr "Musik"
+ 
+-msgid "Canada"
+-msgstr "Kanada"
++#: ../src/MyTubeSearch.py:184
++#: ../src/plugin.py:75
++msgid "Pets & Animals"
++msgstr "Tiere"
+ 
+-msgid "Choose target folder"
+-msgstr "Wähle Zielverzeichnis"
++#: ../src/MyTubeSearch.py:185
++#: ../src/plugin.py:76
++msgid "Sports"
++msgstr "Sport"
+ 
+-msgid "Clear history on Exit:"
+-msgstr "Verlauf beim Verlassen löschen:"
++#: ../src/MyTubeSearch.py:186
++#: ../src/plugin.py:77
++msgid "Travel & Events"
++msgstr "Reisen & Events"
+ 
+-msgid "Close"
+-msgstr "Schließen"
++#: ../src/MyTubeSearch.py:187
++#: ../src/plugin.py:78
++msgid "Short Movies"
++msgstr "Kurzvideos"
++
++#: ../src/MyTubeSearch.py:188
++#: ../src/plugin.py:79
++msgid "Gaming"
++msgstr "Spiele"
+ 
++#: ../src/MyTubeSearch.py:189
++#: ../src/plugin.py:80
+ msgid "Comedy"
+ msgstr "Komödien"
+ 
+-msgid "Czech Republic"
+-msgstr "Tschechien"
+-
+-msgid "Descending"
+-msgstr "absteigend"
+-
+-msgid "Display search results by:"
+-msgstr "Suchergebnisse anzeigen:"
+-
+-msgid "Do you want to see more entries?"
+-msgstr "Weitere Videos?"
+-
+-msgid "Download Video"
+-msgstr "Video runterladen"
+-
+-msgid "Download location"
+-msgstr "Download Verzeichnis:"
++#: ../src/MyTubeSearch.py:190
++#: ../src/plugin.py:81
++msgid "People & Blogs"
++msgstr "Leute & Blogs"
+ 
+-msgid "Downloading screenshots. Please wait..."
+-msgstr "Bilder werden geladen. Bitte warten..."
++#: ../src/MyTubeSearch.py:191
++#: ../src/plugin.py:82
++msgid "News & Politics"
++msgstr "Nachrichten & Politik"
+ 
+-msgid "Duration: "
+-msgstr "Dauer: "
++#: ../src/MyTubeSearch.py:192
++#: ../src/plugin.py:83
++msgid "Entertainment"
++msgstr "Unterhaltung"
+ 
++#: ../src/MyTubeSearch.py:193
++#: ../src/plugin.py:84
+ msgid "Education"
+ msgstr "Bildung"
+ 
+-msgid "Enter your search term(s)"
+-msgstr "Suchbegriff eingeben"
++#: ../src/MyTubeSearch.py:194
++#: ../src/plugin.py:85
++msgid "Howto & Style"
++msgstr "Tipps & Tricks"
+ 
+-msgid "Entertainment"
+-msgstr "Unterhaltung"
++#: ../src/MyTubeSearch.py:195
++#: ../src/plugin.py:86
++msgid "Nonprofits & Activism"
++msgstr "Non-Profit"
+ 
+-msgid "Fetching feed entries"
+-msgstr "Lade feeds"
++#: ../src/MyTubeSearch.py:196
++#: ../src/plugin.py:87
++msgid "Science & Technology"
++msgstr "Wissenschaft & Technik"
+ 
+-msgid "Fetching search entries"
+-msgstr "Lade Suchergebnisse"
++#: ../src/MyTubeSearch.py:201
++#: ../src/MyTubeSearch.py:208
++#: ../src/plugin.py:92
++#: ../src/plugin.py:99
++msgid "Australia"
++msgstr "Australien"
+ 
+-msgid "Film & Animation"
+-msgstr "Film & Animation"
++#: ../src/MyTubeSearch.py:202
++#: ../src/plugin.py:93
++msgid "Brazil"
++msgstr "Brasilien"
+ 
++#: ../src/MyTubeSearch.py:203
++#: ../src/plugin.py:94
++msgid "Canada"
++msgstr "Kanada"
++
++#: ../src/MyTubeSearch.py:204
++#: ../src/plugin.py:95
++msgid "Czech Republic"
++msgstr "Tschechien"
++
++#: ../src/MyTubeSearch.py:205
++#: ../src/plugin.py:96
+ msgid "France"
+ msgstr "Frankreich"
+ 
+-msgid "Gaming"
+-msgstr "Spiele"
+-
++#: ../src/MyTubeSearch.py:206
++#: ../src/plugin.py:97
+ msgid "Germany"
+ msgstr "Deutschland"
+ 
++#: ../src/MyTubeSearch.py:207
++#: ../src/plugin.py:98
+ msgid "Great Britain"
+ msgstr "England"
+ 
+-msgid "HD videos"
+-msgstr "HD Videos"
+-
+-msgid "Help"
+-msgstr "Hilfe"
+-
+-msgid "History"
+-msgstr "Verlauf"
+-
++#: ../src/MyTubeSearch.py:209
++#: ../src/plugin.py:100
+ msgid "Holland"
+ msgstr "Holland"
+ 
++#: ../src/MyTubeSearch.py:210
++#: ../src/plugin.py:101
+ msgid "Hong Kong"
+ msgstr "Hong Kong"
+ 
+-msgid "Howto & Style"
+-msgstr "Tipps & Tricks"
+-
++#: ../src/MyTubeSearch.py:211
++#: ../src/plugin.py:102
+ msgid "India"
+ msgstr "Indien"
+ 
++#: ../src/MyTubeSearch.py:212
++#: ../src/plugin.py:103
+ msgid "Ireland"
+ msgstr "Irland"
+ 
++#: ../src/MyTubeSearch.py:213
++#: ../src/plugin.py:104
+ msgid "Israel"
+ msgstr "Israel"
+ 
++#: ../src/MyTubeSearch.py:214
++#: ../src/plugin.py:105
+ msgid "Italy"
+ msgstr "Italien"
+ 
++#: ../src/MyTubeSearch.py:215
++#: ../src/plugin.py:106
+ msgid "Japan"
+ msgstr "Japan"
+ 
+-msgid "Load feed on startup:"
+-msgstr "Feed beim Starten laden:"
+-
++#: ../src/MyTubeSearch.py:216
++#: ../src/plugin.py:107
+ msgid "Mexico"
+ msgstr "Mexiko"
+ 
+-msgid "More video entries."
+-msgstr "Weitere Video Einträge."
++#: ../src/MyTubeSearch.py:217
++#: ../src/plugin.py:108
++msgid "New Zealand"
++msgstr "Neuseeland"
+ 
+-msgid "Most discussed"
+-msgstr "Heiß diskutiert"
++#: ../src/MyTubeSearch.py:218
++#: ../src/plugin.py:109
++msgid "Poland"
++msgstr "Polen"
+ 
+-msgid "Most linked"
+-msgstr "Am meisten verlinkt"
++#: ../src/MyTubeSearch.py:219
++#: ../src/plugin.py:110
++msgid "Russia"
++msgstr "Russland"
+ 
+-msgid "Most popular"
+-msgstr "Beliebteste Videos"
++#: ../src/MyTubeSearch.py:220
++#: ../src/plugin.py:111
++msgid "South Korea"
++msgstr "Süd Korea"
+ 
+-msgid "Most recent"
+-msgstr "Neueste Videos"
++#: ../src/MyTubeSearch.py:221
++#: ../src/plugin.py:112
++msgid "Spain"
++msgstr "Spanien"
+ 
+-msgid "Most responded"
+-msgstr "Meiste Antworten"
++#: ../src/MyTubeSearch.py:222
++#: ../src/plugin.py:113
++msgid "Sweden"
++msgstr "Schweden"
+ 
+-msgid "Most viewed"
+-msgstr "Meistgesehen"
++#: ../src/MyTubeSearch.py:223
++#: ../src/plugin.py:114
++msgid "Taiwan"
++msgstr "Taiwan"
+ 
+-msgid "Music"
+-msgstr "Musik"
++#: ../src/MyTubeSearch.py:224
++#: ../src/plugin.py:115
++msgid "United States"
++msgstr "USA"
+ 
+-msgid "My TubePlayer"
+-msgstr "MyTube Player"
++#: ../src/MyTubeSearch.py:228
++#: ../src/plugin.py:119
++msgid "Ascending"
++msgstr "Aufsteigend"
+ 
+-msgid "MyTube Settings"
+-msgstr "MyTube Einstellungen"
++#: ../src/MyTubeSearch.py:229
++#: ../src/plugin.py:120
++msgid "Descending"
++msgstr "Absteigend"
+ 
+-msgid "MyTubePlayer"
+-msgstr "MyTube Player"
++#: ../src/MyTubeSearch.py:237
++#: ../src/plugin.py:128
++#: ../src/plugin.py:790
++msgid "HD videos"
++msgstr "HD Videos"
+ 
+-msgid "MyTubePlayer Help"
+-msgstr "MyTube Player Hilfe"
++#: ../src/MyTubeSearch.py:238
++#: ../src/plugin.py:129
++#: ../src/plugin.py:794
++msgid "Most viewed"
++msgstr "Meistgesehen"
+ 
+-msgid "MyTubePlayer active video downloads"
+-msgstr "aktive Video downloads"
++#: ../src/MyTubeSearch.py:239
++#: ../src/plugin.py:130
++#: ../src/plugin.py:792
++msgid "Top rated"
++msgstr "Beste Bewertung"
+ 
+-msgid "MyTubePlayer settings"
+-msgstr "MyTube Player Einstellungen"
++#: ../src/MyTubeSearch.py:240
++#: ../src/plugin.py:131
++#: ../src/plugin.py:799
++msgid "Recently featured"
++msgstr "Kürzlich featured"
+ 
+-msgid "MyTubeVideoInfoScreen"
+-msgstr "MyTubeVideoInfoScreen"
++#: ../src/MyTubeSearch.py:241
++#: ../src/plugin.py:132
++#: ../src/plugin.py:797
++msgid "Most discussed"
++msgstr "Heiß diskutiert"
+ 
+-msgid "MyTubeVideohelpScreen"
+-msgstr "MyTubeVideohelpScreen"
++#: ../src/MyTubeSearch.py:242
++#: ../src/plugin.py:133
++#: ../src/plugin.py:793
++msgid "Top favorites"
++msgstr "Top-Favoriten"
+ 
+-msgid "New Zealand"
+-msgstr "Neu Seeland"
++#: ../src/MyTubeSearch.py:243
++#: ../src/plugin.py:134
++#: ../src/plugin.py:798
++msgid "Most linked"
++msgstr "Am meisten verlinkt"
+ 
+-msgid "News & Politics"
+-msgstr "Nachrichten & Politik"
++#: ../src/MyTubeSearch.py:244
++#: ../src/plugin.py:135
++#: ../src/plugin.py:800
++msgid "Most responded"
++msgstr "Meiste Antworten"
+ 
+-msgid "No"
+-msgstr "Nein"
++#: ../src/MyTubeSearch.py:245
++#: ../src/plugin.py:136
++#: ../src/plugin.py:796
++msgid "Most recent"
++msgstr "Neueste Videos"
+ 
+-msgid "No playable video found! Stop playing this movie?"
+-msgstr "Kein abspielbares Video gefunden! Wiedergabe beenden?"
++#: ../src/MyTubeSearch.py:249
++#: ../src/MyTubeSearch.py:252
++#: ../src/plugin.py:139
++#: ../src/plugin.py:142
++msgid "Ask user"
++msgstr "Nutzer fragen"
+ 
+-msgid "No videos to display"
+-msgstr "Keine Videos zum anzeigen"
++#: ../src/MyTubeSearch.py:249
++#: ../src/MyTubeSearch.py:252
++#: ../src/plugin.py:139
++#: ../src/plugin.py:142
++msgid "Return to movie list"
++msgstr "Zurück zur Videoliste"
+ 
+-msgid "No, but play video again"
+-msgstr "Nein, aber Video noch mal abspielen"
++#: ../src/MyTubeSearch.py:249
++#: ../src/plugin.py:139
++msgid "Play next video"
++msgstr "nächstes Video"
+ 
+-msgid "No, but switch to video entries."
+-msgstr "Nein, aber zu den Videos zurück."
++#: ../src/MyTubeSearch.py:249
++#: ../src/plugin.py:139
++msgid "Play video again"
++msgstr "Video noch mal abspielen"
+ 
+-msgid "No, but switch to video search."
+-msgstr "Nein, aber zur Videosuche zurück"
++#: ../src/MyTubeSearch.py:314
++msgid " Results"
++msgstr " Ergebnisse"
+ 
+-msgid "Nonprofits & Activism"
+-msgstr "Non-Profit"
++#: ../src/MyTubeSearch.py:398
++#: ../src/MyTubeSearch.py:562
++#: ../src/plugin.py:281
++#: ../src/plugin.py:1280
++#: ../src/plugin.py:1466
++msgid "Close"
++msgstr "Schließen"
+ 
+-msgid "Not fetching feed entries"
+-msgstr "Lade keine feed Einträge"
++#: ../src/MyTubeSearch.py:399
++msgid "Save"
++msgstr "Speichern"
+ 
+-msgid "People & Blogs"
+-msgstr "Leute & Blogs"
++#: ../src/MyTubeSearch.py:412
++#: ../src/MyTubeSearch.py:415
++msgid "MyTubePlayer settings"
++msgstr "MyTube Player Einstellungen"
+ 
+-msgid "Pets & Animals"
+-msgstr "Tiere"
++#: ../src/MyTubeSearch.py:419
++msgid "Display search results by:"
++msgstr "Suchergebnisse anzeigen:"
+ 
+-msgid "Play YouTube movies"
+-msgstr "YouTube Videos abspielen"
++#: ../src/MyTubeSearch.py:420
++msgid "Search restricted content:"
++msgstr "Suche ohne Altersbeschränkung:"
+ 
+-msgid "Play next video"
+-msgstr "nächstes Video"
++#: ../src/MyTubeSearch.py:421
++msgid "Search category:"
++msgstr "Such-Kategorie:"
+ 
+-msgid "Play video again"
+-msgstr "Video noch mal abspielen"
++#: ../src/MyTubeSearch.py:422
++msgid "Search region:"
++msgstr "Such-Region:"
+ 
+-msgid "Please enter your search term."
+-msgstr "Bitte geben Sie einen Suchbegriff ein."
++#: ../src/MyTubeSearch.py:423
++msgid "Load feed on startup:"
++msgstr "Feed beim Starten laden:"
+ 
+-msgid "Please select a standard feed or try searching for videos."
+-msgstr "Wählen Sie einen Standard Feed oder suchen Sie nach Videos."
++#: ../src/MyTubeSearch.py:426
++msgid "Start with following feed:"
++msgstr "Beginne mit folgendem feed:"
+ 
+-msgid "Poland"
+-msgstr "Polen"
++#: ../src/MyTubeSearch.py:427
++msgid "Videoplayer stop/exit behavior:"
++msgstr "Verhalten beim Drücken der STOPP/EXIT-Taste:"
+ 
+-msgid "Published"
+-msgstr "Veröffentlicht"
++#: ../src/MyTubeSearch.py:428
++msgid "Videobrowser exit behavior:"
++msgstr "Verhalten nach Verlassen der Videoliste:"
+ 
+-msgid "Rating"
+-msgstr "Bewertung"
++#: ../src/MyTubeSearch.py:435
++msgid "Download location"
++msgstr "Download Verzeichnis:"
+ 
+-msgid "Ratings: "
+-msgstr "Bewertungen: "
++#: ../src/MyTubeSearch.py:438
++msgid "Clear history on Exit:"
++msgstr "Verlauf beim Verlassen löschen:"
+ 
+-msgid "Really quit MyTube Player?"
+-msgstr "MyTube Player wirklich beenden?"
++#: ../src/MyTubeSearch.py:459
++msgid "Choose target folder"
++msgstr "Wähle Zielverzeichnis"
+ 
+-msgid "Recently featured"
+-msgstr "Kürzlich featured"
++#: ../src/MyTubeSearch.py:575
++#: ../src/MyTubeSearch.py:591
++msgid "MyTubePlayer active video downloads"
++msgstr "aktive Video downloads"
+ 
+-msgid "Related video entries."
+-msgstr "Ähnliche Videos"
++#: ../src/plugin.py:271
++msgid ""
++"Welcome to the MyTube Youtube Player.\n"
++"\n"
++"While entering your search term(s) you will get suggestions displayed matching your search term.\n"
++"\n"
++"To select a suggestion press DOWN on your remote, select the desired result and press OK on your remote to start the search.\n"
++"\n"
++"Press exit to get back to the input field."
++msgstr ""
++"Herzlich Willkommen beim MyTube YouTube Player.\n"
++"\n"
++"Während der Eingabe Ihres Suchwortes erhalten Sie passende Vorschläge zu Ihrer Sucheingabe.\n"
++"\n"
++"Um einen Vorschlag auszuwählen, drücken Sie die NACH UNTEN-Taste, wählen den entsprechenden Eintrag aus und drücken die OK-Taste um die Suche zu starten.\n"
++"\n"
++"Um zur Such-Eingabemaske zurück zu gelangen, drücken Sie die EXIT-Taste."
+ 
+-msgid "Relevance"
+-msgstr "Relevanz"
++#: ../src/plugin.py:272
++msgid ""
++"Welcome to the MyTube Youtube Player.\n"
++"\n"
++"Use the Bouqet+ button to navigate to the search field and the Bouqet- to navigate to the video entries.\n"
++"\n"
++"To play a movie just press OK on your remote control.\n"
++"\n"
++"Press info to see the movie description.\n"
++"\n"
++"Press the Menu button for additional options.\n"
++"\n"
++"The Help button shows this help again."
++msgstr ""
++"Herzlich Willkommen beim MyTube YouTube Player.\n"
++"\n"
++"Nutzen Sie die Bouqet+ Taste um zur Sucheingabe zu gelangen und die Bouqet- Taste für die Video Einträge.\n"
++"\n"
++"Um ein Video abzuspielen drücken Sie die OK-Taste auf Ihrer Fernbedienung.\n"
++"\n"
++"Mit der Info-Taste erhalten Sie die erweiterte Beschreibung zu einem Video.\n"
++"\n"
++"Für weitere Einstellungen drücken Sie die Menü-Taste.\n"
++"\n"
++"Um diese Hilfe erneut anzuzeigen, drücken Sie die Hilfe-Taste."
+ 
+-msgid "Response video entries."
+-msgstr "Video Antworten"
++#: ../src/plugin.py:282
++msgid "Std. Feeds"
++msgstr "Std. Feeds"
+ 
+-msgid "Return to movie list"
+-msgstr "Zurück zur Videoliste"
++#: ../src/plugin.py:283
++msgid "History"
++msgstr "Verlauf"
+ 
+-msgid "Russia"
+-msgstr "Russland"
++#: ../src/plugin.py:398
++#: ../src/plugin.py:422
++#: ../src/plugin.py:464
++msgid "Genuine Dreambox validation failed!"
++msgstr "Prüfung auf Original-Dreambox gescheitert!"
+ 
+-msgid "Save"
+-msgstr "Speichern"
++#: ../src/plugin.py:398
++#: ../src/plugin.py:422
++#: ../src/plugin.py:464
++msgid "Verify your Dreambox authenticity by running the genuine dreambox plugin!"
++msgstr "Bitte mit dem \"Genuine Dreambox Plugin\" auf Echtheit prüfen!"
+ 
+-msgid "Science & Technology"
+-msgstr "Wissenschaft & Technik"
++#: ../src/plugin.py:417
++#: ../src/plugin.py:476
++msgid "Fetching feed entries"
++msgstr "Lade feeds"
+ 
++#: ../src/plugin.py:417
++#: ../src/plugin.py:476
++msgid "Trying to download the Youtube feed entries. Please wait..."
++msgstr "YouTube feeds werden geladen, bitte warten..."
++
++#: ../src/plugin.py:434
++msgid "MyTubePlayer"
++msgstr "MyTube Player"
++
++#: ../src/plugin.py:438
+ msgid "Search Term(s)"
+ msgstr "Suchwort(e)"
+ 
+-msgid "Search category:"
+-msgstr "Such-Kategorie:"
++#: ../src/plugin.py:478
++msgid "Fetching search entries"
++msgstr "Lade Suchergebnisse"
+ 
+-msgid "Search region:"
+-msgstr "Such-Region:"
++#: ../src/plugin.py:478
++msgid "Trying to download the Youtube search results. Please wait..."
++msgstr "YouTube Suchergebnisse werden geladen, bitte warten..."
+ 
+-msgid "Search restricted content:"
+-msgstr "Suche ohne Altersbeschränkung:"
++#: ../src/plugin.py:480
++msgid "An error occured."
++msgstr "Es ist ein Fehler aufgetreten."
+ 
+-msgid "Select new feed to view."
+-msgstr "Neuen feed auswählen"
++#: ../src/plugin.py:480
++msgid "There was an error getting the feed entries. Please try again."
++msgstr "Fehler beim Laden der Suchergebnisse. Noch mal probieren."
+ 
+-msgid "Select your choice."
+-msgstr "Treffen Sie Ihre Wahl."
++#: ../src/plugin.py:483
++msgid "No videos to display"
++msgstr "Keine Videos zum anzeigen"
+ 
+-msgid "Short Movies"
+-msgstr "Kurzvideos"
++#: ../src/plugin.py:483
++msgid "Please select a standard feed or try searching for videos."
++msgstr "Wählen Sie einen Standard Feed oder suchen Sie nach Videos."
+ 
+-msgid "Sorry, video is not available!"
+-msgstr "Video nicht verfügbar!"
++#: ../src/plugin.py:485
++msgid "Not fetching feed entries"
++msgstr "Lade keine feed Einträge"
+ 
+-msgid "South Korea"
+-msgstr "Süd Korea"
++#: ../src/plugin.py:485
++msgid "Please enter your search term."
++msgstr "Bitte geben Sie einen Suchbegriff ein."
+ 
+-msgid "Spain"
+-msgstr "Spanien"
++#: ../src/plugin.py:504
++#: ../src/plugin.py:506
++#: ../src/plugin.py:513
++msgid "MyTubePlayer Help"
++msgstr "MyTube Player Hilfe"
+ 
+-msgid "Sports"
+-msgstr "Sport"
++#: ../src/plugin.py:525
++#: ../src/plugin.py:531
++msgid "MyTube Settings"
++msgstr "MyTube Einstellungen"
+ 
+-msgid "Start with following feed:"
+-msgstr "Beginne mit folgendem feed:"
++#: ../src/plugin.py:528
++#: ../src/plugin.py:543
++msgid "Select your choice."
++msgstr "Treffen Sie Ihre Wahl."
+ 
+-msgid "Std. Feeds"
+-msgstr "Std. Feeds"
++#: ../src/plugin.py:533
++msgid "View related videos"
++msgstr "Ähnliche Videos"
+ 
+-msgid "Stop playing this movie?"
+-msgstr "Wiedergabe beenden?"
++#: ../src/plugin.py:534
++msgid "View response videos"
++msgstr "Video Antworten"
+ 
+-msgid "Sweden"
+-msgstr "Schweden"
++#: ../src/plugin.py:538
++msgid "Download Video"
++msgstr "Video runterladen"
+ 
+-msgid "Tags: "
+-msgstr "Tags: "
++#: ../src/plugin.py:539
++msgid "View active downloads"
++msgstr "Aktive Downloads anzeigen"
+ 
+-msgid "Taiwan"
+-msgstr "Taiwan"
++#: ../src/plugin.py:577
++msgid "Enter your search term(s)"
++msgstr "Suchbegriff eingeben"
+ 
+-msgid "There was an error getting the feed entries. Please try again."
+-msgstr "Fehler beim Laden der Suchergebnisse. Noch mal probieren."
++#: ../src/plugin.py:621
++msgid "No, but switch to video entries."
++msgstr "Nein, aber zu den Videos zurück."
+ 
+-msgid "This Month"
+-msgstr "Diesen Monat"
++#: ../src/plugin.py:627
++msgid "No, but switch to video search."
++msgstr "Nein, aber zur Videosuche zurück"
+ 
+-msgid "This Week"
+-msgstr "Diese Woche"
++#: ../src/plugin.py:629
++msgid "Really quit MyTube Player?"
++msgstr "MyTube Player wirklich beenden?"
+ 
+-msgid "This is the help screen. Feed me with something to display."
+-msgstr ""
++#: ../src/plugin.py:722
++msgid "Sorry, video is not available!"
++msgstr "Video nicht verfügbar!"
+ 
+-msgid "Today"
+-msgstr "Heute"
++#: ../src/plugin.py:757
++msgid "Do you want to see more entries?"
++msgstr "Weitere Videos?"
+ 
+-msgid "Top favorites"
+-msgstr "Top-Favoriten"
++#: ../src/plugin.py:795
++msgid "Most popular"
++msgstr "Beliebteste Videos"
+ 
+-msgid "Top rated"
+-msgstr "Beste Bewertung"
++#: ../src/plugin.py:802
++msgid "Select new feed to view."
++msgstr "Neuen feed auswählen"
+ 
+-msgid "Travel & Events"
+-msgstr "Reisen & Events"
++#: ../src/plugin.py:968
++msgid "More video entries."
++msgstr "Weitere Video Einträge."
+ 
+-msgid "Trying to download the Youtube feed entries. Please wait..."
+-msgstr "YouTube feeds werden geladen, bitte warten..."
++#: ../src/plugin.py:976
++msgid "Related video entries."
++msgstr "Ähnliche Videos"
+ 
+-msgid "Trying to download the Youtube search results. Please wait..."
+-msgstr "YouTube Suchergebnisse werden geladen, bitte warten..."
++#: ../src/plugin.py:984
++msgid "Response video entries."
++msgstr "Video Antworten"
+ 
+-msgid "United States"
+-msgstr "USA"
++#: ../src/plugin.py:1103
++#: ../src/plugin.py:1341
++msgid "Added: "
++msgstr "Hinzugefügt: "
+ 
+-msgid "Videobrowser exit behavior:"
+-msgstr "Verhalten nach Verlassen der Videoliste:"
++#: ../src/plugin.py:1103
++#: ../src/plugin.py:1344
++msgid "Views: "
++msgstr "Aufrufe: "
+ 
+-msgid "Videoplayer stop/exit behavior:"
+-msgstr "Verhalten beim Drücken der STOPP/EXIT-Taste:"
++#: ../src/plugin.py:1103
++#: ../src/plugin.py:1335
++msgid "Duration: "
++msgstr "Dauer: "
+ 
+-msgid "View Count"
+-msgstr "Aufrufe"
++#: ../src/plugin.py:1103
++msgid "Ratings: "
++msgstr "Bewertungen: "
+ 
+-msgid "View active downloads"
+-msgstr "Aktive Downloads anzeigen"
++#: ../src/plugin.py:1309
++msgid "Downloading screenshots. Please wait..."
++msgstr "Bilder werden geladen. Bitte warten..."
+ 
+-msgid "View related videos"
+-msgstr "Ähnliche Videos"
++#: ../src/plugin.py:1338
++msgid "Author: "
++msgstr "Autor: "
+ 
+-msgid "View response videos"
+-msgstr "Video Antworten"
++#: ../src/plugin.py:1347
++msgid "Tags: "
++msgstr "Tags: "
+ 
+-msgid "Views: "
+-msgstr "Aufrufe: "
++#: ../src/plugin.py:1350
++msgid "MyTubeVideoInfoScreen"
++msgstr "MyTubeVideoInfoScreen"
+ 
+-msgid ""
+-"Welcome to the MyTube Youtube Player.\n"
+-"\n"
+-"Use the Bouqet+ button to navigate to the search field and the Bouqet- to "
+-"navigate to the video entries.\n"
+-"\n"
+-"To play a movie just press OK on your remote control.\n"
+-"\n"
+-"Press info to see the movie description.\n"
+-"\n"
+-"Press the Menu button for additional options.\n"
+-"\n"
+-"The Help button shows this help again."
+-msgstr ""
+-"Herzlich Willkommen beim MyTube YouTube Player.\n"
+-"\n"
+-"Nutzen Sie die Bouqet+ Taste um zur Sucheingabe zu gelangen und die Bouqet- "
+-"Taste für die Video Einträge.\n"
+-"\n"
+-"Um ein Video abzuspielen drücken Sie die OK-Taste auf Ihrer Fernbedienung.\n"
+-"\n"
+-"Mit der Info-Taste erhalten Sie die erweiterte Beschreibung zu einem Video.\n"
+-"\n"
+-"Für weitere Einstellungen drücken Sie die Menü-Taste.\n"
+-"\n"
+-"Um diese Hilfe erneut anzuzeigen, drücken Sie die Hilfe-Taste."
++#: ../src/plugin.py:1484
++msgid "Help"
++msgstr "Hilfe"
+ 
+-msgid ""
+-"Welcome to the MyTube Youtube Player.\n"
+-"\n"
+-"While entering your search term(s) you will get suggestions displayed "
+-"matching your search term.\n"
+-"\n"
+-"To select a suggestion press DOWN on your remote, select the desired result "
+-"and press OK on your remote to start the search.\n"
+-"\n"
+-"Press exit to get back to the input field."
+-msgstr ""
+-"Herzlich Willkommen beim MyTube YouTube Player.\n"
+-"\n"
+-"Während der Eingabe Ihres Suchwortes erhalten Sie passende Vorschläge zu "
+-"Ihrer Sucheingabe.\n"
+-"\n"
+-"Um einen Vorschlag auszuwählen drücken Sie die NACH UNTEN-Taste, wählen den "
+-"entsprechenden Eintrag aus und drücken die OK-Taste um die Suche zu "
+-"starten.\n"
+-"\n"
+-"Um zur Such-Eingabemaske zurück zu gelangen drücken Sie die EXIT-Taste."
++#: ../src/plugin.py:1488
++msgid "This is the help screen. Feed me with something to display."
++msgstr "Dies ist die MyTube Hilfe. Bitte ausfüllen."
+ 
+-msgid "Yes"
+-msgstr "Ja"
++#: ../src/plugin.py:1493
++msgid "MyTubeVideohelpScreen"
++msgstr "MyTubeVideohelpScreen"
++
++#: ../src/plugin.py:1744
++msgid "No, but play video again"
++msgstr "Nein, aber Video noch mal abspielen"
+ 
++#: ../src/plugin.py:1745
+ msgid "Yes, but play next video"
+ msgstr "Ja, aber nächstes Video abspielen"
+ 
++#: ../src/plugin.py:1746
+ msgid "Yes, but play previous video"
+ msgstr "Ja, aber vorheriges Video abspielen"
+ 
++#: ../src/plugin.py:1749
++msgid "Stop playing this movie?"
++msgstr "Wiedergabe beenden?"
++
++#: ../src/plugin.py:1751
++msgid "No playable video found! Stop playing this movie?"
++msgstr "Kein abspielbares Video gefunden! Wiedergabe beenden?"
++
++#: ../src/plugin.py:1797
++msgid "My TubePlayer"
++msgstr "MyTube Player"
++
++#: ../src/plugin.py:1798
++msgid "Play YouTube movies"
++msgstr "YouTube Videos abspielen"
++
+ #~ msgid "View Downloads"
+ #~ msgstr "Downloads anzeigen"
+diff --git a/mytube/src/MyTubeSearch.py b/mytube/src/MyTubeSearch.py
+index be63669..a1a324c 100755
+--- a/mytube/src/MyTubeSearch.py
++++ b/mytube/src/MyTubeSearch.py
+@@ -1,33 +1,28 @@
++from enigma import eListboxPythonMultiContent, RT_HALIGN_LEFT, RT_HALIGN_RIGHT, gFont, eTimer
+ from MyTubeService import GoogleSuggestions
+ from Screens.Screen import Screen
+ from Screens.LocationBox import MovieLocationBox
+-from Components.config import config, Config, ConfigSelection, ConfigText, getConfigListEntry, ConfigSubsection, ConfigYesNo, ConfigIP, ConfigNumber,ConfigLocations
++from Components.config import config, ConfigText, getConfigListEntry
++from Components.config import KEY_DELETE, KEY_BACKSPACE, KEY_ASCII, KEY_TIMEOUT
+ from Components.ConfigList import ConfigListScreen
+-from Components.config import KEY_DELETE, KEY_BACKSPACE, KEY_LEFT, KEY_RIGHT, KEY_HOME, KEY_END, KEY_TOGGLEOW, KEY_ASCII, KEY_TIMEOUT
+ from Components.ActionMap import ActionMap
+ from Components.Button import Button
+ from Components.Label import Label
+-from Components.ScrollLabel import ScrollLabel
+ from Components.Sources.List import List
+-from Components.Pixmap import Pixmap
+-from Components.MultiContent import MultiContentEntryText, MultiContentEntryPixmapAlphaTest
+-from Components.Task import Task, Job, job_manager
+-from enigma import eListboxPythonMultiContent, RT_HALIGN_LEFT, RT_HALIGN_RIGHT, gFont, eListbox,ePoint,eTimer
++from Components.MultiContent import MultiContentEntryText 
+ from Components.Task import job_manager
+-from Tools.Directories import pathExists, fileExists, resolveFilename, SCOPE_HDD
++from Tools.Directories import resolveFilename, SCOPE_HDD
++
+ from threading import Thread
+ from threading import Condition
+ from xml.etree.cElementTree import parse as cet_parse
+ from StringIO import StringIO
+-
+-
+-import urllib
++#import urllib
+ from urllib import FancyURLopener
+ 
+ class MyOpener(FancyURLopener):
+ 	version = 'Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.0.12) Gecko/20070731 Ubuntu/dapper-security Firefox/1.5.0.12'
+ 
+-
+ class ConfigTextWithGoogleSuggestions(ConfigText):
+ 	class SuggestionsThread(Thread):
+ 		def __init__(self, suggestionsService):
+@@ -151,122 +146,14 @@ class ConfigTextWithGoogleSuggestions(ConfigText):
+ 		if self.suggestionsWindow is not None:
+ 			self.suggestionsWindow.enableSelection(value)
+ 
+-
+-config.plugins.mytube = ConfigSubsection()
+-config.plugins.mytube.search = ConfigSubsection()
+-
+-config.plugins.mytube.search.searchTerm = ConfigTextWithGoogleSuggestions("", False, threaded = True)
+-config.plugins.mytube.search.orderBy = ConfigSelection(
+-				[
+-				 ("relevance", _("Relevance")),
+-				 ("viewCount", _("View Count")),
+-				 ("published", _("Published")),
+-				 ("rating", _("Rating"))
+-				], "relevance")
+-config.plugins.mytube.search.time = ConfigSelection(
+-				[
+-				 ("all_time", _("All Time")),
+-				 ("this_month", _("This Month")),
+-				 ("this_week", _("This Week")),
+-				 ("today", _("Today"))
+-				], "all_time")
+-config.plugins.mytube.search.racy = ConfigSelection(
+-				[
+-				 ("include", _("Yes")),
+-				 ("exclude", _("No"))
+-				], "include")
+-config.plugins.mytube.search.categories = ConfigSelection(
+-				[
+-				 (None, _("All")),
+-				 ("Film", _("Film & Animation")),
+-				 ("Autos", _("Autos & Vehicles")),
+-				 ("Music", _("Music")),
+-				 ("Animals", _("Pets & Animals")),
+-				 ("Sports", _("Sports")),
+-				 ("Travel", _("Travel & Events")),
+-				 ("Shortmov", _("Short Movies")),
+-				 ("Games", _("Gaming")),
+-				 ("Comedy", _("Comedy")),
+-				 ("People", _("People & Blogs")),
+-				 ("News", _("News & Politics")),
+-				 ("Entertainment", _("Entertainment")),
+-				 ("Education", _("Education")),
+-				 ("Howto", _("Howto & Style")),
+-				 ("Nonprofit", _("Nonprofits & Activism")),
+-				 ("Tech", _("Science & Technology"))
+-				], None)
+-config.plugins.mytube.search.lr = ConfigSelection(
+-				[
+-				 (None, _("All")),
+-				 ("au", _("Australia")),
+-				 ("br", _("Brazil")),				 
+-				 ("ca", _("Canada")),
+-				 ("cz", _("Czech Republic")),
+-				 ("fr", _("France")),
+-				 ("de", _("Germany")),
+-				 ("gb", _("Great Britain")),
+-				 ("au", _("Australia")),
+-				 ("nl", _("Holland")),
+-				 ("hk", _("Hong Kong")),
+-				 ("in", _("India")),
+-				 ("ie", _("Ireland")),
+-				 ("il", _("Israel")),
+-				 ("it", _("Italy")),
+-				 ("jp", _("Japan")),
+-				 ("mx", _("Mexico")),
+-				 ("nz", _("New Zealand")),
+-				 ("pl", _("Poland")),
+-				 ("ru", _("Russia")),
+-				 ("kr", _("South Korea")),
+-				 ("es", _("Spain")),
+-				 ("se", _("Sweden")),
+-				 ("tw", _("Taiwan")),
+-				 ("us", _("United States")) 
+-				], None)
+-config.plugins.mytube.search.sortOrder = ConfigSelection(
+-				[
+-				 ("ascending", _("Ascending")),
+-				 ("descending", _("Descending"))
+-				], "ascending")
+-
+-config.plugins.mytube.general = ConfigSubsection()
+-config.plugins.mytube.general.showHelpOnOpen = ConfigYesNo(default = True)
+-config.plugins.mytube.general.loadFeedOnOpen = ConfigYesNo(default = True)
+-config.plugins.mytube.general.startFeed = ConfigSelection(
+-				[
+-				 ("hd", _("HD videos")),
+-				 ("most_viewed", _("Most viewed")),
+-				 ("top_rated", _("Top rated")),
+-				 ("recently_featured", _("Recently featured")),
+-				 ("most_discussed", _("Most discussed")),
+-				 ("top_favorites", _("Top favorites")),
+-				 ("most_linked", _("Most linked")),
+-				 ("most_responded", _("Most responded")),
+-				 ("most_recent", _("Most recent"))
+-				], "most_viewed")
+-
+-config.plugins.mytube.general.on_movie_stop = ConfigSelection(default = "ask", choices = [
+-	("ask", _("Ask user")), ("quit", _("Return to movie list")), ("playnext", _("Play next video")), ("playagain", _("Play video again")) ])
+-
+-config.plugins.mytube.general.on_exit = ConfigSelection(default = "ask", choices = [
+-	("ask", _("Ask user")), ("quit", _("Return to movie list"))])
+-
+-
+ default = resolveFilename(SCOPE_HDD)
+ tmp = config.movielist.videodirs.value
+ if default not in tmp:
+ 	tmp.append(default)
+-config.plugins.mytube.general.videodir = ConfigSelection(default = default, choices = tmp)
+-config.plugins.mytube.general.history = ConfigText(default="")
+-config.plugins.mytube.general.clearHistoryOnClose = ConfigYesNo(default = False)
+-
+-#config.plugins.mytube.general.useHTTPProxy = ConfigYesNo(default = False)
+-#config.plugins.mytube.general.ProxyIP = ConfigIP(default=[0,0,0,0])
+-#config.plugins.mytube.general.ProxyPort = ConfigNumber(default=8080)
+ 
+ class MyTubeSuggestionsListScreen(Screen):
+ 	skin = """
+-		<screen name="MyTubeSuggestionsListScreen" position="60,93" zPosition="6" size="610,160" flags="wfNoBorder" >
++		<screen name="MyTubeSuggestionsListScreen" title="MyTube - Search" position="60,93" zPosition="6" size="610,160" flags="wfNoBorder" >
+ 			<ePixmap position="0,0" zPosition="-1" size="610,160" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MyTube/suggestions_bg.png" alphatest="on" transparent="1" backgroundColor="transparent"/>
+ 			<widget source="suggestionslist" render="Listbox" position="10,5" zPosition="7" size="580,150" scrollbarMode="showOnDemand" transparent="1" >
+ 				<convert type="TemplatedMultiContent">
+@@ -366,7 +253,7 @@ class MyTubeSuggestionsListScreen(Screen):
+ 
+ class MyTubeSettingsScreen(Screen, ConfigListScreen):
+ 	skin = """
+-		<screen name="MyTubeSettingsScreen" flags="wfNoBorder" position="0,0" size="720,576" title="MyTubePlayerMainScreen..." >
++		<screen name="MyTubeSettingsScreen" flags="wfNoBorder" position="0,0" size="720,576" title="MyTube - Settings" >
+ 			<ePixmap position="0,0" zPosition="-1" size="720,576" pixmap="~/mytubemain_bg.png" alphatest="on" transparent="1" backgroundColor="transparent"/>
+ 			<widget name="title" position="60,50" size="600,50" zPosition="5" valign="center" halign="left" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
+ 			<widget name="config" zPosition="2" position="60,120" size="610,370" scrollbarMode="showOnDemand" transparent="1" />
+@@ -524,7 +411,7 @@ class MyTubeSettingsScreen(Screen, ConfigListScreen):
+ 
+ class MyTubeTasksScreen(Screen):
+ 	skin = """
+-		<screen name="MyTubeTasksScreen" flags="wfNoBorder" position="0,0" size="720,576" title="MyTubePlayerMainScreen..." >
++		<screen name="MyTubeTasksScreen" flags="wfNoBorder" position="0,0" size="720,576" title="MyTube - Tasks" >
+ 			<ePixmap position="0,0" zPosition="-1" size="720,576" pixmap="~/mytubemain_bg.png" alphatest="on" transparent="1" backgroundColor="transparent"/>
+ 			<widget name="title" position="60,50" size="600,50" zPosition="5" valign="center" halign="left" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
+ 			<widget source="tasklist" render="Listbox" position="60,120" size="610,370" zPosition="7" scrollbarMode="showOnDemand" transparent="1" >
+@@ -610,7 +497,7 @@ class MyTubeTasksScreen(Screen):
+ 
+ class MyTubeHistoryScreen(Screen):
+ 	skin = """
+-		<screen name="MyTubeHistoryScreen" position="60,93" zPosition="6" size="610,160" flags="wfNoBorder" >
++		<screen name="MyTubeHistoryScreen" position="60,93" zPosition="6" size="610,160" flags="wfNoBorder" title="MyTube - History">
+ 			<ePixmap position="0,0" zPosition="-1" size="610,160" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MyTube/suggestions_bg.png" alphatest="on" transparent="1" backgroundColor="transparent"/>
+ 			<widget source="historylist" render="Listbox" position="10,5" zPosition="7" size="580,150" scrollbarMode="showOnDemand" transparent="1" >
+ 				<convert type="TemplatedMultiContent">
+diff --git a/mytube/src/MyTubeService.py b/mytube/src/MyTubeService.py
+index 246575c..fc3dafd 100755
+--- a/mytube/src/MyTubeService.py
++++ b/mytube/src/MyTubeService.py
+@@ -1,23 +1,24 @@
+ # -*- coding: iso-8859-1 -*-
+-from __init__ import bin2long, long2bin, rsa_pub1024, decrypt_block
++from enigma import ePythonMessagePump
++
++from __init__ import decrypt_block
++from ThreadQueue import ThreadQueue
+ import gdata.youtube
+ import gdata.youtube.service
+ from gdata.service import BadAuthentication
+-from Tools.LoadPixmap import LoadPixmap
+-from Components.config import config, Config, ConfigSelection, ConfigText, getConfigListEntry, ConfigSubsection, ConfigYesNo, ConfigIP, ConfigNumber
+-from Components.ConfigList import ConfigListScreen
+-from Components.config import KEY_DELETE, KEY_BACKSPACE, KEY_LEFT, KEY_RIGHT, KEY_HOME, KEY_END, KEY_TOGGLEOW, KEY_ASCII, KEY_TIMEOUT
+ 
+ from twisted.web import client
+ from twisted.internet import reactor
+-from urllib2 import Request, URLError, HTTPError, urlopen as urlopen2
+-from socket import gaierror,error
+-import re, os, sys, socket
++from urllib2 import Request, URLError, urlopen as urlopen2
++from socket import gaierror, error
++import os, socket
+ from urllib import quote, unquote_plus, unquote
+-import cookielib
+-from httplib import HTTPConnection,CannotSendRequest,BadStatusLine,HTTPException
+-HTTPConnection.debuglevel = 1
++from httplib import HTTPConnection, CannotSendRequest, BadStatusLine, HTTPException
++
+ from urlparse import parse_qs
++from threading import Thread
++
++HTTPConnection.debuglevel = 1
+ 
+ def validate_cert(cert, key):
+ 	buf = decrypt_block(cert[8:], key) 
+@@ -50,7 +51,7 @@ std_headers = {
+ 
+ class GoogleSuggestions():
+ 	def __init__(self, callback, ds = None, json = None, hl = None):
+-		self.callback = callback
++		self.gotFeed = callback
+ 		self.conn = HTTPConnection("google.com")
+ 		#GET /complete/search?output=toolbar&ds=yt&hl=en&jsonp=self.gotSuggestions&q=s
+ 		self.prepQuerry = "/complete/search?output=toolbar&"
+@@ -63,7 +64,7 @@ class GoogleSuggestions():
+ 		self.prepQuerry = self.prepQuerry + "jsonp=self.gotSuggestions&q="
+ 
+ 	def gotSuggestions(self, suggestslist):
+-		self.callback(suggestslist)
++		self.gotFeed(suggestslist)
+ 
+ 	def getSuggestions(self, querryString):
+ 		if querryString is not "":
+@@ -72,22 +73,22 @@ class GoogleSuggestions():
+ 				self.conn.request("GET", querry)
+ 			except (CannotSendRequest, gaierror, error):
+ 				print "[MyTube]  Can not send request for suggestions"
+-				self.callback(None)
++				self.gotFeed(None)
+ 			else:
+ 				try:
+ 					response = self.conn.getresponse()
+ 				except BadStatusLine:
+ 					print "[MyTube]  Can not get a response from google"
+-					self.callback(None)
++					self.gotFeed(None)
+ 				else:
+ 					if response.status == 200:
+ 						data = response.read()
+ 						self.gotSuggestions(data)
+ 					else:
+-						self.callback(None)
++						self.gotFeed(None)
+ 			self.conn.close()
+ 		else:
+-			self.callback(None)
++			self.gotFeed(None)
+ 
+ 
+ class MyTubeFeedEntry():
+@@ -224,16 +225,16 @@ class MyTubeFeedEntry():
+ 			try:
+ 				infopage = urlopen2(request).read()
+ 				videoinfo = parse_qs(infopage)
+-				if 'fmt_url_map' in videoinfo:
++				if ('url_encoded_fmt_stream_map' or 'fmt_url_map') in videoinfo:
+ 					break
+ 			except (URLError, HTTPException, socket.error), err:
+ 				print "[MyTube] Error: unable to download video infopage",str(err)
+ 				return video_url
+ 
+-		if 'fmt_url_map' not in videoinfo:
++		if ('url_encoded_fmt_stream_map' or 'fmt_url_map') not in videoinfo:
+ 			# Attempt to see if YouTube has issued an error message
+ 			if 'reason' not in videoinfo:
+-				print '[MyTube] Error: unable to extract "fmt_url_map" parameter for unknown reason'
++				print '[MyTube] Error: unable to extract "fmt_url_map" or "url_encoded_fmt_stream_map" parameter for unknown reason'
+ 			else:
+ 				reason = unquote_plus(videoinfo['reason'][0])
+ 				print '[MyTube] Error: YouTube said: %s' % reason.decode('utf-8')
+@@ -241,22 +242,30 @@ class MyTubeFeedEntry():
+ 
+ 		video_fmt_map = {}
+ 		fmt_infomap = {}
+-		tmp_fmtUrlDATA = videoinfo['fmt_url_map'][0].split(',')
++		if videoinfo.has_key('url_encoded_fmt_stream_map'):
++			tmp_fmtUrlDATA = videoinfo['url_encoded_fmt_stream_map'][0].split(',url=')
++		else:
++			tmp_fmtUrlDATA = videoinfo['fmt_url_map'][0].split(',')
+ 		for fmtstring in tmp_fmtUrlDATA:
+-			(fmtid,fmturl) = fmtstring.split('|')
++			if videoinfo.has_key('url_encoded_fmt_stream_map'):
++				(fmturl, fmtid) = fmtstring.split('&itag=')
++				if fmturl.find("url=") !=-1:
++					fmturl = fmturl.replace("url=","")
++			else:
++				(fmtid,fmturl) = fmtstring.split('|')
+ 			if VIDEO_FMT_PRIORITY_MAP.has_key(fmtid):
+ 				video_fmt_map[VIDEO_FMT_PRIORITY_MAP[fmtid]] = { 'fmtid': fmtid, 'fmturl': unquote_plus(fmturl) }
+ 			fmt_infomap[int(fmtid)] = unquote_plus(fmturl)
+ 		print "[MyTube] got",sorted(fmt_infomap.iterkeys())
+ 		if video_fmt_map and len(video_fmt_map):
+ 			print "[MyTube] found best available video format:",video_fmt_map[sorted(video_fmt_map.iterkeys())[0]]['fmtid']
+-			video_url = video_fmt_map[sorted(video_fmt_map.iterkeys())[0]]['fmturl']
++			video_url = video_fmt_map[sorted(video_fmt_map.iterkeys())[0]]['fmturl'].split(';')[0]
+ 			print "[MyTube] found best available video url:",video_url
+ 		
+ 		return video_url
+ 	
+ 	def getRelatedVideos(self):
+-		print "[MyTubeFeedEntry] getResponseVideos()"
++		print "[MyTubeFeedEntry] getRelatedVideos()"
+ 		for link in self.entry.link:
+ 			#print "Related link: ", link.rel.endswith
+ 			if link.rel.endswith("video.related"):
+@@ -279,13 +288,14 @@ class MyTubePlayerService():
+ 		print "[MyTube] MyTubePlayerService - init"
+ 		self.feedentries = []
+ 		self.feed = None
+-		
++				
+ 	def startService(self):
+ 		print "[MyTube] MyTubePlayerService - startService"
+-		self.yt_service = gdata.youtube.service.YouTubeService()
+-		self.yt_service.developer_key = 'AI39si4AjyvU8GoJGncYzmqMCwelUnqjEMWTFCcUtK-VUzvWygvwPO-sadNwW5tNj9DDCHju3nnJEPvFy4WZZ6hzFYCx8rJ6Mw'
+-		self.yt_service.client_id = 'ytapi-dream-MyTubePlayer-i0kqrebg-0'
+-		self.loggedIn = False
++		self.yt_service = gdata.youtube.service.YouTubeService( 
++			developer_key = 'AI39si4AjyvU8GoJGncYzmqMCwelUnqjEMWTFCcUtK-VUzvWygvwPO-sadNwW5tNj9DDCHju3nnJEPvFy4WZZ6hzFYCx8rJ6Mw',
++			client_id = 'ytapi-dream-MyTubePlayer-i0kqrebg-0' 
++		)
++#		self.loggedIn = False
+ 		#os.environ['http_proxy'] = 'http://169.229.50.12:3128'
+ 		#proxy = os.environ.get('http_proxy')
+ 		#print "FOUND ENV PROXY-->",proxy
+@@ -295,23 +305,18 @@ class MyTubePlayerService():
+ 	def stopService(self):
+ 		print "[MyTube] MyTubePlayerService - stopService"
+ 		del self.ytService
+-		self.loggedIn = False
+-
+-	def isLoggedIn(self):
+-		return self.loggedIn
+ 
+-	def getFeed(self, url):
++	def getFeed(self, url, callback = None, errorback = None):
+ 		print "[MyTube] MyTubePlayerService - getFeed:",url
+ 		self.feedentries = []
+-		self.feed = self.yt_service.GetYouTubeVideoFeed(url)
+-		for entry in self.feed.entry:
+-			MyFeedEntry = MyTubeFeedEntry(self, entry)
+-			self.feedentries.append(MyFeedEntry)
+-		return self.feed			
++		queryThread = YoutubeQueryThread(self.yt_service.GetYouTubeVideoFeed, url, self.gotFeed, self.gotFeedError, callback, errorback)
++		queryThread.start()
++		return queryThread		
+ 
+ 	def search(self, searchTerms, startIndex = 1, maxResults = 25,
+ 					orderby = "relevance", racy = "include", 
+-					author = "", lr = "", categories = "", sortOrder = "ascending"):
++					author = "", lr = "", categories = "", sortOrder = "ascending", 
++					callback = None, errorback = None):
+ 		print "[MyTube] MyTubePlayerService - search()"
+ 		self.feedentries = []
+ 		query = gdata.youtube.service.YouTubeVideoQuery()
+@@ -325,17 +330,24 @@ class MyTubePlayerService():
+ 			query.categories = categories
+ 		query.start_index = startIndex
+ 		query.max_results = maxResults
+-		try:
+-			feed = self.yt_service.YouTubeQuery(query)
+-		except gaierror:
+-			feed = None
++		queryThread = YoutubeQueryThread(self.yt_service.YouTubeQuery, query, self.gotFeed, self.gotFeedError, callback, errorback)
++		queryThread.start()
++		return queryThread	
++	
++	def gotFeed(self, feed, callback):
+ 		if feed is not None:
+ 			self.feed = feed
+ 			for entry in self.feed.entry:
+ 				MyFeedEntry = MyTubeFeedEntry(self, entry)
+ 				self.feedentries.append(MyFeedEntry)
+-		return self.feed		
+-
++		if callback is not None:
++			callback(self.feed)
++			
++	def gotFeedError(self, exception, errorback):
++		if errorback is not None:
++			errorback(exception)
++	
++	
+ 	def getTitle(self):
+ 		return self.feed.title.text
+ 
+@@ -354,5 +366,38 @@ class MyTubePlayerService():
+ 				return link.href
+ 		return None
+ 
+-
++class YoutubeQueryThread(Thread):
++	def __init__(self, query, param, gotFeed, gotFeedError, callback, errorback):
++		Thread.__init__(self)
++		self.messagePump = ePythonMessagePump()
++		self.messages = ThreadQueue()
++		self.gotFeed = gotFeed
++		self.gotFeedError = gotFeedError
++		self.callback = callback
++		self.errorback = errorback
++		self.query = query
++		self.param = param
++		self.canceled = False
++		self.messagePump.recv_msg.get().append(self.finished)
++	
++	def cancel(self):
++		self.canceled = True
++	
++	def run(self):
++		try:
++			feed = self.query(self.param)
++			self.messages.push((True, feed, self.callback))
++			self.messagePump.send(0)
++		except Exception, ex:
++			self.messages.push((False, ex, self.errorback))
++			self.messagePump.send(0)			
++	
++	def finished(self, val):		
++		if not self.canceled:
++			message = self.messages.pop()
++			if message[0]:		
++				self.gotFeed(message[1], message[2])
++			else:
++				self.gotFeedError(message[1], message[2])
++		
+ myTubeService = MyTubePlayerService()
+diff --git a/mytube/src/ThreadQueue.py b/mytube/src/ThreadQueue.py
+new file mode 100644
+index 0000000..ddec604
+--- /dev/null
++++ b/mytube/src/ThreadQueue.py
+@@ -0,0 +1,20 @@
++from threading import Lock
++
++class ThreadQueue:
++	def __init__(self):
++		self.__list = [ ]
++		self.__lock = Lock()
++
++	def push(self, val):
++		lock = self.__lock
++		lock.acquire()
++		self.__list.append(val)
++		lock.release()
++
++	def pop(self):
++		lock = self.__lock
++		lock.acquire()
++		ret = self.__list.pop()
++		lock.release()
++		return ret
++
+diff --git a/mytube/src/__init__.py b/mytube/src/__init__.py
+index c8c21ef..b7b3a56 100755
+--- a/mytube/src/__init__.py
++++ b/mytube/src/__init__.py
+@@ -1,8 +1,7 @@
+ # -*- coding: ISO-8859-1 -*-
+ from Components.Language import language
+ from Tools.Directories import resolveFilename, SCOPE_PLUGINS, SCOPE_LANGUAGE
+-import os,gettext
+-import sha
++import os, gettext, hashlib
+ PluginLanguageDomain = "MyTube"
+ PluginLanguagePath = "Extensions/MyTube/locale"
+ 
+@@ -35,7 +34,7 @@ def decrypt_block(src, mod):
+ 	if len(src) != 128 and len(src) != 202:
+ 		return None
+ 	dest = rsa_pub1024(src[:128], mod)
+-	hash = sha.new(dest[1:107])
++	hash = hashlib.sha1(dest[1:107])
+ 	if len(src) == 202:
+ 		hash.update(src[131:192])	
+ 	result = hash.digest()
+diff --git a/mytube/src/plugin.py b/mytube/src/plugin.py
+index 93b54c1..84b98c4 100755
+--- a/mytube/src/plugin.py
++++ b/mytube/src/plugin.py
+@@ -1,51 +1,44 @@
+-from Plugins.Plugin import PluginDescriptor
+-from MyTubeService import GoogleSuggestions, validate_cert, get_rnd
+-from MyTubeSearch import ConfigTextWithGoogleSuggestions
+-from Tools.BoundFunction import boundFunction
+-from Screens.MessageBox import MessageBox
+-from Screens.Screen import Screen
+-from Screens.ChoiceBox import ChoiceBox
+-from Screens.InfoBar import MoviePlayer
+-from Screens.VirtualKeyBoard import VirtualKeyBoard
+-from Components.ActionMap import ActionMap, NumberActionMap
++from Components.AVSwitch import AVSwitch
++from Components.ActionMap import ActionMap
++from Components.Button import Button
++from Components.ConfigList import ConfigListScreen
+ from Components.Label import Label
+-from Components.ScrollLabel import ScrollLabel
+-from Components.ProgressBar import ProgressBar
++from Components.MultiContent import MultiContentEntryText, MultiContentEntryPixmapAlphaTest
+ from Components.Pixmap import Pixmap
+-from Components.Button import Button
++from Components.ProgressBar import ProgressBar
++from Components.ScrollLabel import ScrollLabel
++from Components.ServiceEventTracker import ServiceEventTracker
+ from Components.Sources.List import List
+-from Components.MultiContent import MultiContentEntryText, MultiContentEntryPixmapAlphaTest
+-from Components.AVSwitch import AVSwitch
+-from Components.ActionMap import HelpableActionMap
+-from Components.config import config, Config, ConfigSelection, ConfigSubsection, ConfigText, getConfigListEntry, ConfigYesNo, ConfigIP, ConfigNumber,ConfigLocations
+-from Components.config import KEY_DELETE, KEY_BACKSPACE, KEY_LEFT, KEY_RIGHT, KEY_HOME, KEY_END, KEY_TOGGLEOW, KEY_ASCII, KEY_TIMEOUT
+-from Components.ConfigList import ConfigListScreen
+-from Components.ServiceEventTracker import ServiceEventTracker, InfoBarBase
+-from Components.Console import Console
+-from Components.Sources.Source import Source
+ from Components.Task import Task, Job, job_manager
++from Components.config import config, ConfigSelection, ConfigSubsection, ConfigText, ConfigYesNo, getConfigListEntry
++#, ConfigIP, ConfigNumber, ConfigLocations
++from MyTubeSearch import ConfigTextWithGoogleSuggestions, MyTubeSettingsScreen, MyTubeTasksScreen, MyTubeHistoryScreen
++from MyTubeService import validate_cert, get_rnd, myTubeService
++from Plugins.Plugin import PluginDescriptor
++from Screens.ChoiceBox import ChoiceBox
++from Screens.InfoBarGenerics import InfoBarNotifications
++from Screens.MessageBox import MessageBox
++from Screens.Screen import Screen
++from Screens.VirtualKeyBoard import VirtualKeyBoard
++from Tools.BoundFunction import boundFunction
++from Tools.Directories import resolveFilename, SCOPE_HDD, SCOPE_CURRENT_PLUGIN
++from Tools.Downloader import downloadWithProgress
+ 
+-from threading import Thread
+-from threading import Condition
++from __init__ import decrypt_block
+ 
+-from Tools.Directories import pathExists, fileExists, resolveFilename, SCOPE_PLUGINS, SCOPE_SKIN_IMAGE, SCOPE_HDD, SCOPE_CURRENT_PLUGIN
+-from Tools.LoadPixmap import LoadPixmap
+-from Tools.Downloader import HTTPProgressDownloader, downloadWithProgress
+-from enigma import eTimer, quitMainloop,eListbox,ePoint, RT_HALIGN_LEFT, RT_HALIGN_RIGHT, RT_VALIGN_CENTER, eListboxPythonMultiContent, eListbox, gFont, getDesktop, ePicLoad, eServiceCenter, iServiceInformation, eServiceReference,iSeekableService,iServiceInformation, iPlayableService, iPlayableServicePtr
+-from os import path as os_path, system as os_system, unlink, stat, mkdir, popen, makedirs, listdir, access, rename, remove, W_OK, R_OK, F_OK
++from enigma import eTPM, eTimer, ePoint, RT_HALIGN_LEFT, RT_VALIGN_CENTER, gFont, ePicLoad, eServiceReference, iPlayableService
++from os import path as os_path, remove as os_remove
+ from twisted.web import client
+-from twisted.internet import reactor
+-from time import time
+ 
+-from Screens.InfoBarGenerics import InfoBarShowHide, InfoBarSeek, InfoBarNotifications, InfoBarServiceNotifications
+-from enigma import eTPM
+-from __init__ import bin2long, long2bin, rsa_pub1024, decrypt_block
++
++
+ etpm = eTPM()
+ rootkey = ['\x9f', '|', '\xe4', 'G', '\xc9', '\xb4', '\xf4', '#', '&', '\xce', '\xb3', '\xfe', '\xda', '\xc9', 'U', '`', '\xd8', '\x8c', 's', 'o', '\x90', '\x9b', '\\', 'b', '\xc0', '\x89', '\xd1', '\x8c', '\x9e', 'J', 'T', '\xc5', 'X', '\xa1', '\xb8', '\x13', '5', 'E', '\x02', '\xc9', '\xb2', '\xe6', 't', '\x89', '\xde', '\xcd', '\x9d', '\x11', '\xdd', '\xc7', '\xf4', '\xe4', '\xe4', '\xbc', '\xdb', '\x9c', '\xea', '}', '\xad', '\xda', 't', 'r', '\x9b', '\xdc', '\xbc', '\x18', '3', '\xe7', '\xaf', '|', '\xae', '\x0c', '\xe3', '\xb5', '\x84', '\x8d', '\r', '\x8d', '\x9d', '2', '\xd0', '\xce', '\xd5', 'q', '\t', '\x84', 'c', '\xa8', ')', '\x99', '\xdc', '<', '"', 'x', '\xe8', '\x87', '\x8f', '\x02', ';', 'S', 'm', '\xd5', '\xf0', '\xa3', '_', '\xb7', 'T', '\t', '\xde', '\xa7', '\xf1', '\xc9', '\xae', '\x8a', '\xd7', '\xd2', '\xcf', '\xb2', '.', '\x13', '\xfb', '\xac', 'j', '\xdf', '\xb1', '\x1d', ':', '?']
+ 
+ config.plugins.mytube = ConfigSubsection()
+ config.plugins.mytube.search = ConfigSubsection()
+ 
++
+ config.plugins.mytube.search.searchTerm = ConfigTextWithGoogleSuggestions("", False, threaded = True)
+ config.plugins.mytube.search.orderBy = ConfigSelection(
+ 				[
+@@ -152,6 +145,7 @@ config.plugins.mytube.general.clearHistoryOnClose = ConfigYesNo(default = False)
+ #config.plugins.mytube.general.ProxyIP = ConfigIP(default=[0,0,0,0])
+ #config.plugins.mytube.general.ProxyPort = ConfigNumber(default=8080)
+ 
++
+ class downloadJob(Job):
+ 	def __init__(self, url, file, title):
+ 		Job.__init__(self, title)
+@@ -189,8 +183,6 @@ class downloadTask(Task):
+ 
+ 
+ 
+-from MyTubeService import myTubeService
+-from MyTubeSearch import MyTubeSettingsScreen,MyTubeTasksScreen,MyTubeHistoryScreen
+ 
+ 
+ class MyTubePlayerMainScreen(Screen, ConfigListScreen):
+@@ -198,7 +190,7 @@ class MyTubePlayerMainScreen(Screen, ConfigListScreen):
+ 	Details = {}
+ 	#(entry, Title, Description, TubeID, thumbnail, PublishedDate,Views,duration,ratings )	
+ 	skin = """
+-		<screen name="MyTubePlayerMainScreen" flags="wfNoBorder" position="0,0" size="720,576" title="MyTubePlayerMainScreen..." >
++		<screen name="MyTubePlayerMainScreen" flags="wfNoBorder" position="0,0" size="720,576" title="MyTube - Browser" >
+ 			<ePixmap position="0,0" zPosition="-1" size="720,576" pixmap="~/mytubemain_bg.png" alphatest="on" transparent="1" backgroundColor="transparent"/>
+ 			<widget name="config" zPosition="2" position="60,60" size="600,50" scrollbarMode="showNever" transparent="1" />
+ 			<widget source="feedlist" render="Listbox" position="49,110" size="628,385" zPosition="1" scrollbarMode="showOnDemand" transparent="1" backgroundPixmap="~/list_bg.png" selectionPixmap="~/list_sel.png" >
+@@ -248,6 +240,8 @@ class MyTubePlayerMainScreen(Screen, ConfigListScreen):
+ 		self.ytfeed = None
+ 		self.currentFeedName = None
+ 		self.videolist = []
++		self.queryThread = None
++		self.queryRunning = False
+ 
+ 		self.video_playlist = []
+ 		self.statuslist = []
+@@ -339,6 +333,7 @@ class MyTubePlayerMainScreen(Screen, ConfigListScreen):
+ 			"nextBouquet": self.switchToConfigList,
+ 			"green": self.keyStdFeed,
+ 			"yellow": self.handleHistory,
++			"menu": self.handleMenu
+ 		}, -2)
+ 
+ 		self["historyactions"] = ActionMap(["ShortcutActions", "WizardActions", "MediaPlayerActions", "MovieSelectionActions", "HelpActions"],
+@@ -385,10 +380,12 @@ class MyTubePlayerMainScreen(Screen, ConfigListScreen):
+ 		current = self["config"].getCurrent()
+ 		if current[1].help_window.instance is not None:
+ 			current[1].help_window.instance.hide()
++
+ 		self.statuslist.append(( _("Fetching feed entries"), _("Trying to download the Youtube feed entries. Please wait..." ) ))
+ 		self["feedlist"].style = "state"
+ 		self['feedlist'].setList(self.statuslist)
+-		self.Timer.start(200)
++		self.Timer.start(200)		
++	
+ 	def TimerFire(self):
+ 		self.Timer.stop()
+ 		if config.plugins.mytube.general.loadFeedOnOpen.value:
+@@ -473,7 +470,7 @@ class MyTubePlayerMainScreen(Screen, ConfigListScreen):
+ 			self.switchToConfigList()
+ 
+ 	def handleMenu(self):
+-		if self.currList == "configlist":
++		if self.currList == "configlist" or self.currList == "status":
+ 			menulist = (
+ 					(_("MyTube Settings"), "settings"),
+ 				)
+@@ -644,6 +641,7 @@ class MyTubePlayerMainScreen(Screen, ConfigListScreen):
+ 		config.plugins.mytube.general.history.save()
+ 		config.plugins.mytube.general.save()
+ 		config.plugins.mytube.save()
++		self.cancelThread()
+ 		self.close()
+ 			
+ 	def keyOK(self):
+@@ -901,16 +899,8 @@ class MyTubePlayerMainScreen(Screen, ConfigListScreen):
+ 		self.propagateUpDownNormally = True
+ 
+ 	def getFeed(self, feedUrl, feedName):
+-		try:
+-			feed = myTubeService.getFeed(feedUrl)
+-		except Exception, e:
+-			feed = None
+-			print "Error querying feed :",feedName
+-			print "E-->",e
+-			self.setState('Error')
+-		if feed is not None:
+-			self.ytfeed = feed
+-		self.buildEntryList()
++		self.queryStarted()
++		self.queryThread = myTubeService.getFeed(feedUrl, self.gotFeed, self.gotFeedError)
+ 
+ 	def getNextEntries(self, result):
+ 		if not result:
+@@ -943,26 +933,53 @@ class MyTubePlayerMainScreen(Screen, ConfigListScreen):
+ 			self.searchFeed(searchContext)
+ 
+ 	def searchFeed(self, searchContext):
+-		print "[MyTubePlayer] searchFeed"
++		print "[MyTubePlayer] searchFeed"		
++		self.queryStarted()		
+ 		self.appendEntries = False
+-		try:
+-			feed = myTubeService.search(searchContext, 
++		self.queryThread = myTubeService.search(searchContext, 
+ 					orderby = config.plugins.mytube.search.orderBy.value,
+ 					racy = config.plugins.mytube.search.racy.value,
+ 					lr = config.plugins.mytube.search.lr.value,
+ 					categories = [ config.plugins.mytube.search.categories.value ],
+-					sortOrder = config.plugins.mytube.search.sortOrder.value)
+-		except Exception, e:
+-			feed = None
+-			print "Error querying search for :",config.plugins.mytube.search.searchTerm.value
+-			print "E-->",e
+-			self.setState('Error')
++					sortOrder = config.plugins.mytube.search.sortOrder.value,
++					callback = self.gotSearchFeed, errorback = self.gotSearchFeedError)
++	
++	def queryStarted(self):
++		if self.queryRunning:
++			self.cancelThread()
++		self.queryRunning = True		
++	
++	def queryFinished(self):
++		self.queryRunning = False
++	
++	def cancelThread(self):
++		print "[MyTubePlayer] cancelThread"
++		if self.queryThread is not None:
++			self.queryThread.cancel()
++		self.queryFinished()
++	
++	def gotFeed(self, feed):
++		print "[MyTubePlayer] gotFeed"
++		self.queryFinished()
+ 		if feed is not None:
+ 			self.ytfeed = feed
+-		if self.FirstRun == True:	
+-			self.FirstRun = False
+ 		self.buildEntryList()
+-
++	
++	def gotFeedError(self, exception):
++		print "[MyTubePlayer] gotFeedError"
++		self.queryFinished()
++		self.setState('Error')
++	
++	def gotSearchFeed(self, feed):
++		if self.FirstRun:	
++			self.FirstRun = False
++		self.gotFeed(feed)
++	
++	def gotSearchFeedError(self, exception):
++		if self.FirstRun:	
++			self.FirstRun = False
++		self.gotFeedError(exception)
++	
+ 	def buildEntryList(self):
+ 		self.mytubeentries = None
+ 		self.screenshotList = []
+@@ -989,7 +1006,7 @@ class MyTubePlayerMainScreen(Screen, ConfigListScreen):
+ 					self["feedlist"].setIndex(0)
+ 					self["feedlist"].setList(self.videolist)
+ 					self["feedlist"].updateList(self.videolist)
+-					if self.FirstRun == True:	
++					if self.FirstRun and not config.plugins.mytube.general.loadFeedOnOpen.value:
+ 						self.switchToConfigList()
+ 					else:
+ 						self.switchToFeedList()
+@@ -1157,7 +1174,7 @@ class MyTubePlayerMainScreen(Screen, ConfigListScreen):
+ 			if self.Details.has_key(tubeid):
+ 				self.Details[tubeid]["thumbnail"] = ptr
+ 			if (os_path.exists(thumbnailFile) == True):
+-				remove(thumbnailFile)
++				os_remove(thumbnailFile)
+ 			del self.picloads[tubeid]
+ 		else:
+ 			del self.picloads[tubeid]
+@@ -1186,7 +1203,7 @@ class MyTubePlayerMainScreen(Screen, ConfigListScreen):
+ 
+ class MyTubeVideoInfoScreen(Screen):
+ 	skin = """
+-		<screen name="MyTubeVideoInfoScreen" flags="wfNoBorder" position="0,0" size="720,576" title="MyTubePlayerMainScreen..." >
++		<screen name="MyTubeVideoInfoScreen" flags="wfNoBorder" position="0,0" size="720,576" title="MyTube - Video Info" >
+ 			<ePixmap position="0,0" zPosition="-1" size="720,576" pixmap="~/mytubemain_bg.png" alphatest="on" transparent="1" backgroundColor="transparent"/>
+ 			<widget name="title" position="60,50" size="600,50" zPosition="5" valign="center" halign="left" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
+ 			<widget name="starsbg" pixmap="~/starsbar_empty.png" position="560,220" zPosition="5" size="100,20" transparent="1" alphatest="on" />
+@@ -1361,7 +1378,7 @@ class MyTubeVideoInfoScreen(Screen):
+ 			self.thumbnails[picindex][3] = ptr
+ 			if (os_path.exists(self.thumbnails[picindex][2]) == True):
+ 				print "removing", self.thumbnails[picindex][2]
+-				remove(self.thumbnails[picindex][2])
++				os_remove(self.thumbnails[picindex][2])
+ 				del self.picloads[picindex]
+ 				if len(self.picloads) == 0:
+ 					self.timer.startLongTimer(3)
+@@ -1400,7 +1417,7 @@ class MyTubeVideoInfoScreen(Screen):
+ 
+ class MyTubeVideoHelpScreen(Screen):
+ 	skin = """
+-		<screen name="MyTubeVideoHelpScreen" flags="wfNoBorder" position="0,0" size="720,576" title="MyTubePlayerMainScreen..." >
++		<screen name="MyTubeVideoHelpScreen" flags="wfNoBorder" position="0,0" size="720,576" title="MyTube - Help" >
+ 			<ePixmap position="0,0" zPosition="-1" size="720,576" pixmap="~/mytubemain_bg.png" alphatest="on" transparent="1" backgroundColor="transparent"/>
+ 			<widget name="title" position="60,50" size="600,50" zPosition="5" valign="center" halign="left" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
+ 			<widget name="detailtext" position="60,120" size="610,370" zPosition="10" font="Regular;21" transparent="1" halign="left" valign="top"/>
+@@ -1561,7 +1578,6 @@ class MyTubePlayer(Screen, InfoBarNotifications):
+ 		if self.infoCallback is not None:	
+ 			self.infoCallback()
+ 
+-
+ 	def playNextFile(self):
+ 		print "playNextFile"
+ 		nextservice,error = self.nextCallback()

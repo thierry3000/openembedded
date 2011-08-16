@@ -1,7 +1,7 @@
 DESCRIPTION = "Vuplus: E2 Task for the Vuplus Distribution"
 SECTION = "vuplus/base"
 LICENSE = "MIT"
-PR = "r4"
+PR = "r5"
 
 inherit task
 
@@ -50,10 +50,12 @@ RDEPENDS_task-vuplus-enigma2_append_bm750 = "\
 "
 RDEPENDS_task-vuplus-enigma2_append_vuuno = "\
   enigma2-plugin-systemplugins-fpgaupgrade \
+  enigma2-plugin-systemplugins-blindscan \
   enigma2-plugin-systemplugins-manualfancontrol \
 "
 RDEPENDS_task-vuplus-enigma2_append_vuultimo = "\
   enigma2-plugin-systemplugins-fpgaupgrade \
+  enigma2-plugin-systemplugins-blindscan \
   enigma2-plugin-systemplugins-manualfancontrol \
 "
 
