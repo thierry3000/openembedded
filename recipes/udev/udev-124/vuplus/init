@@ -81,7 +81,7 @@ make_extra_nodes() {
 
 [ -x /sbin/udevd ] || exit 0
 
-PATH="/sbin:/bin:/usr/bin"
+PATH="/sbin:/bin"
 
 # defaults
 tmpfs_size="2M"
@@ -90,7 +90,6 @@ udev_root="/dev"
 if [ -e /etc/udev/udev.conf ]; then
   . /etc/udev/udev.conf
 fi
-
 
 ##############################################################################
 
@@ -136,9 +135,6 @@ case "$1" in
 
     create_dev_makedev
 
-#force COLDPLUG to yes
-
-    COLDPLUG=yes;
     if [ $COLDPLUG != "no" ]; then
         echo "Synthesizing the initial hotplug events"
         udevadm trigger
