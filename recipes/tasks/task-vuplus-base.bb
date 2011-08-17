@@ -1,7 +1,7 @@
 DESCRIPTION = "Vuplus: Base Task for the Vuplus Distribution"
 SECTION = "vuplus/base"
 LICENSE = "MIT"
-PR = "r5"
+PR = "r6"
 
 inherit task
 
@@ -29,7 +29,6 @@ VUPLUS_BASE_ESSENTIAL = "\
   tuxbox-common \
   util-linux-sfdisk \
   vsftpd \
-  udev-static-devices \
   mtd-utils \
   hdparm \  
 "
