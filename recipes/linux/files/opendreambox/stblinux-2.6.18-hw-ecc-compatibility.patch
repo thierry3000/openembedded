@@ -36,8 +36,8 @@
 +		} else {
 +			if (bits_modified) {
 +				uint32_t acc = brcmnand_ctrl_read(BCHP_NAND_ACC_CONTROL);
-+if (gdebug > 3) printk("re-enable ecc %08x %08x, old %08x\n", acc, bits_modified, acc);
-+				brcmnand_ctrl_write(BCHP_NAND_ACC_CONTROL, acc);
++if (gdebug > 3) printk("re-enable ecc %08x %08x, old %08x\n", acc | bits_modified, bits_modified, acc);
++				brcmnand_ctrl_write(BCHP_NAND_ACC_CONTROL, acc | bits_modified);
 +				bits_modified = 0;
 +			}
 +		}
