@@ -4,7 +4,7 @@ DEPENDS = "python-native db gdbm openssl readline sqlite3 tcl zlib\
 DEPENDS_sharprom = "python-native db readline zlib gdbm openssl"
 DEPENDS_opendreambox = "python-native db gdbm openssl readline sqlite3 zlib"
 # set to .0 on every increase of INC_PR
-PR = "${INC_PR}.1"
+PR = "${INC_PR}.2"
 
 SRC_URI = "\
   http://www.python.org/ftp/python/${PV}/Python-${PV}.tar.bz2 \
@@ -105,22 +105,22 @@ do_install_append() {
 require python-${PYTHON_MAJMIN}-manifest.inc
 
 # manual dependency additions
-RPROVIDES_${PN}-core = "${PN}"
-RRECOMMENDS_${PN}-core = "${PN}-readline"
-RRECOMMENDS_${PN}-crypt = "openssl"
+RPROVIDES_python-core = "python"
+RRECOMMENDS_python-core = "python-readline"
+RRECOMMENDS_python-crypt = "openssl"
 
 # add sitecustomize
-FILES_${PN}-core += "${libdir}/python${PYTHON_MAJMIN}/sitecustomize.py"
+FILES_python-core += "${libdir}/python${PYTHON_MAJMIN}/sitecustomize.py"
 # ship 2to3
-FILES_${PN}-core += "${bindir}/2to3"
+FILES_python-core += "${bindir}/2to3"
 
 # package libpython2
-PACKAGES =+ "lib${PN}2"
-FILES_lib${PN}2 = "${libdir}/libpython*.so.*"
+PACKAGES =+ "libpython2"
+FILES_libpython2 = "${libdir}/libpython*.so*"
 
 # additional stuff -dev
 
-FILES_${PN}-dev += "\
+FILES_${PN}-dev = "\
   ${includedir} \
   ${libdir}/lib*${SOLIBSDEV} \
   ${libdir}/*.la \
@@ -134,12 +134,13 @@ FILES_${PN}-dev += "\
 "
 
 # catch debug extensions (isn't that already in python-core-dbg?)
-FILES_${PN}-dbg += "${libdir}/python${PYTHON_MAJMIN}/lib-dynload/.debug"
+FILES_python-dbg += "${libdir}/python${PYTHON_MAJMIN}/lib-dynload/.debug"
 
 # catch all the rest (unsorted)
-PACKAGES += "${PN}-misc"
-FILES_${PN}-misc = "${libdir}/python${PYTHON_MAJMIN}"
+PACKAGES += "python-misc"
+FILES_python-misc = "${libdir}/python${PYTHON_MAJMIN}"
+RDEPENDS_python-misc += "python-shell"
 
 # catch manpage
-PACKAGES += "${PN}-man"
-FILES_${PN}-man = "${datadir}/man"
+PACKAGES += "python-man"
+FILES_python-man = "${datadir}/man"
