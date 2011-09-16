@@ -1,23 +1,21 @@
 DEFAULT_PREFERENCE = "-1"
-DEFAULT_PREFERENCE_opendreambox = "1"
 LICENSE = "LGPLv2.1 GPLv3"
 
 FILESPATHPKG =. "qt-${PV}:"
 
 SRC_URI = "\
-	ftp://ftp.trolltech.com/qt/source/qt-everywhere-opensource-src-${PV}.tar.gz \
-	file://blacklist-fraudulent-comodo-certificates-patch.diff;patch=1 \
+	http://get.qt.nokia.com/qt/source/qt-everywhere-opensource-src-${PV}.tar.gz \
 	file://0004-no-qmake.patch;patch=1 \
 	file://hack-out-pg2-4.7.0.patch;patch=1 \
 	file://0006-freetype-host-includes.patch;patch=1 \
 	file://0001-Added-Openembedded-crossarch-option.patch;patch=1 \
 	file://0010-phonon-gstreamer-rgb-endianess.patch;patch=1 \
-	file://webkit_r82142.patch;patch=1 \
+	file://fix-translations.patch;patch=1 \
+	file://0001-wsegl2-support.patch;patch=1 \
 	file://g++.conf \
 	file://linux.conf \
-           "
-# Set necessary variables in the profile
-SRC_URI += "file://qte.sh"
+	file://blacklist-diginotar-certs.diff;patch=1 \
+	"
 
 S = "${WORKDIR}/qt-everywhere-opensource-src-${PV}"
 
@@ -25,7 +23,7 @@ FILES_${QT_BASE_NAME}-tools                += "${bindir}/qml"
 
 do_configure_prepend() {
     for pro in $(find ${S} -name "*.pro") ; do
-        sed -i 's:$$QT_BUILD_TREE/bin/lrelease:${OE_QMAKE_LRELEASE}:g' $pro
+        sed -i 's:$$LRELEASE:${STAGING_BINDIR_NATIVE}/lrelease4:g' $pro
     done
 
     sed -i s:SEDME:${S}: ${WORKDIR}/linux.conf
@@ -37,24 +35,11 @@ do_configure_prepend() {
     ${S}/configure
 }
 
-do_configure_append() {
-    sed -e '/QMAKE_TARGET /d' -e '/TARGET /d' -i ${S}/translations/Makefile
-}
-
 QT_GLFLAGS ?= ""
-QT_CONFIG_FLAGS += " -xmlpatterns -no-rpath -qt3support -reduce-relocations -silent ${QT_GLFLAGS}"
+QT_CONFIG_FLAGS += " -script -scripttools -declarative -xmlpatterns -no-rpath -qt3support -reduce-relocations -silent ${QT_GLFLAGS}"
 
 do_compile() {
-    # Fixup missing wsegl header in some SGX SDKs
-    if ! [ -e ${STAGING_INCDIR}/wsegl.h ] ; then
-        cp src/3rdparty/powervr/wsegl.h src/plugins/gfxdrivers/powervr/QWSWSEGL/
-    fi
-
     unset CFLAGS CXXFLAGS
-    install -m 0755 ${STAGING_BINDIR_NATIVE}/rcc4 ${S}/bin/rcc
-    install -m 0755 ${STAGING_BINDIR_NATIVE}/moc4 ${S}/bin/moc
-    install -m 0755 ${STAGING_BINDIR_NATIVE}/uic4 ${S}/bin/uic
-    install -m 0755 ${STAGING_BINDIR_NATIVE}/lrelease4 ${S}/bin/lrelease
 
     oe_runmake ${EXTRA_ENV}
 }
