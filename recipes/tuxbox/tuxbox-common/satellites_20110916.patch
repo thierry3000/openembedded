@@ -1,7 +1,7 @@
-diff --git a/tuxbox/satellites.xml b/tuxbox/satellites.xml
+diff --git ../tuxbox/satellites.xml ../tuxbox/satellites.xml
 index 7393703..66903df 100644
---- a/tuxbox/satellites.xml
-+++ b/tuxbox/satellites.xml
+--- ../tuxbox/satellites.xml
++++ ../tuxbox/satellites.xml
 @@ -359,6 +359,8 @@
  		<transponder fec_inner="3" frequency="11650000" modulation="1" polarization="0" symbol_rate="21350000" system="0"/>
  		<transponder fec_inner="3" frequency="11670000" modulation="1" polarization="0" symbol_rate="10005000" system="0"/>
