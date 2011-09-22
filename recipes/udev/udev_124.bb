@@ -2,7 +2,7 @@ DESCRIPTION = "udev is a daemon which dynamically creates and removes device nod
 /dev/, handles hotplug events and loads drivers at boot time. It replaces \
 the hotplug package and requires a kernel not older than 2.6.12."
 RPROVIDES_${PN} = "hotplug"
-PR = "r20"
+PR = "r21"
 
 SRC_URI = "http://kernel.org/pub/linux/utils/kernel/hotplug/udev-${PV}.tar.gz \
 	   file://noasmlinkage.patch;patch=1 \
@@ -17,10 +17,6 @@ SRC_URI = "http://kernel.org/pub/linux/utils/kernel/hotplug/udev-${PV}.tar.gz \
 	   file://local.rules \
 	   "
 
-SRC_URI_append_bm750 = " file://50-udev-default.rules "
-SRC_URI_append_vusolo = " file://50-udev-default.rules "
-SRC_URI_append_vuuno = " file://50-udev-default.rules "
-SRC_URI_append_vuultimo = " file://50-udev-default.rules "
 SRC_URI_append_h2200 = " file://50-hostap_cs.rules "
 PACKAGE_ARCH_h2200 = "h2200"
 
@@ -32,6 +28,15 @@ SRC_URI_append_dm800 = " ${@base_contains('PREFERRED_VERSION_linux-dm800', '2.6.
 SRC_URI_append_dm800se = " ${@base_contains('PREFERRED_VERSION_linux-dm800se', '2.6.18', 'file://41-od-linux-2.6.18-misc.rules', '', d)}"
 SRC_URI_append_dm7020hd = " ${@base_contains('PREFERRED_VERSION_linux-dm7020hd', '2.6.18', 'file://41-od-linux-2.6.18-misc.rules', '', d)}"
 SRC_URI_append_dm500hd = " ${@base_contains('PREFERRED_VERSION_linux-dm500hd', '2.6.18', 'file://41-od-linux-2.6.18-misc.rules', '', d)}"
+
+SRC_URI_append_vuplus = " file://40-od-devfs-compatibility.rules \
+	   file://42-od-oled-compatibility.rules"
+
+SRC_URI_append_bm750 = " ${@base_contains('PREFERRED_VERSION_linux-bm750', '2.6.18', 'file://41-od-linux-2.6.18-misc.rules', '', d)}"
+SRC_URI_append_vusolo = " ${@base_contains('PREFERRED_VERSION_linux-vusolo', '2.6.18', 'file://41-od-linux-2.6.18-misc.rules', '', d)}"
+SRC_URI_append_vuuno = " ${@base_contains('PREFERRED_VERSION_linux-vuuno', '2.6.18', 'file://41-od-linux-2.6.18-misc.rules', '', d)}"
+SRC_URI_append_vuultimo = " ${@base_contains('PREFERRED_VERSION_linux-vuultimo', '2.6.18', 'file://41-od-linux-2.6.18-misc.rules', '', d)}"
+
 
 require udev.inc
 
@@ -85,6 +90,7 @@ do_install_append_opendreambox() {
 }
 
 do_install_append_vuplus() {
-	install -m 0644 ${WORKDIR}/50-udev-default.rules         ${D}${sysconfdir}/udev/rules.d/50-udev-default.rules
+	install -m 0644 ${WORKDIR}/??-od-*.rules ${D}${sysconfdir}/udev/rules.d/
 }
+
 

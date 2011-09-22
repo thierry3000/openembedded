@@ -1,7 +1,7 @@
 DESCRIPTION = "Vuplus: W-LAN Task for the Vuplus Distribution"
 SECTION = "vuplus/base"
 LICENSE = "MIT"
-PR = "r3"
+PR = "r4"
 
 inherit task
 
@@ -11,7 +11,7 @@ inherit task
 DESCRIPTION_${PN} = "Vuplus: W-LAN Support"
 DEPENDS_${PN} = "enigma2-plugins"
 RDEPENDS_${PN} = "\
-  enigma2-plugin-systemplugins-wirelesslan \
+  ${@base_contains("MACHINE_FEATURES", "vuwlan", "enigma2-plugin-systemplugins-wirelesslansetup", "enigma2-plugin-systemplugins-wirelesslan", d)} \
   wireless-tools \
   wpa-supplicant \
 "
@@ -44,6 +44,7 @@ WLAN_USB_MODULES_LEGACY = "\
   wlan-rt73 \
   r8712u \
   rt3070 \
+  r8192cu \
 "
 
 RDEPENDS_${PN}_append_bm750 = "\
