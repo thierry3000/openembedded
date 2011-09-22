@@ -1,6 +1,6 @@
 require linux-vuplus-2.6.18.inc
 
-PR = "r14"
+PR = "r15"
 
 SRC_URI += "\
 	file://vuuno_defconfig \

@@ -1,6 +1,6 @@
 require linux-vuplus-2.6.18.inc
 
-PR = "r11"
+PR = "r12"
 
 SRC_URI += "\
 	file://bm750_defconfig \

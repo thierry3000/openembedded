@@ -109,7 +109,7 @@ Index: include/linux/dvb/frontend.h
  } fe_guard_interval_t;
  
  
-@@ -239,7 +257,138 @@
+@@ -239,7 +257,139 @@
  	struct dvb_frontend_parameters parameters;
  };
  
@@ -205,6 +205,7 @@ Index: include/linux/dvb/frontend.h
 +	SYS_CMMB,
 +	SYS_DAB,
 +	SYS_DVBT2,
++	SYS_TURBO,
 +} fe_delivery_system_t;
 +
 +struct dtv_cmds_h {
@@ -305,7 +306,7 @@ Index: include/linux/dvb/version.h
 -#define DVB_API_VERSION 3
 -#define DVB_API_VERSION_MINOR 1
 +#define DVB_API_VERSION 5
-+#define DVB_API_VERSION_MINOR 3
++#define DVB_API_VERSION_MINOR 4
  
  #endif /*_DVBVERSION_H_*/
 Index: include/linux/dvb/net.h
