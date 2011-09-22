@@ -4,7 +4,7 @@ PRIORITY = "optional"
 LICENSE = "GPL"
 
 PV = "1.7"
-PR = "r0"
+PR = "r1"
 
 
 SRC_URI = "file://showiframe.c"
