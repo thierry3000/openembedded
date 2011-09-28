@@ -16,6 +16,6 @@ QT_CONFIG_FLAGS += " \
  -exceptions \
 "
 
-PR .= "-dream2"
+PR .= "-vuplus"
 
 QT_CONFIG_FLAGS := "${@oe_filter_out('^(-webkit)$', '${QT_CONFIG_FLAGS}', d)} -no-webkit"

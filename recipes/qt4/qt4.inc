@@ -9,8 +9,8 @@ QT_ENDIAN = "${@qt_endian(d)}"
 QT_CONFIG_FLAGS += "-release -no-cups -no-accessibility -reduce-relocations \
                     -shared -no-nas-sound -no-sm -no-nis \
                     -qt-gif -system-libjpeg -system-libpng -system-zlib \
-                    -no-sql-ibase -plugin-sql-mysql -no-sql-odbc -plugin-sql-psql -plugin-sql-sqlite -plugin-sql-sqlite2 \
-                    -no-pch -qdbus -stl -glib -phonon -webkit"
+                    -no-sql-ibase -no-sql-mysql -no-sql-odbc -no-sql-psql -no-sql-sqlite -no-sql-sqlite2 \
+                    -no-pch -qdbus -stl -glib -no-phonon -webkit"
 
 EXTRA_OEMAKE = "-e"
 

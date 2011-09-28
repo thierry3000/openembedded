@@ -32,8 +32,7 @@ S = "${WORKDIR}/qt-embedded-linux-opensource-src-${PV}"
 
 QT_CONFIG_FLAGS += " \
     -qtlibinfix ${QT_LIBINFIX} \
-    -plugin-gfx-transformed -plugin-gfx-qvfb -plugin-gfx-vnc -plugin-gfx-directfb \
-    -plugin-mouse-tslib -qt-mouse-pc -qt-mouse-qvfb -qt-mouse-linuxinput \
+    -qt-mouse-pc -qt-mouse-linuxinput \
     -qt-kbd-tty -qt-kbd-linuxinput \
     -DQT_KEYPAD_NAVIGATION \
     "

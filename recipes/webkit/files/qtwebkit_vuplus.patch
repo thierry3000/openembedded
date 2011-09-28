@@ -1,0 +1,270 @@
+diff --git a/Source/WebCore/page/ContextMenuController.cpp b/Source/WebCore/page/ContextMenuController.cpp
+index 923d2ce..556c8cd 100644
+--- a/Source/WebCore/page/ContextMenuController.cpp
++++ b/Source/WebCore/page/ContextMenuController.cpp
+@@ -195,6 +195,8 @@ void ContextMenuController::contextMenuItemSelected(ContextMenuItem* item)
+     case ContextMenuItemTagCopyLinkToClipboard:
+         frame->editor()->copyURL(m_hitTestResult.absoluteLinkURL(), m_hitTestResult.textContent());
+         break;
++    case ContextMenuItemTagGotoYoutubeLink:
++        break;
+     case ContextMenuItemTagOpenImageInNewWindow:
+         openNewWindow(m_hitTestResult.absoluteImageURL(), frame);
+         break;
+@@ -625,6 +627,8 @@ void ContextMenuController::populate()
+         contextMenuItemTagDownloadLinkToDisk());
+     ContextMenuItem CopyLinkItem(ActionType, ContextMenuItemTagCopyLinkToClipboard, 
+         contextMenuItemTagCopyLinkToClipboard());
++    ContextMenuItem GotoYoutube(ActionType, ContextMenuItemTagGotoYoutubeLink, 
++        contextMenuItemTagGotoYoutubeLink());
+     ContextMenuItem OpenImageInNewWindowItem(ActionType, ContextMenuItemTagOpenImageInNewWindow, 
+         contextMenuItemTagOpenImageInNewWindow());
+     ContextMenuItem DownloadImageItem(ActionType, ContextMenuItemTagDownloadImageToDisk, 
+@@ -1172,6 +1176,7 @@ void ContextMenuController::checkOrEnableIfNeeded(ContextMenuItem& item) const
+         case ContextMenuItemTagOpenLinkInNewWindow:
+         case ContextMenuItemTagDownloadLinkToDisk:
+         case ContextMenuItemTagCopyLinkToClipboard:
++		case ContextMenuItemTagGotoYoutubeLink:
+         case ContextMenuItemTagOpenImageInNewWindow:
+         case ContextMenuItemTagDownloadImageToDisk:
+         case ContextMenuItemTagCopyImageToClipboard:
+diff --git a/Source/WebCore/platform/ContextMenuItem.h b/Source/WebCore/platform/ContextMenuItem.h
+index 46a6987..bcab2c4 100644
+--- a/Source/WebCore/platform/ContextMenuItem.h
++++ b/Source/WebCore/platform/ContextMenuItem.h
+@@ -158,6 +158,7 @@ namespace WebCore {
+         ContextMenuItemTagEnterVideoFullscreen,
+         ContextMenuItemTagMediaPlayPause,
+         ContextMenuItemTagMediaMute,
++        ContextMenuItemTagGotoYoutubeLink,
+         ContextMenuItemBaseCustomTag = 5000,
+         ContextMenuItemCustomTagNoAction = 5998,
+         ContextMenuItemLastCustomTag = 5999,
+diff --git a/Source/WebCore/platform/DefaultLocalizationStrategy.cpp b/Source/WebCore/platform/DefaultLocalizationStrategy.cpp
+index 4c11f29..1dab43d 100644
+--- a/Source/WebCore/platform/DefaultLocalizationStrategy.cpp
++++ b/Source/WebCore/platform/DefaultLocalizationStrategy.cpp
+@@ -150,6 +150,11 @@ String DefaultLocalizationStrategy::contextMenuItemTagCopyLinkToClipboard()
+     return WEB_UI_STRING("Copy Link", "Copy Link context menu item");
+ }
+ 
++String DefaultLocalizationStrategy::contextMenuItemTagGotoYoutubeLink()
++{
++    return WEB_UI_STRING("Open Youtube", "Open Youtube context menu item");
++}
++
+ String DefaultLocalizationStrategy::contextMenuItemTagOpenImageInNewWindow()
+ {
+     return WEB_UI_STRING("Open Image in New Window", "Open Image in New Window context menu item");
+diff --git a/Source/WebCore/platform/DefaultLocalizationStrategy.h b/Source/WebCore/platform/DefaultLocalizationStrategy.h
+index 56120e0..3d65344 100644
+--- a/Source/WebCore/platform/DefaultLocalizationStrategy.h
++++ b/Source/WebCore/platform/DefaultLocalizationStrategy.h
+@@ -52,6 +52,7 @@ private:
+     virtual String contextMenuItemTagOpenLinkInNewWindow();
+     virtual String contextMenuItemTagDownloadLinkToDisk();
+     virtual String contextMenuItemTagCopyLinkToClipboard();
++	virtual String contextMenuItemTagGotoYoutubeLink();
+     virtual String contextMenuItemTagOpenImageInNewWindow();
+     virtual String contextMenuItemTagDownloadImageToDisk();
+     virtual String contextMenuItemTagCopyImageToClipboard();
+diff --git a/Source/WebCore/platform/LocalizationStrategy.h b/Source/WebCore/platform/LocalizationStrategy.h
+index f883893..14b322e 100644
+--- a/Source/WebCore/platform/LocalizationStrategy.h
++++ b/Source/WebCore/platform/LocalizationStrategy.h
+@@ -53,6 +53,7 @@ public:
+     virtual String contextMenuItemTagOpenLinkInNewWindow() = 0;
+     virtual String contextMenuItemTagDownloadLinkToDisk() = 0;
+     virtual String contextMenuItemTagCopyLinkToClipboard() = 0;
++	virtual String contextMenuItemTagGotoYoutubeLink() = 0;
+     virtual String contextMenuItemTagOpenImageInNewWindow() = 0;
+     virtual String contextMenuItemTagDownloadImageToDisk() = 0;
+     virtual String contextMenuItemTagCopyImageToClipboard() = 0;
+diff --git a/Source/WebCore/platform/LocalizedStrings.cpp b/Source/WebCore/platform/LocalizedStrings.cpp
+index f5ad0b7..861be70 100644
+--- a/Source/WebCore/platform/LocalizedStrings.cpp
++++ b/Source/WebCore/platform/LocalizedStrings.cpp
+@@ -94,6 +94,11 @@ String contextMenuItemTagCopyLinkToClipboard()
+     return platformStrategies()->localizationStrategy()->contextMenuItemTagCopyLinkToClipboard();
+ }
+ 
++String contextMenuItemTagGotoYoutubeLink()
++{
++    return platformStrategies()->localizationStrategy()->contextMenuItemTagGotoYoutubeLink();
++}
++
+ String contextMenuItemTagOpenImageInNewWindow()
+ {
+     return platformStrategies()->localizationStrategy()->contextMenuItemTagOpenImageInNewWindow();
+diff --git a/Source/WebCore/platform/LocalizedStrings.h b/Source/WebCore/platform/LocalizedStrings.h
+index 777fcec..3080831 100644
+--- a/Source/WebCore/platform/LocalizedStrings.h
++++ b/Source/WebCore/platform/LocalizedStrings.h
+@@ -49,6 +49,7 @@ namespace WebCore {
+     String contextMenuItemTagOpenLinkInNewWindow();
+     String contextMenuItemTagDownloadLinkToDisk();
+     String contextMenuItemTagCopyLinkToClipboard();
++	String contextMenuItemTagGotoYoutubeLink();
+     String contextMenuItemTagOpenImageInNewWindow();
+     String contextMenuItemTagDownloadImageToDisk();
+     String contextMenuItemTagCopyImageToClipboard();
+diff --git a/Source/WebKit/chromium/src/LocalizedStrings.cpp b/Source/WebKit/chromium/src/LocalizedStrings.cpp
+index 35e03c4..6dbbfa4 100644
+--- a/Source/WebKit/chromium/src/LocalizedStrings.cpp
++++ b/Source/WebKit/chromium/src/LocalizedStrings.cpp
+@@ -242,6 +242,7 @@ String imageTitle(const String& filename, const IntSize& size)
+ String contextMenuItemTagOpenLinkInNewWindow() { return String(); }
+ String contextMenuItemTagDownloadLinkToDisk() { return String(); }
+ String contextMenuItemTagCopyLinkToClipboard() { return String(); }
++String contextMenuItemTagGotoYoutubeLink() { return String(); }
+ String contextMenuItemTagOpenImageInNewWindow() { return String(); }
+ String contextMenuItemTagDownloadImageToDisk() { return String(); }
+ String contextMenuItemTagCopyImageToClipboard() { return String(); }
+diff --git a/Source/WebKit/qt/Api/qwebpage.cpp b/Source/WebKit/qt/Api/qwebpage.cpp
+index b3efe0f..8860ba8 100644
+--- a/Source/WebKit/qt/Api/qwebpage.cpp
++++ b/Source/WebKit/qt/Api/qwebpage.cpp
+@@ -247,7 +247,8 @@ static const char* editorCommandWebActions[] =
+ 
+     0, // CopyImageUrlToClipboard,
+ 
+-    0 // WebActionCount
++    0, // WebActionCount
++    0  // GotoYoutubeLink
+ };
+ 
+ // Lookup the appropriate editor command to use for WebAction \a action
+@@ -436,6 +437,7 @@ static QWebPage::WebAction webActionForContextMenuAction(WebCore::ContextMenuAct
+         case WebCore::ContextMenuItemTagOpenLinkInNewWindow: return QWebPage::OpenLinkInNewWindow;
+         case WebCore::ContextMenuItemTagDownloadLinkToDisk: return QWebPage::DownloadLinkToDisk;
+         case WebCore::ContextMenuItemTagCopyLinkToClipboard: return QWebPage::CopyLinkToClipboard;
++		case WebCore::ContextMenuItemTagGotoYoutubeLink: return QWebPage::GotoYoutubeLink;
+         case WebCore::ContextMenuItemTagOpenImageInNewWindow: return QWebPage::OpenImageInNewWindow;
+         case WebCore::ContextMenuItemTagDownloadImageToDisk: return QWebPage::DownloadImageToDisk;
+         case WebCore::ContextMenuItemTagCopyImageToClipboard: return QWebPage::CopyImageToClipboard;
+@@ -2335,6 +2337,53 @@ static void collectChildFrames(QWebFrame* frame, QList<QWebFrame*>& list)
+ 
+     \sa action()
+ */
++#include <string.h>
++#include <unistd.h>
++#include <sys/un.h>
++#include <sys/types.h>
++#include <arpa/inet.h>
++#include "qscreen_qws.h"
++
++#define BUFF_SIZE 	1024
++#define FILE_SERVER 	"/tmp/vuplus.tmp"
++int uds_send_message(char* buffer)
++{
++    int message_len;
++    int client_socket;
++    struct sockaddr_un server_addr;
++
++    if(buffer == 0)
++    {
++        qDebug("[buffer is NULL]");
++        return 0;
++    }
++
++    if((client_socket  = socket( PF_FILE, SOCK_STREAM, 0)) < 0)
++    {
++        qDebug("[fail to open socket]");
++        return 0;
++    }
++    memset(&server_addr, 0, sizeof(server_addr));
++    strcpy(server_addr.sun_path, FILE_SERVER);
++    server_addr.sun_family = AF_UNIX;
++    if(connect(client_socket, (struct sockaddr*)&server_addr, sizeof(server_addr)) < 0)
++    {
++        qDebug("[fail to connect][%s]", FILE_SERVER);
++        return 0;
++    }
++
++    Singleton<CVu>::instance().lock();
++
++    write(client_socket, buffer, strlen(buffer));
++    int rc = read (client_socket, buffer, BUFF_SIZE);
++    buffer[rc] = 0;
++
++    Singleton<CVu>::instance().unlock();
++
++    close(client_socket);
++    return 1;
++}
++
+ void QWebPage::triggerAction(WebAction action, bool)
+ {
+     WebCore::Frame *frame = d->page->focusController()->focusedOrMainFrame();
+@@ -2373,6 +2422,19 @@ void QWebPage::triggerAction(WebAction action, bool)
+             editor->copyURL(d->hitTestResult.linkUrl(), d->hitTestResult.linkText());
+             break;
+         }
++        case GotoYoutubeLink: {
++            char tmp[BUFF_SIZE] = {0};
++            String url_string = KURL(d->hitTestResult.linkUrl()).string();
++            UChar* url_wide_string = url_string.characters();
++            for(int i=0 ; i<url_string.length() ; i++)
++                tmp[i] = (url_wide_string[i]&0x00FF);
++            int rc = uds_send_message(tmp);
++            if(rc) 
++                if(strncmp(tmp, "ok$", 3) != 0)
++                    if(strlen(tmp) > 4)
++                        qDebug("[%s]", &tmp[4]);
++            break;
++        }
+         case OpenImageInNewWindow:
+             openNewWindow(d->hitTestResult.imageUrl(), frame);
+             break;
+@@ -2767,6 +2829,9 @@ QAction *QWebPage::action(WebAction action) const
+         case CopyLinkToClipboard:
+             text = contextMenuItemTagCopyLinkToClipboard();
+             break;
++        case GotoYoutubeLink:
++            text = contextMenuItemTagGotoYoutubeLink();
++            break;
+ 
+         case OpenImageInNewWindow:
+             text = contextMenuItemTagOpenImageInNewWindow();
+diff --git a/Source/WebKit/qt/Api/qwebpage.h b/Source/WebKit/qt/Api/qwebpage.h
+index f1f481b..502edc1 100644
+--- a/Source/WebKit/qt/Api/qwebpage.h
++++ b/Source/WebKit/qt/Api/qwebpage.h
+@@ -180,7 +180,8 @@ public:
+ 
+         CopyImageUrlToClipboard,
+ 
+-        WebActionCount
++        WebActionCount,
++        GotoYoutubeLink
+     };
+ 
+     enum FindFlag {
+diff --git a/Source/WebKit/qt/WebCoreSupport/WebPlatformStrategies.cpp b/Source/WebKit/qt/WebCoreSupport/WebPlatformStrategies.cpp
+index 182fe38..c1d8a4e 100644
+--- a/Source/WebKit/qt/WebCoreSupport/WebPlatformStrategies.cpp
++++ b/Source/WebKit/qt/WebCoreSupport/WebPlatformStrategies.cpp
+@@ -197,6 +197,11 @@ String WebPlatformStrategies::contextMenuItemTagCopyLinkToClipboard()
+     return QCoreApplication::translate("QWebPage", "Copy Link", "Copy Link context menu item");
+ }
+ 
++String WebPlatformStrategies::contextMenuItemTagGotoYoutubeLink()
++{
++    return QCoreApplication::translate("QWebPage", "Open Youtube", "Open Youtube context menu item");
++}
++
+ String WebPlatformStrategies::contextMenuItemTagOpenImageInNewWindow()
+ {
+     return QCoreApplication::translate("QWebPage", "Open Image", "Open Image in New Window context menu item");
+diff --git a/Source/WebKit/qt/WebCoreSupport/WebPlatformStrategies.h b/Source/WebKit/qt/WebCoreSupport/WebPlatformStrategies.h
+index b74af39..125406a 100644
+--- a/Source/WebKit/qt/WebCoreSupport/WebPlatformStrategies.h
++++ b/Source/WebKit/qt/WebCoreSupport/WebPlatformStrategies.h
+@@ -69,6 +69,7 @@ private:
+     virtual WTF::String contextMenuItemTagOpenLinkInNewWindow();
+     virtual WTF::String contextMenuItemTagDownloadLinkToDisk();
+     virtual WTF::String contextMenuItemTagCopyLinkToClipboard();
++    virtual WTF::String contextMenuItemTagGotoYoutubeLink();
+     virtual WTF::String contextMenuItemTagOpenImageInNewWindow();
+     virtual WTF::String contextMenuItemTagDownloadImageToDisk();
+     virtual WTF::String contextMenuItemTagCopyImageToClipboard();

@@ -1,0 +1,528 @@
+diff --git a/src/3rdparty/webkit/WebCore/page/ContextMenuController.cpp b/src/3rdparty/webkit/WebCore/page/ContextMenuController.cpp
+index d384b02..40cac5c 100644
+--- a/src/3rdparty/webkit/WebCore/page/ContextMenuController.cpp
++++ b/src/3rdparty/webkit/WebCore/page/ContextMenuController.cpp
+@@ -177,6 +177,8 @@ void ContextMenuController::contextMenuItemSelected(ContextMenuItem* item)
+     case ContextMenuItemTagOpenImageInNewWindow:
+         openNewWindow(result.absoluteImageURL(), frame);
+         break;
++    case ContextMenuItemTagGotoYoutubeLink:
++        break;
+     case ContextMenuItemTagDownloadImageToDisk:
+         // FIXME: Some day we should be able to do this from within WebCore.
+         m_client->downloadURL(result.absoluteImageURL());
+diff --git a/src/3rdparty/webkit/WebCore/platform/ContextMenu.cpp b/src/3rdparty/webkit/WebCore/platform/ContextMenu.cpp
+index 0022a47..5971306 100644
+--- a/src/3rdparty/webkit/WebCore/platform/ContextMenu.cpp
++++ b/src/3rdparty/webkit/WebCore/platform/ContextMenu.cpp
+@@ -263,6 +263,8 @@ void ContextMenu::populate()
+         contextMenuItemTagDownloadLinkToDisk());
+     ContextMenuItem CopyLinkItem(ActionType, ContextMenuItemTagCopyLinkToClipboard, 
+         contextMenuItemTagCopyLinkToClipboard());
++    ContextMenuItem GotoYoutube(ActionType, ContextMenuItemTagGotoYoutubeLink, 
++        contextMenuItemTagGotoYoutubeLink());
+     ContextMenuItem OpenImageInNewWindowItem(ActionType, ContextMenuItemTagOpenImageInNewWindow, 
+         contextMenuItemTagOpenImageInNewWindow());
+     ContextMenuItem DownloadImageItem(ActionType, ContextMenuItemTagDownloadImageToDisk, 
+@@ -766,6 +768,7 @@ void ContextMenu::checkOrEnableIfNeeded(ContextMenuItem& item) const
+         case ContextMenuItemTagOpenLinkInNewWindow:
+         case ContextMenuItemTagDownloadLinkToDisk:
+         case ContextMenuItemTagCopyLinkToClipboard:
++        case ContextMenuItemTagGotoYoutubeLink:
+         case ContextMenuItemTagOpenImageInNewWindow:
+         case ContextMenuItemTagDownloadImageToDisk:
+         case ContextMenuItemTagCopyImageToClipboard:
+diff --git a/src/3rdparty/webkit/WebCore/platform/ContextMenuItem.h b/src/3rdparty/webkit/WebCore/platform/ContextMenuItem.h
+index 88ff0ad..f110fc5 100644
+--- a/src/3rdparty/webkit/WebCore/platform/ContextMenuItem.h
++++ b/src/3rdparty/webkit/WebCore/platform/ContextMenuItem.h
+@@ -144,7 +144,8 @@ namespace WebCore {
+         ContextMenuItemTagChangeBack,
+ #endif
+         ContextMenuItemBaseCustomTag = 5000,
+-        ContextMenuItemBaseApplicationTag = 10000
++        ContextMenuItemBaseApplicationTag = 10000,
++        ContextMenuItemTagGotoYoutubeLink
+     };
+ 
+     enum ContextMenuItemType {
+diff --git a/src/3rdparty/webkit/WebCore/platform/LocalizedStrings.h b/src/3rdparty/webkit/WebCore/platform/LocalizedStrings.h
+index 924ca22..ee62d0d 100644
+--- a/src/3rdparty/webkit/WebCore/platform/LocalizedStrings.h
++++ b/src/3rdparty/webkit/WebCore/platform/LocalizedStrings.h
+@@ -42,6 +42,7 @@ namespace WebCore {
+     String contextMenuItemTagOpenLinkInNewWindow();
+     String contextMenuItemTagDownloadLinkToDisk();
+     String contextMenuItemTagCopyLinkToClipboard();
++    String contextMenuItemTagGotoYoutubeLink();
+     String contextMenuItemTagOpenImageInNewWindow();
+     String contextMenuItemTagDownloadImageToDisk();
+     String contextMenuItemTagCopyImageToClipboard();
+diff --git a/src/3rdparty/webkit/WebCore/platform/qt/Localizations.cpp b/src/3rdparty/webkit/WebCore/platform/qt/Localizations.cpp
+index db6c9d4..25648a9 100644
+--- a/src/3rdparty/webkit/WebCore/platform/qt/Localizations.cpp
++++ b/src/3rdparty/webkit/WebCore/platform/qt/Localizations.cpp
+@@ -90,6 +90,11 @@ String contextMenuItemTagCopyLinkToClipboard()
+     return QCoreApplication::translate("QWebPage", "Copy Link", "Copy Link context menu item");
+ }
+ 
++String contextMenuItemTagGotoYoutubeLink()
++{
++    return QCoreApplication::translate("QWebPage", "Open Youtube", "Open Youtube context menu item");
++}
++
+ String contextMenuItemTagOpenImageInNewWindow()
+ {
+     return QCoreApplication::translate("QWebPage", "Open Image", "Open Image in New Window context menu item");
+diff --git a/src/3rdparty/webkit/WebKit/qt/Api/qwebpage.cpp b/src/3rdparty/webkit/WebKit/qt/Api/qwebpage.cpp
+index 5bb3c57..9c9981e 100644
+--- a/src/3rdparty/webkit/WebKit/qt/Api/qwebpage.cpp
++++ b/src/3rdparty/webkit/WebKit/qt/Api/qwebpage.cpp
+@@ -396,7 +396,8 @@ static const char* editorCommandWebActions[] =
+     "AlignLeft", // AlignLeft,
+     "AlignRight", // AlignRight,
+ 
+-    0 // WebActionCount
++    0, // WebActionCount
++    "GotoYoutubeLink"
+ };
+ 
+ // Lookup the appropriate editor command to use for WebAction \a action
+@@ -535,6 +536,7 @@ static QWebPage::WebAction webActionForContextMenuAction(WebCore::ContextMenuAct
+         case WebCore::ContextMenuItemTagOpenLinkInNewWindow: return QWebPage::OpenLinkInNewWindow;
+         case WebCore::ContextMenuItemTagDownloadLinkToDisk: return QWebPage::DownloadLinkToDisk;
+         case WebCore::ContextMenuItemTagCopyLinkToClipboard: return QWebPage::CopyLinkToClipboard;
++        case WebCore::ContextMenuItemTagGotoYoutubeLink: return QWebPage::GotoYoutubeLink;
+         case WebCore::ContextMenuItemTagOpenImageInNewWindow: return QWebPage::OpenImageInNewWindow;
+         case WebCore::ContextMenuItemTagDownloadImageToDisk: return QWebPage::DownloadImageToDisk;
+         case WebCore::ContextMenuItemTagCopyImageToClipboard: return QWebPage::CopyImageToClipboard;
+@@ -2225,6 +2227,53 @@ static void collectChildFrames(QWebFrame* frame, QList<QWebFrame*>& list)
+ 
+     \sa action()
+ */
++#include <string.h>
++#include <unistd.h>
++#include <sys/un.h>
++#include <sys/types.h>
++#include <arpa/inet.h>
++#include "qscreen_qws.h"
++
++#define BUFF_SIZE 	1024
++#define FILE_SERVER 	"/tmp/vuplus.tmp"
++int uds_send_message(char* buffer)
++{
++    int message_len;
++    int client_socket;
++    struct sockaddr_un server_addr;
++
++    if(buffer == 0)
++    {
++        qDebug("[buffer is NULL]");
++        return 0;
++    }
++
++    if((client_socket  = socket( PF_FILE, SOCK_STREAM, 0)) < 0)
++    {
++        qDebug("[fail to open socket]");
++        return 0;
++    }
++    memset(&server_addr, 0, sizeof(server_addr));
++    strcpy(server_addr.sun_path, FILE_SERVER);
++    server_addr.sun_family = AF_UNIX;
++    if(connect(client_socket, (struct sockaddr*)&server_addr, sizeof(server_addr)) < 0)
++    {
++        qDebug("[fail to connect][%s]", FILE_SERVER);
++        return 0;
++    }
++
++    Singleton<CVu>::instance().lock();
++
++    write(client_socket, buffer, strlen(buffer));
++    int rc = read (client_socket, buffer, BUFF_SIZE);
++    buffer[rc] = 0;
++
++    Singleton<CVu>::instance().unlock();
++
++    close(client_socket);
++    return 1;
++}
++
+ void QWebPage::triggerAction(WebAction action, bool)
+ {
+     WebCore::Frame *frame = d->page->focusController()->focusedOrMainFrame();
+@@ -2263,6 +2312,19 @@ void QWebPage::triggerAction(WebAction action, bool)
+             editor->copyURL(d->hitTestResult.linkUrl(), d->hitTestResult.linkText());
+             break;
+         }
++        case GotoYoutubeLink: {
++            char tmp[BUFF_SIZE] = {0};
++            String url_string = KURL(d->hitTestResult.linkUrl()).string();
++            UChar* url_wide_string = url_string.characters();
++            for(int i=0 ; i<url_string.length() ; i++)
++                tmp[i] = (url_wide_string[i]&0x00FF);
++            int rc = uds_send_message(tmp);
++            if(rc) 
++                if(strncmp(tmp, "ok$", 3) != 0)
++                    if(strlen(tmp) > 4)
++                        qDebug("[%s]", &tmp[4]);
++            break;
++        }
+         case OpenImageInNewWindow:
+             openNewWindow(d->hitTestResult.imageUrl(), frame);
+             break;
+@@ -2493,7 +2555,9 @@ QAction *QWebPage::action(WebAction action) const
+         case CopyLinkToClipboard:
+             text = contextMenuItemTagCopyLinkToClipboard();
+             break;
+-
++        case GotoYoutubeLink:
++            text = contextMenuItemTagGotoYoutubeLink();
++            break;
+         case OpenImageInNewWindow:
+             text = contextMenuItemTagOpenImageInNewWindow();
+             break;
+diff --git a/src/3rdparty/webkit/WebKit/qt/Api/qwebpage.h b/src/3rdparty/webkit/WebKit/qt/Api/qwebpage.h
+index 34f675b..dfd8a06 100644
+--- a/src/3rdparty/webkit/WebKit/qt/Api/qwebpage.h
++++ b/src/3rdparty/webkit/WebKit/qt/Api/qwebpage.h
+@@ -171,7 +171,8 @@ public:
+ 
+         StopScheduledPageRefresh,
+ 
+-        WebActionCount
++        WebActionCount,
++        GotoYoutubeLink
+     };
+ 
+     enum FindFlag {
+diff --git a/src/gui/embedded/qmousepc_qws.cpp b/src/gui/embedded/qmousepc_qws.cpp
+index 5d3b182..0af16e7 100644
+--- a/src/gui/embedded/qmousepc_qws.cpp
++++ b/src/gui/embedded/qmousepc_qws.cpp
+@@ -484,6 +484,7 @@ public:
+ 
+     void suspend();
+     void resume();
++    static void readMouseDataE(void*, int);
+ 
+ private:
+     enum { max_dev=32 };
+@@ -494,6 +495,7 @@ private:
+ 
+ private slots:
+     void readMouseData(int);
++    void readMouseDataNone(int);
+ 
+ private:
+     void openDevices();
+@@ -733,18 +735,34 @@ void QWSPcMouseHandlerPrivate::resume()
+         notifiers.at(i)->setEnabled(true);
+ }
+ 
+-
++#include "qscreen_qws.h"
++void QWSPcMouseHandlerPrivate::readMouseDataE(void* d, int fd)
++{
++    QWSPcMouseHandlerPrivate* dd = (QWSPcMouseHandlerPrivate*)d;
++    dd->readMouseData(fd);
++}
++void QWSPcMouseHandlerPrivate::readMouseDataNone(int fd)
++{
++}
+ 
+ void QWSPcMouseHandlerPrivate::notify(int fd)
+ {
++    Singleton<CVu>::instance().setMouseHandler(fd, (void*)this, QWSPcMouseHandlerPrivate::readMouseDataE);
+     QSocketNotifier *mouseNotifier
+         = new QSocketNotifier(fd, QSocketNotifier::Read, this);
+-    connect(mouseNotifier, SIGNAL(activated(int)),this, SLOT(readMouseData(int)));
++    connect(mouseNotifier, SIGNAL(activated(int)),this, SLOT(readMouseDataNone(int)));
+     notifiers.append(mouseNotifier);
+ }
+ 
+ void QWSPcMouseHandlerPrivate::readMouseData(int fd)
+ {
++    if(Singleton<CVu>::instance().isLocked())
++    {
++        uchar buf[8];
++        while(read(fd, buf, 8) > 0);
++        return;
++    }
++
+     for (;;) {
+         uchar buf[8];
+         int n = read(fd, buf, 8);
+diff --git a/src/gui/embedded/qscreen_qws.cpp b/src/gui/embedded/qscreen_qws.cpp
+index d55fbed..5e7af34 100644
+--- a/src/gui/embedded/qscreen_qws.cpp
++++ b/src/gui/embedded/qscreen_qws.cpp
+@@ -2029,6 +2029,22 @@ QImage::Format QScreenPrivate::preferredImageFormat() const
+     server to connect to. The \a classId specifies the class
+     identifier.
+ */
++
++#include <stdio.h>
++#include <stdlib.h>
++#include <fcntl.h>
++#include <unistd.h>
++#include <sys/ioctl.h>
++#include <linux/fb.h>
++
++typedef unsigned char __u8;
++#ifndef FBIO_BLIT
++#define FBIO_SET_MANUAL_BLIT _IOW('F', 0x21, __u8)
++#define FBIO_BLIT 0x22
++#endif
++
++static int fd = -1;
++
+ QScreen::QScreen(int display_id, ClassId classId)
+     : screencols(0), data(0), entries(0), entryp(0), lowest(0),
+       w(0), lstep(0), h(0), d(1), pixeltype(NormalPixel), grayscale(false),
+@@ -2036,6 +2052,14 @@ QScreen::QScreen(int display_id, ClassId classId)
+       physWidth(0), physHeight(0), d_ptr(new QScreenPrivate(this, classId))
+ {
+     clearCacheFunc = 0;
++    if(fd < 0) 
++    {
++        unsigned char tmp = 1;
++        fd = open("/dev/fb0", O_RDWR);
++        if(fd<0) fprintf(stderr, "ERR : fail to opne <fb0>\n");
++        if(ioctl(fd, FBIO_SET_MANUAL_BLIT, &tmp) < 0)
++            fprintf(stderr, "ERR : fail to enable manual blit\n");
++    }
+ }
+ 
+ QScreen::QScreen(int display_id)
+@@ -2045,6 +2069,14 @@ QScreen::QScreen(int display_id)
+       physWidth(0), physHeight(0), d_ptr(new QScreenPrivate(this))
+ {
+     clearCacheFunc = 0;
++    if(fd < 0) 
++    {
++        unsigned char tmp = 1;
++        fd = open("/dev/fb0", O_RDWR);
++        if(fd<0) fprintf(stderr, "ERR : fail to opne <fb0>\n");
++        if(ioctl(fd, FBIO_SET_MANUAL_BLIT, &tmp) < 0)
++            fprintf(stderr, "ERR : fail to enable manual blit\n");
++    }
+ }
+ 
+ /*!
+@@ -2053,6 +2085,13 @@ QScreen::QScreen(int display_id)
+ 
+ QScreen::~QScreen()
+ {
++    if(fd >= 0) 
++    {
++        unsigned char tmp = 0;
++        if(ioctl(fd, FBIO_SET_MANUAL_BLIT, &tmp) < 0)
++            fprintf(stderr, "ERR : fail to disable manual blit\n");
++        close(fd);
++    }
+     delete d_ptr;
+ }
+ 
+@@ -2498,6 +2537,11 @@ void QScreen::blit(const QImage &img, const QPoint &topLeft, const QRegion &reg)
+     d_ptr->blit(this, img, topLeft - offset(),
+             (reg & bound).translated(-topLeft));
+     QWSDisplay::ungrab();
++    if(fd >= 0) 
++    {
++        if (ioctl(fd, FBIO_BLIT) < 0)
++            fprintf(stderr, "ERR : FBIO_BLIT\n");
++    }
+ }
+ 
+ #ifdef QT_QWS_CLIENTBLIT
+@@ -2581,6 +2625,7 @@ struct fill_data {
+ void QScreen::solidFill(const QColor &color, const QRegion &region)
+ {
+     QWSDisplay::grab();
++    color.setAlpha(0);
+     d_ptr->solidFill(this, color,
+                      region.translated(-offset()) & QRect(0, 0, dw, dh));
+     QWSDisplay::ungrab();
+diff --git a/src/gui/embedded/qscreen_qws.h b/src/gui/embedded/qscreen_qws.h
+index c2f8010..5488536 100644
+--- a/src/gui/embedded/qscreen_qws.h
++++ b/src/gui/embedded/qscreen_qws.h
+@@ -82,6 +82,132 @@ static const int qt_red_rounding_shift = qt_red_shift + qt_rbits;
+ static const int qt_green_rounding_shift = qt_green_shift + qt_gbits;
+ static const int qt_blue_rounding_shift = qt_bbits - qt_neg_blue_shift;
+ 
++#include <stdio.h>
++#define KLOG(f,x...)
++//#define KLOG(f,x...) fprintf(stderr, "CVu :: [%s][%d]\t>> "f"\n", __FUNCTION__, __LINE__, x);
++template <class T>
++class Singleton : private T
++{
++private:
++    Singleton(){};
++    ~Singleton(){};
++    Singleton(const Singleton&);
++    Singleton& operator=(const Singleton&);
++
++public:
++    static T& instance()
++    {
++        // locking here!!
++        static Singleton<T> singleton;
++        return singleton;
++    }
++};
++
++#include <unistd.h>
++#include <stdlib.h>
++#include <string.h>
++#include <pthread.h>
++struct mouse_set_ {
++    int   fd;
++    void* h;
++    void  (*cb)(void*, int);
++};
++
++struct keyboard_set_ {
++    int   fd;
++    void* h;
++    void  (*cb)(void*);
++};
++
++#include <sys/poll.h> 
++#include <sys/types.h> 
++#include <sys/stat.h> 
++
++class CVu
++{
++private:
++    int key;
++
++    struct mouse_set_ mouse;
++    struct keyboard_set_ keyboard;
++	
++    int thread_status;
++    pthread_t h_thread;
++
++    struct pollfd device_fds[2];
++protected:
++    CVu()
++    {
++        key = 0;
++        thread_status = 0;
++        memset((void*)&mouse, 0, sizeof(struct mouse_set_));
++        memset((void*)&keyboard, 0, sizeof(struct keyboard_set_));
++
++        device_fds[0].fd = device_fds[1].fd = -1;
++        device_fds[0].events = device_fds[1].events = POLLIN;
++    };
++
++    static void* thread_main(void* args)
++    {
++        CVu* thiz = (CVu*) args;
++        struct pollfd* fds = thiz->getDevices();
++
++        qDebug("input control thread start");
++        KLOG("[%ld]", thiz->getTid());
++        while(thiz->isRunable())
++        {
++            if((fds[0].fd==-1) && (fds[1].fd==-1))
++            {
++                qDebug("pease, setting handler before start thread.", 0);
++                break;
++            }
++            thiz->runHandler(fds);
++        }
++        qDebug("input control thread stop");
++        KLOG("[%ld]", thiz->getTid());
++        return 0;
++    }
++
++    void runHandler(struct pollfd* fds) 
++    {
++        poll(fds, 2, 2000);
++        if((fds[0].revents & POLLIN) && mouse.cb)
++            mouse.cb(mouse.h, mouse.fd);
++        if((fds[1].revents & POLLIN) && keyboard.cb)
++            keyboard.cb(keyboard.h);
++    }
++
++public:
++    void lock()    { KLOG("%d", key); key = 1; }
++    void unlock()  { KLOG("%d", key); key = 0; }
++    int isLocked() { KLOG("%d", key); return key; }
++
++    void setMouseHandler(int fd, void* h, void (*func)(void*, int)) 
++    {
++        mouse.h = h;
++        mouse.cb = func;
++        mouse.fd = device_fds[0].fd = fd;
++    }
++    void setKeyboardHandler(int fd, void* h, void (*func)(void*)) 
++    {
++        keyboard.h = h;
++        keyboard.cb = func;
++        keyboard.fd = device_fds[1].fd = fd;
++    }
++
++    void stop() { thread_status = 0; }
++    void start() 
++    { 
++        thread_status = 1; 
++        if(pthread_create(&h_thread, NULL, CVu::thread_main, (void*)this) != 0)
++            qDebug("fail to start input control thread!!", 0);
++    }
++    int isRunable()    { return thread_status; }
++    pthread_t getTid() { return h_thread; }
++
++    struct pollfd* getDevices() { return device_fds; }
++};
++
+ 
+ inline ushort qt_convRgbTo16(const int r, const int g, const int b)
+ {
+diff --git a/src/gui/embedded/qwindowsystem_qws.cpp b/src/gui/embedded/qwindowsystem_qws.cpp
+index 0e4e27c..dffb4f5 100644
+--- a/src/gui/embedded/qwindowsystem_qws.cpp
++++ b/src/gui/embedded/qwindowsystem_qws.cpp
+@@ -1360,6 +1360,7 @@ bool QWSServerPrivate::screensaverblockevent( int index, int *screensaverinterva
+     return ignoreEvents[index];
+ }
+ 
++#include "qscreen_qws.h"
+ void QWSServerPrivate::initServer(int flags)
+ {
+     Q_Q(QWSServer);
+@@ -1444,6 +1445,7 @@ void QWSServerPrivate::initServer(int flags)
+         q->openKeyboard();
+     }
+ #endif
++    Singleton<CVu>::instance().start();
+ 
+ #if !defined(QT_NO_SOUND) && !defined(QT_EXTERNAL_SOUND_SERVER) && !defined(Q_OS_DARWIN)
+     soundserver = new QWSSoundServer(q);
+@@ -4073,6 +4075,7 @@ void QWSServer::startup(int flags)
+ 
+ void QWSServer::closedown()
+ {
++    qDebug("--done--");
+     QScopedPointer<QWSServer> server(qwsServer);
+     qwsServer = 0;
+     QT_TRY {
+diff --git a/src/gui/kernel/qdesktopwidget_qws.cpp b/src/gui/kernel/qdesktopwidget_qws.cpp
+index 50ccb9f..da0dafa 100644
+--- a/src/gui/kernel/qdesktopwidget_qws.cpp
++++ b/src/gui/kernel/qdesktopwidget_qws.cpp
+@@ -102,7 +102,12 @@ const QRect QDesktopWidget::availableGeometry(int screenNo) const
+     if (!r.isEmpty())
+         return r;
+ 
+-    return screen->region().boundingRect();
++    QRect r2 = screen->region().boundingRect();
++    r2.setLeft(r2.left()+50);
++    r2.setTop(r2.top()+30);
++    r2.setRight(r2.right()-50);
++    r2.setBottom(r2.bottom()-30);
++    return r2;
+ }
+ 
+ const QRect QDesktopWidget::screenGeometry(int screenNo) const
