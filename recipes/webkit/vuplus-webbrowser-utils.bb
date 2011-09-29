@@ -1,16 +1,12 @@
 DESCRIPTION = "arora webbrowser binary"
 PV = "0.10.1"
-PR = "r0"
+PR = "r1"
 
 DEPENDS = "qtwebkit-e"
 
-SRC_URI = "file://arora"
+SRC_URI = "http://archive.vuplus.com/download/utils/vuplus-webbrowser-utils.tar.bz2"
 
 S = "${WORKDIR}/vuplus-webbrowser-utils"
-
-do_configure() {
-	mv ${WORKDIR}/arora ${S}
-}
 
 do_install() {
 	install -d ${D}/${bindir};
