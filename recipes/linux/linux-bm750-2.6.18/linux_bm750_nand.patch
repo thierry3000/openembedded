@@ -152,11 +152,11 @@ Index: drivers/mtd/brcmnand/bcm7xxx-nand.c
 +#define ROOTFS_PART     (0)
 +        { name: "rootfs",               offset: 0,              size: DEFAULT_ROOTFS_SIZE },   /* rootfs is total nand size - 6 M Bytes. referr to cfe. bcm97335_devs.c */ 
 +#ifndef USE_SPLASH /* csh splash */
-+        { name: "kernel",       offset: 0x00600000,             size: 2<<20 },        
-+        { name: "boot",       offset: 0x00800000,             size: 4<<20 },
++        { name: "kernel",       offset: 0x00600000,             size: 4<<20 },        
++        { name: "boot",       offset: 0x00800000,             size: 2<<20 },
 +#else
-+        { name: "kernel",       offset: 0x00500000,             size: 2<<20 },        
-+        { name: "boot",       offset: 0x00700000,             size: 4<<20 },
++        { name: "kernel",       offset: 0x00500000,             size: 4<<20 },        
++        { name: "boot",       offset: 0x00700000,             size: 2<<20 },
 +        { name: "bootimg",       offset: 0x00B00000,             size: DEFAULT_SPLASH_SIZE },
  #endif
 +#if 0 /*12 09 */
