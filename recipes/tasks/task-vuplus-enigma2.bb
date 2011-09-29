@@ -52,11 +52,13 @@ RDEPENDS_task-vuplus-enigma2_append_vuuno = "\
   enigma2-plugin-systemplugins-fpgaupgrade \
   enigma2-plugin-systemplugins-blindscan \
   enigma2-plugin-systemplugins-manualfancontrol \
+  enigma2-plugin-systemplugins-remotecontrolcode \
 "
 RDEPENDS_task-vuplus-enigma2_append_vuultimo = "\
   enigma2-plugin-systemplugins-fpgaupgrade \
   enigma2-plugin-systemplugins-blindscan \
   enigma2-plugin-systemplugins-manualfancontrol \
+  enigma2-plugin-systemplugins-remotecontrolcode \
 "
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
