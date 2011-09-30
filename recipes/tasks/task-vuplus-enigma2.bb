@@ -1,7 +1,7 @@
 DESCRIPTION = "Vuplus: E2 Task for the Vuplus Distribution"
 SECTION = "vuplus/base"
 LICENSE = "MIT"
-PR = "r7"
+PR = "r8"
 
 inherit task
 
@@ -42,7 +42,8 @@ RRECOMMENDS_task-vuplus-enigma2 = "\
   enigma2-plugin-extensions-mediaplayer \
   enigma2-plugin-extensions-pictureplayer \
   enigma2-plugin-systemplugins-skinselector \
-  enigma2-plugin-systemplugins-osd3dsetup \
+  enigma2-plugin-systemplugins-ui3dsetup \
+  enigma2-plugin-systemplugins-uipositionsetup \
   ${@base_contains("MACHINE_FEATURES", "wifi", "task-vuplus-wlan", "", d)} \
 "
 
