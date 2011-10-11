@@ -4,7 +4,7 @@ LICENSE = "LGPLv2.1 GPLv3"
 PRIORITY = "optional"
 HOMEPAGE = "https://qt.nokia.com/"
 DEPENDS += "directfb tslib"
-INC_PR = "r33"
+INC_PR = "r34"
 
 QT_BASE_NAME ?= "qt4-embedded"
 QT_BASE_LIB  ?= "libqt-embedded"
