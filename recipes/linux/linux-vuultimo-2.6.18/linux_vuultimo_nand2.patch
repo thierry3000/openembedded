@@ -37,7 +37,7 @@ index 56f2bc9..38c2f77 100644
  
  /*
 diff --git a/drivers/mtd/brcmnand/bcm7xxx-nand.c b/drivers/mtd/brcmnand/bcm7xxx-nand.c
-index 6cea6bf..d1cddfd 100644
+index 6cea6bf..8a710f8 100644
 --- a/drivers/mtd/brcmnand/bcm7xxx-nand.c
 +++ b/drivers/mtd/brcmnand/bcm7xxx-nand.c
 @@ -46,12 +46,13 @@ when	who what
@@ -75,23 +75,21 @@ index 6cea6bf..d1cddfd 100644
  	{ name: N_ROOTFS,	offset: 0,					size: DEFAULT_ROOTFS_SIZE },	
  #ifdef CONFIG_MTD_ECM_PARTITION
  	{ name: N_AVAIL1,	offset: DEFAULT_ROOTFS_SIZE,	size: DEFAULT_AVAIL1_SIZE },
-@@ -189,8 +193,66 @@ static struct mtd_partition bcm7XXX_old_partition[] =
+@@ -189,8 +193,61 @@ static struct mtd_partition bcm7XXX_old_partition[] =
  /* Add 1 extra place-holder partition for splash, and a safety guard element */
  	{name: NULL, offset: 0, size: 0},
  	{name: NULL, offset: 0, size: 0}
 + #else /* by doliyu : for splash init*/
 +     /* name         offset      size */
-+         { name: "rootfs",               offset: 0,              size:0x07200000 /* DEFAULT_ROOTFS_SIZE*/ },   /* rootfs is total nand size - 6 M Bytes. referr to cfe. bcm97335_devs.c */ 
-+         { name: "kernel",       offset: 0x07200000,             size: 4<<20 },        
-+         { name: "boot",       offset: 0x07600000,             size: 4<<20 },
-+         { name: "splash",       offset: 0x07A00000,             size: 2<<20 },
-+         { name: "cfe",          offset: 0x07C00000,             size: 1<<20 },
-+         { name: "mac",          offset: 0x07D00000,             size: 1<<19 },
-+         { name: "env",          offset: 0x07D80000,             size: 1<<19 },
-+         { name: "nvm",          offset: 0x07E00000,             size: 1<<20 }, //csh change to 1 20091207
++         { name: "rootfs",               offset: 0,              size:0x1F200000 /* DEFAULT_ROOTFS_SIZE*/ },   /* rootfs is total nand size - 6 M Bytes. referr to cfe. bcm97335_devs.c */ 
++         { name: "kernel",       offset: 0x1F200000,             size: 4<<20 },        
++         { name: "boot",       offset: 0x1F600000,             size: 4<<20 },
++         { name: "splash",       offset: 0x1FA00000,             size: 2<<20 },
++         { name: "cfe",          offset: 0x1FC00000,             size: 1<<20 },
++         { name: "mac",          offset: 0x1FD00000,             size: 1<<19 },
++         { name: "env",          offset: 0x1FD80000,             size: 1<<19 },
++         { name: "nvm",          offset: 0x1FE00000,             size: 1<<20 },
 +         /* BBT 1MB not mountable by anyone */
-+ /*        { name: "data",         offset: 0x20000000,             size: 0 },*/
-+ /* Add 1 extra place-holder partition for splash, and a safety guard element */
 +         /* Add 1 extra place-holder partition for splash, and a safety guard element */
 +         {name: NULL, offset: 0, size: 0},
 +         {name: NULL, offset: 0, size: 0},
@@ -103,16 +101,14 @@ index 6cea6bf..d1cddfd 100644
 +static struct mtd_partition bcm7XXX_vuplus_partition[] = 
 +{
 +        /* name         offset      size */
-+            { name: "rootfs",               offset: 0,              size:0x07400000 /* DEFAULT_ROOTFS_SIZE*/ },   /* rootfs is total nand size - 6 M Bytes. referr to cfe. bcm97335_devs.c */ 
-+            { name: "kernel",       offset: 0x07400000,             size: 4<<20 },        
-+            { name: "boot",       offset: 0x07800000,             size: 4<<20 },
-+            { name: "cfe",          offset: 0x07C00000,             size: 1<<20 },
-+            { name: "mac",          offset: 0x07D00000,             size: 1<<19 },
-+            { name: "env",          offset: 0x07D80000,             size: 1<<19 },
-+            { name: "nvm",          offset: 0x07E00000,             size: 1<<20 }, //csh change to 1 20091207
++            { name: "rootfs",               offset: 0,              size:0x1F400000 /* DEFAULT_ROOTFS_SIZE*/ },   /* rootfs is total nand size - 6 M Bytes. referr to cfe. bcm97335_devs.c */ 
++            { name: "kernel",       offset: 0x1F400000,             size: 4<<20 },        
++            { name: "boot",       offset: 0x1F800000,             size: 4<<20 },
++            { name: "cfe",          offset: 0x1FC00000,             size: 1<<20 },
++            { name: "mac",          offset: 0x1FD00000,             size: 1<<19 },
++            { name: "env",          offset: 0x1FD80000,             size: 1<<19 },
++            { name: "nvm",          offset: 0x1FE00000,             size: 1<<20 },
 +            /* BBT 1MB not mountable by anyone */
-+    /*        { name: "data",         offset: 0x20000000,             size: 0 },*/
-+    /* Add 1 extra place-holder partition for splash, and a safety guard element */
 +            /* Add 1 extra place-holder partition for splash, and a safety guard element */
 +            {name: NULL, offset: 0, size: 0},
 +            {name: NULL, offset: 0, size: 0}
@@ -121,18 +117,17 @@ index 6cea6bf..d1cddfd 100644
 +static struct mtd_partition bcm7XXX_vuplus_splash_partition[] = 
 +{
 +        /* name         offset      size */
-+            { name: "rootfs",               offset: 0,              size:0x07200000 /* DEFAULT_ROOTFS_SIZE*/ },   /* rootfs is total nand size - 6 M Bytes. referr to cfe. bcm97335_devs.c */ 
-+            { name: "kernel",       offset: 0x07200000,             size: 4<<20 },        
-+            { name: "boot",       offset: 0x07600000,             size: 4<<20 },
-+            { name: "splash",       offset: 0x07A00000,             size: 2<<20 },
-+            { name: "cfe",          offset: 0x07C00000,             size: 1<<20 },
-+            { name: "mac",          offset: 0x07D00000,             size: 1<<19 },
-+            { name: "env",          offset: 0x07D80000,             size: 1<<19 },
-+            { name: "nvm",          offset: 0x07E00000,             size: 1<<20 }, //csh change to 1 20091207
++            { name: "rootfs",               offset: 0,              size:0x1F200000 /* DEFAULT_ROOTFS_SIZE*/ },   /* rootfs is total nand size - 6 M Bytes. referr to cfe. bcm97335_devs.c */ 
++            { name: "kernel",       offset: 0x1F200000,             size: 4<<20 },        
++            { name: "boot",       offset: 0x1F600000,             size: 4<<20 },
++            { name: "splash",       offset: 0x1FA00000,             size: 2<<20 },
++            { name: "cfe",          offset: 0x1FC00000,             size: 1<<20 },
++            { name: "mac",          offset: 0x1FD00000,             size: 1<<19 },
++            { name: "env",          offset: 0x1FD80000,             size: 1<<19 },
++            { name: "nvm",          offset: 0x1FE00000,             size: 1<<20 },
 +            /* BBT 1MB not mountable by anyone */
-+    /*        { name: "data",         offset: 0x20000000,             size: 0 },*/
-+    /* Add 1 extra place-holder partition for splash, and a safety guard element */
 +            /* Add 1 extra place-holder partition for splash, and a safety guard element */
++            { name: "data",          offset: 0x20000000,             size: (512-DEFAULT_BBT1_SIZE_MB)<<20 },
 +            {name: NULL, offset: 0, size: 0},
 +            {name: NULL, offset: 0, size: 0}
 +
@@ -142,7 +137,7 @@ index 6cea6bf..d1cddfd 100644
  #if defined( CONFIG_MTD_BRCMNAND_DISABLE_XOR )
  static struct mtd_partition* bcm7XXX_nand_parts = bcm7XXX_no_xor_partition;
  
-@@ -198,7 +260,9 @@ static struct mtd_partition* bcm7XXX_nand_parts = bcm7XXX_no_xor_partition;
+@@ -198,7 +255,9 @@ static struct mtd_partition* bcm7XXX_nand_parts = bcm7XXX_no_xor_partition;
  static struct mtd_partition* bcm7XXX_nand_parts = bcm7XXX_new_partition;
  
  #else
@@ -153,7 +148,7 @@ index 6cea6bf..d1cddfd 100644
  #endif
  
  struct brcmnand_info {
-@@ -261,7 +325,7 @@ brcmnanddrv_setup_mtd_partitions(struct brcmnand_info* nandinfo, int *numParts)
+@@ -261,7 +320,7 @@ brcmnanddrv_setup_mtd_partitions(struct brcmnand_info* nandinfo, int *numParts)
  	/* 
  	 * Is XOR disabled? if so use the new partition.
  	 */
@@ -162,7 +157,7 @@ index 6cea6bf..d1cddfd 100644
  		bcm7XXX_nand_parts = bcm7XXX_no_xor_partition;
  
  		if (device_size(mtd) <= (512ULL <<20)) {
-@@ -309,7 +373,7 @@ brcmnanddrv_setup_mtd_partitions(struct brcmnand_info* nandinfo, int *numParts)
+@@ -309,7 +368,7 @@ brcmnanddrv_setup_mtd_partitions(struct brcmnand_info* nandinfo, int *numParts)
  	
  	return;
  #else
@@ -171,7 +166,7 @@ index 6cea6bf..d1cddfd 100644
    	/* NAND on CS1, same partition as that of CONFIG_MTD_NEW_PARTITION */
  PRINTK("nandinfo->brcmnand.CS[0] = %d\n", nandinfo->brcmnand.CS[0]);
  PRINTK("bcm7XXX_nand_parts=%p, bcm7XXX_new_partition=%p, bcm7XXX_old_partition=%p\n",
-@@ -375,7 +439,7 @@ print_partition(*numParts);
+@@ -375,7 +434,7 @@ print_partition(*numParts);
  	nandinfo->parts = bcm7XXX_nand_parts;
  	bcm7XXX_nand_parts[0].size = size - DEFAULT_RESERVED_SIZE - ecm_size;
  	bcm7XXX_nand_parts[0].ecclayout = mtd->ecclayout;
@@ -180,8 +175,24 @@ index 6cea6bf..d1cddfd 100644
  PRINTK("Part[%d] name=%s, size=%llx, offset=%llx\n", i, bcm7XXX_nand_parts[0].name, 
  bcm7XXX_nand_parts[0].size, bcm7XXX_nand_parts[0].offset);
  
+@@ -397,7 +456,6 @@ PRINTK("Part[%d] name=%s, size=%llx, offset=%llx\n", i, bcm7XXX_nand_parts[i].na
+ bcm7XXX_nand_parts[i].size, bcm7XXX_nand_parts[i].offset);
+ 	}
+ 
+-	
+ 	if  (device_size(mtd) > (512ULL << 20)) { // For total flash size > 512MB, we must split the rootfs into 2 partitions
+ 		i = *numParts - 1;
+ 		bcm7XXX_nand_parts[i].offset = 512 << 20;
+@@ -414,7 +472,6 @@ bcm7XXX_nand_parts[i].size, bcm7XXX_nand_parts[i].offset);
+ 
+ 	}
+ 
+-
+ #ifdef CONFIG_MTD_ECM_PARTITION
+ 	/* Shift partitions 1 up if avail1_size is 0 */
+ 	if (0 == avail1_size) {
 diff --git a/drivers/mtd/brcmnand/brcmnand_base.c b/drivers/mtd/brcmnand/brcmnand_base.c
-index 3bc428a..294cdfc 100644
+index 3bc428a..b95856d 100644
 --- a/drivers/mtd/brcmnand/brcmnand_base.c
 +++ b/drivers/mtd/brcmnand/brcmnand_base.c
 @@ -181,8 +181,8 @@ static brcmnand_chip_Id brcmnand_chips[] = {
@@ -195,7 +206,17 @@ index 3bc428a..294cdfc 100644
  		.nop=8,
  		.ctrlVersion = 0, /* THT Verified on data-sheet 7/10/08: Allows 4 on main and 4 on OOB */
  	},
-@@ -537,7 +537,7 @@ static brcmnand_chip_Id brcmnand_chips[] = {
+@@ -269,7 +269,8 @@ static brcmnand_chip_Id brcmnand_chips[] = {
+ 		.chipIdStr = "Samsung K9K8G08U0A",
+ 		.options = NAND_USE_FLASH_BBT,
+ 		.idOptions = 0,
+-		.timing1 = 0, .timing2 = 0,
++		.timing1 = 0x4232222D,
++		.timing2 = 0x00000D94,
+ 		.nop=4,
+ 		.ctrlVersion = CONFIG_MTD_BRCMNAND_VERS_2_1,
+ 	},
+@@ -537,7 +538,7 @@ static brcmnand_chip_Id brcmnand_chips[] = {
  		.chipId = HYNIX_HY27UT088G2A,
  		.mafId = FLASHTYPE_HYNIX,
  		.chipIdStr = "HYNIX_HY27UT088G2A",
@@ -204,7 +225,7 @@ index 3bc428a..294cdfc 100644
  				//| NAND_COMPLEX_OOB_WRITE	/* Write data together with OOB for write_oob */
  		.idOptions = BRCMNAND_ID_EXT_BYTES,
  		.timing1 = 0, 
-@@ -550,7 +550,7 @@ static brcmnand_chip_Id brcmnand_chips[] = {
+@@ -550,7 +551,7 @@ static brcmnand_chip_Id brcmnand_chips[] = {
  		.chipId = HYNIX_HY27UAG8T2M,
  		.mafId = FLASHTYPE_HYNIX,
  		.chipIdStr = "HYNIX_HY27UAG8T2M",
@@ -213,7 +234,7 @@ index 3bc428a..294cdfc 100644
  				//| NAND_COMPLEX_OOB_WRITE	/* Write data together with OOB for write_oob */
  		.idOptions = BRCMNAND_ID_EXT_BYTES,
  		.timing1 = 0, 
-@@ -605,13 +605,43 @@ static const unsigned char ffchars[] = {
+@@ -605,13 +606,43 @@ static const unsigned char ffchars[] = {
  
  //static unsigned char eccmask[128]; // Will be initialized during probe
  
@@ -258,7 +279,7 @@ index 3bc428a..294cdfc 100644
  		(nandCtrlReg & 0x3) != 0) {
  		printk("brcmnand_ctrl_read: Invalid register value %08x\n", nandCtrlReg);
  	}
-@@ -625,7 +655,7 @@ static void brcmnand_ctrl_write(uint32_t nandCtrlReg, uint32_t val)
+@@ -625,7 +656,7 @@ static void brcmnand_ctrl_write(uint32_t nandCtrlReg, uint32_t val)
  	volatile unsigned long* pReg = (volatile unsigned long*) (BRCMNAND_CTRL_REGS 
  		+ nandCtrlReg - BCHP_NAND_REVISION);
  
@@ -267,7 +288,7 @@ index 3bc428a..294cdfc 100644
  		(nandCtrlReg & 0x3) != 0) {
  		printk( "brcmnand_ctrl_read: Invalid register value %08x\n", nandCtrlReg);
  	}
-@@ -689,6 +719,30 @@ if (gdebug > 3) printk("%s: offset=%0llx  cs=%d ldw = %08x, udw = %08x\n", __FUN
+@@ -689,6 +720,30 @@ if (gdebug > 3) printk("%s: offset=%0llx  cs=%d ldw = %08x, udw = %08x\n", __FUN
  	return (ldw); //(ldw ^ 0x1FC00000);
  }
  
@@ -298,7 +319,7 @@ index 3bc428a..294cdfc 100644
  #if 1
  /* Dont delete, may be useful for debugging */
  
-@@ -739,7 +793,7 @@ static void print_config_regs(void)
+@@ -739,7 +794,7 @@ static void print_config_regs(void)
  		nand_acc_control, nand_config, flash_id, nand_timing1, nand_timing2);	
  }
  
@@ -307,7 +328,7 @@ index 3bc428a..294cdfc 100644
  
  static void print_nand_ctrl_regs(void)
  {
-@@ -1533,7 +1587,7 @@ void dump_nand_regs(struct brcmnand_chip* chip, loff_t offset, uint32_t pa, int
+@@ -1533,7 +1588,7 @@ void dump_nand_regs(struct brcmnand_chip* chip, loff_t offset, uint32_t pa, int
  		uint32_t reg = BCHP_NAND_REVISION+(i*4);
  		uint32_t regval;
  
@@ -316,7 +337,7 @@ index 3bc428a..294cdfc 100644
  			regval = 0;
  		}
  		else {
-@@ -1603,6 +1657,7 @@ static int brcmnand_EDU_write_is_complete(struct mtd_info *mtd, int* outp_needBB
+@@ -1603,6 +1658,7 @@ static int brcmnand_EDU_write_is_complete(struct mtd_info *mtd, int* outp_needBB
  	if (hif_err != 0) // No timeout
  	{
  		uint32_t flashStatus; // = chip->ctrl_read(BCHP_NAND_INTFC_STATUS);
@@ -324,7 +345,7 @@ index 3bc428a..294cdfc 100644
  
  #if 0
  if (!(hif_err & HIF_INTR2_EDU_DONE))
-@@ -1612,11 +1667,7 @@ printk("hif_err=%08x\n", hif_err);
+@@ -1612,11 +1668,7 @@ printk("hif_err=%08x\n", hif_err);
  		/******************* BUG BUG BUG *****************
  		 * THT 01/06/09: What if EDU returns bus error?  We should not mark the block bad then.
  		 */
@@ -337,7 +358,7 @@ index 3bc428a..294cdfc 100644
  
  		//Clear interrupt:
  		//EDU_volatileWrite(EDU_BASE_ADDRESS  + EDU_DONE, 0x00000000);
-@@ -1624,28 +1675,36 @@ printk("hif_err=%08x\n", hif_err);
+@@ -1624,28 +1676,36 @@ printk("hif_err=%08x\n", hif_err);
  		flashStatus = chip->ctrl_read(BCHP_NAND_INTFC_STATUS);
  
  		/* Just to be dead sure */
@@ -391,7 +412,7 @@ index 3bc428a..294cdfc 100644
  			goto out;
  		}
  		else if (edu_err) {
-@@ -1743,6 +1802,42 @@ printk("%s: AUTO: oob=%p, chip->oob_poi=%p, ooboffs=%d, len=%d, bytes=%d, boffs=
+@@ -1743,6 +1803,42 @@ printk("%s: AUTO: oob=%p, chip->oob_poi=%p, ooboffs=%d, len=%d, bytes=%d, boffs=
  }
  
  
@@ -434,7 +455,7 @@ index 3bc428a..294cdfc 100644
  /*
   * Returns 0 on success
   * Expect a controller read was done before hand, and that the OOB data are read into NAND registers.
-@@ -1769,7 +1864,7 @@ static int brcmnand_handle_false_read_ecc_unc_errors(
+@@ -1769,7 +1865,7 @@ static int brcmnand_handle_false_read_ecc_unc_errors(
  	//u_char oobbuf[16];
  	int erased, allFF;
  	int i;
@@ -443,7 +464,7 @@ index 3bc428a..294cdfc 100644
  	//int valid;
  
  	/*
-@@ -1779,19 +1874,17 @@ static int brcmnand_handle_false_read_ecc_unc_errors(
+@@ -1779,19 +1875,17 @@ static int brcmnand_handle_false_read_ecc_unc_errors(
  
  #if 1 /* Testing 1 2 3 */
  	/* Disable ECC */
@@ -466,7 +487,7 @@ index 3bc428a..294cdfc 100644
  #endif
  
  	for (i = 0; i < 4; i++) {
-@@ -1815,8 +1908,10 @@ print_oobbuf(p8, 16);
+@@ -1815,8 +1909,10 @@ print_oobbuf(p8, 16);
  			if (!erased) {
  				printk("p8[%d]=%02x\n", i, p8[i]); 
  				break;
@@ -478,7 +499,7 @@ index 3bc428a..294cdfc 100644
  if (gdebug > 3 ) 
  {printk("%s: offset=%0llx, i=%d from %d to %d, eccOobSize=%d, eccbytes=%d, erased=%d, allFF=%d\n",
  __FUNCTION__, offset, i, chip->eccOobSize-chip->eccbytes, chip->eccOobSize,
-@@ -1847,6 +1942,25 @@ chip->eccOobSize, chip->eccbytes, erased, allFF);}
+@@ -1847,6 +1943,25 @@ chip->eccOobSize, chip->eccbytes, erased, allFF);}
  		/* Real error: Disturb read returns uncorrectable errors */
  		ret = -EBADMSG; 
  if (gdebug > 3 ) {printk("<-- %s: ret -EBADMSG\n", __FUNCTION__);}
@@ -504,7 +525,7 @@ index 3bc428a..294cdfc 100644
  	}
  	
  	return ret;
-@@ -2027,16 +2141,14 @@ static int brcmnand_Hamming_WAR(struct mtd_info* mtd, loff_t offset, void* buffe
+@@ -2027,16 +2142,14 @@ static int brcmnand_Hamming_WAR(struct mtd_info* mtd, loff_t offset, void* buffe
  	struct brcmnand_chip* chip = mtd->priv;
  	static uint32_t ucdata[128];
  	u_char* uncorr_data = (u_char*) ucdata;
@@ -523,7 +544,7 @@ index 3bc428a..294cdfc 100644
  
  	while (retries >= 0) {
  		// Resubmit the read-op
-@@ -2070,7 +2182,7 @@ static int brcmnand_Hamming_WAR(struct mtd_info* mtd, loff_t offset, void* buffe
+@@ -2070,7 +2183,7 @@ static int brcmnand_Hamming_WAR(struct mtd_info* mtd, loff_t offset, void* buffe
  	}
  
  	if (retries < 0) {
@@ -532,7 +553,7 @@ index 3bc428a..294cdfc 100644
  	}
  
  	// Reread the uncorrected buffer.
-@@ -2098,8 +2210,10 @@ static int brcmnand_Hamming_WAR(struct mtd_info* mtd, loff_t offset, void* buffe
+@@ -2098,8 +2211,10 @@ static int brcmnand_Hamming_WAR(struct mtd_info* mtd, loff_t offset, void* buffe
  			offset, inp_hwECC[0], inp_hwECC[1], inp_hwECC[2],
  			inoutp_swECC[0], inoutp_swECC[1], inoutp_swECC[2]);
  	}
@@ -544,7 +565,7 @@ index 3bc428a..294cdfc 100644
  	return ret;
  }
  #endif
-@@ -2432,15 +2546,22 @@ brcmnand_edu_read_comp_intr(struct mtd_info* mtd,
+@@ -2432,15 +2547,22 @@ brcmnand_edu_read_comp_intr(struct mtd_info* mtd,
  	int i;
  	static uint32_t oob0[4]; // Sparea Area to handle ECC workaround, aligned on DW boundary
  	uint32_t* p32 = (oobarea ?  (uint32_t*) oobarea :  (uint32_t*) &oob0[0]);
@@ -570,7 +591,7 @@ index 3bc428a..294cdfc 100644
  	}
  
  	// Remember last good sector read.  Needed for HIF_INTR2 workaround.
-@@ -3905,6 +4026,7 @@ static int brcmnand_refresh_blk(struct mtd_info *mtd, loff_t from)
+@@ -3905,6 +4027,7 @@ static int brcmnand_refresh_blk(struct mtd_info *mtd, loff_t from)
   * EDU ISR Implementation
   */
  
@@ -578,7 +599,7 @@ index 3bc428a..294cdfc 100644
   
  /*
   * Submit the read op, then return immediately, without waiting for completion.
-@@ -4437,7 +4559,7 @@ static int brcmnand_do_read_ops(struct mtd_info *mtd, loff_t from,
+@@ -4437,7 +4560,7 @@ static int brcmnand_do_read_ops(struct mtd_info *mtd, loff_t from,
  			buffer_aligned = EDU_buffer_OK(bufpoi, EDU_READ);
  
  			// (3) Batch mode if writing more than 1 pages.
@@ -587,7 +608,7 @@ index 3bc428a..294cdfc 100644
  
  			// Only do Batch mode if all 3 conditions are satisfied.
  			if (!aligned || !buffer_aligned || numPages <= 1) {
-@@ -4935,22 +5057,26 @@ if (gdebug > 3) printk("-->%s: addr=%0llx\n", __FUNCTION__, addr);
+@@ -4935,22 +5058,26 @@ if (gdebug > 3) printk("-->%s: addr=%0llx\n", __FUNCTION__, addr);
  	 * (2) OOB area is included in ECC calculation for BCH, so no need to check it
  	 *      separately.
  	 */
@@ -618,7 +639,7 @@ index 3bc428a..294cdfc 100644
  	/* 
  	 * If there are no Input Buffer, there is nothing to verify.
  	 * Reading the page should be enough.
-@@ -5087,6 +5213,7 @@ printk("-->%s, offset=%0llx\n", __FUNCTION__, offset);}
+@@ -5087,6 +5214,7 @@ printk("-->%s, offset=%0llx\n", __FUNCTION__, offset);}
  		if (ret < 0) {
  			printk(KERN_ERR "%s: brcmnand_posted_write_cache failed at offset=%0llx, ret=%d\n", 
  				__FUNCTION__, offset + dataWritten, ret);
@@ -626,7 +647,7 @@ index 3bc428a..294cdfc 100644
  			return ret;
  		}
  		dataWritten += chip->eccsize;
-@@ -5142,7 +5269,7 @@ printk("-->%s, page=%0llx\n", __FUNCTION__, page);}
+@@ -5142,7 +5270,7 @@ printk("-->%s, page=%0llx\n", __FUNCTION__, page);}
  #endif
  
  
@@ -635,7 +656,7 @@ index 3bc428a..294cdfc 100644
  	{
  if (gdebug>3) printk("++++++++++++++++++++++++ %s: buffer not 32B aligned, trying non-EDU read\n", __FUNCTION__);
  		/* EDU does not work on non-aligned buffers */
-@@ -5186,6 +5313,9 @@ if (gdebug>3) printk("++++++++++++++++++++++++ %s: buffer not 32B aligned, tryin
+@@ -5186,6 +5314,9 @@ if (gdebug>3) printk("++++++++++++++++++++++++ %s: buffer not 32B aligned, tryin
  	while (!list_empty(&gJobQ.jobQ)) {
  		spin_unlock_irqrestore(&gJobQ.lock, flags);
  		ret = ISR_wait_for_queue_completion();
@@ -645,7 +666,7 @@ index 3bc428a..294cdfc 100644
  		spin_lock_irqsave(&gJobQ.lock, flags);
  	}
  	spin_unlock_irqrestore(&gJobQ.lock, flags);
-@@ -5267,6 +5397,9 @@ if (gdebug>3) printk("++++++++++++++++++++++++ %s: buffer not 32B aligned, tryin
+@@ -5267,6 +5398,9 @@ if (gdebug>3) printk("++++++++++++++++++++++++ %s: buffer not 32B aligned, tryin
  	while (!list_empty(&gJobQ.jobQ)) {
  		spin_unlock_irqrestore(&gJobQ.lock, flags);
  		ret = ISR_wait_for_queue_completion();
@@ -655,7 +676,7 @@ index 3bc428a..294cdfc 100644
  		spin_lock_irqsave(&gJobQ.lock, flags);
  	}
  	spin_unlock_irqrestore(&gJobQ.lock, flags);
-@@ -5428,7 +5561,7 @@ DEBUG(MTD_DEBUG_LEVEL3, "-->%s, offset=%0llx\n", __FUNCTION__, to);
+@@ -5428,7 +5562,7 @@ DEBUG(MTD_DEBUG_LEVEL3, "-->%s, offset=%0llx\n", __FUNCTION__, to);
  		/*
  		 * Group several pages for submission for small page NAND
  		 */
@@ -664,7 +685,7 @@ index 3bc428a..294cdfc 100644
  
  		// If Batch mode		
  		if (buffer_aligned && numPages > 1 && chip->pageSize == chip->eccsize) {
-@@ -5455,6 +5588,10 @@ DEBUG(MTD_DEBUG_LEVEL3, "-->%s, offset=%0llx\n", __FUNCTION__, to);
+@@ -5455,6 +5589,10 @@ DEBUG(MTD_DEBUG_LEVEL3, "-->%s, offset=%0llx\n", __FUNCTION__, to);
  			}
  			
  			ret = brcmnand_isr_write_pages(mtd, buf, chip->oob_poi, realpage, numPages);
@@ -675,7 +696,7 @@ index 3bc428a..294cdfc 100644
  
  		}
  		
-@@ -5520,8 +5657,8 @@ printk("-->%s, offset=%0llx\n", __FUNCTION__, to);}
+@@ -5520,8 +5658,8 @@ printk("-->%s, offset=%0llx\n", __FUNCTION__, to);}
  
  	/* Do not allow writes past end of device */
  	if (unlikely((to + len) > device_size(mtd))) {
@@ -686,7 +707,7 @@ index 3bc428a..294cdfc 100644
  printk("Attempt to write beyond end of device\n");	
  	}	
  	if (!len)
-@@ -5674,8 +5811,8 @@ printk("-->%s, offset=%0llx, len=%08x\n", __FUNCTION__,  to, (int) ops->len);}
+@@ -5674,8 +5812,8 @@ printk("-->%s, offset=%0llx, len=%08x\n", __FUNCTION__,  to, (int) ops->len);}
  
  	if (unlikely((to + ops->len) > device_size(mtd))) 
  	{
@@ -697,7 +718,7 @@ index 3bc428a..294cdfc 100644
  printk("Attempt to write beyond end of device\n");		
  		return -EINVAL;
  	}
-@@ -6137,8 +6274,9 @@ if (gdebug > 3 ) {printk(  "%s: Erase past end of device, instr_addr=%016llx, in
+@@ -6137,8 +6275,9 @@ if (gdebug > 3 ) {printk(  "%s: Erase past end of device, instr_addr=%016llx, in
   */
  		/* Check if we have a bad block, we do not erase bad blocks */
  		if (brcmnand_block_checkbad(mtd, addr, 0, allowbbt)) {
@@ -708,7 +729,7 @@ index 3bc428a..294cdfc 100644
  			goto erase_one_block;
  		}
  
-@@ -6898,11 +7036,11 @@ static int brcmnand_probe(struct mtd_info *mtd, unsigned int chipSelect)
+@@ -6898,11 +7037,11 @@ static int brcmnand_probe(struct mtd_info *mtd, unsigned int chipSelect)
  			if (chip->cellinfo) {
  				unsigned long devIdExt = chip->ctrl_read(BCHP_NAND_FLASH_DEVICE_ID_EXT);
  				unsigned char devId5thByte = (devIdExt & 0xff000000) >> 24;
@@ -724,7 +745,7 @@ index 3bc428a..294cdfc 100644
  				//unsigned int oobSize;
  
  
-@@ -7043,7 +7181,7 @@ PRINTK("nandConfigChipSize = %04x\n", nandConfigChipSize);
+@@ -7043,7 +7182,7 @@ PRINTK("nandConfigChipSize = %04x\n", nandConfigChipSize);
  				else if ((brcmnand_chips[i].idOptions & BRCMNAND_ID_EXT_BYTES_TYPE2) == 
  					BRCMNAND_ID_EXT_BYTES_TYPE2) 
  				{
@@ -733,7 +754,7 @@ index 3bc428a..294cdfc 100644
  					//uint32_t nandconfig, chipSizeShift;
  
  					/*---------------- 4th ID byte: page size, block size and OOB size ---------------- */
-@@ -7663,11 +7801,6 @@ PRINTK("gNumNand=%d, cs=%d\n", gNumNand, cs);
+@@ -7663,11 +7802,6 @@ PRINTK("gNumNand=%d, cs=%d\n", gNumNand, cs);
  				return (-EINVAL);
  			cs = chip->CS[chip->numchips - 1];
  	PRINTK("gNumNand=%d, cs=%d\n", gNumNand, cs);
@@ -745,7 +766,7 @@ index 3bc428a..294cdfc 100644
  		}
  
  		/*
-@@ -7678,6 +7811,7 @@ PRINTK("gNumNand=%d, cs=%d\n", gNumNand, cs);
+@@ -7678,6 +7812,7 @@ PRINTK("gNumNand=%d, cs=%d\n", gNumNand, cs);
  		printk("NAND_CS_NAND_XOR=%08x\n", nand_xor);
  		//
  #ifdef CONFIG_MTD_BRCMNAND_DISABLE_XOR
@@ -753,7 +774,7 @@ index 3bc428a..294cdfc 100644
  	/* Testing 1,2,3: Force XOR disable on CS0, if not done by CFE */
  		if (chip->CS[0] == 0) {	
  			printk("Disabling XOR: Before: SEL=%08x, XOR=%08x\n", nand_select, nand_xor);
-@@ -7699,6 +7833,11 @@ PRINTK("gNumNand=%d, cs=%d\n", gNumNand, cs);
+@@ -7699,6 +7834,11 @@ PRINTK("gNumNand=%d, cs=%d\n", gNumNand, cs);
  printk("Disabling XOR on CS#%1d\n", chip->CS[i]);
  				chip->xor_disable[i] = 1;
  			}
@@ -765,7 +786,7 @@ index 3bc428a..294cdfc 100644
  		}
  	}
  #else
-@@ -8021,7 +8160,7 @@ printk("Corrected ECC to Hamming for SLC flashes: ACC_CONTROL = %08lx from %08lx
+@@ -8021,7 +8161,7 @@ printk("Corrected ECC to Hamming for SLC flashes: ACC_CONTROL = %08lx from %08lx
  			int corr_threshold;
  
  			if ( chip->ecclevel >=  BRCMNAND_ECC_BCH_4) {
@@ -774,7 +795,7 @@ index 3bc428a..294cdfc 100644
  			} 
  			else {
  				corr_threshold = 1;  // 1 , default for Hamming
-@@ -8227,6 +8366,13 @@ printk(KERN_INFO "ECC layout=%s\n", "brcmnand_oob_bch8_4k");
+@@ -8227,6 +8367,13 @@ printk(KERN_INFO "ECC layout=%s\n", "brcmnand_oob_bch8_4k");
  				chip->ecclayout = &brcmnand_oob_bch8_4k;
  				break;
  			}
@@ -788,7 +809,7 @@ index 3bc428a..294cdfc 100644
  			
  			printk(KERN_WARNING "No oob scheme defined for oobsize %d\n", mtd->oobsize);
  			BUG();
-@@ -8389,8 +8535,8 @@ printk(KERN_INFO "%s, eccsize=%d, writesize=%d, eccsteps=%d, ecclevel=%d, eccbyt
+@@ -8389,8 +8536,8 @@ printk(KERN_INFO "%s, eccsize=%d, writesize=%d, eccsteps=%d, ecclevel=%d, eccbyt
  
  
  
@@ -799,7 +820,7 @@ index 3bc428a..294cdfc 100644
  	printk("-----------------------------------------------------\n");
  	print_nand_ctrl_regs();
  	printk("-----------------------------------------------------\n");
-@@ -8411,7 +8557,6 @@ gdebug=4;
+@@ -8411,7 +8558,6 @@ gdebug=4;
  	}
  #endif
  
