@@ -247,6 +247,21 @@ index 376b0d0..c0c58ed 100644
          if (m_handler->filterInputEvent(code, value))
              continue;
  
+diff --git a/src/gui/embedded/qmouse_qws.cpp b/src/gui/embedded/qmouse_qws.cpp
+index f982988..cea7414 100644
+--- a/src/gui/embedded/qmouse_qws.cpp
++++ b/src/gui/embedded/qmouse_qws.cpp
+@@ -224,8 +224,8 @@ QWSMouseHandler::~QWSMouseHandler()
+ 
+ void QWSMouseHandler::limitToScreen(QPoint &position)
+ {
+-    position.setX(qMin(d_ptr->screen->deviceWidth() - 1, qMax(0, position.x())));
+-    position.setY(qMin(d_ptr->screen->deviceHeight() - 1, qMax(0, position.y())));
++    position.setX(qMin(d_ptr->screen->deviceWidth() - 51, qMax(51, position.x())));
++    position.setY(qMin(d_ptr->screen->deviceHeight() - 31, qMax(31, position.y())));
+ }
+ 
+ /*!
 diff --git a/src/gui/embedded/qmousepc_qws.cpp b/src/gui/embedded/qmousepc_qws.cpp
 index 5d3b182..0af16e7 100644
 --- a/src/gui/embedded/qmousepc_qws.cpp
@@ -596,3 +611,20 @@ index 50ccb9f..da0dafa 100644
  }
  
  const QRect QDesktopWidget::screenGeometry(int screenNo) const
+diff --git a/src/gui/util/qdesktopservices_qws.cpp b/src/gui/util/qdesktopservices_qws.cpp
+index e3847e5..4d7c9b7 100644
+--- a/src/gui/util/qdesktopservices_qws.cpp
++++ b/src/gui/util/qdesktopservices_qws.cpp
+@@ -79,6 +79,12 @@ QString QDesktopServices::storageLocation(StandardLocation type)
+         return qwsCacheHome;
+     }
+ 
++    if (type == TempLocation)
++    {
++        char* tmp = getenv("VU_DOWNLOAD_DIR");
++        return QString((tmp) ? tmp : "/tmp");
++    }
++
+     qWarning("QDesktopServices::storageLocation %d not implemented", type);
+     return QString();
+ }

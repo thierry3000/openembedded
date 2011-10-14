@@ -1,6 +1,6 @@
 DESCRIPTION = "arora webbrowser binary"
 PV = "0.10.1"
-PR = "r3"
+PR = "r5"
 
 DEPENDS = "qtwebkit-e"
 
