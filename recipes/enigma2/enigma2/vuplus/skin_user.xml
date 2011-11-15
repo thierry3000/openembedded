@@ -1,0 +1,233 @@
+<skin>
+	<fonts>
+		<font filename="orbitron-medium.ttf" name="VFD" scale="100"/>
+	</fonts>
+	<screen name="InfoBarSummary" position="0,0" size="256,64" id="1">
+		<widget source="session.CurrentService" render="Label" position="6,0" size="120,49" font="VFD;15" halign="center" valign="center" >
+			<convert type="ServiceName">Name</convert>
+		</widget>
+		<widget source="session.Event_Now" render="Progress" position="5,50" size="120,14" borderWidth="1">
+			<convert type="EventTime">Progress</convert>
+		</widget>
+		<widget source="global.CurrentTime" render="Label" position="132,44" size="90,20" font="VFD;26" halign="right" valign="top" transparent="1">
+			<convert type="ClockToText">Format:%H:%M</convert>
+		</widget>
+		<widget source="global.CurrentTime" render="Label" position="224,44" zPosition="1" size="30,19" font="VFD;15" valign="top" transparent="1">
+			<convert type="ClockToText">Format:%S</convert>
+		</widget>
+		<widget source="session.RecordState" render="Pixmap" pixmap="750S/icons/icon_rec.png" position="132,5"  size="31,15">
+			<convert type="ConditionalShowHide" />
+		</widget>	
+		<widget source="session.CurrentService" render="Pixmap" pixmap="Vu_HD/icons/icon_crypt.png" position="164,5"  size="11,15">
+			<convert type="ServiceInfo">IsCrypted</convert>
+			<convert type="ConditionalShowHide" />
+		</widget>
+		<widget source="session.CurrentService" render="Pixmap" pixmap="Vu_HD/icons/icon_txt.png" position="176,5" size="18,15">
+			<convert type="ServiceInfo">HasTelext</convert>
+			<convert type="ConditionalShowHide" />
+		</widget>
+		<widget source="session.CurrentService" render="Pixmap" pixmap="Vu_HD/icons/icon_format.png" position="195,5" size="28,15">
+			<convert type="ServiceInfo">IsWidescreen</convert>
+			<convert type="ConditionalShowHide" />
+		</widget>
+		<widget source="session.CurrentService" render="Pixmap" pixmap="750S/icons/icon_dolby.png" position="224,5" size="32,15">
+			<convert type="ServiceInfo">IsMultichannel</convert>
+			<convert type="ConditionalShowHide" />
+		</widget>
+	 </screen>
+	 <screen name="ChannelSelection_summary" position="0,0" size="256,64" id="1">
+		<widget source="session.CurrentService" render="Label" position="6,0" size="120,49" font="VFD;16" halign="center" valign="center" >
+			<convert type="ServiceName">Name</convert>
+		</widget>
+		<widget source="session.Event_Now" render="Progress" position="5,50" size="120,14" borderWidth="1">
+			<convert type="EventTime">Progress</convert>
+		</widget>
+		<widget source="global.CurrentTime" render="Label" position="132,44" size="90,20" font="VFD;26" halign="right" valign="top" transparent="1">
+			<convert type="ClockToText">Format:%H:%M</convert>
+		</widget>
+		<widget source="global.CurrentTime" render="Label" position="224,44" zPosition="1" size="30,19" font="VFD;15" valign="top" transparent="1">
+			<convert type="ClockToText">Format:%S</convert>
+		</widget>
+		<widget source="session.RecordState" render="Pixmap" pixmap="750S/icons/icon_rec.png" position="132,5"  size="31,15">
+			<convert type="ConditionalShowHide" />
+		</widget>	
+		<widget source="session.CurrentService" render="Pixmap" pixmap="Vu_HD/icons/icon_crypt.png" position="164,5"  size="11,15">
+			<convert type="ServiceInfo">IsCrypted</convert>
+			<convert type="ConditionalShowHide" />
+		</widget>
+		<widget source="session.CurrentService" render="Pixmap" pixmap="Vu_HD/icons/icon_txt.png" position="176,5" size="18,15">
+			<convert type="ServiceInfo">HasTelext</convert>
+			<convert type="ConditionalShowHide" />
+		</widget>
+		<widget source="session.CurrentService" render="Pixmap" pixmap="Vu_HD/icons/icon_format.png" position="195,5" size="28,15">
+			<convert type="ServiceInfo">IsWidescreen</convert>
+			<convert type="ConditionalShowHide" />
+		</widget>
+		<widget source="session.CurrentService" render="Pixmap" pixmap="750S/icons/icon_dolby.png" position="224,5" size="32,15">
+			<convert type="ServiceInfo">IsMultichannel</convert>
+			<convert type="ConditionalShowHide" />
+		</widget>
+	</screen>
+	<screen name="InfoBarMoviePlayerSummary" position="0,0" size="256,64" id="1">
+		<widget source="session.CurrentService" render="Label" position="6,0" size="120,48" font="VFD;16" halign="center" valign="center" >
+			<convert type="ServiceName">Name</convert>
+		</widget>
+		<widget source="session.CurrentService" render="Progress" position="5,50" size="120,14" borderWidth="1">
+			<convert type="ServicePosition">Position</convert>
+		</widget>
+		<widget source="global.CurrentTime" render="Label" position="132,44" size="90,20" font="VFD;26" halign="right" valign="top" transparent="1">
+			<convert type="ClockToText">Format:%H:%M</convert>
+		</widget>
+		<widget source="global.CurrentTime" render="Label" position="224,44" zPosition="1" size="30,19" font="VFD;15" valign="top" transparent="1">
+			<convert type="ClockToText">Format:%S</convert>
+		</widget>
+		<widget source="session.RecordState" render="Pixmap" pixmap="750S/icons/icon_rec.png" position="132,5"  size="31,15">
+			<convert type="ConditionalShowHide" />
+		</widget>	
+		<widget source="session.CurrentService" render="Pixmap" pixmap="Vu_HD/icons/icon_crypt.png" position="164,5"  size="11,15">
+			<convert type="ServiceInfo">IsCrypted</convert>
+			<convert type="ConditionalShowHide" />
+		</widget>
+		<widget source="session.CurrentService" render="Pixmap" pixmap="Vu_HD/icons/icon_txt.png" position="176,5" size="18,15">
+			<convert type="ServiceInfo">HasTelext</convert>
+			<convert type="ConditionalShowHide" />
+		</widget>
+		<widget source="session.CurrentService" render="Pixmap" pixmap="Vu_HD/icons/icon_format.png" position="195,5" size="28,15">
+			<convert type="ServiceInfo">IsWidescreen</convert>
+			<convert type="ConditionalShowHide" />
+		</widget>
+		<widget source="session.CurrentService" render="Pixmap" pixmap="750S/icons/icon_dolby.png" position="224,5" size="32,15">
+			<convert type="ServiceInfo">IsMultichannel</convert>
+			<convert type="ConditionalShowHide" />
+		</widget>
+	</screen>
+	<screen name="MenuSummary" position="0,0" size="256,64" id="1">
+		<widget source="parent.title" render="Label" position="6,0" size="120,32" font="VFD;14" halign="center" valign="center"/>
+		<widget source="parent.menu" render="Label" position="6,32" size="120,32" font="VFD;15" halign="center" valign="center">
+			<convert type="StringListSelection" />
+		</widget>
+		<widget source="global.CurrentTime" render="Label" position="132,44" size="90,20" font="VFD;26" halign="right" valign="top" transparent="1">
+			<convert type="ClockToText">Format:%H:%M</convert>
+		</widget>
+		<widget source="global.CurrentTime" render="Label" position="224,44" zPosition="1" size="30,19" font="VFD;15" valign="top" transparent="1">
+			<convert type="ClockToText">Format:%S</convert>
+		</widget>
+		<widget source="session.RecordState" render="Pixmap" pixmap="750S/icons/icon_rec.png" position="132,5"  size="31,15">
+			<convert type="ConditionalShowHide" />
+		</widget>	
+		<widget source="session.CurrentService" render="Pixmap" pixmap="Vu_HD/icons/icon_crypt.png" position="164,5"  size="11,15">
+			<convert type="ServiceInfo">IsCrypted</convert>
+			<convert type="ConditionalShowHide" />
+		</widget>
+		<widget source="session.CurrentService" render="Pixmap" pixmap="Vu_HD/icons/icon_txt.png" position="176,5" size="18,15">
+			<convert type="ServiceInfo">HasTelext</convert>
+			<convert type="ConditionalShowHide" />
+		</widget>
+		<widget source="session.CurrentService" render="Pixmap" pixmap="Vu_HD/icons/icon_format.png" position="195,5" size="28,15">
+			<convert type="ServiceInfo">IsWidescreen</convert>
+			<convert type="ConditionalShowHide" />
+		</widget>
+		<widget source="session.CurrentService" render="Pixmap" pixmap="750S/icons/icon_dolby.png" position="224,5" size="32,15">
+			<convert type="ServiceInfo">IsMultichannel</convert>
+			<convert type="ConditionalShowHide" />
+		</widget>
+	</screen>
+	<screen name="ServiceScanSummary" position="0,0" size="132,64" id="1">
+		<widget name="Title" position="6,4" size="120,42" font="VFD;15" transparent="1" />
+		<widget name="Service" position="6,22" size="120,26" font="VFD;12" transparent="1" />
+		<widget name="scan_progress" position="6,50" zPosition="1" borderWidth="1" size="56,12" backgroundColor="dark" />
+	</screen>
+	<screen name="SetupSummary" position="0,0" size="256,64" id="1">
+		<widget source="SetupTitle" render="Label" position="6,0" size="120,16" font="VFD;12" />
+		<widget source="SetupEntry" render="Label" position="6,16" size="120,32" font="VFD;12" />
+		<widget source="SetupValue" render="Label" position="6,48" size="120,16" font="VFD;12" />
+		<widget source="global.CurrentTime" render="Label" position="132,44" size="90,20" font="VFD;26" halign="right" valign="top" transparent="1">
+			<convert type="ClockToText">Format:%H:%M</convert>
+		</widget>
+		<widget source="global.CurrentTime" render="Label" position="224,44" zPosition="1" size="30,19" font="VFD;15" valign="top" transparent="1">
+			<convert type="ClockToText">Format:%S</convert>
+		</widget>
+		<widget source="session.RecordState" render="Pixmap" pixmap="750S/icons/icon_rec.png" position="132,5"  size="31,15">
+			<convert type="ConditionalShowHide" />
+		</widget>	
+		<widget source="session.CurrentService" render="Pixmap" pixmap="Vu_HD/icons/icon_crypt.png" position="164,5"  size="11,15">
+			<convert type="ServiceInfo">IsCrypted</convert>
+			<convert type="ConditionalShowHide" />
+		</widget>
+		<widget source="session.CurrentService" render="Pixmap" pixmap="Vu_HD/icons/icon_txt.png" position="176,5" size="18,15">
+			<convert type="ServiceInfo">HasTelext</convert>
+			<convert type="ConditionalShowHide" />
+		</widget>
+		<widget source="session.CurrentService" render="Pixmap" pixmap="Vu_HD/icons/icon_format.png" position="195,5" size="28,15">
+			<convert type="ServiceInfo">IsWidescreen</convert>
+			<convert type="ConditionalShowHide" />
+		</widget>
+		<widget source="session.CurrentService" render="Pixmap" pixmap="750S/icons/icon_dolby.png" position="224,5" size="32,15">
+			<convert type="ServiceInfo">IsMultichannel</convert>
+			<convert type="ConditionalShowHide" />
+		</widget>
+	</screen>
+	<screen name="StandbySummary" position="0,0" size="256,64" id="1">
+		<widget source="global.CurrentTime" render="Label" position="132,45" size="90,20" font="VFD;26" halign="right" valign="top" transparent="1">
+			<convert type="ClockToText">Format:%H:%M</convert>
+		</widget>
+		<widget source="session.RecordState" render="Pixmap" pixmap="750S/icons/icon_rec.png" position="132,5"  size="31,15">
+			<convert type="ConditionalShowHide" />
+		</widget>	
+		<widget source="session.CurrentService" render="Pixmap" pixmap="Vu_HD/icons/icon_crypt.png" position="164,5"  size="11,15">
+			<convert type="ServiceInfo">IsCrypted</convert>
+			<convert type="ConditionalShowHide" />
+		</widget>
+		<widget source="session.CurrentService" render="Pixmap" pixmap="Vu_HD/icons/icon_txt.png" position="176,5" size="18,15">
+			<convert type="ServiceInfo">HasTelext</convert>
+			<convert type="ConditionalShowHide" />
+		</widget>
+		<widget source="session.CurrentService" render="Pixmap" pixmap="Vu_HD/icons/icon_format.png" position="195,5" size="28,15">
+			<convert type="ServiceInfo">IsWidescreen</convert>
+			<convert type="ConditionalShowHide" />
+		</widget>
+		<widget source="session.CurrentService" render="Pixmap" pixmap="750S/icons/icon_dolby.png" position="224,5" size="32,15">
+			<convert type="ServiceInfo">IsMultichannel</convert>
+			<convert type="ConditionalShowHide" />
+		</widget>
+	</screen>
+	<screen name="SimpleSummary" position="0,0" size="256,64" id="1">
+		<widget source="parent.Title" render="Label" position="6,0" size="120,64" font="VFD;15" halign="center" valign="center" />
+		<widget source="global.CurrentTime" render="Label" position="132,44" size="90,20" font="VFD;26" halign="right" valign="top" transparent="1">
+			<convert type="ClockToText">Format:%H:%M</convert>
+		</widget>
+		<widget source="global.CurrentTime" render="Label" position="224,44" zPosition="1" size="30,19" font="VFD;15" valign="top" transparent="1">
+			<convert type="ClockToText">Format:%S</convert>
+		</widget>
+		<widget source="session.RecordState" render="Pixmap" pixmap="750S/icons/icon_rec.png" position="132,5"  size="31,15">
+			<convert type="ConditionalShowHide" />
+		</widget>	
+		<widget source="session.CurrentService" render="Pixmap" pixmap="Vu_HD/icons/icon_crypt.png" position="164,5"  size="11,15">
+			<convert type="ServiceInfo">IsCrypted</convert>
+			<convert type="ConditionalShowHide" />
+		</widget>
+		<widget source="session.CurrentService" render="Pixmap" pixmap="Vu_HD/icons/icon_txt.png" position="176,5" size="18,15">
+			<convert type="ServiceInfo">HasTelext</convert>
+			<convert type="ConditionalShowHide" />
+		</widget>
+		<widget source="session.CurrentService" render="Pixmap" pixmap="Vu_HD/icons/icon_format.png" position="195,5" size="28,15">
+			<convert type="ServiceInfo">IsWidescreen</convert>
+			<convert type="ConditionalShowHide" />
+		</widget>
+		<widget source="session.CurrentService" render="Pixmap" pixmap="750S/icons/icon_dolby.png" position="224,5" size="32,15">
+			<convert type="ServiceInfo">IsMultichannel</convert>
+			<convert type="ConditionalShowHide" />
+		</widget>
+	</screen>
+	<screen name="MediaPlayerLCDScreen" position="0,0" size="256,64" id="1">
+		<widget name="text1" position="4,0" size="252,38" font="VFD;18"/>
+		<widget name="text3" position="4,39" size="252,12" font="VFD;12"/>
+		<widget name="text4" position="4,52" size="252,12" font="VFD;12"/>
+	</screen>
+	<screen name="WizardSummary" position="0,0" size="256,64" id="1">
+		<widget source="text" render="Label" position="6,0" size="252,16" font="VFD;18" transparent="1" />
+		<widget source="parent.list" render="Label" position="6,18" size="252,46" font="VFD;12">
+			<convert type="StringListSelection" />
+		</widget>
+	</screen>
+</skin>
