@@ -131,8 +131,10 @@ SRC_URI_append_vusolo = " file://enigma2_vuplus_misc.patch;patch=1;pnum=1"
 SRC_URI_append = " ${@base_contains("MACHINE_FEATURES", "vuwlan", "file://enigma2_vuplus_networksetup.patch;patch=1;pnum=1", "", d)}"
 
 SRC_URI_append_vuultimo = " \
-           file://orbitron-medium.ttf \
-           file://skin_user.xml"
+           file://analog.ttf \
+           file://skin_user.xml \
+           file://vfd_icons \
+"
 
 def change_po():
         import os
@@ -199,8 +201,10 @@ EXTRA_OECONF = " \
 "
 
 do_install_append_vuultimo() {
-        install -m 0755 ${WORKDIR}/orbitron-medium.ttf ${D}/usr/share/fonts/
+        install -m 0755 ${WORKDIR}/analog.ttf ${D}/usr/share/fonts/
         install -m 0755 ${WORKDIR}/skin_user.xml ${D}/usr/share/enigma2/defaults/
+        install -d ${D}/usr/share/enigma2/vfd_icons/
+        install -m 0755 ${WORKDIR}/vfd_icons/*.png ${D}/usr/share/enigma2/vfd_icons/
 }
 
 python populate_packages_prepend () {
