@@ -1,7 +1,7 @@
 
 require linux-firmware.inc
 
-DESCRIPTION = "Firmware for dvb-usb-af9015"
+DESCRIPTION = "Firmware for dvb-usb"
 
 SRCREV = "13f0b6bda7b567d29c747196aa65ad82b18651ca"
 
