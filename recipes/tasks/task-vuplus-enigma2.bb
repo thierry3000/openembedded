@@ -50,9 +50,10 @@ RRECOMMENDS_task-vuplus-enigma2 = "\
 
 RDEPENDS_task-vuplus-enigma2_append_bm750 = "\
   enigma2-plugin-systemplugins-fancontrol \
-  vuplus-webbrowser-utils \
-  enigma2-plugin-extensions-webbrowser \
 "
+#  vuplus-webbrowser-utils \
+#  enigma2-plugin-extensions-webbrowser \
+
 RDEPENDS_task-vuplus-enigma2_append_vuuno = "\
   enigma2-plugin-systemplugins-fpgaupgrade \
   enigma2-plugin-systemplugins-blindscan \

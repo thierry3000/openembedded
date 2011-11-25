@@ -3,27 +3,27 @@ SECTION = "base"
 PRIORITY = "required"
 LICENSE = "proprietary"
 
-
-def get_modules_extension(bb, d):
-	if bb.data.getVar('GLIBC_ADDONS', d, 1) in ['nptl']:
-		return "-gcc4.1"
-	return ""
-
-KV = "2.6.18-7.3"
-
+KV = "3.1.1"
 
 PV_bm750 = "${KV}"
 PV_vusolo = "${KV}"
 PV_vuuno = "${KV}"
 PV_vuultimo = "${KV}"
 
-SRCDATE_bm750 = "20111114"
-SRCDATE_vusolo = "20111114"
-SRCDATE_vuuno = "20111114"
-SRCDATE_vuultimo = "20111114"
+SRCDATE_bm750 = "20111124"
+SRCDATE_vusolo = "20111123"
+SRCDATE_vuuno = "20111123"
+SRCDATE_vuultimo = "20111123"
 
 
-RDEPENDS = "initscripts-vuplus kernel (${KV}) kernel-module-firmware-class kernel-module-input kernel-module-evdev kernel-module-i2c-core kernel-module-snd kernel-module-snd-pcm"
+RDEPENDS_2.6.18 = "initscripts-vuplus kernel (${KV}) kernel-module-firmware-class kernel-module-input kernel-module-evdev kernel-module-i2c-core kernel-module-snd kernel-module-snd-pcm"
+RDEPENDS_3.1 = "initscripts-vuplus kernel (${KV})" 
+
+
+RDEPENDS = "\
+  ${@base_contains('PREFERRED_VERSION_linux-${MACHINE}', '2.6.18', '${RDEPENDS_2.6.18}', '${RDEPENDS_3.1}', d)} \
+"
+
 PR = "r19-${SRCDATE}"
 
 #hack
@@ -31,7 +31,7 @@ DEPENDS = " module-init-tools"
 RDEPENDS_append_vuplus = " module-init-tools-depmod"
 
 
-SRC_URI = "http://archive.vuplus.com/download/drivers/vuplus-dvb-modules-${MACHINE}-${PV}-${PREFERRED_GCC_VERSION}-${SRCDATE}.tar.gz "
+SRC_URI = "http://archive.vuplus.com/download/drivers/beta/kernel31/vuplus-dvb-modules-${MACHINE}-${PV}-${PREFERRED_GCC_VERSION}-${SRCDATE}.tar.gz "
 
 S = "${WORKDIR}"
 

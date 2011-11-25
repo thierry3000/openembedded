@@ -82,7 +82,7 @@ EXTRA_OEMAKE = ""
 kernel_do_compile() {
 	unset CFLAGS CPPFLAGS CXXFLAGS LDFLAGS MACHINE
 	oe_runmake include/linux/version.h CC="${KERNEL_CC}" LD="${KERNEL_LD}"
-	if [ "${KERNEL_MAJOR_VERSION}" != "2.6" ]; then
+	if [ "${KERNEL_MAJOR_VERSION}" == "2.4" ]; then
 		oe_runmake dep CC="${KERNEL_CC}" LD="${KERNEL_LD}"
 	fi
 	oe_runmake ${KERNEL_IMAGETYPE} CC="${KERNEL_CC}" LD="${KERNEL_LD}"
@@ -135,6 +135,11 @@ kernel_do_stage() {
 
 	mkdir -p ${STAGING_KERNEL_DIR}/include/pcmcia
 	cp -fR include/pcmcia/* ${STAGING_KERNEL_DIR}/include/pcmcia/
+
+	if [ -e include/generated ] ; then
+		mkdir -p ${STAGING_KERNEL_DIR}/include/generated
+		cp -fR include/generated/* ${STAGING_KERNEL_DIR}/include/generated/
+	fi
 
 	for entry in drivers/crypto drivers/media include/media include/acpi include/sound include/video include/scsi include/trace; do
 		if [ -d $entry ]; then
@@ -194,7 +199,7 @@ kernel_do_install() {
 	install -m 0644 vmlinux ${D}/boot/vmlinux-${KERNEL_VERSION}
 	[ -e Module.symvers ] && install -m 0644 Module.symvers ${D}/boot/Module.symvers-${KERNEL_VERSION}
 	install -d ${D}/etc/modutils
-	if [ "${KERNEL_MAJOR_VERSION}" = "2.6" ]; then
+	if [ "${KERNEL_MAJOR_VERSION}" != "2.4" ]; then
 		install -d ${D}/etc/modprobe.d
 	fi
 	
@@ -435,10 +440,10 @@ python populate_packages_prepend () {
 		# Write out any modconf fragment
 		modconf = bb.data.getVar('module_conf_%s' % basename, d, 1)
 		if modconf:
-			if bb.data.getVar("KERNEL_MAJOR_VERSION", d, 1) == "2.6":
-				name = '%s/etc/modprobe.d/%s.conf' % (dvar, basename)
-			else:
+			if bb.data.getVar("KERNEL_MAJOR_VERSION", d, 1) == "2.4":
 				name = '%s/etc/modutils/%s.conf' % (dvar, basename)
+			else:
+				name = '%s/etc/modprobe.d/%s.conf' % (dvar, basename)
 			f = open(name, 'w')
 			f.write("%s\n" % modconf)
 			f.close()

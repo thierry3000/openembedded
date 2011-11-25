@@ -4,11 +4,13 @@ PRIORITY = "required"
 DEPENDS = "makedevs"
 RDEPENDS = "makedevs"
 LICENSE = "GPL"
-PR = "r28"
+PR = "r29"
 
 #FILESPATH = "${@base_set_filespath([ '${FILE_DIRNAME}/${P}', '${FILE_DIRNAME}/initscripts-${PV}', '${FILE_DIRNAME}/files', '${FILE_DIRNAME}' ], d)}"
 #deprecated
 FILESPATHPKG = "initscripts-${PV}:initscripts:files"
+
+BOOTUP = "${@base_contains('PREFERRED_VERSION_linux-${MACHINE}', '3.1.1', 'bootup_3.1', 'bootup', d)}"
 
 
 SRC_URI = "file://halt \
@@ -26,7 +28,8 @@ SRC_URI = "file://halt \
 			file://sysfs.sh \
 			file://hotplug_br \
 			file://make_mac_sector \
-			file://bootup"
+			file://${BOOTUP} \
+			"
 
 
 do_install () {
@@ -53,7 +56,7 @@ do_install () {
 	install -m 0755    ${WORKDIR}/rmnologin	${D}${sysconfdir}/init.d
 	install -m 0755    ${WORKDIR}/sendsigs		${D}${sysconfdir}/init.d
 	install -m 0755    ${WORKDIR}/single		${D}${sysconfdir}/init.d
-	install -m 0755    ${WORKDIR}/bootup  ${D}${sysconfdir}/init.d
+	install -m 0755    ${WORKDIR}/${BOOTUP}  ${D}${sysconfdir}/init.d/bootup
 	install -m 0755    ${WORKDIR}/devpts.sh ${D}${sysconfdir}/init.d
 	install -m 0755    ${WORKDIR}/devpts            ${D}${sysconfdir}/default
 	install -m 0755    ${WORKDIR}/sysfs.sh          ${D}${sysconfdir}/init.d
