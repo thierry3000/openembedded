@@ -1,7 +1,7 @@
 DESCRIPTION = "Vuplus: W-LAN Task for the Vuplus Distribution"
 SECTION = "vuplus/base"
 LICENSE = "MIT"
-PR = "r4"
+PR = "r5"
 
 inherit task
 
@@ -17,15 +17,6 @@ RDEPENDS_${PN} = "\
 "
 
 WLAN_CRYPTO_MODULES = "\
-  kernel-module-aes-generic \
-  kernel-module-arc4 \
-  kernel-module-ecb \
-  kernel-module-cryptomgr \
-  kernel-module-crypto-hash \
-  kernel-module-aead \
-  kernel-module-pcompress \
-  kernel-module-crypto-blkcipher \
-  kernel-module-crypto-algapi \
 "
 
 WLAN_PCI_MODULES = "\
@@ -37,6 +28,7 @@ WLAN_USB_MODULES = "\
   kernel-module-zd1211rw \
   rt73-firmware \
   zd1211-firmware \
+  r8192cu \
 "
 
 WLAN_USB_MODULES_LEGACY = "\

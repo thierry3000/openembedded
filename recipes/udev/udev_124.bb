@@ -32,10 +32,10 @@ SRC_URI_append_dm500hd = " ${@base_contains('PREFERRED_VERSION_linux-dm500hd', '
 SRC_URI_append_vuplus = " file://40-od-devfs-compatibility.rules \
 	   file://42-od-oled-compatibility.rules"
 
-SRC_URI_append_bm750 = " ${@base_contains('PREFERRED_VERSION_linux-bm750', '2.6.18', 'file://41-od-linux-2.6.18-misc.rules', '', d)}"
-SRC_URI_append_vusolo = " ${@base_contains('PREFERRED_VERSION_linux-vusolo', '2.6.18', 'file://41-od-linux-2.6.18-misc.rules', '', d)}"
-SRC_URI_append_vuuno = " ${@base_contains('PREFERRED_VERSION_linux-vuuno', '2.6.18', 'file://41-od-linux-2.6.18-misc.rules', '', d)}"
-SRC_URI_append_vuultimo = " ${@base_contains('PREFERRED_VERSION_linux-vuultimo', '2.6.18', 'file://41-od-linux-2.6.18-misc.rules', '', d)}"
+SRC_URI_append_bm750 = " file://41-od-linux-2.6.18-misc.rules"
+SRC_URI_append_vusolo = " file://41-od-linux-2.6.18-misc.rules"
+SRC_URI_append_vuuno = " file://41-od-linux-2.6.18-misc.rules"
+SRC_URI_append_vuultimo = " file://41-od-linux-2.6.18-misc.rules"
 
 
 require udev.inc
