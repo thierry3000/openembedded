@@ -1,0 +1,13 @@
+diff --git a/git/usbtunerhelper.c b/git/usbtunerhelper.c
+index cfa5794..fba9ea4 100644
+--- a/git/usbtunerhelper.c
++++ b/git/usbtunerhelper.c
+@@ -68,7 +68,7 @@ struct vtuner_message
+ #define SYS_USB_DEVICES_DIR "/sys/class/usb_device"
+ #define VTUNER_PATH "/dev/misc"
+ #define MAX_ADAPTERS 8
+-#define BUFFER_SIZE ((188 / 4) * 4096) /* multiple of ts packet and page size */
++#define BUFFER_SIZE ((188 / 4) * 4096 * 4) /* multiple of ts packet and page size */
+ #define DEMUX_BUFFER_SIZE (8 * ((188 / 4) * 4096)) /* 1.5MB */
+ 
+ #if DVB_API_VERSION < 5

@@ -31,6 +31,8 @@ VUPLUS_BASE_ESSENTIAL = "\
   vsftpd \
   mtd-utils \
   hdparm \  
+  usbtunerhelper \
+  firmware-dvb-usb \
 "
 
 VUPLUS_BASE_RECOMMENDS = "\
