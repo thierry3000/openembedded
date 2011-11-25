@@ -2,7 +2,7 @@ DESCRIPTION = "Qt port of WebKit"
 HOMEPAGE = "http://trac.webkit.org/wiki/QtWebKit"
 LICENSE = "LGPLv2.1"
 DEPENDS += "fontconfig sqlite3"
-INC_PR = "r0"
+INC_PR = "r1"
 
 inherit lib_package pkgconfig
 

@@ -109,7 +109,7 @@ SRCREV_vuplus = ""
 # enigma2_vuplus_mediaplayer.patch is for trick-play in media player
 
 
-SRC_URI = "git://archive.vuplus.com/git/dvbapp.git;protocol=http;branch=${BRANCH};tag=${SRCREV} \
+SRC_URI = "git://code.vuplus.com/git/dvbapp.git;protocol=http;branch=${BRANCH};tag=${SRCREV} \
            file://enigma2_vuplus_skin.patch;patch=1;pnum=1 \
            file://enigma2_vuplus_mediaplayer.patch;patch=1;pnum=1 \
 	   file://enigma2_vuplus_mediaplayer_subtitle.patch;patch=1;pnum=1 \
@@ -129,6 +129,12 @@ SRC_URI_append_vuuno = " file://enigma2_vuplus_textvfd.patch;patch=1;pnum=1"
 SRC_URI_append_vusolo = " file://enigma2_vuplus_misc.patch;patch=1;pnum=1"
 
 SRC_URI_append = " ${@base_contains("MACHINE_FEATURES", "vuwlan", "file://enigma2_vuplus_networksetup.patch;patch=1;pnum=1", "", d)}"
+
+SRC_URI_append_vuultimo = " \
+           file://analog.ttf \
+           file://skin_user.xml \
+           file://vfd_icons \
+"
 
 def change_po():
         import os
@@ -187,11 +193,20 @@ do_compile_prepend_vuplus() {
 EXTRA_OECONF = " \
 	${@base_contains("MACHINE_FEATURES", "display-text-vfd", "--with-display-text-vfd" , "", d)} \
 	${@base_contains("MACHINE_FEATURES", "display-graphic-vfd", "--with-display-graphic-vfd" , "", d)} \
+	${@base_contains("MACHINE_FEATURES", "right-half-vfd-skin", "--with-set-right-half-vfd-skin" , "", d)} \
+	${@base_contains("MACHINE_FEATURES", "remote-keyboard", "--with-remote-keyboard" , "", d)} \
         BUILD_SYS=${BUILD_SYS} \
         HOST_SYS=${HOST_SYS} \
         STAGING_INCDIR=${STAGING_INCDIR} \
         STAGING_LIBDIR=${STAGING_LIBDIR} \
 "
+
+do_install_append_vuultimo() {
+        install -m 0755 ${WORKDIR}/analog.ttf ${D}/usr/share/fonts/
+        install -m 0755 ${WORKDIR}/skin_user.xml ${D}/usr/share/enigma2/defaults/
+        install -d ${D}/usr/share/enigma2/vfd_icons/
+        install -m 0755 ${WORKDIR}/vfd_icons/*.png ${D}/usr/share/enigma2/vfd_icons/
+}
 
 python populate_packages_prepend () {
 	enigma2_plugindir = bb.data.expand('${libdir}/enigma2/python/Plugins', d)

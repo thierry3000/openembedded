@@ -1,7 +1,7 @@
 DESCRIPTION = "Vuplus: E2 Task for the Vuplus Distribution"
 SECTION = "vuplus/base"
 LICENSE = "MIT"
-PR = "r8"
+PR = "r9"
 
 inherit task
 
@@ -44,14 +44,16 @@ RRECOMMENDS_task-vuplus-enigma2 = "\
   enigma2-plugin-systemplugins-skinselector \
   enigma2-plugin-systemplugins-ui3dsetup \
   enigma2-plugin-systemplugins-uipositionsetup \
+  enigma2-plugin-systemplugins-hdmicec \
   ${@base_contains("MACHINE_FEATURES", "wifi", "task-vuplus-wlan", "", d)} \
 "
 
 RDEPENDS_task-vuplus-enigma2_append_bm750 = "\
   enigma2-plugin-systemplugins-fancontrol \
-  vuplus-webbrowser-utils \
-  enigma2-plugin-extensions-webbrowser \
 "
+#  vuplus-webbrowser-utils \
+#  enigma2-plugin-extensions-webbrowser \
+
 RDEPENDS_task-vuplus-enigma2_append_vuuno = "\
   enigma2-plugin-systemplugins-fpgaupgrade \
   enigma2-plugin-systemplugins-blindscan \

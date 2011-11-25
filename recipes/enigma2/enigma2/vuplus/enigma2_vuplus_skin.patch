@@ -1,5 +1,5 @@
 diff --git a/configure.ac b/configure.ac
-index 27beb1e..d90d0f1 100644
+index ee8130b..5c3afe0 100644
 --- a/configure.ac
 +++ b/configure.ac
 @@ -115,6 +115,16 @@ data/skin_default/menu/Makefile
@@ -81,7 +81,7 @@ index 0000000..20f24d9
 +	*.png
 diff --git a/data/750S/skin.xml b/data/750S/skin.xml
 new file mode 100644
-index 0000000..e41e129
+index 0000000..79fc52d
 --- /dev/null
 +++ b/data/750S/skin.xml
 @@ -0,0 +1,2493 @@
@@ -2650,10 +2650,10 @@ index 0000000..9d4f458
 +	*.png
 diff --git a/data/Vu_HD/skin.xml b/data/Vu_HD/skin.xml
 new file mode 100644
-index 0000000..799373f
+index 0000000..3ceff7a
 --- /dev/null
 +++ b/data/Vu_HD/skin.xml
-@@ -0,0 +1,3040 @@
+@@ -0,0 +1,3004 @@
 +<skin>
 +	<!-- VU+ skin (skin.xml)  -->
 +	<output id="0">
@@ -5650,42 +5650,6 @@ index 0000000..799373f
 +			</convert>
 +		</widget>
 +	</screen>	
-+	<screen name="FactoryTest" position="300,100" size="660,550" title="Test Menu" >
-+		<widget name="testlist" position="10,0" size="440,455" itemHeight="35" />
-+		<widget name="resultlist" position="470,0" size="60,455" itemHeight="35" />
-+		<widget name="testdate" position="20,470" size="250,35" font="Regular;30" />
-+		<widget name="testversion" position="20,505" size="250,35" font="Regular;30" />
-+		<widget name="mactext" position="320,470" size="340,35" font="Regular;30" />			
-+	</screen>
-+	<screen name="MacConfig" position="center,center" size="520,100" title="Mac Config" >
-+		<eLabel text="Mac Address " position="10,15" size="200,40" font="Regular;30" />		
-+		<widget name="text" position="230,15" size="230,40" font="Regular;30" halign="right"/>
-+		<widget name="text1" position="470,15" size="40,40" font="Regular;30" />		
-+		<eLabel text=" " position="5,55" zPosition="-1" size="510,5" backgroundColor="#02e1e8e6" />		
-+		<widget name="stattext" position="30,75" size="450,35" font="Regular;30" />
-+	</screen>
-+	<screen name="ScCiTest" position="center,center" size="440,200" title="CI Smartcard Test" >
-+		<widget name="testlist" position="10,0" size="340,120" />
-+		<widget name="resultlist" position="370,0" size="60,120" />
-+		<eLabel text=" " position="5,125" zPosition="-1" size="430,5" backgroundColor="#02e1e8e6" />		
-+		<widget name="text" position="10,140" size="420,50" font="Regular;25" />
-+	</screen>
-+	<screen name="SmartCardTest" position="center,center" size="300,120" title="SmartCard Test" >
-+		<widget name="text" position="10,10" size="280,100" font="Regular;30" />
-+	</screen>
-+	<screen name="FrontTest" position="center,center" size="300,180" title="Front Test" >
-+		<widget name="text" position="10,10" size="280,160" font="Regular;30" />
-+	</screen>
-+	<screen name="FrontTest_solo" position="center,center" size="300,180" title="Front Test" >
-+		<widget name="text" position="10,10" size="280,160" font="Regular;30" />
-+	</screen>
-+	<screen name="RS232Test" position="center,center" size="260,100" title="RS232 Test" >
-+		<widget name="text" position="10,10" size="240,80" font="Regular;30" />
-+	</screen>
-+	<screen name="AgingTest" position="center,center" size="350,150" title="Aging Test" >
-+		<widget name="text1" position="10,10" size="330,40" font="Regular;30" />
-+		<widget name="text2" position="10,60" size="330,40" font="Regular;30" />
-+	</screen>
 +	<screen name="FancontrolConfiguration" position="center,center" size="560,300" title="Standbymode Fancontrol settings" >
 +		<ePixmap pixmap="Vu_HD/buttons/red.png" position="10,10" size="25,25" alphatest="on" />
 +		<ePixmap pixmap="Vu_HD/buttons/green.png" position="290,10" size="25,25" alphatest="on" />
