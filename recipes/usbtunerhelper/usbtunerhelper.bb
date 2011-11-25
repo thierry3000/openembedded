@@ -8,7 +8,6 @@ PR = "r1"
 SRC_REV = ""
 
 SRC_URI = "git://openpli.git.sourceforge.net/gitroot/openpli/vtuner;protocol=git;tag=${SRC_REV} \
-	file://ut_buffer_size.patch;patch=1;pnum=2 \
 	file://${PN}.sh "
 
 S = "${WORKDIR}/git"

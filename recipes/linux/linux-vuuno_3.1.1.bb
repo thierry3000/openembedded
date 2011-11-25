@@ -6,9 +6,11 @@ PR = "r0"
 
 SRCREV = ""
 
+#TODO : cpu proc patch
+
 MODULE = "linux-3.1.1"
 
-SRC_URI += "git:///home/shcheong/work/stb/sw/7413/refsw/git_linux/3.0/linux-3.1.1;protocol=file;branch=brcm;tag=${SRCREV} \
+SRC_URI += "git:///home/shcheong/work/stb/sw/7413/refsw/git_linux/3.0/linux-3.1.1;protocol=file;branch=uno;tag=${SRCREV} \
 	file://fix_cpu_proc.patch;patch=1;pnum=1 \
         file://${MACHINE}_defconfig \
         "
