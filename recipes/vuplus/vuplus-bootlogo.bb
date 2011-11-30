@@ -7,8 +7,9 @@ IMAGES_VERSION = "1"
 BINARY_VERSION = "7"
 
 PV = "${BINARY_VERSION}.${IMAGES_VERSION}"
-PR = "r4"
+PR = "r5"
 
+KERNEL_VERSION = "${@base_contains('PREFERRED_VERSION_linux-${MACHINE}', '2.6.18', '2.6.18', '3.1.1', d)}"
 
 SRC_URI = "file://bootlogo.mvi file://backdrop.mvi file://bootlogo_wait.mvi file://switchoff.mvi"
 SRC_URI_append_vuuno = " file://splash_cfe_auto.bin"
@@ -47,19 +48,27 @@ do_install_vuultimo() {
 }
 
 pkg_preinst() {
-	[ -d /proc/stb ] && mount -o rw,remount /boot
+	if [ "${KERNEL_VERSION}" = "3.1.1" ]; then
+		[ -d /proc/stb ] && mount -o rw,remount /boot
+	fi
 }
 
 pkg_postinst() {
-	[ -d /proc/stb ] && mount -o ro,remount /boot
+	if [ "${KERNEL_VERSION}" = "3.1.1" ]; then
+		[ -d /proc/stb ] && mount -o ro,remount /boot
+	fi
 }
 
 pkg_prerm() {
-	[ -d /proc/stb ] && mount -o rw,remount /boot
+	if [ "${KERNEL_VERSION}" = "3.1.1" ]; then
+		[ -d /proc/stb ] && mount -o rw,remount /boot
+	fi
 }
 
 pkg_postrm() {
-	[ -d /proc/stb ] && mount -o ro,remount /boot
+	if [ "${KERNEL_VERSION}" = "3.1.1" ]; then
+		[ -d /proc/stb ] && mount -o ro,remount /boot
+	fi
 }
 
 PACKAGE_ARCH := "${MACHINE_ARCH}"

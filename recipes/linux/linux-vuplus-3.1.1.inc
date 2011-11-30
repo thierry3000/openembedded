@@ -2,11 +2,11 @@ CRIPTION = "Linux kernel for vuplus"
 LICENSE = "GPL"
 KV = "3.1.1"
 
-SRCREV = ""
+SRCREV = "r2"
 
 MODULE = "linux-3.1.1"
 
-SRC_URI += "http://archive.vuplus.com/download/kernel/linux-${KV}.tar.bz2 \
+SRC_URI += "http://archive.vuplus.com/download/kernel/linux-${KV}_${SRCREV}.tar.bz2 \
 	file://fix_cpu_proc.patch;patch=1;pnum=1 \
         file://${MACHINE}_defconfig \
         "
