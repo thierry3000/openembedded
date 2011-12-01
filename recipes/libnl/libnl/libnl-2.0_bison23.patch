@@ -1,0 +1,30 @@
+diff --git a/lib/route/pktloc.c b/lib/route/pktloc.c
+index f0d0155..3ab135e 100644
+--- a/lib/route/pktloc.c
++++ b/lib/route/pktloc.c
+@@ -42,6 +42,10 @@
+ /** @cond */
+ #define PKTLOC_NAME_HT_SIZ 256
+ 
++#ifndef YY_BUF_SIZE
++#define YY_BUF_SIZE 16384
++#endif
++
+ static struct nl_list_head pktloc_name_ht[PKTLOC_NAME_HT_SIZ];
+ 
+ /* djb2 */
+diff --git a/lib/route/pktloc_syntax.y b/lib/route/pktloc_syntax.y
+index 05d609a..e6be74d 100644
+--- a/lib/route/pktloc_syntax.y
++++ b/lib/route/pktloc_syntax.y
+@@ -8,8 +8,8 @@
+ 
+ %locations
+ %error-verbose
+-%define api.pure
+-%name-prefix "pktloc_"
++%pure-parser
++%name-prefix = "pktloc_"
+ 
+ %parse-param {void *scanner}
+ %lex-param {void *scanner}
