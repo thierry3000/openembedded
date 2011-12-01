@@ -7,7 +7,7 @@ PR_vusolo = "r96"
 LICENSE = "GPL"
 
 FSTAB_dm7025 = "${@base_contains('PREFERRED_VERSION_linux-dm7025', '2.6.12.6', 'fstab_old', 'fstab', d)}"
-FATAB ?= "fstab"
+FSTAB ?= "fstab"
 
 SRC_URI = " \
            file://nsswitch.conf \
