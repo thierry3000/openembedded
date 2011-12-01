@@ -1,13 +1,13 @@
 DESCRIPTION = "Miscellaneous files for the base system."
 SECTION = "base"
 PRIORITY = "required"
-PR = "r93"
+PR = "r94"
 PR_dm7025 = "r92"
-PR_vusolo = "r95"
+PR_vusolo = "r96"
 LICENSE = "GPL"
 
 FSTAB_dm7025 = "${@base_contains('PREFERRED_VERSION_linux-dm7025', '2.6.12.6', 'fstab_old', 'fstab', d)}"
-FSTAB = "${@base_contains('PREFERRED_VERSION_linux-${MACHINE}', '3.1.1', 'fstab_3.1', 'fstab', d)}"
+FATAB ?= "fstab"
 
 SRC_URI = " \
            file://nsswitch.conf \
