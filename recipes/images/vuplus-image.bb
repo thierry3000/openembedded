@@ -46,7 +46,7 @@ export NFO = '${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}.nfo'
 
 generate_nfo() {
     VER=`grep Version: "${IMAGE_ROOTFS}/usr/lib/ipkg/info/enigma2.control" | cut -b 10-26`
-    echo "Enigma2: ${VER}" > ${NFO}
+    echo "DvbApp2: ${VER}" > ${NFO}
     echo "Machine: Vuplus ${MACHINE}" >> ${NFO}
     DATE=`date +%Y-%m-%d' '%H':'%M`
     echo "Date: ${DATE}" >> ${NFO}
