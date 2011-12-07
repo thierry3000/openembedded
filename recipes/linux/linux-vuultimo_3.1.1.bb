@@ -1,6 +1,6 @@
 require linux-vuplus-3.1.1.inc
 
-PR = "r2"
+PR = "r3"
 
 SRC_URI += "\
 	"
