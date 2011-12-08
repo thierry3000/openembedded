@@ -1,7 +1,7 @@
 DESCRIPTION = "Vuplus: E2 Task for the Vuplus Distribution"
 SECTION = "vuplus/base"
 LICENSE = "MIT"
-PR = "r9"
+PR = "r10"
 
 inherit task
 
@@ -67,6 +67,7 @@ RDEPENDS_task-vuplus-enigma2_append_vuultimo = "\
   enigma2-plugin-systemplugins-blindscan \
   enigma2-plugin-systemplugins-manualfancontrol \
   enigma2-plugin-systemplugins-remotecontrolcode \
+  enigma2-plugin-systemplugins-ledbrightnesssetup \
   vuplus-webbrowser-utils \
   enigma2-plugin-extensions-webbrowser \
 "
