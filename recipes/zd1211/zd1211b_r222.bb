@@ -12,13 +12,15 @@ PR = "r2"
 
 SRC_URI = "http://www.reactivated.net/software/zd1211-vendor/releases/ZD1211LnxDrv_2_22_0_0.tar.gz \
            file://ZD1211LnxDrv_2_22_0_0.patch;patch=1 \
-           file://zdiface.patch;patch=1"
+           file://zdiface.patch;patch=1 \
+	   file://Makefile.patch;patch=1 \
+"
            
 S = "${WORKDIR}/ZD1211LnxDrv_2_22_0_0"
 
 do_compile () {
         unset CFLAGS CPPFLAGS CXXFLAGS LDFLAGS CC LD CPP
-        oe_runmake 'MODPATH={D}${base_libdir}/modules/${KERNEL_VERSION}/kernel/drivers/net' \
+        oe_runmake 'MODPATH=${D}${base_libdir}/modules/${KERNEL_VERSION}/kernel/drivers/net' \
                    'KERNEL_SOURCE=${STAGING_KERNEL_DIR}' \
                    'KDIR=${STAGING_KERNEL_DIR}' \
                    'KERNEL_VERSION=${KERNEL_VERSION}' \
