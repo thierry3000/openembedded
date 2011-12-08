@@ -1,0 +1,35 @@
+--- patches/Makefile	2011-12-05 20:21:45.611778504 +0900
++++ org/Makefile	2011-12-05 20:21:35.315727459 +0900
+@@ -7,10 +7,10 @@
+ #HOST=
+ #CC=$(HOST)gcc
+ #LD=$(HOST)ld
+-VERSION := $(shell uname -r)
+-MODPATH := /lib/modules/$(VERSION)
+-KERN_VER=$(shell uname -r | cut -b1-3;)
+-KDIR := /lib/modules/$(shell uname -r)/build
++VERSION = $(shell cat $(KERNEL_SOURCE)/kernel-abiversion)
++MODPATH ?= /lib/modules/$(VERSION)
++KERN_VER ?= $(shell echo $(VERSION) | cut -c1-3)
++KDIR ?= /lib/modules/$(shell uname -r)/build
+ PWD := $(shell pwd)
+ 
+ SUBDIRS=.
+@@ -22,7 +22,7 @@
+     KERNEL_SOURCE ?= $(MODPATH)/source
+ else 
+     KERN_24=y
+-    KERNEL_SOURCE=/usr/src/linux-2.4
++    KERNEL_SOURCE ?= /usr/src/linux-2.4
+ endif
+ 
+ SRC_DIR=src
+@@ -31,7 +31,7 @@
+ # set to 1 for zd1211b
+ ZD1211REV_B=1
+ 
+-KERNRELEASE := $(shell uname -r;)
++KERNRELEASE ?= $(VERSION)
+ MODPATH := /lib/modules/$(KERNRELEASE)
+ 
+ 
