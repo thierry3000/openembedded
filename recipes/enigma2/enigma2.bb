@@ -194,7 +194,7 @@ EXTRA_OECONF = " \
 	${@base_contains("MACHINE_FEATURES", "display-text-vfd", "--with-display-text-vfd" , "", d)} \
 	${@base_contains("MACHINE_FEATURES", "display-graphic-vfd", "--with-display-graphic-vfd" , "", d)} \
 	${@base_contains("MACHINE_FEATURES", "right-half-vfd-skin", "--with-set-right-half-vfd-skin" , "", d)} \
-	${@base_contains("MACHINE_FEATURES", "remote-keyboard", "--with-remote-keyboard" , "", d)} \
+	${@base_contains("MACHINE_FEATURES", "enable-rc-kbd", "--with-remote-keyboard" , "", d)} \
         BUILD_SYS=${BUILD_SYS} \
         HOST_SYS=${HOST_SYS} \
         STAGING_INCDIR=${STAGING_INCDIR} \
