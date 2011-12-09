@@ -11,7 +11,7 @@ PV = "${KV}"
 SRCDATE_bm750 = "20111206"
 SRCDATE_vusolo = "20111206"
 SRCDATE_vuuno = "20111206"
-SRCDATE_vuultimo = "20111206"
+SRCDATE_vuultimo = "20111209"
 
 MODULES_NAME_bm750 = "procmk\ndvb-bcm7335\nbrcmfb"
 MODULES_NAME_vusolo = "procmk\ndvb-bcm7325\nbrcmfb"
