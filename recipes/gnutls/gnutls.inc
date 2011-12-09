@@ -1,24 +1,16 @@
 DESCRIPTION = "GNU Transport Layer Security Library"
 HOMEPAGE = "http://www.gnu.org/software/gnutls/"
-DEPENDS = "zlib libgcrypt lzo guile-native"
+DEPENDS = "zlib libgcrypt lzo guile-native gtk-doc"
 LICENSE = "LGPL"
+LICENSE_${PN}-extra = "GPLv3"
 
-SRC_URI = "ftp://ftp.gnutls.org/pub/gnutls/gnutls-${PV}.tar.bz2"
+SRC_URI = "ftp://ftp.gnutls.org/pub/gnutls/gnutls-${PV}.tar.bz2;name=gnutls"
 
-inherit autotools binconfig pkgconfig
+inherit autotools binconfig pkgconfig gettext
 
-EXTRA_OECONF = "--with-included-opencdk --with-included-libtasn1"
+INC_PR = "r11"
 
-do_stage() {
-    oe_libinstall -C lib/.libs -so -a libgnutls ${STAGING_LIBDIR}
-    oe_libinstall -C libextra/.libs -so -a libgnutls-extra ${STAGING_LIBDIR}
-    oe_libinstall -C libextra/.libs -so -a libgnutls-openssl ${STAGING_LIBDIR}
-    autotools_stage_includes
-
-    install -d ${STAGING_DATADIR}/aclocal
-    cp ${S}/lib/libgnutls.m4 ${STAGING_DATADIR}/aclocal/
-    cp ${S}/libextra/libgnutls-extra.m4 ${STAGING_DATADIR}/aclocal/
-}
+EXTRA_OECONF = "--with-included-opencdk --with-included-libtasn1 --disable-rpath"
 
 PACKAGES =+ "${PN}-openssl ${PN}-extra ${PN}-bin ${PN}-xx"
 
@@ -34,3 +26,5 @@ FILES_${PN}-dev += "${bindir}/*-config ${bindir}/gnutls-cli-debug"
 FILES_${PN}-extra = "${libdir}/libgnutls-extra.so.*"
 FILES_${PN}-openssl = "${libdir}/libgnutls-openssl.so.*"
 FILES_${PN}-xx = "${libdir}/libgnutlsxx.so.*"
+
+BBCLASSEXTEND = "native"
