@@ -73,32 +73,6 @@ mtd_utils = " docfdisk \
 	ubi-utils/ubirmvol \
 	ubi-utils/ubiupdatevol"
 
-#mtd_utils_vuplus = " docfdisk \
-#	doc_loadbios \
-#	flashcp \
-#	flash_erase \
-#	flash_eraseall \
-#	flash_info \
-#	flash_lock \
-#	flash_otp_dump \
-#	flash_otp_info \
-#	flash_unlock \
-#	ftl_check \
-#	ftl_format \
-#	jffs2dump \
-#	mkfs.jffs2 \
-#	mtd_debug \
-#	nanddump \
-#	nandtest \
-#	nandwrite \
-#	nftldump \
-#	nftl_format \
-#	recv_image \
-#	rfddump \
-#	rfdformat \
-#	serve_image \
-#	sumtool "
-#
 PACKAGES =+ "mkfs-jffs mkfs-jffs2 mkfs-ubifs"
 FILES_mkfs-jffs = "${bindir}/mkfs.jffs"
 FILES_mkfs-jffs2 = "${bindir}/mkfs.jffs2"

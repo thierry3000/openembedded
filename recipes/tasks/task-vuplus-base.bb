@@ -1,7 +1,7 @@
 DESCRIPTION = "Vuplus: Base Task for the Vuplus Distribution"
 SECTION = "vuplus/base"
 LICENSE = "MIT"
-PR = "r6"
+PR = "r7"
 
 inherit task
 
@@ -30,6 +30,8 @@ VUPLUS_BASE_ESSENTIAL = "\
   util-linux-sfdisk \
   vsftpd \
   mtd-utils \
+  mkfs-ubifs \
+  mkfs-jffs2 \
   hdparm \  
   usbtunerhelper \
   firmware-dvb-usb \
