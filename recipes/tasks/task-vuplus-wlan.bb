@@ -1,7 +1,7 @@
 DESCRIPTION = "Vuplus: W-LAN Task for the Vuplus Distribution"
 SECTION = "vuplus/base"
 LICENSE = "MIT"
-PR = "r6"
+PR = "r8"
 
 inherit task
 
@@ -30,6 +30,10 @@ WLAN_USB_MODULES = "\
   zd1211-firmware \
   r8192cu \
   rt2870sta \
+  firmware-rt3070 \
+  firmware-htc9271 \
+  firmware-rt2561 \
+  firmware-rtl8721u \
 "
 
 WLAN_USB_MODULES_LEGACY = "\
