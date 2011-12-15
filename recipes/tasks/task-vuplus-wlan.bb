@@ -1,7 +1,7 @@
 DESCRIPTION = "Vuplus: W-LAN Task for the Vuplus Distribution"
 SECTION = "vuplus/base"
 LICENSE = "MIT"
-PR = "r6"
+PR = "r8"
 
 inherit task
 
@@ -29,7 +29,10 @@ WLAN_USB_MODULES = "\
   rt73-firmware \
   zd1211-firmware \
   r8192cu \
-  rt2870sta \
+  firmware-htc9271 \
+  firmware-rt2561 \
+  firmware-rtl8721u \
+  ${@base_contains("MACHINE_FEATURES", "rt3070-legacy", "rt3070", "rt2870sta firmware-rt3070 ", d)} \
 "
 
 WLAN_USB_MODULES_LEGACY = "\
