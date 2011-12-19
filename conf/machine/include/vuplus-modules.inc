@@ -25,7 +25,7 @@ KERNEL_DVB_MODULES = " \
 	kernel-module-dvb-usb-af9005 \
 	kernel-module-af9013 kernel-module-mt2060 kernel-module-qt1010 kernel-module-tda18271 kernel-module-mxl5005s kernel-module-mc44s803 kernel-module-tda18218 kernel-module-mxl5007t kernel-module-dvb-usb-af9015 \
 	kernel-module-mxl5007t kernel-module-tda18218 \
-	kernel-module-tda10021 kernel-module-tda10023 kernel-module-mt352 kernel-module-zl10353 kernel-module-tda18212 kernel-module-cx24116 kernel-module-stv0900 kernel-module-stv6110 kernel-module-isl6423 kernel-module-dvb-usb-anysee \
+	kernel-module-tda10021 kernel-module-tda10023 kernel-module-mt352 kernel-module-zl10353 kernel-module-tda18212 kernel-module-cx24116 kernel-module-stv0900 kernel-module-stv6110 kernel-module-stv6110x kernel-module-isl6423 kernel-module-dvb-usb-anysee \
 	kernel-module-zl10353 kernel-module-qt1010 kernel-module-dvb-usb-au6610 \
 	kernel-module-dvb-usb-az6027 \
 	kernel-module-zl10353 kernel-module-mxl5005s  kernel-module-dvb-usb-ce6230 \
@@ -40,7 +40,6 @@ KERNEL_DVB_MODULES = " \
 	kernel-module-si21xx kernel-module-stv0299 kernel-module-stv0288 kernel-module-stb6000 kernel-module-cx24116 \
 	kernel-module-mt312 kernel-module-zl10039 kernel-module-ds3000 kernel-module-stv0900 kernel-module-stv6110 kernel-module-dvb-usb-dw2102 \
 	kernel-module-ec100 kernel-module-mxl5005s kernel-module-dvb-usb-ec168 \
-	kernel-module-dvb-usb-friio \
 	kernel-module-zl10353 kernel-module-qt1010 kernel-module-dvb-usb-gl861 \
 	kernel-module-dvb-usb-gp8psk \
 	kernel-module-mt352 kernel-module-qt1010 kernel-module-tda1004x kernel-module-tda827x kernel-module-dvb-usb-m920x \
