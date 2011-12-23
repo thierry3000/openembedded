@@ -63,9 +63,11 @@ DESCRIPTION_append_enigma2-plugin-systemplugins-wirelesslansetup = "configure wi
 RDEPENDS_enigma2-plugin-systemplugins-wirelesslansetup = "wpa-supplicant wireless-tools python-wifi"
 DESCRIPTION_append_enigma2-plugin-systemplugins-networkwizard = "provides easy step by step network configuration"
 RDEPENDS_enigma2-plugin-extensions-webbrowser = "python-gdata libqtwebkite4 vuplus-webbrowser-utils qt4-embedded-fonts qt4-embedded-plugin-imageformat-gif qt4-embedded-plugin-imageformat-ico qt4-embedded-plugin-imageformat-jpeg qt4-embedded-plugin-imageformat-mng qt4-embedded-plugin-imageformat-svg qt4-embedded-plugin-imageformat-tiff qt4-embedded-plugin-iconengine-svgicon "
+DESCRIPTION_append_enigma2-plugin-systemplugins-crashreport = "automatically send crashlogs to Vu+"
+RDEPENDS_enigma2-plugin-systemplugins-crashreport = "twisted-mail twisted-names python-compression python-mime python-email"
 
 PN = "enigma2"
-PR = "r1"
+PR = "r4"
 
 SRCDATE = "20110922"
 SRCREV = "5e19a3f8a5e8ce8a4e2cb2b601a1b8ef3554e4be"

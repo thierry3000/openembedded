@@ -1,7 +1,8 @@
 require linux-vuplus-3.1.1.inc
 
-PR = "r4"
+PR = "r6"
 
 SRC_URI += "\
+	file://linux-sata_brcm.patch;patch=1;pnum=1 \
 	"
 

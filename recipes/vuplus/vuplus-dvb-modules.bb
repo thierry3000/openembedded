@@ -7,10 +7,10 @@ KV = "${@base_contains('PREFERRED_VERSION_linux-${MACHINE}', '2.6.18', '2.6.18',
 
 PV = "${KV}"
 
-SRCDATE_bm750 = "20111213"
-SRCDATE_vusolo = "20111213"
-SRCDATE_vuuno = "20111213"
-SRCDATE_vuultimo = "20111213"
+SRCDATE_bm750 = "20111222"
+SRCDATE_vusolo = "20111222"
+SRCDATE_vuuno = "20111222"
+SRCDATE_vuultimo = "20111222"
 
 MODULES_NAME_bm750 = "procmk\ndvb-bcm7335\nbrcmfb"
 MODULES_NAME_vusolo = "procmk\ndvb-bcm7325\nbrcmfb"
@@ -53,7 +53,6 @@ do_install() {
 pkg_postinst_vuplus-dvb-modules () {
         if [ -d /proc/stb ]; then
                 depmod -ae
-		sync
         fi
         true
 }
