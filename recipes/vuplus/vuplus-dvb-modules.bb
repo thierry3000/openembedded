@@ -34,7 +34,7 @@ PR = "r19-${SRCDATE}"
 DEPENDS = " module-init-tools"
 RDEPENDS_append_vuplus = " module-init-tools-depmod"
 
-SRC_URI = "http://archive.vuplus.com/download/drivers/beta/kernel31/vuplus-dvb-modules-${MACHINE}-${PV}-${PREFERRED_GCC_VERSION}-${SRCDATE}.tar.gz "
+SRC_URI = "http://archive.vuplus.com/download/drivers/vuplus-dvb-modules-${MACHINE}-${PV}-${PREFERRED_GCC_VERSION}-${SRCDATE}.tar.gz "
 
 S = "${WORKDIR}"
 
