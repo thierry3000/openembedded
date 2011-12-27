@@ -3,7 +3,6 @@ SECTION = "base"
 PRIORITY = "required"
 LICENSE = "proprietary"
 
-
 KV = "${@base_contains('PREFERRED_VERSION_linux-${MACHINE}', '2.6.18', '2.6.18', '3.1.1', d)}"
 
 PV = "${KV}"
@@ -57,8 +56,6 @@ pkg_postinst_vuplus-dvb-modules () {
         fi
         true
 }
-
-
 
 
 PACKAGE_ARCH := "${MACHINE_ARCH}"
