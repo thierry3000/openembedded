@@ -1,6 +1,6 @@
 <skin>
 	<fonts>
-		<font filename="analog.ttf" name="VFD" scale="100"/>
+		<font filename="nmsbd.ttf" name="VFD" scale="90"/>
 	</fonts>
 	<screen name="InfoBarSummary" position="0,0" size="256,64" id="1">
 		<widget source="session.CurrentService" render="Label" position="0,7" size="143,48" font="VFD;24" halign="center" valign="center" >
