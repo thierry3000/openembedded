@@ -1,7 +1,7 @@
 DESCRIPTION = "Vuplus: E2 Task for the Vuplus Distribution"
 SECTION = "vuplus/base"
 LICENSE = "MIT"
-PR = "r13"
+PR = "r14"
 
 inherit task
 
@@ -42,7 +42,6 @@ RRECOMMENDS_task-vuplus-enigma2 = "\
   python-twisted-web \
   enigma2-plugin-extensions-mediaplayer \
   enigma2-plugin-extensions-pictureplayer \
-  enigma2-plugin-extensions-genuinevuplus \
   enigma2-plugin-systemplugins-skinselector \
   enigma2-plugin-systemplugins-ui3dsetup \
   enigma2-plugin-systemplugins-uipositionsetup \
