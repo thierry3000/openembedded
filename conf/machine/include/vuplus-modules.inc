@@ -29,7 +29,7 @@ KERNEL_DVB_MODULES = " \
 	kernel-module-zl10353 kernel-module-qt1010 kernel-module-dvb-usb-au6610 \
 	kernel-module-dvb-usb-az6027 \
 	kernel-module-zl10353 kernel-module-mxl5005s  kernel-module-dvb-usb-ce6230 \
-	kernel-module-lgdt330x kernel-module-mt352 kernel-module-zl10353 kernel-module-tuner-xc2028 kernel-module-tuner-simple kernel-module-mxl5005s kernel-module-max2165 kernel-module-lgs8gxx kernel-module-atbm8830 kernel-module-dvb-usb-cxusb \
+	kernel-module-lgdt330x kernel-module-mt352 kernel-module-zl10353 kernel-module-tuner-xc2028 kernel-module-tuner-simple kernel-module-mxl5005s kernel-module-max2165 kernel-module-lgs8gxx kernel-module-atbm8830 kernel-module-dvb-usb-cxusb kernel-module-drxd \
 	kernel-module-dvb-usb-cinergyt2 \
 	kernel-module-mt352 kernel-module-nxt6000 kernel-module-dvb-usb-digitv \
 	kernel-module-mt2060 kernel-module-mt2266 kernel-module-tuner-xc2028 kernel-module-xc5000 kernel-module-xc4000 kernel-module-s5h1411 kernel-module-lgdt3305 kernel-module-mxl5007t kernel-module-dvb-usb-dib0700 \

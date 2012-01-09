@@ -1,7 +1,7 @@
 DESCRIPTION = "Vuplus: Base Task for the Vuplus Distribution"
 SECTION = "vuplus/base"
 LICENSE = "MIT"
-PR = "r8"
+PR = "r9"
 
 inherit task
 
@@ -50,6 +50,7 @@ VUPLUS_BASE_ESSENTIAL = "\
   firmware-dvb-usb-umt-010 \
   firmware-dvb-usb-xc5000 \
   firmware-dvb-usb-wt220u-zl0353 \
+  firmware-drxd-a2 \
 "
 
 VUPLUS_BASE_RECOMMENDS = "\
