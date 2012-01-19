@@ -9,6 +9,7 @@ MODULE = "linux-3.1.1"
 SRC_URI += "http://archive.vuplus.com/download/kernel/linux-${KV}_${SRCREV}.tar.bz2 \
 	file://fix_cpu_proc.patch;patch=1;pnum=1 \
         file://${MACHINE}_defconfig \
+	file://igmp.patch;patch=1;pnum=1 \
         "
 
 S = "${WORKDIR}/linux-${KV}"
