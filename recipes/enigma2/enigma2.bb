@@ -67,7 +67,7 @@ DESCRIPTION_append_enigma2-plugin-systemplugins-crashreport = "automatically sen
 RDEPENDS_enigma2-plugin-systemplugins-crashreport = "twisted-mail twisted-names python-compression python-mime python-email"
 
 PN = "enigma2"
-PR = "r15"
+PR = "r16"
 
 SRCDATE = "20110922"
 SRCREV = "5e19a3f8a5e8ce8a4e2cb2b601a1b8ef3554e4be"
