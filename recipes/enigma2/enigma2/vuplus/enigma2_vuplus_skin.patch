@@ -1,8 +1,8 @@
 diff --git a/configure.ac b/configure.ac
-index ee8130b..5c3afe0 100644
+index c08344c..d103204 100644
 --- a/configure.ac
 +++ b/configure.ac
-@@ -115,6 +115,16 @@ data/skin_default/menu/Makefile
+@@ -134,6 +134,16 @@ data/skin_default/menu/Makefile
  data/skin_default/icons/Makefile
  data/skin_default/buttons/Makefile
  data/skin_default/spinner/Makefile
@@ -81,10 +81,10 @@ index 0000000..20f24d9
 +	*.png
 diff --git a/data/750S/skin.xml b/data/750S/skin.xml
 new file mode 100644
-index 0000000..79fc52d
+index 0000000..29944ed
 --- /dev/null
 +++ b/data/750S/skin.xml
-@@ -0,0 +1,2493 @@
+@@ -0,0 +1,2823 @@
 +<skin>
 +	<!-- VU+ skin (skin.xml)  -->
 +	<output id="0">
@@ -2577,6 +2577,336 @@ index 0000000..79fc52d
 +		</widget>
 +	</screen>
 +	
++	<!-- Genuine Vuplus Plugin -->
++	<screen name="VuplusAuthenticity" position="center,center" size="600,320" title="Return the Love Event (only for genuine box)">
++		<ePixmap pixmap="750S/buttons/red.png" position="140,15" size="140,40" alphatest="on" />
++		<ePixmap pixmap="750S/buttons/green.png" position="320,15" size="140,40" alphatest="on" />
++		<widget source="key_red" render="Label" position="145,15" zPosition="1" size="135,40" font="Regular;24" halign="center" valign="center" transparent="1" />
++		<widget source="key_green" render="Label" position="325,15" zPosition="1" size="135,40" font="Regular;24" halign="center" valign="center" transparent="1" />
++		<widget name="config" zPosition="2" position="10,70" size="580,80" scrollbarMode="showOnDemand" transparent="1" />
++		<widget name="text1" position="10,160" size="580,50" font="Regular;32" halign="center" valign="center"/>
++		<widget name="text2" position="10,220" size="580,100" font="Regular;18" halign="center" valign="center"/>
++	</screen>
++	<screen name="MessageBoxGenuine" position="center,center" size="600,10" title="Message">
++		<widget name="text" position="65,8" size="420,0" font="Regular;22" />
++		<widget name="ErrorPixmap" pixmap="750S/icons/input_error.png" position="5,5" size="53,53" alphatest="blend" />
++		<widget name="QuestionPixmap" pixmap="750S/icons/input_question.png" position="5,5" size="53,53" alphatest="blend" />
++		<widget name="InfoPixmap" pixmap="750S/icons/input_info.png" position="5,5" size="53,53" alphatest="blend" />
++		<widget name="list" position="100,100" size="380,375" transparent="1" />
++		<applet type="onLayoutFinish">
++# this should be factored out into some helper code, but currently demonstrates applets.
++from enigma import eSize, ePoint
++
++orgwidth = self.instance.size().width()
++orgpos = self.instance.position()
++textsize = self[&quot;text&quot;].getSize()
++
++# y size still must be fixed in font stuff...
++textsize = (textsize[0] + 50, textsize[1] + 50)
++offset = 0
++if self.type == self.TYPE_YESNO:
++	offset = 60
++wsizex = textsize[0] + 60
++wsizey = textsize[1] + offset
++if (280 &gt; wsizex):
++	wsizex = 280
++wsize = (wsizex, wsizey)
++
++
++# resize
++self.instance.resize(eSize(*wsize))
++
++# resize label
++self[&quot;text&quot;].instance.resize(eSize(*textsize))
++
++# move list
++listsize = (wsizex, 50)
++self[&quot;list&quot;].instance.move(ePoint(0, textsize[1]))
++self[&quot;list&quot;].instance.resize(eSize(*listsize))
++
++# center window
++newwidth = wsize[0]
++self.instance.move(ePoint(orgpos.x() + (orgwidth - newwidth)/2, orgpos.y()))
++		</applet>
++	</screen>
++
++	<!-- HDMI CEC Plugin -->
++	<screen name="HdmiCecPlugin" position="center,center" size="590,320" title="HDMI-CEC Plugin" >
++		<ePixmap pixmap="750S/buttons/red.png" position="20,0" size="140,40" alphatest="on" />
++		<ePixmap pixmap="750S/buttons/green.png" position="160,0" size="140,40" alphatest="on" />
++		<ePixmap pixmap="750S/buttons/yellow.png" position="300,0" size="140,40" alphatest="on" />
++		<ePixmap pixmap="750S/buttons/blue.png" position="440,0" size="140,40" alphatest="on" />
++
++		<widget source="key_red" render="Label" position="25,0" zPosition="1" size="135,40" font="Regular;20" halign="center" valign="center" transparent="1" />
++		<widget source="key_green" render="Label" position="165,0" zPosition="1" size="135,40" font="Regular;20" halign="center" valign="center" transparent="1" />
++		<widget source="key_yellow" render="Label" position="305,0" zPosition="1" size="135,40" font="Regular;20" halign="center" valign="center" transparent="1" />
++		<widget source="key_blue" render="Label" position="445,0" zPosition="1" size="135,40" font="Regular;20" halign="center" valign="center" transparent="1" />
++
++		<widget name="config" zPosition="2" position="10,50" size="580,270" scrollbarMode="showOnDemand" transparent="1" />
++	</screen>
++
++	<!-- LED Brightness Setup Plugin -->
++	<screen name="LEDBrightnessSetup" position="center,center" size="560,300" title="LED Brightness Setup">
++		<ePixmap pixmap="750S/buttons/red.png" position="40,10" size="140,40" alphatest="on" />
++		<ePixmap pixmap="750S/buttons/green.png" position="210,10" size="140,40" alphatest="on" />
++		<ePixmap pixmap="750S/buttons/yellow.png" position="380,10" size="140,40" alphatest="on" />
++
++		<widget source="key_red" render="Label" position="45,10" zPosition="1" size="130,40" font="Regular;20" halign="center" valign="center" transparent="1" />
++		<widget source="key_green" render="Label" position="215,10" zPosition="1" size="130,40" font="Regular;20" halign="center" valign="center" transparent="1" />
++		<widget source="key_yellow" render="Label" position="385,10" zPosition="1" size="130,40" font="Regular;20" halign="center" valign="center" transparent="1" />
++
++		<widget name="config" zPosition="2" position="5,70" size="550,200" scrollbarMode="showOnDemand" transparent="1"/>
++		<widget name="current_entry" position="130,240" size="300,30" font="Regular;18" halign="center" valign="center"/>
++	</screen>
++
++	<!-- Fancontrol Plugin -->
++	<screen name="FancontrolConfiguration" position="center,center" size="560,300" title="Standbymode Fancontrol settings" >
++		<ePixmap pixmap="750S/buttons/red.png" position="110,10" size="140,40" alphatest="on" />
++		<ePixmap pixmap="750S/buttons/green.png" position="310,10" size="140,40" alphatest="on" />
++
++		<widget source="key_red" render="Label" position="115,10" zPosition="1" size="135,40" font="Regular;20" halign="center" valign="center" transparent="1" />
++		<widget source="key_green" render="Label" position="315,10" zPosition="1" size="135,40" font="Regular;20" halign="center" valign="center" transparent="1" />
++
++		<widget name="config" zPosition="2" position="5,70" size="550,200" scrollbarMode="showOnDemand" transparent="1" />
++	</screen>
++
++	<!-- RC Code Plugin -->
++	<screen name="RemoteControlCode" position="center,center" size="560,250" title="Remote Control System Code Setting" >
++		<ePixmap pixmap="750S/buttons/red.png" position="110,10" size="140,40" alphatest="on" />
++		<ePixmap pixmap="750S/buttons/green.png" position="310,10" size="140,40" alphatest="on" />
++
++		<widget source="key_red" render="Label" position="115,10" zPosition="1" size="135,40" font="Regular;20" halign="center" valign="center" transparent="1" />
++		<widget source="key_green" render="Label" position="315,10" zPosition="1" size="135,40" font="Regular;20" halign="center" valign="center" transparent="1" />
++
++		<widget name="config" zPosition="2" position="5,70" size="550,200" scrollbarMode="showOnDemand" transparent="1" />
++	</screen>
++
++	<screen name="MessageBoxConfirmCode" position="center,320" size="620,10" title="Message">
++		<widget name="text" position="65,8" size="420,0" font="Regular;20" />
++		<widget name="ErrorPixmap" pixmap="750S/icons/input_error.png" position="5,5" size="53,53" alphatest="blend" />
++		<widget name="QuestionPixmap" pixmap="750S/icons/input_question.png" position="5,5" size="53,53" alphatest="blend" />
++		<widget name="InfoPixmap" pixmap="750S/icons/input_info.png" position="5,5" size="53,53" alphatest="blend" />
++		<widget name="list" position="100,100" size="380,375" transparent="1" />
++		<applet type="onLayoutFinish">
++# this should be factored out into some helper code, but currently demonstrates applets.
++from enigma import eSize, ePoint
++
++orgwidth  = self.instance.size().width()
++orgheight = self.instance.size().height()
++orgpos    = self.instance.position()
++textsize  = self[&quot;text&quot;].getSize()
++
++# y size still must be fixed in font stuff...
++textsize = (textsize[0] + 50, textsize[1] + 50)
++offset = 0
++if self.type == self.TYPE_YESNO:
++	offset = 60
++wsizex = textsize[0] + 60
++wsizey = textsize[1] + offset
++if (280 &gt; wsizex):
++	wsizex = 280
++wsize = (wsizex, wsizey)
++
++# resize
++self.instance.resize(eSize(*wsize))
++
++# resize label
++self[&quot;text&quot;].instance.resize(eSize(*textsize))
++
++# move list
++listsize = (wsizex, 50)
++self[&quot;list&quot;].instance.move(ePoint(0, textsize[1]))
++self[&quot;list&quot;].instance.resize(eSize(*listsize))
++
++# center window
++newwidth = wsize[0]
++newheight = wsize[1]
++self.instance.move(ePoint(orgpos.x() + (orgwidth - newwidth)/2, orgpos.y() + (orgheight - newheight)/2))
++		</applet>
++	</screen>
++
++	<!-- Manual Fancontrol Plugin -->
++	<screen name="ManualFancontrol" position="center,center" size="560,300" title="Fancontrol Settings in Standby mode" >
++		<ePixmap pixmap="750S/buttons/red.png" position="110,10" size="140,40" alphatest="on" />
++		<ePixmap pixmap="750S/buttons/green.png" position="310,10" size="140,40" alphatest="on" />
++
++		<widget source="key_red" render="Label" position="115,10" zPosition="1" size="135,40" font="Regular;20" halign="center" valign="center" transparent="1" />
++		<widget source="key_green" render="Label" position="315,10" zPosition="1" size="135,40" font="Regular;20" halign="center" valign="center" transparent="1" />
++
++		<widget name="config" zPosition="2" position="5,70" size="550,200" scrollbarMode="showOnDemand" transparent="1" />
++		<widget source="current" render="Label" position="150,270" zPosition="1" size="280,30" font="Regular;20" halign="center" valign="center" />
++	</screen>
++
++	<!-- UI 3D Setup Plugin -->
++	<screen name="UI3DSetupScreen" position="center,center" size="560,300" title="UI 3D setup" >
++		<ePixmap pixmap="750S/buttons/red.png" position="110,10" size="140,40" alphatest="on" />
++		<ePixmap pixmap="750S/buttons/green.png" position="310,10" size="140,40" alphatest="on" />
++
++		<widget source="key_red" render="Label" position="115,10" zPosition="1" size="135,40" font="Regular;20" halign="center" valign="center" transparent="1" />
++		<widget source="key_green" render="Label" position="315,10" zPosition="1" size="135,40" font="Regular;20" halign="center" valign="center" transparent="1" />
++
++		<widget name="config" zPosition="2" position="5,70" size="550,200" scrollbarMode="showOnDemand" transparent="1" />
++	</screen>
++
++	<!-- Blindscan Plugin -->
++	<screen name="Blindscan" position="center,130" size="560,390" title="Blindscan">
++		<ePixmap pixmap="750S/buttons/red.png" position="40,10" size="140,40" alphatest="on" />
++		<ePixmap pixmap="750S/buttons/green.png" position="210,10" size="140,40" alphatest="on" />
++		<ePixmap pixmap="750S/buttons/blue.png" position="380,10" size="140,40" alphatest="on" />
++
++		<widget source="key_red" render="Label" position="45,10" zPosition="1" size="135,40" font="Regular;20" halign="center" valign="center" transparent="1"/>
++		<widget source="key_green" render="Label" position="215,10" zPosition="1" size="135,40" font="Regular;20" halign="center" valign="center" transparent="1"/>
++		<widget source="key_blue" render="Label" position="385,10" zPosition="1" size="135,40" font="Regular;20" halign="center" valign="center" transparent="1"/>
++
++		<widget name="config" position="5,70" size="550,280" scrollbarMode="showOnDemand" />
++		<widget name="introduction" position="0,365" size="560,20" font="Regular;20" halign="center" />
++	</screen>
++
++	<!-- Web Browser Plugin -->
++	<screen name="BrowserLauncher" position="center,center" size="620,310" title="Web Browser">
++		<ePixmap pixmap="750S/buttons/red.png" position="10,0" size="140,40" alphatest="on" />
++		<ePixmap pixmap="750S/buttons/green.png" position="158,0" size="140,40" alphatest="on" />
++
++		<widget source="key_red" render="Label" position="15,0" zPosition="1" size="135,40" font="Regular;20" halign="center" valign="center" transparent="1" />
++		<widget source="key_green" render="Label" position="163,0" zPosition="1" size="135,40" font="Regular;20" halign="center" valign="center" transparent="1" />
++
++		<widget name="config" position="0,50" size="309,100" scrollbarMode="showOnDemand" />
++		<ePixmap pixmap="rc_wb_desc.png" position="312,5" size="309,296" alphatest="on" />
++		<widget name="info" position="0,180" size="309,50" font="Regular;18" halign="center" foregroundColor="#a08500" transparent="1" />
++	</screen>
++
++	<!-- Crash Report Plugin -->
++	<screen name="CrashlogReportConfiguration" position="center,120" size="560,420" title="CrashlogReport Settings" >
++		<ePixmap pixmap="750S/buttons/red.png" position="110,10" size="140,40" alphatest="on" />
++		<ePixmap pixmap="750S/buttons/green.png" position="310,10" size="140,40" alphatest="on" />
++
++		<widget source="key_red" render="Label" position="115,10" zPosition="1" size="135,40" font="Regular;20" halign="center" valign="center" transparent="1" />
++		<widget source="key_green" render="Label" position="315,10" zPosition="1" size="135,40" font="Regular;20" halign="center" valign="center" transparent="1" />
++
++		<widget name="config" zPosition="2" position="5,70" size="550,300" scrollbarMode="showOnDemand" transparent="1" />
++		<ePixmap pixmap="750S/div-h.png" position="0,360" zPosition="10" size="560,2" transparent="1" alphatest="on" />
++		<widget source="status" render="Label" position="10,370" size="540,40" zPosition="10" font="Regular;20" halign="center" valign="center" backgroundColor="#25062748" transparent="1"/>
++		<widget name="VKeyIcon" pixmap="750S/buttons/key_text.png" position="10,390" zPosition="10" size="35,25" transparent="1" alphatest="on" />
++		<widget name="HelpWindow" pixmap="750S/vkey_icon.png" position="160,350" zPosition="1" size="1,1" transparent="1" alphatest="on" />
++	</screen>
++
++	<!-- FPGA Upgrade Plugin -->
++	<screen name="FPGAUpgrade" position="center,120" size="560,420" title="FPGA Upgrade" >
++		<ePixmap pixmap="750S/buttons/red.png" position="40,10" size="140,40" alphatest="blend" />
++		<ePixmap pixmap="750S/buttons/green.png" position="210,10" size="140,40" alphatest="blend" />
++		<ePixmap pixmap="750S/buttons/blue.png" position="380,10" size="140,40" alphatest="blend" />
++
++		<widget source="key_red" render="Label" position="45,10" zPosition="1" size="135,40" font="Regular;20" halign="center" valign="center" transparent="1"/>
++		<widget source="key_green" render="Label" position="215,10" zPosition="1" size="135,40" font="Regular;20" halign="center" valign="center" transparent="1"/>
++		<widget source="key_blue" render="Label" position="385,10" zPosition="1" size="135,40" font="Regular;20" halign="center" valign="center" transparent="1"/>
++
++		<widget source="status" render="Label" position="15,60" zPosition="1" size="540,40" font="Regular;18" halign="left" valign="center" transparent="1" />
++		<widget name="file_list" position="0,100" size="555,320" scrollbarMode="showOnDemand" />
++        </screen>
++
++	<screen name="UpgradeStatus" position="center,center" size="450,130" title=" ">
++		<widget name="name" position="10,0" size="430,20" font="Regular;18" halign="left" valign="bottom"/>
++		<widget name="slider" position="10,25" size="430,30" borderWidth="2" borderColor="#cccccc"/>
++		<widget name="status" position="10,25" zPosition="1" size="430,30" font="Regular;18" halign="center" valign="center" foregroundColor="#9f1313" transparent="1"/>
++		<widget source="info" render="Label" position="10,70" zPosition="1" size="430,60" font="Regular;22" halign="center" valign="center" transparent="1"/>
++	</screen>
++
++	<!-- Firmware Upgrade Plugin -->
++	<screen name="FirmwareUpgrade" position="center,center" size="560,175" title="Firmware Upgrade" >
++		<ePixmap pixmap="750S/buttons/red.png" position="110,10" size="140,40" alphatest="blend" />
++		<ePixmap pixmap="750S/buttons/green.png" position="310,10" size="140,40" alphatest="blend" />
++
++		<widget source="key_red" render="Label" position="115,10" zPosition="1" size="135,40" font="Regular;20" halign="center" valign="center" transparent="1" />
++		<widget source="key_green" render="Label" position="315,10" zPosition="1" size="135,40" font="Regular;20" halign="center" valign="center" transparent="1" />
++
++		<widget name="config" zPosition="2" position="0,70" itemHeight="36" size="540,40" scrollbarMode="showOnDemand" transparent="1" />
++		<widget source="status" render="Label" position="0,100" zPosition="1" size="540,75" font="Regular;20" halign="center" valign="center" />
++        </screen>
++
++	<screen name="FUFilebrowser" position="center,center" size="500,290" title="File Browser" >
++		<ePixmap pixmap="750S/buttons/blue.png" position="5,10" size="140,40" alphatest="blend" />
++
++		<widget source="key_blue" render="Label" position="10,10" zPosition="1" size="135,40" font="Regular;20" halign="center" valign="center" transparent="1"/>
++
++		<widget name="file_list" position="0,70" size="495,160" scrollbarMode="showOnDemand" />
++		<widget source="status" render="Label" position="0,230" zPosition="1" size="490,60" font="Regular;20" halign="center" valign="center" backgroundColor="#a08500" transparent="1" />
++        </screen>
++
++	<!-- WLan Setup Plugin -->
++	<screen name="WlanSelection" position="center,120" size="510,400" title="Wireless Network Adapter Selection..." >
++		<ePixmap pixmap="750S/div-h.png" position="0,350" zPosition="1" size="560,2" />
++		<ePixmap pixmap="750S/border_menu_a.png" position="10,10" zPosition="1" size="250,300" transparent="1" alphatest="on" />
++
++		<ePixmap pixmap="750S/buttons/red.png" position="10,360" size="140,40" alphatest="on" />
++		<ePixmap pixmap="750S/buttons/green.png" position="360,360" size="140,40" alphatest="on" />
++
++		<widget source="key_red" render="Label" position="15,360" zPosition="1" size="135,40" font="Regular;20" halign="center" valign="center" transparent="1" />
++		<widget source="key_green" render="Label" position="365,360" zPosition="1" size="135,40" font="Regular;20" halign="center" valign="center" transparent="1" />
++
++		<widget name="menulist" position="20,20" size="230,260" transparent="1" backgroundColor="#371e1c1a" zPosition="10" scrollbarMode="showOnDemand" />
++		<widget source="description" render="Label" position="305,10" size="195,300" font="Regular;19" halign="center" valign="center" />
++	</screen>
++
++	<screen name="WlanSetup" position="center,120" size="510,400" title="Wireless Network Setup Menu..." >
++		<ePixmap pixmap="750S/div-h.png" position="0,350" zPosition="1" size="560,2" />
++		<ePixmap pixmap="750S/border_menu_a.png" position="10,10" zPosition="1" size="250,300" transparent="1" alphatest="on" />
++
++		<ePixmap pixmap="750S/buttons/red.png" position="10,360" size="140,40" alphatest="on" />
++		<ePixmap pixmap="750S/buttons/green.png" position="360,360" size="140,40" alphatest="on" />
++
++		<widget source="key_red" render="Label" position="15,360" zPosition="1" size="135,40" font="Regular;20" halign="center" valign="center" transparent="1" />
++		<widget source="key_green" render="Label" position="365,360" zPosition="1" size="135,40" font="Regular;20" halign="center" valign="center" transparent="1" />
++
++		<widget name="menulist" position="20,20" size="230,260" transparent="1" backgroundColor="#371e1c1a" zPosition="10" scrollbarMode="showOnDemand" />
++		<widget source="description" render="Label" position="305,10" size="195,300" font="Regular;19" halign="center" valign="center" />
++	</screen>
++
++	<screen name="WlanConfig" position="center,120" size="510,400" title="Wireless Network Configuration..." >
++		<ePixmap pixmap="750S/buttons/red.png" position="10,360" size="140,40" alphatest="on" />
++		<ePixmap pixmap="750S/buttons/green.png" position="360,360" size="140,40" alphatest="on" />
++
++		<widget source="key_red" render="Label" position="15,360" zPosition="1" size="135,40" font="Regular;20" halign="center" valign="center" transparent="1" />
++		<widget source="key_green" render="Label" position="365,360" zPosition="1" size="135,40" font="Regular;20" halign="center" valign="center" transparent="1" />
++
++		<widget name="config" position="10,10" backgroundColor="#371e1c1a" transparent="1" size="480,210" scrollbarMode="showOnDemand" />
++		<ePixmap pixmap="750S/div-h.png" position="0,225" zPosition="1" size="550,2" />
++
++		<eLabel text="IP Address : " position="100,250" size="190,21" font="Regular;19" />
++		<widget source="ipaddress" render="Label" position="300,250" zPosition="1" size="150,26" font="Regular;20" halign="center" valign="center" />
++		<eLabel text="NetMask : " position="100,275" size="190,21" font="Regular;19" />
++		<widget source="netmask" render="Label" position="300,275" zPosition="1" size="150,26" font="Regular;20" halign="center" valign="center" />	
++		<eLabel text="Gateway : " position="100,300" size="190,21" font="Regular;19" />
++		<widget source="gateway" render="Label" position="300,300" zPosition="1" size="150,26" font="Regular;20" halign="center" valign="center" />
++	</screen>
++
++	<screen name="WlanScanAp" position="center,120" size="510,400" title="Wireless Network AP Scan..." >
++		<ePixmap pixmap="750S/div-h.png" position="0,350" zPosition="1" size="560,2" />
++		<ePixmap pixmap="750S/border_menu_a.png" position="10,10" zPosition="1" size="250,300" transparent="1" alphatest="on" />
++
++		<ePixmap pixmap="750S/buttons/red.png" position="10,360" size="140,40" alphatest="on" />
++		<ePixmap pixmap="750S/buttons/green.png" position="185,360" size="140,40" alphatest="on" />
++		<ePixmap pixmap="750S/buttons/blue.png" position="360,360" size="140,40" alphatest="on" />
++
++		<widget source="key_red" render="Label" position="15,360" zPosition="1" size="135,40" font="Regular;20" halign="center" valign="center" transparent="1" />
++		<widget source="key_green" render="Label" position="190,360" zPosition="1" size="135,40" font="Regular;20" halign="center" valign="center" transparent="1" />
++		<widget source="key_blue" render="Label" position="365,360" zPosition="1" size="135,40" font="Regular;20" halign="center" valign="center" transparent="1" />
++
++		<widget name="menulist" position="20,20" size="230,260" backgroundColor="#371e1c1a" transparent="1" zPosition="10" scrollbarMode="showOnDemand" />
++
++		<widget source="Address" render="Label" position="265,70" zPosition="1" size="240,30" font="Regular;18" halign="center" valign="center" />
++		<widget source="ESSID" render="Label" position="265,100" zPosition="1" size="240,30" font="Regular;18" halign="center" valign="center" />
++		<widget source="Protocol" render="Label" position="265,130" zPosition="1" size="240,30" font="Regular;18" halign="center" valign="center" />
++		<widget source="Frequency" render="Label" position="265,160" zPosition="1" size="240,40" font="Regular;18" halign="center" valign="center" />
++		<widget source="Encryption key" render="Label" position="265,200" zPosition="1" size="240,30" font="Regular;18" halign="center" valign="center" />
++		<widget source="BitRate" render="Label" position="265,220" zPosition="1" size="240,60" font="Regular;18" halign="center" valign="center" />
++	</screen>
++
++	<screen name="Wlanstatus" position="center,120" size="510,400" title="Wireless Network Status..." >
++		<widget source="status" render="Label" position="5,15" size="500,350" font="Regular;18" zPosition="1" />
++
++		<ePixmap pixmap="750S/buttons/red.png" position="190,360" size="135,40" alphatest="on" />
++		<widget source="key_red" render="Label" position="185,360" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" transparent="1" />
++	</screen>
 +</skin>
 diff --git a/data/Makefile.am b/data/Makefile.am
 index 0eaa082..869a16e 100644
@@ -2650,10 +2980,10 @@ index 0000000..9d4f458
 +	*.png
 diff --git a/data/Vu_HD/skin.xml b/data/Vu_HD/skin.xml
 new file mode 100644
-index 0000000..3ceff7a
+index 0000000..1bd4e85
 --- /dev/null
 +++ b/data/Vu_HD/skin.xml
-@@ -0,0 +1,3004 @@
+@@ -0,0 +1,3353 @@
 +<skin>
 +	<!-- VU+ skin (skin.xml)  -->
 +	<output id="0">
@@ -5650,12 +5980,361 @@ index 0000000..3ceff7a
 +			</convert>
 +		</widget>
 +	</screen>	
-+	<screen name="FancontrolConfiguration" position="center,center" size="560,300" title="Standbymode Fancontrol settings" >
++
++	<!-- Genuine Vuplus Plugin -->
++	<screen name="VuplusAuthenticity" position="center,center" size="800,370" title="Return the Love Event (only for genuine box)">
++		<ePixmap pixmap="Vu_HD/buttons/red.png" position="250,15" size="25,25" alphatest="on" />
++		<ePixmap pixmap="Vu_HD/buttons/green.png" position="435,15" size="25,25" alphatest="on" />
++		<widget source="key_red" render="Label" position="265,15" zPosition="1" size="140,25" font="Regular;24" halign="center" valign="center" transparent="1" />
++		<widget source="key_green" render="Label" position="450,15" zPosition="1" size="140,25" font="Regular;24" halign="center" valign="center" transparent="1" />
++		<widget name="config" zPosition="2" position="80,70" size="640,80" scrollbarMode="showOnDemand" transparent="1" />
++		<widget name="text1" position="0,165" size="800,90" font="Regular;32" halign="center" valign="center"/>
++		<widget name="text2" position="100,260" size="600,110" font="Regular;24" halign="center" valign="center"/>
++	</screen>
++	<screen name="MessageBoxGenuine" position="center,center" size="600,10" title="Message">
++		<widget name="text" position="65,8" size="420,0" font="Regular;22" />
++		<widget name="ErrorPixmap" pixmap="Vu_HD/icons/input_error.png" position="5,5" size="53,53" alphatest="blend" />
++		<widget name="QuestionPixmap" pixmap="Vu_HD/icons/input_question.png" position="5,5" size="53,53" alphatest="blend" />
++		<widget name="InfoPixmap" pixmap="Vu_HD/icons/input_info.png" position="5,5" size="53,53" alphatest="blend" />
++		<widget name="list" position="100,100" size="380,375" transparent="1" backgroundColor="darkgrey" />
++		<applet type="onLayoutFinish">
++# this should be factored out into some helper code, but currently demonstrates applets.
++from enigma import eSize, ePoint
++
++orgwidth = self.instance.size().width()
++orgpos = self.instance.position()
++textsize = self[&quot;text&quot;].getSize()
++
++# y size still must be fixed in font stuff...
++textsize = (textsize[0] + 50, textsize[1] + 50)
++offset = 0
++if self.type == self.TYPE_YESNO:
++	offset = 60
++wsizex = textsize[0] + 60
++wsizey = textsize[1] + offset
++if (280 &gt; wsizex):
++	wsizex = 280
++wsize = (wsizex, wsizey)
++
++
++# resize
++self.instance.resize(eSize(*wsize))
++
++# resize label
++self[&quot;text&quot;].instance.resize(eSize(*textsize))
++
++# move list
++listsize = (wsizex, 50)
++self[&quot;list&quot;].instance.move(ePoint(0, textsize[1]))
++self[&quot;list&quot;].instance.resize(eSize(*listsize))
++
++# center window
++newwidth = wsize[0]
++self.instance.move(ePoint(orgpos.x() + (orgwidth - newwidth)/2, orgpos.y()))
++		</applet>
++	</screen>
++
++	<!-- HDMI CEC Plugin -->
++	<screen name="HdmiCecPlugin" position="center,center" size="590,320" title="HDMI-CEC Plugin" >
++		<ePixmap pixmap="Vu_HD/buttons/red.png" position="20,0" size="140,40" alphatest="on" />
++		<ePixmap pixmap="Vu_HD/buttons/green.png" position="160,0" size="140,40" alphatest="on" />
++		<ePixmap pixmap="Vu_HD/buttons/yellow.png" position="300,0" size="140,40" alphatest="on" />
++		<ePixmap pixmap="Vu_HD/buttons/blue.png" position="440,0" size="140,40" alphatest="on" />
++
++		<widget source="key_red" render="Label" position="25,0" zPosition="1" size="140,30" font="Regular;20" halign="center" valign="center" transparent="1" />
++		<widget source="key_green" render="Label" position="165,0" zPosition="1" size="140,30" font="Regular;20" halign="center" valign="center" transparent="1" />
++		<widget source="key_yellow" render="Label" position="305,0" zPosition="1" size="140,30" font="Regular;20" halign="center" valign="center" transparent="1" />
++		<widget source="key_blue" render="Label" position="445,0" zPosition="1" size="140,30" font="Regular;20" halign="center" valign="center" transparent="1" />
++
++		<widget name="config" zPosition="2" position="10,50" size="580,270" scrollbarMode="showOnDemand" transparent="1" />
++	</screen>
++
++	<!-- LED Brightness Setup Plugin -->
++	<screen name="LEDBrightnessSetup" position="center,center" size="560,300" title="LED Brightness Setup">
 +		<ePixmap pixmap="Vu_HD/buttons/red.png" position="10,10" size="25,25" alphatest="on" />
-+		<ePixmap pixmap="Vu_HD/buttons/green.png" position="290,10" size="25,25" alphatest="on" />
-+		<widget source="key_red" render="Label" position="40,10" zPosition="1" size="140,25" font="Regular;20" halign="center" valign="center" transparent="1" />
-+		<widget source="key_green" render="Label" position="320,10" zPosition="1" size="140,25" font="Regular;20" halign="center" valign="center" transparent="1" />
++		<ePixmap pixmap="Vu_HD/buttons/green.png" position="195,10" size="25,25" alphatest="on" />
++		<ePixmap pixmap="Vu_HD/buttons/yellow.png" position="380,10" size="25,25" alphatest="on" />
++
++		<widget source="key_red" render="Label" position="30,10" zPosition="1" size="140,25" font="Regular;20" halign="center" valign="center" transparent="1" />
++		<widget source="key_green" render="Label" position="215,10" zPosition="1" size="140,25" font="Regular;20" halign="center" valign="center" transparent="1" />
++		<widget source="key_yellow" render="Label" position="400,10" zPosition="1" size="140,25" font="Regular;20" halign="center" valign="center" transparent="1" />
++
++		<widget name="config" zPosition="2" position="5,50" size="550,200" scrollbarMode="showOnDemand" transparent="1"/>
++		<widget name="current_entry" position="130,240" size="300,30" font="Regular;18" halign="center" valign="center"/>
++	</screen>
++
++	<!-- Fancontrol Plugin -->
++	<screen name="FancontrolConfiguration" position="center,center" size="560,300" title="Standbymode Fancontrol settings" >
++		<ePixmap pixmap="Vu_HD/buttons/red.png" position="110,10" size="30,40" alphatest="on" />
++		<ePixmap pixmap="Vu_HD/buttons/green.png" position="310,10" size="30,40" alphatest="on" />
++
++		<widget source="key_red" render="Label" position="115,10" zPosition="1" size="140,30" font="Regular;20" halign="center" valign="center" transparent="1" />
++		<widget source="key_green" render="Label" position="315,10" zPosition="1" size="140,30" font="Regular;20" halign="center" valign="center" transparent="1" />
++
++		<widget name="config" zPosition="2" position="5,70" size="550,200" scrollbarMode="showOnDemand" transparent="1" />
++	</screen>
++
++	<!-- RC Code Plugin -->
++	<screen name="RemoteControlCode" position="center,center" size="560,250" title="Remote Control System Code Setting" >
++		<ePixmap pixmap="Vu_HD/buttons/red.png" position="110,10" size="30,40" alphatest="on" />
++		<ePixmap pixmap="Vu_HD/buttons/green.png" position="310,10" size="30,40" alphatest="on" />
++
++		<widget source="key_red" render="Label" position="115,10" zPosition="1" size="140,30" font="Regular;20" halign="center" valign="center" transparent="1" />
++		<widget source="key_green" render="Label" position="315,10" zPosition="1" size="140,30" font="Regular;20" halign="center" valign="center" transparent="1" />
++
 +		<widget name="config" zPosition="2" position="5,50" size="550,200" scrollbarMode="showOnDemand" transparent="1" />
++	</screen>
++
++	<screen name="MessageBoxConfirmCode" position="center,center" size="620,10" title="Message">
++		<widget name="text" position="65,8" size="420,0" font="Regular;20" />
++		<widget name="ErrorPixmap" pixmap="Vu_HD/icons/input_error.png" position="5,5" size="53,53" alphatest="blend" />
++		<widget name="QuestionPixmap" pixmap="Vu_HD/icons/input_question.png" position="5,5" size="53,53" alphatest="blend" />
++		<widget name="InfoPixmap" pixmap="Vu_HD/icons/input_info.png" position="5,5" size="53,53" alphatest="blend" />
++		<widget name="list" position="100,100" size="380,375" transparent="1" backgroundColor="#279e9fa4" />
++		<applet type="onLayoutFinish">
++# this should be factored out into some helper code, but currently demonstrates applets.
++from enigma import eSize, ePoint
++
++orgwidth = self.instance.size().width()
++orgheight = self.instance.size().height()
++orgpos = self.instance.position()
++textsize = self[&quot;text&quot;].getSize()
++
++# y size still must be fixed in font stuff...
++textsize = (textsize[0] + 50, textsize[1] + 50)
++offset = 0
++if self.type == self.TYPE_YESNO:
++	offset = 60
++wsizex = textsize[0] + 60
++wsizey = textsize[1] + offset
++if (280 &gt; wsizex):
++	wsizex = 280
++wsize = (wsizex, wsizey)
++
++
++# resize
++self.instance.resize(eSize(*wsize))
++
++# resize label
++self[&quot;text&quot;].instance.resize(eSize(*textsize))
++
++# move list
++listsize = (wsizex, 50)
++self[&quot;list&quot;].instance.move(ePoint(0, textsize[1]))
++self[&quot;list&quot;].instance.resize(eSize(*listsize))
++
++# center window
++newwidth = wsize[0]
++newheight = wsize[1]
++self.instance.move(ePoint(orgpos.x() + (orgwidth - newwidth)/2, orgpos.y() + (orgheight - newheight)/2))
++		</applet>
++	</screen>
++
++	<!-- Manual Fancontrol Plugin -->
++	<screen name="ManualFancontrol" position="center,center" size="560,300" title="Fancontrol Settings in Standby mode" >
++		<ePixmap pixmap="Vu_HD/buttons/red.png" position="110,10" size="140,40" alphatest="on" />
++		<ePixmap pixmap="Vu_HD/buttons/green.png" position="310,10" size="140,40" alphatest="on" />
++
++		<widget source="key_red" render="Label" position="120,10" zPosition="1" size="140,30" font="Regular;20" halign="center" valign="center" transparent="1" />
++		<widget source="key_green" render="Label" position="320,10" zPosition="1" size="140,30" font="Regular;20" halign="center" valign="center" transparent="1" />
++
++		<widget name="config" zPosition="2" position="5,70" size="550,200" scrollbarMode="showOnDemand" transparent="1" />
++		<widget source="current" render="Label" position="150,270" zPosition="1" size="280,30" font="Regular;20" halign="center" valign="center" />
++	</screen>
++
++	<!-- UI 3D Setup Plugin -->
++	<screen name="UI3DSetupScreen" position="center,center" size="560,300" title="UI 3D setup" >
++		<ePixmap pixmap="Vu_HD/buttons/red.png" position="110,10" size="140,40" alphatest="on" />
++		<ePixmap pixmap="Vu_HD/buttons/green.png" position="310,10" size="140,40" alphatest="on" />
++
++		<widget source="key_red" render="Label" position="120,10" zPosition="1" size="140,30" font="Regular;20" halign="center" valign="center" transparent="1" />
++		<widget source="key_green" render="Label" position="320,10" zPosition="1" size="140,30" font="Regular;20" halign="center" valign="center" transparent="1" />
++
++		<widget name="config" zPosition="2" position="5,70" size="550,200" scrollbarMode="showOnDemand" transparent="1" />
++	</screen>
++
++	<!-- Blindscan Plugin -->
++	<screen name="Blindscan" position="center,center" size="560,390" title="Blindscan">
++		<ePixmap pixmap="Vu_HD/buttons/red.png" position="40,10" size="140,40" alphatest="on" />
++		<ePixmap pixmap="Vu_HD/buttons/green.png" position="210,10" size="140,40" alphatest="on" />
++		<ePixmap pixmap="Vu_HD/buttons/blue.png" position="380,10" size="140,40" alphatest="on" />
++
++		<widget source="key_red" render="Label" position="50,10" zPosition="1" size="140,30" font="Regular;20" halign="center" valign="center" transparent="1"/>
++		<widget source="key_green" render="Label" position="220,10" zPosition="1" size="140,30" font="Regular;20" halign="center" valign="center" transparent="1"/>
++		<widget source="key_blue" render="Label" position="390,10" zPosition="1" size="140,30" font="Regular;20" halign="center" valign="center" transparent="1"/>
++
++		<widget name="config" position="5,70" size="550,280" scrollbarMode="showOnDemand" />
++		<widget name="introduction" position="0,365" size="560,20" font="Regular;20" halign="center" />
++	</screen>
++
++	<!-- Web Browser Plugin -->
++	<screen name="BrowserLauncher" position="center,center" size="309,498" title="Web Browser">
++		<ePixmap pixmap="Vu_HD/buttons/red.png" position="4,0" size="40,40" alphatest="on" />
++		<ePixmap pixmap="Vu_HD/buttons/green.png" position="154,0" size="40,40" alphatest="on" />
++
++		<widget source="key_red" render="Label" position="30,0" zPosition="1" size="125,30" font="Regular;20" halign="center" valign="center" transparent="1" />
++		<widget source="key_green" render="Label" position="180,0" zPosition="1" size="125,30" font="Regular;20" halign="center" valign="center" transparent="1" />
++
++		<widget name="config" position="0,50" size="309,100" scrollbarMode="showOnDemand" />
++		<ePixmap pixmap="rc_wb_desc.png" position="0,150" size="309,296" alphatest="on" />
++		<widget name="info" position="0,455" size="309,50" font="Regular;18" halign="center" foregroundColor="blue" transparent="1" />
++	</screen>
++
++	<!-- Crash Report Plugin -->
++	<screen name="CrashlogReportConfiguration" position="209,48" size="865,623" title="CrashlogReport Setting" flags="wfNoBorder" backgroundColor="transparent">	
++		<ePixmap pixmap="Vu_HD/Bg_EPG_list.png" zPosition="-1" position="0,0" size="865,623" alphatest="on" />
++		<ePixmap pixmap="Vu_HD/menu/ico_title_Setup.png" position="32,41" size="40,40" alphatest="blend"  transparent="1" />
++		<eLabel text="CrashlogReport Setting" position="90,50" size="600,32" font="Semiboldit;32" foregroundColor="#5d5d5d" backgroundColor="#27b5b9bd" transparent="1" />
++		<ePixmap pixmap="Vu_HD/icons/clock.png" position="750,55" zPosition="1" size="20,20" alphatest="blend" />
++		<widget source="global.CurrentTime" render="Label" position="770,57" zPosition="1" size="50,20" font="Regular;20" foregroundColor="#1c1c1c" halign="right" backgroundColor="#27d9dee2" transparent="1">
++			<convert type="ClockToText">Format:%H:%M</convert>
++		</widget>
++		<ePixmap pixmap="Vu_HD/buttons/red.png" position="45,98" size="25,25" alphatest="blend" />
++		<ePixmap pixmap="Vu_HD/buttons/green.png" position="240,98" size="25,25" alphatest="blend" />
++		<ePixmap pixmap="Vu_HD/buttons/button_off.png" position="435,98" size="25,25" alphatest="blend" />
++		<ePixmap pixmap="Vu_HD/buttons/button_off.png" position="630,98" size="25,25" alphatest="blend" />
++		<widget source="key_red" render="Label" position="66,97" zPosition="1" size="150,25" font="Regular;20" halign="center" valign="center" backgroundColor="darkgrey" foregroundColor="#1c1c1c" transparent="1" />
++		<widget source="key_green" render="Label" position="268,97" zPosition="1" size="150,25" font="Regular;20" halign="center" valign="center" backgroundColor="darkgrey" foregroundColor="#1c1c1c" transparent="1" />
++		<widget name="config" zPosition="2" position="50,130" itemHeight="36" size="750,324" scrollbarMode="showOnDemand" transparent="1" />
++		<widget source="status" render="Label" position="160,525" size="540,60" zPosition="10" foregroundColor="#3c3c3c" backgroundColor="#27aeaeae" font="Regular;20" halign="center" valign="center" transparent="1"/>
++		<widget name="VKeyIcon" pixmap="Vu_HD/buttons/key_text.png" position="500,350" zPosition="10" size="35,25" transparent="1" alphatest="on" />
++		<widget name="HelpWindow" pixmap="Vu_HD/vkey_icon.png" position="310,400" zPosition="1" size="1,1" transparent="1" alphatest="on" />
++	</screen>
++
++	<!-- FPGA Upgrade Plugin -->
++	<screen name="FPGAUpgrade" position="center,center" size="560,420" title="FPGA Upgrade" >
++		<ePixmap pixmap="Vu_HD/buttons/red.png" position="40,10" size="140,40" alphatest="blend" />
++		<ePixmap pixmap="Vu_HD/buttons/green.png" position="210,10" size="140,40" alphatest="blend" />
++		<ePixmap pixmap="Vu_HD/buttons/blue.png" position="380,10" size="140,40" alphatest="blend" />
++
++		<widget source="key_red" render="Label" position="60,10" zPosition="1" size="140,30" font="Regular;20" halign="center" valign="center" transparent="1"/>
++		<widget source="key_green" render="Label" position="230,10" zPosition="1" size="140,30" font="Regular;20" halign="center" valign="center" transparent="1"/>
++		<widget source="key_blue" render="Label" position="400,10" zPosition="1" size="140,30" font="Regular;20" halign="center" valign="center" transparent="1"/>
++
++		<widget source="status" render="Label" position="15,60" zPosition="1" size="540,40" font="Regular;18" halign="left" valign="center" transparent="1" />
++		<widget name="file_list" position="0,100" size="555,320" scrollbarMode="showOnDemand" />
++        </screen>
++
++	<screen name="UpgradeStatus" position="center,center" size="450,130" title=" ">
++		<widget name="name" position="10,0" size="430,20" font="Regular;18" halign="left" valign="bottom"/>
++		<widget name="slider" position="10,25" size="430,30" borderWidth="2" borderColor="#cccccc"/>
++		<widget name="status" position="10,25" zPosition="1" size="430,30" font="Regular;18" halign="center" valign="center" foregroundColor="blue" backgroundColor="blue" transparent="1"/>
++		<widget source="info" render="Label" position="10,70" zPosition="1" size="430,60" font="Regular;22" halign="center" valign="center" transparent="1"/>
++	</screen>
++
++	<!-- Firmware Upgrade Plugin -->
++	<screen name="FirmwareUpgrade" position="center,center" size="560,175" title="Firmware Upgrade" >
++		<ePixmap pixmap="Vu_HD/buttons/red.png" position="125,7" size="80,40" alphatest="blend" />
++		<ePixmap pixmap="Vu_HD/buttons/green.png" position="330,7" size="80,40" alphatest="blend" />
++
++		<widget source="key_red" render="Label" position="160,0" zPosition="1" size="155,40" font="Regular;20" halign="left" valign="center" transparent="1" />
++		<widget source="key_green" render="Label" position="365,0" zPosition="1" size="155,40" font="Regular;20" halign="left" valign="center" transparent="1" />
++
++		<widget name="config" zPosition="2" position="0,50" itemHeight="36" size="540,40" scrollbarMode="showOnDemand" transparent="1" />
++		<widget source="status" render="Label" position="0,100" zPosition="1" size="540,75" font="Regular;20" halign="center" valign="center" backgroundColor="#a08500" transparent="1" />
++        </screen>
++
++	<screen name="FUFilebrowser" position="center,center" size="500,290" title="File Browser" >
++		<ePixmap pixmap="Vu_HD/buttons/blue.png" position="5,7" size="80,40" alphatest="blend" />
++		<widget source="key_blue" render="Label" position="40,0" zPosition="1" size="300,40" font="Regular;20" halign="left" valign="center" transparent="1"/>
++		<widget name="file_list" position="0,50" size="500,160" scrollbarMode="showOnDemand" />
++
++		<widget source="status" render="Label" position="0,230" zPosition="1" size="500,60" font="Regular;20" halign="center" valign="center" backgroundColor="#a08500" transparent="1" />
++        </screen>
++
++
++	<!-- WLan Setup Plugin -->
++	<screen name="WlanSelection" position="209,48" size="865,623" title="Wireless Network Configuration..." flags="wfNoBorder" backgroundColor="transparent">
++		<ePixmap pixmap="Vu_HD/Bg_EPG_view.png" zPosition="-1" position="0,0" size="865,623" alphatest="on" />
++		<ePixmap pixmap="Vu_HD/menu/ico_title_Setup.png" position="32,41" size="40,40" alphatest="blend"  transparent="1" />
++		<eLabel text="Wireless Network Adapter Selection..." position="90,50" size="600,32" font="Semiboldit;32" foregroundColor="#5d5d5d" backgroundColor="#27b5b9bd" transparent="1" />
++		<ePixmap pixmap="Vu_HD/icons/clock.png" position="750,55" zPosition="1" size="20,20" alphatest="blend" />
++		<widget source="global.CurrentTime" render="Label" position="770,57" zPosition="1" size="50,20" font="Regular;20" foregroundColor="#1c1c1c" backgroundColor="#27d9dee2" halign="right" transparent="1">
++			<convert type="ClockToText">Format:%H:%M</convert>
++		</widget>
++		<ePixmap pixmap="Vu_HD/buttons/red.png" position="45,98" size="25,25" alphatest="blend" />
++		<ePixmap pixmap="Vu_HD/buttons/green.png" position="240,98" size="25,25" alphatest="blend" />
++		<widget source="key_red" render="Label" position="66,97" zPosition="1" size="150,25" font="Regular;20" halign="center" valign="center" backgroundColor="darkgrey" foregroundColor="#1c1c1c" transparent="1" />
++		<widget source="key_green" render="Label" position="268,97" zPosition="1" size="150,25" font="Regular;20" halign="center" valign="center" backgroundColor="darkgrey" foregroundColor="#1c1c1c" transparent="1" />
++		<ePixmap pixmap="Vu_HD/border_menu.png" position="120,140" zPosition="-1" size="342,358" transparent="1" alphatest="blend" />
++		<widget name="menulist" position="130,150" size="322,338" transparent="1" backgroundColor="#27d9dee2" zPosition="10" scrollbarMode="showOnDemand" />
++		<widget source="description" render="Label" position="500,140" size="280,360" font="Regular;19" halign="center" valign="center" backgroundColor="#c5c9cc" transparent="1"/>
++	</screen>
++
++	<screen name="WlanSetup" position="209,48" size="865,623" title="Wireless Network Configuration..." flags="wfNoBorder" backgroundColor="transparent">	
++		<ePixmap pixmap="Vu_HD/Bg_EPG_view.png" zPosition="-1" position="0,0" size="865,623" alphatest="on" />
++		<ePixmap pixmap="Vu_HD/menu/ico_title_Setup.png" position="32,41" size="40,40" alphatest="blend"  transparent="1" />
++		<eLabel text="Wireless Network Setup Menu..." position="90,50" size="600,32" font="Semiboldit;32" foregroundColor="#5d5d5d" backgroundColor="#27b5b9bd" transparent="1" />
++		<ePixmap pixmap="Vu_HD/icons/clock.png" position="750,55" zPosition="1" size="20,20" alphatest="blend" />
++		<widget source="global.CurrentTime" render="Label" position="770,57" zPosition="1" size="50,20" font="Regular;20" foregroundColor="#1c1c1c" backgroundColor="#27d9dee2" halign="right" transparent="1">
++			<convert type="ClockToText">Format:%H:%M</convert>
++		</widget>
++		<ePixmap pixmap="Vu_HD/buttons/red.png" position="45,98" size="25,25" alphatest="blend" />
++		<ePixmap pixmap="Vu_HD/buttons/green.png" position="240,98" size="25,25" alphatest="blend" />
++		<widget source="key_red" render="Label" position="66,97" zPosition="1" size="150,25" font="Regular;20" halign="center" valign="center" backgroundColor="darkgrey" foregroundColor="#1c1c1c" transparent="1" />
++		<widget source="key_green" render="Label" position="268,97" zPosition="1" size="150,25" font="Regular;20" halign="center" valign="center" backgroundColor="darkgrey" foregroundColor="#1c1c1c" transparent="1" />
++		<ePixmap pixmap="Vu_HD/border_menu.png" position="120,140" zPosition="-1" size="342,358" transparent="1" alphatest="blend" />
++		<widget name="menulist" position="130,150" size="322,338" transparent="1" backgroundColor="#27d9dee2" zPosition="10" scrollbarMode="showOnDemand" />
++		<widget source="description" render="Label" position="500,140" size="280,360" font="Regular;19" halign="center" valign="center" backgroundColor="#c5c9cc" transparent="1"/>
++	</screen>
++
++	<screen name="WlanConfig" position="209,48" size="865,623" title="Wireless Network Configuration..." flags="wfNoBorder" backgroundColor="transparent">	
++		<ePixmap pixmap="Vu_HD/Bg_EPG_view.png" zPosition="-1" position="0,0" size="865,623" alphatest="on" />
++		<ePixmap pixmap="Vu_HD/menu/ico_title_Setup.png" position="32,41" size="40,40" alphatest="blend"  transparent="1" />
++		<eLabel text="Wireless Network Configuration..." position="90,50" size="600,32" font="Semiboldit;32" foregroundColor="#5d5d5d" backgroundColor="#27b5b9bd" transparent="1" />
++		<ePixmap pixmap="Vu_HD/icons/clock.png" position="750,55" zPosition="1" size="20,20" alphatest="blend" />
++		<widget source="global.CurrentTime" render="Label" position="770,57" zPosition="1" size="50,20" font="Regular;20" foregroundColor="#1c1c1c" backgroundColor="#27d9dee2" halign="right" transparent="1">
++			<convert type="ClockToText">Format:%H:%M</convert>
++		</widget>
++		<ePixmap pixmap="Vu_HD/buttons/red.png" position="45,98" size="25,25" alphatest="blend" />
++		<ePixmap pixmap="Vu_HD/buttons/green.png" position="240,98" size="25,25" alphatest="blend" />
++		<widget source="key_red" render="Label" position="66,97" zPosition="1" size="150,25" font="Regular;20" halign="center" valign="center" backgroundColor="darkgrey" foregroundColor="#1c1c1c" transparent="1" />
++		<widget source="key_green" render="Label" position="268,97" zPosition="1" size="150,25" font="Regular;20" halign="center" valign="center" backgroundColor="darkgrey" foregroundColor="#1c1c1c" transparent="1" />
++		<ePixmap pixmap="Vu_HD/border_menu.png" position="120,140" zPosition="-1" size="342,358" transparent="1" alphatest="blend" />
++		<widget name="config" position="130,150" size="322,338" transparent="1" backgroundColor="#27d9dee2" zPosition="10" scrollbarMode="showOnDemand" />
++		<eLabel text="IP Address : " position="500,160" size="200,26" font="Semiboldit;22" foregroundColor="#5d5d5d" backgroundColor="#27b5b9bd" transparent="1" />		
++		<widget source="ipaddress" render="Label" position="530,190" zPosition="1" size="150,26" font="Regular;20" halign="center" valign="center" backgroundColor="#27b5b9bd" foregroundColor="#1c1c1c" transparent="1" />		
++		<eLabel text="NetMask : " position="500,220" size="200,26" font="Semiboldit;22" foregroundColor="#5d5d5d" backgroundColor="#27b5b9bd" transparent="1" />		
++		<widget source="netmask" render="Label" position="530,250" zPosition="1" size="150,26" font="Regular;20" halign="center" valign="center" backgroundColor="#27b5b9bd" foregroundColor="#1c1c1c" transparent="1" />		
++		<eLabel text="Gateway : " position="500,280" size="200,26" font="Semiboldit;22" foregroundColor="#5d5d5d" backgroundColor="#27b5b9bd" transparent="1" />		
++		<widget source="gateway" render="Label" position="530,310" zPosition="1" size="150,26" font="Regular;20" halign="center" valign="center" backgroundColor="#27b5b9bd" foregroundColor="#1c1c1c" transparent="1" />		
++	</screen>
++
++	<screen name="WlanScanAp" position="209,48" size="865,623" title="Wireless Network Configuration..." flags="wfNoBorder" backgroundColor="transparent">
++		<ePixmap pixmap="Vu_HD/Bg_EPG_view.png" zPosition="-1" position="0,0" size="865,623" alphatest="on" />
++		<ePixmap pixmap="Vu_HD/menu/ico_title_Setup.png" position="32,41" size="40,40" alphatest="blend"  transparent="1" />
++		<eLabel text="Wireless Network AP Scan..." position="90,50" size="600,32" font="Semiboldit;32" foregroundColor="#5d5d5d" backgroundColor="#27b5b9bd" transparent="1" />
++		<ePixmap pixmap="Vu_HD/icons/clock.png" position="750,55" zPosition="1" size="20,20" alphatest="blend" />
++		<widget source="global.CurrentTime" render="Label" position="770,57" zPosition="1" size="50,20" font="Regular;20" foregroundColor="#1c1c1c" backgroundColor="#27d9dee2" halign="right" transparent="1">
++			<convert type="ClockToText">Format:%H:%M</convert>
++		</widget>
++		<ePixmap pixmap="Vu_HD/buttons/red.png" position="45,98" size="25,25" alphatest="blend" />
++		<ePixmap pixmap="Vu_HD/buttons/green.png" position="240,98" size="25,25" alphatest="blend" />
++		<ePixmap pixmap="Vu_HD/buttons/blue.png" position="630,98" size="25,25" alphatest="blend" />
++		<widget source="key_red" render="Label" position="66,97" zPosition="1" size="150,25" font="Regular;20" halign="center" valign="center" backgroundColor="darkgrey" foregroundColor="#1c1c1c" transparent="1" />
++		<widget source="key_green" render="Label" position="268,97" zPosition="1" size="150,25" font="Regular;20" halign="center" valign="center" backgroundColor="darkgrey" foregroundColor="#1c1c1c" transparent="1" />
++		<widget source="key_blue" render="Label" position="665,97" zPosition="1" size="150,25" font="Regular;20" halign="center" valign="center" backgroundColor="darkgrey" foregroundColor="#1c1c1c" transparent="1" />
++		<ePixmap pixmap="Vu_HD/border_menu.png" position="120,140" zPosition="-1" size="342,358" transparent="1" alphatest="blend" />
++		<widget name="menulist" position="130,150" size="322,338" transparent="1" backgroundColor="#27d9dee2" zPosition="10" scrollbarMode="showOnDemand" />
++		<widget source="Address" render="Label" position="490,220" zPosition="1" size="300,30" font="Regular;20" halign="center" valign="center" backgroundColor="#27b5b9bd" foregroundColor="#1c1c1c" transparent="1" />
++		<widget source="ESSID" render="Label" position="490,250" zPosition="1" size="300,30" font="Regular;20" halign="center" valign="center" backgroundColor="#27b5b9bd" foregroundColor="#1c1c1c" transparent="1" />
++		<widget source="Protocol" render="Label" position="490,280" zPosition="1" size="300,30" font="Regular;20" halign="center" valign="center" backgroundColor="#27b5b9bd" foregroundColor="#1c1c1c" transparent="1" />	
++		<widget source="Frequency" render="Label" position="490,310" zPosition="1" size="300,30" font="Regular;20" halign="center" valign="center" backgroundColor="#27b5b9bd" foregroundColor="#1c1c1c" transparent="1" />
++		<widget source="Encryption key" render="Label" position="490,340" zPosition="1" size="300,30" font="Regular;20" halign="center" valign="center" backgroundColor="#27b5b9bd" foregroundColor="#1c1c1c" transparent="1" />
++		<widget source="BitRate" render="Label" position="490,370" zPosition="1" size="300,60" font="Regular;20" halign="center" valign="center" backgroundColor="#27b5b9bd" foregroundColor="#1c1c1c" transparent="1" />
++	</screen>
++
++	<screen name="Wlanstatus" position="209,48" size="865,623" title="Wireless Network Configuration..." flags="wfNoBorder" backgroundColor="transparent">
++		<ePixmap pixmap="Vu_HD/Bg_EPG_view.png" zPosition="-1" position="0,0" size="865,623" alphatest="on" />
++		<ePixmap pixmap="Vu_HD/menu/ico_title_Setup.png" position="32,41" size="40,40" alphatest="blend"  transparent="1" />
++		<eLabel text="Wireless Network Status..." position="90,50" size="600,32" font="Semiboldit;32" foregroundColor="#5d5d5d" backgroundColor="#27b5b9bd" transparent="1" />
++		<ePixmap pixmap="Vu_HD/icons/clock.png" position="750,55" zPosition="1" size="20,20" alphatest="blend" />
++		<widget source="global.CurrentTime" render="Label" position="770,57" zPosition="1" size="50,20" font="Regular;20" foregroundColor="#1c1c1c" backgroundColor="#27d9dee2" halign="right" transparent="1">
++			<convert type="ClockToText">Format:%H:%M</convert>
++		</widget>
++		<ePixmap pixmap="Vu_HD/buttons/red.png" position="45,98" size="25,25" alphatest="blend" />
++		<widget source="key_red" render="Label" position="66,97" zPosition="1" size="150,25" font="Regular;20" halign="center" valign="center" backgroundColor="darkgrey" foregroundColor="#1c1c1c" transparent="1" />
++		<widget source="status" render="Label" position="110,200" size="650,400" transparent="1" font="Regular;20" foregroundColor="#1c1c1c" backgroundColor="#27d9dee2" zPosition="1" />
 +	</screen>
 +</skin>
 diff --git a/data/fonts/Makefile.am b/data/fonts/Makefile.am
@@ -5765,7 +6444,7 @@ index fd33298..d8c1982 100644
  	png_destroy_read_struct(&png_ptr, &info_ptr,&end_info);
  	fclose(fp);
 diff --git a/lib/python/Screens/ChannelSelection.py b/lib/python/Screens/ChannelSelection.py
-index 912d678..0bf21ba 100755
+index 688fe50..7bc66dc 100755
 --- a/lib/python/Screens/ChannelSelection.py
 +++ b/lib/python/Screens/ChannelSelection.py
 @@ -2,6 +2,8 @@ from Tools.Profile import profile
