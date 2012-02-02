@@ -6,7 +6,7 @@ DEPENDS = "jpeg libungif libmad libpng libsigc++-1.2 gettext-native \
 	gst-plugins-bad gst-plugins-good gst-plugins-ugly python-wifi"
 RDEPENDS = "python-codecs python-core python-lang python-re python-threading \
 	python-xml python-fcntl gst-plugin-decodebin gst-plugin-decodebin2 python-stringold \
-	python-pickle gst-plugin-app \
+	python-pickle gst-plugin-app gst-plugin-fragmented \
 	gst-plugin-id3demux gst-plugin-mad gst-plugin-ogg gst-plugin-playbin \
 	gst-plugin-typefindfunctions gst-plugin-audioconvert gst-plugin-audioresample \
 	gst-plugin-wavparse python-netclient gst-plugin-mpegstream \
@@ -67,7 +67,7 @@ DESCRIPTION_append_enigma2-plugin-systemplugins-crashreport = "automatically sen
 RDEPENDS_enigma2-plugin-systemplugins-crashreport = "twisted-mail twisted-names python-compression python-mime python-email"
 
 PN = "enigma2"
-PR = "r18"
+PR = "r19"
 
 SRCDATE = "20110922"
 SRCREV = "5e19a3f8a5e8ce8a4e2cb2b601a1b8ef3554e4be"
