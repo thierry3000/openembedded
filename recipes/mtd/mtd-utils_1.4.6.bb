@@ -1,6 +1,6 @@
 require mtd-utils.inc
 
-PR_append = ".1"
+PR_append = ".2"
 
 DEPENDS += "util-linux-ng lzo2"
 
@@ -13,6 +13,7 @@ ARM_INSTRUCTION_SET = "arm"
 TAG = "v${PV}"
 
 SRC_URI = "git://git.infradead.org/mtd-utils.git;protocol=git;tag=${TAG} \
+	   file://0001-mkfs.ubifs-allow-output-file-creation-on-different-device.patch;patch=1 \
 	  "
 
 S = "${WORKDIR}/git/"
