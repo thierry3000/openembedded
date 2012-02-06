@@ -3,13 +3,13 @@ LICENSE = "GPL"
 MAINTAINER = "Felix Domke <tmbinc@elitdvb.net>"
 
 PN = "tuxbox-common"
-PR = "r2"
+PR = "r3"
 SRCDATE = "20090305"
 PV = "0.0+cvs${SRCDATE}"
 
 SRC_URI = "cvs://anoncvs@cvs.tuxbox.org/cvs/tuxbox/;module=cdk/root/share/tuxbox;method=ext;tag=dreambox;date=${SRCDATE} \
 	http://dreamboxupdate.com/download/opendreambox/tuxbox-common-r11.tar.gz \
-	file://satellites_20110916.patch;patch=1;pnum=0"
+	file://satellites_20120206.patch;patch=1;pnum=0"
 
 FILES_${PN} = "/"
 
