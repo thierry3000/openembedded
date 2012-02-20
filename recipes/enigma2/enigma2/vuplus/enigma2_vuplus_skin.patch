@@ -3485,7 +3485,7 @@ index 0000000..1bd4e85
 +		<widget name="key_green" position="316,84" zPosition="1" size="182,20" font="Regular;20" halign="left" valign="center" foregroundColor="#1c1c1c" backgroundColor="#27ebebeb" transparent="1" />
 +		<widget name="key_yellow" position="543,84" zPosition="1" size="182,20" font="Regular;20" halign="left" valign="center" foregroundColor="#1c1c1c" backgroundColor="#27ebebeb" transparent="1" />
 +		<widget name="key_blue" position="770,84" zPosition="1" size="182,20" font="Regular;20" halign="left" valign="center" foregroundColor="#1c1c1c" backgroundColor="#27ebebeb" transparent="1" />
-+		<widget name="list" position="30,127" size="615,462" zPosition="3" scrollbarMode="showOnDemand" foregroundColor="#1c1c1c" backgroundColor="#27ebebeb" selectionPixmap="Vu_HD/buttons/FocusBar_H42.png" foregroundColorServiceNotAvail="#2c2c2c" serviceItemHeight="42" serviceNumberFont="Regular;24" serviceNameFont="Regular;24" serviceInfoFont="Semibold;21" transparent="1" />
++		<widget name="list" position="30,127" size="615,462" zPosition="3" scrollbarMode="showOnDemand" foregroundColor="#1c1c1c" backgroundColor="#27ebebeb" selectionPixmap="Vu_HD/buttons/FocusBar_H42.png" foregroundColorServiceNotAvail="#6c6c6c" serviceItemHeight="42" serviceNumberFont="Regular;24" serviceNameFont="Regular;24" serviceInfoFont="Semibold;21" transparent="1" />
 +		<eLabel text=" " backgroundColor="#9c9c9c" position="655,127" size="2,450" />
 +		<widget source="ServiceEvent" render="Label" position="670,130" zPosition="1" size="300,24" foregroundColor="#07255d" backgroundColor="#27d8dee2" font="Semibold;24" noWrap="1" transparent="1">
 +			<convert type="EventName">Name</convert>
