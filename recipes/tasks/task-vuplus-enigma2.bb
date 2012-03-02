@@ -20,7 +20,6 @@ PACKAGES = "\
 RPROVIDES_task-vuplus-enigma2 = "task-vuplus-ui"
 DESCRIPTION_task-vuplus-enigma2 = "Vuplus: Enigma2 Dependencies"
 RDEPENDS_task-vuplus-enigma2 = "\
-  vuplus-blindscan-utils \
   enigma2 \
   enigma2-defaultservices \
   enigma2-plugin-extensions-mediascanner \
@@ -55,6 +54,7 @@ RDEPENDS_task-vuplus-enigma2_append_bm750 = "\
 "
 
 RDEPENDS_task-vuplus-enigma2_append_vuuno = "\
+  vuplus-blindscan-utils \
   enigma2-plugin-systemplugins-fpgaupgrade \
   enigma2-plugin-systemplugins-blindscan \
   enigma2-plugin-systemplugins-manualfancontrol \
@@ -63,6 +63,7 @@ RDEPENDS_task-vuplus-enigma2_append_vuuno = "\
   enigma2-plugin-extensions-webbrowser \
 "
 RDEPENDS_task-vuplus-enigma2_append_vuultimo = "\
+  vuplus-blindscan-utils \
   enigma2-plugin-systemplugins-firmwareupgrade \
   enigma2-plugin-systemplugins-blindscan \
   enigma2-plugin-systemplugins-manualfancontrol \

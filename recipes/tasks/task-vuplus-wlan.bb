@@ -55,6 +55,9 @@ RDEPENDS_${PN}_append_vuuno = "\
 RDEPENDS_${PN}_append_vuultimo = "\
   ${@base_contains('PREFERRED_VERSION_linux-vuultimo', '2.6.18', '${WLAN_USB_MODULES_LEGACY}', '${WLAN_CRYPTO_MODULES} ${WLAN_USB_MODULES}', d)} \
 "
+RDEPENDS_${PN}_append_vu7425 = "\
+  ${@base_contains('PREFERRED_VERSION_linux-vuultimo', '2.6.18', '${WLAN_USB_MODULES_LEGACY}', '${WLAN_CRYPTO_MODULES} ${WLAN_USB_MODULES}', d)} \
+"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 

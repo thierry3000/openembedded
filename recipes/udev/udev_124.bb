@@ -36,6 +36,7 @@ SRC_URI_append_bm750 = " file://41-od-linux-2.6.18-misc.rules"
 SRC_URI_append_vusolo = " file://41-od-linux-2.6.18-misc.rules"
 SRC_URI_append_vuuno = " file://41-od-linux-2.6.18-misc.rules"
 SRC_URI_append_vuultimo = " file://41-od-linux-2.6.18-misc.rules"
+SRC_URI_append_vu7425 = " file://41-od-linux-2.6.18-misc.rules"
 
 
 require udev.inc
