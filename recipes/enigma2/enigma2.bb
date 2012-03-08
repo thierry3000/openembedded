@@ -12,7 +12,7 @@ RDEPENDS = "python-codecs python-core python-lang python-re python-threading \
 	gst-plugin-wavparse python-netclient gst-plugin-mpegstream \
 	gst-plugin-flac gst-plugin-dvbmediasink gst-plugin-mpegdemux gst-plugin-dvdsub \
 	gst-plugin-souphttpsrc gst-plugin-mpegaudioparse gst-plugin-subparse \
-	gst-plugin-apetag gst-plugin-icydemux gst-plugin-autodetect \
+	gst-plugin-apetag gst-plugin-icydemux gst-plugin-autodetect gst-plugin-flv \
 	glibc-gconv-iso8859-15 ethtool"
 
 GST_RTSP_RDEPENDS = "gst-plugin-udp gst-plugin-rtsp gst-plugin-rtp gst-plugin-rtpmanager"
@@ -67,7 +67,7 @@ DESCRIPTION_append_enigma2-plugin-systemplugins-crashreport = "automatically sen
 RDEPENDS_enigma2-plugin-systemplugins-crashreport = "twisted-mail twisted-names python-compression python-mime python-email"
 
 PN = "enigma2"
-PR = "r23"
+PR = "r24"
 
 SRCDATE = "20110922"
 SRCREV = "5e19a3f8a5e8ce8a4e2cb2b601a1b8ef3554e4be"
