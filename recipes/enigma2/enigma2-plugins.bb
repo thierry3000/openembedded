@@ -10,8 +10,8 @@ SRCDATE="20110215"
 BRANCH="master"
 PV = "experimental-git${SRCDATE}"
 
-PR = "r3"
-SRC_URI="git://schwerkraft.elitedvb.net/enigma2-plugins/enigma2-plugins.git;protocol=git;branch=${BRANCH};tag=${SRCREV}"
+PR = "r4"
+SRC_URI="git://code.vuplus.com/git/dvbapp-plugin.git;protocol=git;branch=${BRANCH};tag=${SRCREV}"
 
 EXTRA_OECONF = " \
         BUILD_SYS=${BUILD_SYS} \
