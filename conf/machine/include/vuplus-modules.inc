@@ -2,6 +2,14 @@
 # Kernel Modules
 #
 
+KERNEL_3G_MODULES = " \
+        kernel-module-ppp-async \
+        kernel-module-ppp-deflate \
+        kernel-module-ppp-synctty \
+        kernel-module-ppp-generic \
+        kernel-module-slhc \
+        kernel-module-usbserial \
+        "
 
 KERNEL_WIFI_MODULES = " \
 	kernel-module-ath9k-htc \

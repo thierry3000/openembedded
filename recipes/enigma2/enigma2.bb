@@ -3,7 +3,7 @@ MAINTAINER = "Felix Domke <tmbinc@elitedvb.net>"
 DEPENDS = "jpeg libungif libmad libpng libsigc++-1.2 gettext-native \
 	dreambox-dvbincludes freetype libdvbsi++ python swig-native \
 	libfribidi libxmlccwrap libdreamdvd gstreamer gst-plugin-dvbmediasink \
-	gst-plugins-bad gst-plugins-good gst-plugins-ugly python-wifi"
+	gst-plugins-bad gst-plugins-good gst-plugins-ugly python-wifi wvdial wvstreams ppp usbmodeswitch usbmodeswitch-data "
 RDEPENDS = "python-codecs python-core python-lang python-re python-threading \
 	python-xml python-fcntl gst-plugin-decodebin gst-plugin-decodebin2 python-stringold \
 	python-pickle gst-plugin-app gst-plugin-fragmented \
@@ -65,9 +65,10 @@ DESCRIPTION_append_enigma2-plugin-systemplugins-networkwizard = "provides easy s
 RDEPENDS_enigma2-plugin-extensions-webbrowser = "python-gdata libqtwebkite4 vuplus-webbrowser-utils qt4-embedded-fonts qt4-embedded-plugin-imageformat-gif qt4-embedded-plugin-imageformat-ico qt4-embedded-plugin-imageformat-jpeg qt4-embedded-plugin-imageformat-mng qt4-embedded-plugin-imageformat-svg qt4-embedded-plugin-imageformat-tiff qt4-embedded-plugin-iconengine-svgicon "
 DESCRIPTION_append_enigma2-plugin-systemplugins-crashreport = "automatically send crashlogs to Vu+"
 RDEPENDS_enigma2-plugin-systemplugins-crashreport = "twisted-mail twisted-names python-compression python-mime python-email"
+RDEPENDS_enigma2-plugin-systemplugins-3gmodemmanager = "ppp usbmodeswitch usbmodeswitch-data wvdial wvstreams libwvutils4.6 libwvstreams-extras libuniconf4.6"
 
 PN = "enigma2"
-PR = "r26"
+PR = "r27"
 
 SRCDATE = "20110922"
 SRCREV = "5e19a3f8a5e8ce8a4e2cb2b601a1b8ef3554e4be"
