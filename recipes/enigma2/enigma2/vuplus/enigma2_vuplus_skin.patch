@@ -1,5 +1,5 @@
 diff --git a/configure.ac b/configure.ac
-index c08344c..d103204 100644
+index 28fd415..97ff37f 100644
 --- a/configure.ac
 +++ b/configure.ac
 @@ -134,6 +134,16 @@ data/skin_default/menu/Makefile
@@ -81,10 +81,10 @@ index 0000000..20f24d9
 +	*.png
 diff --git a/data/750S/skin.xml b/data/750S/skin.xml
 new file mode 100644
-index 0000000..29944ed
+index 0000000..f6cb31e
 --- /dev/null
 +++ b/data/750S/skin.xml
-@@ -0,0 +1,2823 @@
+@@ -0,0 +1,2825 @@
 +<skin>
 +	<!-- VU+ skin (skin.xml)  -->
 +	<output id="0">
@@ -2877,6 +2877,8 @@ index 0000000..29944ed
 +		<widget source="netmask" render="Label" position="300,275" zPosition="1" size="150,26" font="Regular;20" halign="center" valign="center" />	
 +		<eLabel text="Gateway : " position="100,300" size="190,21" font="Regular;19" />
 +		<widget source="gateway" render="Label" position="300,300" zPosition="1" size="150,26" font="Regular;20" halign="center" valign="center" />
++		<widget name="VKeyIcon" pixmap="750S/buttons/key_text.png" position="460,245" zPosition="10" size="35,25" transparent="1" alphatest="on" />                  
++                <widget name="HelpWindow" pixmap="750S/vkey_icon.png" position="160,350" zPosition="1" size="1,1" transparent="1" alphatest="on" />
 +	</screen>
 +
 +	<screen name="WlanScanAp" position="center,120" size="510,400" title="Wireless Network AP Scan..." >
@@ -2980,10 +2982,10 @@ index 0000000..9d4f458
 +	*.png
 diff --git a/data/Vu_HD/skin.xml b/data/Vu_HD/skin.xml
 new file mode 100644
-index 0000000..1bd4e85
+index 0000000..daa1abf
 --- /dev/null
 +++ b/data/Vu_HD/skin.xml
-@@ -0,0 +1,3353 @@
+@@ -0,0 +1,3355 @@
 +<skin>
 +	<!-- VU+ skin (skin.xml)  -->
 +	<output id="0">
@@ -6298,6 +6300,8 @@ index 0000000..1bd4e85
 +		<widget source="netmask" render="Label" position="530,250" zPosition="1" size="150,26" font="Regular;20" halign="center" valign="center" backgroundColor="#27b5b9bd" foregroundColor="#1c1c1c" transparent="1" />		
 +		<eLabel text="Gateway : " position="500,280" size="200,26" font="Semiboldit;22" foregroundColor="#5d5d5d" backgroundColor="#27b5b9bd" transparent="1" />		
 +		<widget source="gateway" render="Label" position="530,310" zPosition="1" size="150,26" font="Regular;20" halign="center" valign="center" backgroundColor="#27b5b9bd" foregroundColor="#1c1c1c" transparent="1" />		
++		<widget name="VKeyIcon" pixmap="Vu_HD/buttons/key_text.png" position="500,350" zPosition="10" size="35,25" transparent="1" alphatest="on" />
++                <widget name="HelpWindow" pixmap="Vu_HD/vkey_icon.png" position="310,535" zPosition="1" size="1,1" transparent="1" alphatest="on" />
 +	</screen>
 +
 +	<screen name="WlanScanAp" position="209,48" size="865,623" title="Wireless Network Configuration..." flags="wfNoBorder" backgroundColor="transparent">
