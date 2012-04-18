@@ -24,8 +24,11 @@ KERNEL_WIFI_MODULES = " \
 	kernel-module-w35und \
 	kernel-module-zd1211rw \
 	${@base_contains("MACHINE_FEATURES", "rt3070-legacy", "", "kernel-module-rt2800usb", d)} \
+	kernel-module-llc \
+        kernel-module-stp \
+        kernel-module-bridge \
+        kernel-module-hostap \
 	"
-
 
 KERNEL_DVB_MODULES = " \
 	kernel-module-em28xx-dvb \
@@ -61,6 +64,3 @@ KERNEL_DVB_MODULES = " \
 	kernel-module-dvb-usb-vp7045 \
 	kernel-module-smsdvb kernel-module-smsusb \
 	"
-
-
-

@@ -1,5 +1,5 @@
 diff --git a/configure.ac b/configure.ac
-index 28fd415..97ff37f 100644
+index f11245a..87be088 100644
 --- a/configure.ac
 +++ b/configure.ac
 @@ -134,6 +134,16 @@ data/skin_default/menu/Makefile
@@ -81,10 +81,10 @@ index 0000000..20f24d9
 +	*.png
 diff --git a/data/750S/skin.xml b/data/750S/skin.xml
 new file mode 100644
-index 0000000..f6cb31e
+index 0000000..356191e
 --- /dev/null
 +++ b/data/750S/skin.xml
-@@ -0,0 +1,2825 @@
+@@ -0,0 +1,2841 @@
 +<skin>
 +	<!-- VU+ skin (skin.xml)  -->
 +	<output id="0">
@@ -2909,6 +2909,22 @@ index 0000000..f6cb31e
 +		<ePixmap pixmap="750S/buttons/red.png" position="190,360" size="135,40" alphatest="on" />
 +		<widget source="key_red" render="Label" position="185,360" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" transparent="1" />
 +	</screen>
++
++	<!-- Wireless Access Point plugin-->
++	<screen name="WirelessAccessPoint" position="center,center" size="560,450" title="Wireless Access Point Setup" >
++		<ePixmap pixmap="750S/buttons/red.png" position="110,10" size="140,40" alphatest="on" />
++		<ePixmap pixmap="750S/buttons/green.png" position="310,10" size="140,40" alphatest="on" />
++		<widget source="key_red" render="Label" position="115,10" zPosition="1" size="135,40" font="Regular;20" halign="center" valign="center" transparent="1" />
++		<widget source="key_green" render="Label" position="315,10" zPosition="1" size="135,40" font="Regular;20" halign="center" valign="center" transparent="1" />
++		<widget name="config" zPosition="2" position="5,70" size="550,270" scrollbarMode="showOnDemand" transparent="1" />
++		<widget source="current_settings" render="Label" position="10,340" size="570,20" font="Regular;19" halign="center" valign="center" transparent="1" />
++		<widget source="IPAddress_text" render="Label" position="130,370" size="190,21" font="Regular;19" transparent="1" />
++		<widget source="Netmask_text" render="Label" position="130,395" size="190,21" font="Regular;19" transparent="1" />
++		<widget source="Gateway_text" render="Label" position="130,420" size="190,21" font="Regular;19" transparent="1" />
++		<widget source="IPAddress" render="Label" position="340,370" size="240,21" font="Regular;19" transparent="1" />
++		<widget source="Netmask" render="Label" position="340,395" size="240,21" font="Regular;19" transparent="1" />
++		<widget source="Gateway" render="Label" position="340,420" size="240,21" font="Regular;19" transparent="1" />
++	</screen>"""
 +</skin>
 diff --git a/data/Makefile.am b/data/Makefile.am
 index 0eaa082..869a16e 100644
@@ -2982,10 +2998,10 @@ index 0000000..9d4f458
 +	*.png
 diff --git a/data/Vu_HD/skin.xml b/data/Vu_HD/skin.xml
 new file mode 100644
-index 0000000..daa1abf
+index 0000000..ccf3ae3
 --- /dev/null
 +++ b/data/Vu_HD/skin.xml
-@@ -0,0 +1,3355 @@
+@@ -0,0 +1,3377 @@
 +<skin>
 +	<!-- VU+ skin (skin.xml)  -->
 +	<output id="0">
@@ -6340,7 +6356,29 @@ index 0000000..daa1abf
 +		<widget source="key_red" render="Label" position="66,97" zPosition="1" size="150,25" font="Regular;20" halign="center" valign="center" backgroundColor="darkgrey" foregroundColor="#1c1c1c" transparent="1" />
 +		<widget source="status" render="Label" position="110,200" size="650,400" transparent="1" font="Regular;20" foregroundColor="#1c1c1c" backgroundColor="#27d9dee2" zPosition="1" />
 +	</screen>
++
++	<!-- Wireless Access Point Plugin -->
++	<screen name = "WirelessAccessPoint" position="center,center" size="650,520" title="Wireless Access Point Setup" >
++		<ePixmap pixmap="Vu_HD/buttons/red.png" position="20,10" size="140,40" alphatest="on" />
++		<ePixmap pixmap="Vu_HD/buttons/green.png" position="180,10" size="140,40" alphatest="on" />
++		<ePixmap pixmap="Vu_HD/buttons/yellow.png" position="340,10" size="140,40" alphatest="on" />
++		<ePixmap pixmap="Vu_HD/buttons/blue.png" position="500,10" size="140,40" alphatest="on" />
++		<widget source="key_red" render="Label" position="25,10" zPosition="1" size="140,30" font="Regular;20" halign="center" valign="center" transparent="1" />
++		<widget source="key_green" render="Label" position="185,10" zPosition="1" size="140,30" font="Regular;20" halign="center" valign="center" transparent="1" />
++		<widget source="key_yellow" render="Label" position="345,10" zPosition="1" size="140,30" font="Regular;20" halign="center" valign="center" transparent="1" />
++		<widget source="key_blue" render="Label" position="505,10" zPosition="1" size="140,30" font="Regular;20" halign="center" valign="center" transparent="1" />
++		<widget name="config" zPosition="2" position="10,60" size="630,350" scrollbarMode="showOnDemand" transparent="1" />
++		<widget source="current_settings" render="Label" position="10,410" size="630,20" font="Regular;19" halign="center" valign="center" transparent="1" />
++		<widget source="IPAddress_text" render="Label" position="160,440" size="190,21" font="Regular;19" transparent="1" />
++		<widget source="Netmask_text" render="Label" position="160,465" size="190,21" font="Regular;19" transparent="1" />
++		<widget source="Gateway_text" render="Label" position="160,490" size="190,21" font="Regular;19" transparent="1" />
++		<widget source="IPAddress" render="Label" position="370,440" size="240,21" font="Regular;19" transparent="1" />
++		<widget source="Netmask" render="Label" position="370,465" size="240,21" font="Regular;19" transparent="1" />
++		<widget source="Gateway" render="Label" position="370,490" size="240,21" font="Regular;19" transparent="1" />
++	</screen>
++
 +</skin>
++
 diff --git a/data/fonts/Makefile.am b/data/fonts/Makefile.am
 index 2f7e7c7..f81801a 100644
 --- a/data/fonts/Makefile.am
