@@ -1,7 +1,7 @@
 DESCRIPTION = "Vuplus: E2 Task for the Vuplus Distribution"
 SECTION = "vuplus/base"
 LICENSE = "MIT"
-PR = "r17"
+PR = "r18"
 
 inherit task
 
@@ -32,6 +32,7 @@ RDEPENDS_task-vuplus-enigma2 = "\
   enigma2-skins-meta \   
   enigma2-plugin-systemplugins-crashreport \
   enigma2-plugin-systemplugins-3gmodemmanager \
+  enigma2-plugin-extensions-streamtv \
 "
 
 RRECOMMENDS_task-vuplus-enigma2 = "\

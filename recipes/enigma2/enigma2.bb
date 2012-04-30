@@ -68,9 +68,10 @@ DESCRIPTION_append_enigma2-plugin-systemplugins-crashreport = "automatically sen
 RDEPENDS_enigma2-plugin-systemplugins-crashreport = "twisted-mail twisted-names python-compression python-mime python-email"
 RDEPENDS_enigma2-plugin-systemplugins-3gmodemmanager = "ppp usbmodeswitch usbmodeswitch-data wvdial wvstreams libwvutils4.6 libwvstreams-extras libuniconf4.6"
 RDEPENDS_enigma2-plugin-systemplugins-wirelessaccesspoint = "hostap-daemon bridge-utils"
+RDEPENDS_enigma2-plugin-extensions-streamtv = "librtmp0 gst-plugin-rtmp "
 
 PN = "enigma2"
-PR = "r29"
+PR = "r30"
 
 SRCDATE = "20110922"
 SRCREV = "5e19a3f8a5e8ce8a4e2cb2b601a1b8ef3554e4be"
