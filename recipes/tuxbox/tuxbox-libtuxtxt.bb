@@ -69,6 +69,14 @@ SRC_URI_append_vu7425 = " \
 	file://32bpp.diff;patch=1 \
 	file://resize_framebuffer.diff;patch=1 \
 	file://allow_different_demux.diff;patch=1"
+SRC_URI_append_vuduo2 = " \
+	file://32bpp.diff;patch=1 \
+	file://resize_framebuffer.diff;patch=1 \
+	file://allow_different_demux.diff;patch=1"
+SRC_URI_append_vusolo2 = " \
+	file://32bpp.diff;patch=1 \
+	file://resize_framebuffer.diff;patch=1 \
+	file://allow_different_demux.diff;patch=1"
 
 S = "${WORKDIR}/libs"
 EXTRA_OECONF = "--with-target=native"

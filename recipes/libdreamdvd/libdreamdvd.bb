@@ -22,6 +22,8 @@ CFLAGS_bm750_append = " -DHARDWARE_SUPPORT_LPCM"
 CFLAGS_vusolo_append = " -DHARDWARE_SUPPORT_LPCM"
 CFLAGS_vuuno_append = " -DHARDWARE_SUPPORT_LPCM"
 CFLAGS_vuultimo_append = " -DHARDWARE_SUPPORT_LPCM"
+CFLAGS_vuduo2_append = " -DHARDWARE_SUPPORT_LPCM"
+CFLAGS_vusolo2_append = " -DHARDWARE_SUPPORT_LPCM"
 
 S = "${WORKDIR}/git"
 

@@ -78,3 +78,9 @@ do_rootfs_append_vuultimo() {
 do_rootfs_append_vu7425() {
     generate_nfo
 }
+do_rootfs_append_vuduo2() {
+    generate_nfo
+}
+do_rootfs_append_vusolo2() {
+    generate_nfo
+}
