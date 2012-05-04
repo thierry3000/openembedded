@@ -71,7 +71,7 @@ RDEPENDS_enigma2-plugin-systemplugins-wirelessaccesspoint = "hostap-daemon bridg
 RDEPENDS_enigma2-plugin-extensions-streamtv = "librtmp0 gst-plugin-rtmp "
 
 PN = "enigma2"
-PR = "r30"
+PR = "r31"
 
 SRCDATE = "20110922"
 SRCREV = "5e19a3f8a5e8ce8a4e2cb2b601a1b8ef3554e4be"
