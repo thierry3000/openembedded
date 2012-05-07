@@ -1,0 +1,44 @@
+diff --git a/drivers/serial/8250.c b/drivers/serial/8250.c
+index da606e6..d75f8c7 100644
+--- a/drivers/serial/8250.c
++++ b/drivers/serial/8250.c
+@@ -1319,6 +1319,7 @@ static void autoconfig_irq(struct uart_8250_port *up)
+ 	if (up->port.flags & UPF_FOURPORT)
+ 		outb_p(save_ICP, ICP);
+ 
++	printk("irq %d\n", irq);
+ 	up->port.irq = (irq > 0) ? irq : 0;
+ }
+ 
+@@ -2774,6 +2775,7 @@ serial8250_register_ports(struct uart_driver *drv, struct device *dev)
+ 	}
+ 
+ 	serial8250_isa_init_ports();
++	printk("serial8250_register_ports %d\n", nr_uarts);
+ 
+ 	for (i = 0; i < nr_uarts; i++) {
+ 		struct uart_8250_port *up = &serial8250_ports[i];
+@@ -2783,6 +2785,7 @@ serial8250_register_ports(struct uart_driver *drv, struct device *dev)
+ 		if (up->port.flags & UPF_FIXED_TYPE)
+ 			serial8250_init_fixed_type_port(up, up->port.type);
+ 
++		printk("serial8250_register_ports --> uart_add_one_port %d\n", up->port.irq);
+ 		uart_add_one_port(drv, &up->port);
+ 	}
+ }
+@@ -3045,6 +3048,7 @@ static int __devinit serial8250_probe(struct platform_device *dev)
+ 		port.pm			= p->pm;
+ 		port.dev		= &dev->dev;
+ 		port.irqflags		|= irqflag;
++		printk("serial8250_probe %d\n", port.irq);
+ 		ret = serial8250_register_port(&port);
+ 		if (ret < 0) {
+ 			dev_err(&dev->dev, "unable to register port at index %d "
+@@ -3216,6 +3220,7 @@ int serial8250_register_port(struct uart_port *port)
+ 			serial8250_isa_config(0, &uart->port,
+ 					&uart->capabilities);
+ 
++		printk("serial8250_register_port %d --> uart_add_one_port\n", uart->port.irq);
+ 		ret = uart_add_one_port(&serial8250_reg, &uart->port);
+ 		if (ret == 0)
+ 			ret = uart->port.line;
