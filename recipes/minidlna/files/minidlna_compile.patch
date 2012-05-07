@@ -1,0 +1,33 @@
+diff --git a/metadata.c b/metadata.c
+index 3c196b2..1b2dc7b 100644
+--- a/metadata.c
++++ b/metadata.c
+@@ -30,9 +30,15 @@
+ #include "image_utils.h"
+ #include <jpeglib.h>
+ #include <setjmp.h>
++#if 0
+ #include <avutil.h>
+ #include <avcodec.h>
+ #include <avformat.h>
++#else
++#include <libavutil/avutil.h>
++#include <libavcodec/avcodec.h>
++#include <libavformat/avformat.h>
++#endif
+ #include "tagutils/tagutils.h"
+ 
+ #include "upnpglobalvars.h"
+diff --git a/tagutils/tagutils-plist.c b/tagutils/tagutils-plist.c
+index dc76917..5a26bfc 100644
+--- a/tagutils/tagutils-plist.c
++++ b/tagutils/tagutils-plist.c
+@@ -27,7 +27,7 @@
+ #include "misc.h"
+ #include "tagutils.h"
+ #include "textutils.h"
+-#include "log.h"
++#include "../log.h"
+ 
+ 
+ #define MAX_BUF 4096

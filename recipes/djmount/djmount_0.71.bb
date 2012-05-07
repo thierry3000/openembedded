@@ -2,18 +2,14 @@ DESCRIPTION = "mount UPnP server content as a linux filesystem"
 HOMEPAGE = "http://djmount.sourceforge.net/"
 LICENSE = "GPL"
 DEPENDS = "libupnp fuse"
-RDEPENDS = "fuse-utils fuse-module"
-PR = "r1"
+RDEPENDS_${PN} = "fuse-utils fuse"
+PR = "r2"
 
-INITSCRIPT_NAME = "djmount"
-INITSCRIPT_PARAMS = "defaults"
-
-inherit autotools update-rc.d
+inherit autotools
 
 EXTRA_OECONF = "--with-external-libupnp --with-fuse-prefix='/usr/lib/'"
 
 SRC_URI = "${SOURCEFORGE_MIRROR}/djmount/djmount-0.71.tar.gz \
-	file://init \
 	file://filebuffer-fix_range.patch;patch=1"
 
 do_configure() {
@@ -21,7 +17,3 @@ do_configure() {
 	oe_runconf
 }
 
-do_install_append() {
-	install -d ${D}/etc/init.d
-	install -m 0755 ${WORKDIR}/init ${D}/etc/init.d/djmount
-}
