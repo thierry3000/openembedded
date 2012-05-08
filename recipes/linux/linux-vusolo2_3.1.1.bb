@@ -1,4 +1,4 @@
-CRIPTION = "Linux kernel for vuplus duo2"
+CRIPTION = "Linux kernel for vuplus solo2"
 LICENSE = "GPL"
 KV = "3.1.1"
 

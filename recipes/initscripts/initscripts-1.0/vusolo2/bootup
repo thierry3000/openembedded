@@ -10,7 +10,7 @@ for mod in snd snd-pcm; do
         modprobe $mod
 done
 
-for mod in procmk dvb-bcm7413 brcmfb fpga_directc; do
+for mod in procmk dvb-bcm7356 brcmfb fpga_directc; do
         modprobe $mod
 done
 

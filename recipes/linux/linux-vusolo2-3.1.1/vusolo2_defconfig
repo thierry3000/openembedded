@@ -1,7 +1,7 @@
 #
 # Automatically generated make config: don't edit
 # Linux/mips 2.6.37-2.6 Kernel Configuration
-# Tue Apr 24 14:24:54 2012
+# Tue May  8 19:33:05 2012
 #
 CONFIG_MIPS=y
 
@@ -949,11 +949,7 @@ CONFIG_INPUT_EVDEV=y
 #
 # Character devices
 #
-CONFIG_VT=y
-# CONFIG_CONSOLE_TRANSLATIONS is not set
-# CONFIG_VT_CONSOLE is not set
-CONFIG_HW_CONSOLE=y
-# CONFIG_VT_HW_CONSOLE_BINDING is not set
+# CONFIG_VT is not set
 CONFIG_DEVKMEM=y
 # CONFIG_SERIAL_NONSTANDARD is not set
 # CONFIG_N_GSM is not set
@@ -1301,13 +1297,6 @@ CONFIG_FB=y
 # Display device support
 #
 # CONFIG_DISPLAY_SUPPORT is not set
-
-#
-# Console display driver support
-#
-# CONFIG_VGA_CONSOLE is not set
-CONFIG_DUMMY_CONSOLE=y
-# CONFIG_FRAMEBUFFER_CONSOLE is not set
 # CONFIG_LOGO is not set
 CONFIG_SOUND=y
 CONFIG_SOUND_OSS_CORE=y

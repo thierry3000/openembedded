@@ -12,11 +12,15 @@ SRCDATE_bm750 = "20111213"
 SRCDATE_vusolo = "20111213"
 SRCDATE_vuuno = "20111213"
 SRCDATE_vuultimo = "20111213"
+SRCDATE_vuduo2 = "20111213"
+SRCDATE_vusolo2 = "20120508"
 
 MODULES_NAME_bm750 = "procmk\ndvb-bcm7335\nbrcmfb"
 MODULES_NAME_vusolo = "procmk\ndvb-bcm7325\nbrcmfb"
 MODULES_NAME_vuuno = "procmk\ndvb-bcm7413\nbrcmfb\nfpga_directc"
 MODULES_NAME_vuultimo = "procmk\ndvb-bcm7413\nbrcmfb\nfpga_directc"
+MODULES_NAME_vuduo2 = "procmk\ndvb-bcm7413\nbrcmfb\nfpga_directc"
+MODULES_NAME_vusolo2 = "procmk\ndvb-bcm7413\nbrcmfb\nfpga_directc"
 
 RDEPENDS_2.6.18 = "initscripts-vuplus kernel (${KV}) kernel-module-firmware-class kernel-module-input kernel-module-evdev kernel-module-i2c-core kernel-module-snd kernel-module-snd-pcm"
 RDEPENDS_3.1 = "initscripts-vuplus kernel (${KV})" 
@@ -32,7 +36,7 @@ PR = "r19-${SRCDATE}"
 DEPENDS = " module-init-tools"
 RDEPENDS_append_vuplus = " module-init-tools-depmod"
 
-SRC_URI = "http://archive.vuplus.com/download/drivers/beta/kernel31/vuplus-dvb-modules-${MACHINE}-${PV}-${PREFERRED_GCC_VERSION}-${SRCDATE}.tar.gz "
+SRC_URI = "http://archive.vuplus.com/download/drivers/beta/private/vuplus-dvb-modules-${MACHINE}-${PV}-${PREFERRED_GCC_VERSION}-${SRCDATE}.tar.gz "
 
 S = "${WORKDIR}"
 

@@ -11,6 +11,7 @@ SRC_URI += "file://stblinux-2.6.37-2.4.tar.bz2 \
 	file://pinmux.patch;patch=1;pnum=1 \
 	file://debug.patch;patch=1;pnum=1 \
 	file://fix_cpu_proc.patch;patch=1;pnum=1 \
+	file://ubifs_packport.patch;patch=1;pnum=1 \
         file://${MACHINE}_defconfig \
         "
 
