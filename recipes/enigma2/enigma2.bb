@@ -3,7 +3,8 @@ MAINTAINER = "Felix Domke <tmbinc@elitedvb.net>"
 DEPENDS = "jpeg libungif libmad libpng libsigc++-1.2 gettext-native \
 	dreambox-dvbincludes freetype libdvbsi++ python swig-native \
 	libfribidi libxmlccwrap libdreamdvd gstreamer gst-plugin-dvbmediasink \
-	gst-plugins-bad gst-plugins-good gst-plugins-ugly python-wifi"
+	gst-plugins-bad gst-plugins-good gst-plugins-ugly python-wifi \
+	directfb mpfr gmp tslib opera-hbbtv"
 RDEPENDS = "python-codecs python-core python-lang python-re python-threading \
 	python-xml python-fcntl gst-plugin-decodebin gst-plugin-decodebin2 python-stringold \
 	python-pickle gst-plugin-app \
@@ -66,6 +67,7 @@ DESCRIPTION_append_enigma2-plugin-systemplugins-wirelesslansetup = "configure wi
 RDEPENDS_enigma2-plugin-systemplugins-wirelesslansetup = "wpa-supplicant wireless-tools python-wifi"
 DESCRIPTION_append_enigma2-plugin-systemplugins-networkwizard = "provides easy step by step network configuration"
 RDEPENDS_enigma2-plugin-extensions-webbrowser = "python-gdata libqtwebkite4 vuplus-webbrowser-utils qt4-embedded-fonts qt4-embedded-plugin-imageformat-gif qt4-embedded-plugin-imageformat-ico qt4-embedded-plugin-imageformat-jpeg qt4-embedded-plugin-imageformat-mng qt4-embedded-plugin-imageformat-svg qt4-embedded-plugin-imageformat-tiff qt4-embedded-plugin-iconengine-svgicon "
+RDEPENDS_enigma2-plugin-extensions-hbbtv = "tslib-conf libts-1.0-0 libsysfs2 directfb libgmp3 libmpfr1 opera-hbbtv"
 
 PN = "enigma2"
 PR = "r1"
@@ -118,6 +120,7 @@ SRC_URI = "git://code.vuplus.com/git/dvbapp.git;protocol=http;branch=${BRANCH};t
 	   file://enigma2_vuplus_mediaplayer_subtitle.patch;patch=1;pnum=1 \
            file://enigma2_vuplus_remove_dreambox_enigma.patch;patch=1;pnum=1 \
            file://enigma2_vuplus_vfd_mode.patch;patch=1;pnum=1 \
+	   file://enigma2-hbbtv_20120604.patch;patch=1;pnum=1 \
            file://MyriadPro-Regular.otf \
            file://MyriadPro-Semibold.otf \
            file://MyriadPro-SemiboldIt.otf \
@@ -139,11 +142,6 @@ SRC_URI_append_vuultimo = " \
            file://vfd_icons \
 "
 SRC_URI_append_vu7425 = " \
-           file://analog.ttf \
-           file://skin_user.xml \
-           file://vfd_icons \
-"
-SRC_URI_append_vuduo2 = " \
            file://analog.ttf \
            file://skin_user.xml \
            file://vfd_icons \
@@ -215,18 +213,6 @@ EXTRA_OECONF = " \
 "
 
 do_install_append_vuultimo() {
-        install -m 0755 ${WORKDIR}/analog.ttf ${D}/usr/share/fonts/
-        install -m 0755 ${WORKDIR}/skin_user.xml ${D}/usr/share/enigma2/defaults/
-        install -d ${D}/usr/share/enigma2/vfd_icons/
-        install -m 0755 ${WORKDIR}/vfd_icons/*.png ${D}/usr/share/enigma2/vfd_icons/
-}
-do_install_append_vu7425() {
-        install -m 0755 ${WORKDIR}/analog.ttf ${D}/usr/share/fonts/
-        install -m 0755 ${WORKDIR}/skin_user.xml ${D}/usr/share/enigma2/defaults/
-        install -d ${D}/usr/share/enigma2/vfd_icons/
-        install -m 0755 ${WORKDIR}/vfd_icons/*.png ${D}/usr/share/enigma2/vfd_icons/
-}
-do_install_append_vuduo2() {
         install -m 0755 ${WORKDIR}/analog.ttf ${D}/usr/share/fonts/
         install -m 0755 ${WORKDIR}/skin_user.xml ${D}/usr/share/enigma2/defaults/
         install -d ${D}/usr/share/enigma2/vfd_icons/

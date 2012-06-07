@@ -48,25 +48,25 @@ do_install_vuultimo() {
 }
 
 pkg_preinst() {
-	if [ "${KERNEL_VERSION}" = "3.1.1" ]; then
+	if [ "${KERNEL_VERSION}" = "2.6.18" ]; then
 		[ -d /proc/stb ] && mount -o rw,remount /boot
 	fi
 }
 
 pkg_postinst() {
-	if [ "${KERNEL_VERSION}" = "3.1.1" ]; then
+	if [ "${KERNEL_VERSION}" = "2.6.18" ]; then
 		[ -d /proc/stb ] && mount -o ro,remount /boot
 	fi
 }
 
 pkg_prerm() {
-	if [ "${KERNEL_VERSION}" = "3.1.1" ]; then
+	if [ "${KERNEL_VERSION}" = "2.6.18" ]; then
 		[ -d /proc/stb ] && mount -o rw,remount /boot
 	fi
 }
 
 pkg_postrm() {
-	if [ "${KERNEL_VERSION}" = "3.1.1" ]; then
+	if [ "${KERNEL_VERSION}" = "2.6.18" ]; then
 		[ -d /proc/stb ] && mount -o ro,remount /boot
 	fi
 }

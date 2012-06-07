@@ -31,6 +31,7 @@ RDEPENDS_task-vuplus-enigma2 = "\
   enigma2-skins-meta \   
 "
 
+
 RRECOMMENDS_task-vuplus-enigma2 = "\
   aio-grab \
   python-crypt \
@@ -39,6 +40,7 @@ RRECOMMENDS_task-vuplus-enigma2 = "\
   python-twisted-protocols \
   python-twisted-web \
   enigma2-plugin-extensions-mediaplayer \
+  enigma2-plugin-extensions-hbbtv \
   enigma2-plugin-extensions-pictureplayer \
   enigma2-plugin-systemplugins-skinselector \
   enigma2-plugin-systemplugins-ui3dsetup \

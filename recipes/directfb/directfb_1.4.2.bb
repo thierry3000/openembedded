@@ -10,6 +10,8 @@ SRC_URI = " \
     file://mkdfiff.patch;patch=1 \
     file://dont-use-linux-config.patch;patch=1 \
     file://ts_lib_autotools.patch;patch=1 \
+    file://directfb-vuplus-blit.patch;patch=1 \
+    file://directfbrc \
 "
 
 EXTRA_OECONF = "\

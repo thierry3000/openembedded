@@ -1,4 +1,4 @@
-CRIPTION = "Linux kernel for vuplus duo2"
+DESCRIPTION = "Linux kernel for vuplus duo2"
 LICENSE = "GPL"
 KV = "3.1.1"
 
@@ -6,13 +6,13 @@ SRCREV = "r0"
 
 MODULE = "linux-3.1.1"
 
-SRC_URI += "file://stblinux-2.6.37-2.4.tar.bz2 \
+SRC_URI += "file://stblinux-2.6.37-2.8.tar.bz2 \
 	file://dvb-core.patch;patch=1;pnum=1 \
 	file://pinmux.patch;patch=1;pnum=1 \
 	file://debug.patch;patch=1;pnum=1 \
 	file://fix_cpu_proc.patch;patch=1;pnum=1 \
-	file://ubifs_packport.patch;patch=1;pnum=1 \
-        file://${MACHINE}_defconfig \
+	file://brcm_disable_enet1.patch;patch=1;pnum=1 \
+	file://${MACHINE}_defconfig \
         "
 
 S = "${WORKDIR}/stblinux-2.6.37"

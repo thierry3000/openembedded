@@ -5,6 +5,7 @@ LICENSE = "proprietary"
 
 
 KV = "${@base_contains('PREFERRED_VERSION_linux-${MACHINE}', '2.6.18', '2.6.18', '3.1.1', d)}"
+KV_vusolo2 = "${@base_contains('PREFERRED_VERSION_linux-${MACHINE}', '2.6.18', '2.6.18', '2.6.37', d)}"
 
 PV = "${KV}"
 
@@ -12,15 +13,15 @@ SRCDATE_bm750 = "20111213"
 SRCDATE_vusolo = "20111213"
 SRCDATE_vuuno = "20111213"
 SRCDATE_vuultimo = "20111213"
-SRCDATE_vuduo2 = "20111213"
-SRCDATE_vusolo2 = "20120508"
+SRCDATE_vuduo2 = "20120605"
+SRCDATE_vusolo2 = "20120523"
 
 MODULES_NAME_bm750 = "procmk\ndvb-bcm7335\nbrcmfb"
 MODULES_NAME_vusolo = "procmk\ndvb-bcm7325\nbrcmfb"
 MODULES_NAME_vuuno = "procmk\ndvb-bcm7413\nbrcmfb\nfpga_directc"
 MODULES_NAME_vuultimo = "procmk\ndvb-bcm7413\nbrcmfb\nfpga_directc"
-MODULES_NAME_vuduo2 = "procmk\ndvb-bcm7413\nbrcmfb\nfpga_directc"
-MODULES_NAME_vusolo2 = "procmk\ndvb-bcm7413\nbrcmfb\nfpga_directc"
+MODULES_NAME_vuduo2 = "procmk\ndvb-bcm7424\nbrcmfb\nfpga_directc"
+MODULES_NAME_vusolo2 = "procmk\ndvb-bcm7356\nbrcmfb\nfpga_directc"
 
 RDEPENDS_2.6.18 = "initscripts-vuplus kernel (${KV}) kernel-module-firmware-class kernel-module-input kernel-module-evdev kernel-module-i2c-core kernel-module-snd kernel-module-snd-pcm"
 RDEPENDS_3.1 = "initscripts-vuplus kernel (${KV})" 
@@ -50,6 +51,26 @@ do_install() {
 		echo -e "${MODULES_NAME}" > ${D}/etc/modutils/vuplus-dvb-modules
 		echo -e "${MODULES_NAME}" > ${D}/etc/modules
 	fi
+}
+
+do_install_vusolo2() {
+        install -d ${D}/lib/modules/2.6.37-2.8/extra
+        for f in *.ko; do
+                install -m 0644 ${WORKDIR}/$f ${D}/lib/modules/2.6.37-2.8/extra/$f;
+        done
+	install -d ${D}/etc/modutils
+	echo -e "${MODULES_NAME}" > ${D}/etc/modutils/vuplus-dvb-modules
+	echo -e "${MODULES_NAME}" > ${D}/etc/modules
+}
+
+do_install_vuduo2() {
+        install -d ${D}/lib/modules/2.6.37-2.8/extra
+        for f in *.ko; do
+                install -m 0644 ${WORKDIR}/$f ${D}/lib/modules/2.6.37-2.8/extra/$f;
+        done
+	install -d ${D}/etc/modutils
+	echo -e "${MODULES_NAME}" > ${D}/etc/modutils/vuplus-dvb-modules
+	echo -e "${MODULES_NAME}" > ${D}/etc/modules
 }
 
 pkg_postinst_vuplus-dvb-modules () {

@@ -1,0 +1,69 @@
+diff --git a/systems/fbdev/fbdev.c b/systems/fbdev/fbdev.c
+index cc73416..326b7d8 100644
+--- a/systems/fbdev/fbdev.c
++++ b/systems/fbdev/fbdev.c
+@@ -94,6 +94,12 @@
+ 
+ #include <core/core_system.h>
+ 
++typedef unsigned char __u8;
++#ifndef FBIO_BLIT
++#define FBIO_SET_MANUAL_BLIT _IOW('F', 0x21, __u8)
++#define FBIO_BLIT 0x22
++#endif
++
+ DFB_CORE_SYSTEM( fbdev )
+ 
+ 
+@@ -306,6 +312,11 @@ static DFBResult dfb_fbdev_open( void )
+           goto error;
+      }
+ 
++     {
++          unsigned char tmp = 1;
++          if(ioctl(dfb_fbdev->fd,FBIO_SET_MANUAL_BLIT, &tmp) < 0)
++               printf("FBIO_SET_MANUAL_BLIT Fail!!\n");
++     }
+      return DFB_OK;
+ error:
+      return error_result;
+@@ -777,6 +788,12 @@ system_leave( bool emergency )
+                return ret;
+      }
+ 
++     {
++          unsigned char tmp = 0;
++          if(ioctl(dfb_fbdev->fd,FBIO_SET_MANUAL_BLIT, &tmp) < 0)
++               printf("FBIO_SET_MANUAL_BLIT Fail!!\n");
++     }
++
+      close( dfb_fbdev->fd );
+ 
+      D_FREE( dfb_fbdev );
+diff --git a/systems/fbdev/fbdev_surface_pool.c b/systems/fbdev/fbdev_surface_pool.c
+index 7383681..569edf2 100644
+--- a/systems/fbdev/fbdev_surface_pool.c
++++ b/systems/fbdev/fbdev_surface_pool.c
+@@ -359,6 +359,12 @@ fbdevLock( CoreSurfacePool       *pool,
+      return DFB_OK;
+ }
+ 
++#include <sys/ioctl.h>
++typedef unsigned char __u8;
++#ifndef FBIO_BLIT
++#define FBIO_SET_MANUAL_BLIT _IOW('F', 0x21, __u8)
++#define FBIO_BLIT 0x22
++#endif
+ static DFBResult
+ fbdevUnlock( CoreSurfacePool       *pool,
+              void                  *pool_data,
+@@ -378,6 +384,9 @@ fbdevUnlock( CoreSurfacePool       *pool,
+ 
+      (void) alloc;
+ 
++     if (ioctl(dfb_fbdev->fd, FBIO_BLIT) < 0)
++          printf("FBIO_BLIT\n");
++
+      return DFB_OK;
+ }
+ 

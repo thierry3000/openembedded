@@ -61,7 +61,7 @@ RDEPENDS_${PN}_append_vu7425 = "\
 RDEPENDS_${PN}_append_vuduo2 = "\
   ${@base_contains('PREFERRED_VERSION_linux-vuduo2', '2.6.18', '${WLAN_USB_MODULES_LEGACY}', '${WLAN_CRYPTO_MODULES} ${WLAN_USB_MODULES}', d)} \
 "
-RDEPENDS_${PN}_append_vuduo2 = "\
+RDEPENDS_${PN}_append_vusolo2 = "\
   ${@base_contains('PREFERRED_VERSION_linux-vusolo2', '2.6.18', '${WLAN_USB_MODULES_LEGACY}', '${WLAN_CRYPTO_MODULES} ${WLAN_USB_MODULES}', d)} \
 "
 

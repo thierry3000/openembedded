@@ -1,0 +1,13 @@
+diff --git a/arch/mips/brcmstb/bchip.c b/arch/mips/brcmstb/bchip.c
+index fc7883f..1fe5d4d 100644
+--- a/arch/mips/brcmstb/bchip.c
++++ b/arch/mips/brcmstb/bchip.c
+@@ -552,7 +552,7 @@ void __init bchip_set_features(void)
+ 	brcm_smp_enabled = 1;
+ #endif
+ #if defined(CONFIG_BRCM_HAS_EMAC_1) || defined(CONFIG_BRCM_HAS_GENET_1)
+-	brcm_enet1_enabled = 1;
++	brcm_enet1_enabled = 0;
+ #endif
+ #if defined(CONFIG_BRCM_HAS_MOCA)
+ 	brcm_moca_enabled = 1;

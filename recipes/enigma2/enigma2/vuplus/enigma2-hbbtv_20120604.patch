@@ -1,0 +1,1392 @@
+diff --git a/configure.ac b/configure.ac
+index 18a5986..138cb10 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -225,6 +225,8 @@ lib/python/Plugins/Extensions/DLNAServer/Makefile
+ lib/python/Plugins/Extensions/DLNAServer/meta/Makefile
+ lib/python/Plugins/Extensions/DLNABrowser/Makefile
+ lib/python/Plugins/Extensions/DLNABrowser/meta/Makefile
++lib/python/Plugins/Extensions/HbbTV/Makefile
++lib/python/Plugins/Extensions/HbbTV/meta/Makefile
+ lib/python/Plugins/SystemPlugins/CleanupWizard/Makefile
+ lib/python/Plugins/SystemPlugins/CleanupWizard/meta/Makefile
+ lib/python/Plugins/SystemPlugins/CommonInterfaceAssignment/Makefile
+diff --git a/data/keymap.xml b/data/keymap.xml
+index 10a36de..cdc583e 100755
+--- a/data/keymap.xml
++++ b/data/keymap.xml
+@@ -225,6 +225,12 @@
+ 		<key id="KEY_GREEN" mapto="subserviceSelection" flags="b" />
+ 	</map>
+ 
++	<map context="InfobarRedButtonActions">
++		<device name="dreambox advanced remote control (native)">
++			<key id="KEY_RED" mapto="activateRedButton" flags="b" />
++		</device>
++	</map>
++
+ 	<map context="InfobarSubserviceQuickzapActions">
+ 		<key id="KEY_PREVIOUS" mapto="prevSubservice" flags="m" />
+ 		<key id="KEY_NEXT" mapto="nextSubservice" flags="m" />
+diff --git a/lib/dvb/pmt.cpp b/lib/dvb/pmt.cpp
+index 227928b..9773a56 100644
+--- a/lib/dvb/pmt.cpp
++++ b/lib/dvb/pmt.cpp
+@@ -20,6 +20,11 @@
+ #include <dvbsi++/registration_descriptor.h>
+ #include <dvbsi++/ac3_descriptor.h>
+ 
++#include <dvbsi++/simple_application_location_descriptor.h>
++#include <dvbsi++/simple_application_boundary_descriptor.h>
++#include <dvbsi++/transport_protocol_descriptor.h>
++
++
+ eDVBServicePMTHandler::eDVBServicePMTHandler()
+ 	:m_ca_servicePtr(0), m_dvb_scan(0), m_decode_demux_num(0xFF), m_no_pat_entry_delay(eTimer::create())
+ {
+@@ -29,6 +34,9 @@ eDVBServicePMTHandler::eDVBServicePMTHandler()
+ 	CONNECT(m_PMT.tableReady, eDVBServicePMTHandler::PMTready);
+ 	CONNECT(m_PAT.tableReady, eDVBServicePMTHandler::PATready);
+ 	CONNECT(m_no_pat_entry_delay->timeout, eDVBServicePMTHandler::sendEventNoPatEntry);
++
++	CONNECT(m_AIT.tableReady, eDVBServicePMTHandler::AITready);
++	CONNECT(m_OC.tableReady, eDVBServicePMTHandler::OCready);
+ }
+ 
+ eDVBServicePMTHandler::~eDVBServicePMTHandler()
+@@ -188,6 +196,93 @@ void eDVBServicePMTHandler::PATready(int)
+ 		serviceEvent(eventNoPAT);
+ }
+ 
++void eDVBServicePMTHandler::AITready(int error)
++{
++	eDebug("AITready");
++	ePtr<eTable<ApplicationInformationSection> > ptr;
++	if (!m_AIT.getCurrent(ptr))
++	{
++		m_HBBTVUrl = "";
++		for (std::vector<ApplicationInformationSection*>::const_iterator it = ptr->getSections().begin(); it != ptr->getSections().end(); ++it)
++		{
++			for (std::list<ApplicationInformation *>::const_iterator i = (*it)->getApplicationInformation()->begin(); i != (*it)->getApplicationInformation()->end(); ++i)
++			{
++				if ((*i)->getApplicationControlCode() == 0x01) /* AUTOSTART */
++				{
++					for (DescriptorConstIterator desc = (*i)->getDescriptors()->begin();
++						desc != (*i)->getDescriptors()->end(); ++desc)
++					{
++						switch ((*desc)->getTag())
++						{
++						case APPLICATION_DESCRIPTOR:
++							break;
++						case APPLICATION_NAME_DESCRIPTOR:
++							break;
++						case TRANSPORT_PROTOCOL_DESCRIPTOR:
++						{
++							TransportProtocolDescriptor *transport = (TransportProtocolDescriptor*)(*desc);
++							switch (transport->getProtocolId())
++							{
++							case 1: /* object carousel */
++								if (m_dsmcc_pid >= 0)
++								{
++									m_OC.begin(eApp, eDVBDSMCCDLDataSpec(m_dsmcc_pid), m_demux);
++								}
++								break;
++							case 2: /* ip */
++								break;
++							case 3: /* interaction */
++								for (InterActionTransportConstIterator interactionit = transport->getInteractionTransports()->begin(); interactionit != transport->getInteractionTransports()->end(); ++interactionit)
++								{
++									m_HBBTVUrl = (*interactionit)->getUrlBase()->getUrl();
++									break;
++								}
++								break;
++							}
++							break;
++						}
++						case GRAPHICS_CONSTRAINTS_DESCRIPTOR:
++							break;
++						case SIMPLE_APPLICATION_LOCATION_DESCRIPTOR:
++						{
++							SimpleApplicationLocationDescriptor *applicationlocation = (SimpleApplicationLocationDescriptor*)(*desc);
++							m_HBBTVUrl += applicationlocation->getInitialPath();
++							break;
++						}
++						case APPLICATION_USAGE_DESCRIPTOR:
++							break;
++						case SIMPLE_APPLICATION_BOUNDARY_DESCRIPTOR:
++							break;
++						}
++					}
++				}
++			}
++		}
++		if (!m_HBBTVUrl.empty())
++		{
++			eDebug(">> parsed hbbtv url : [%s]", m_HBBTVUrl.c_str());
++			serviceEvent(eventHBBTVInfo);
++		}
++	}
++	/* for now, do not keep listening for table updates */
++	m_AIT.stop();
++}
++
++void eDVBServicePMTHandler::OCready(int error)
++{
++	eDebug("OCready");
++	ePtr<eTable<OCSection> > ptr;
++	if (!m_OC.getCurrent(ptr))
++	{
++		std::string data;
++		for (std::vector<OCSection*>::const_iterator it = ptr->getSections().begin(); it != ptr->getSections().end(); ++it)
++		{
++		}
++	}
++	/* for now, do not keep listening for table updates */
++	m_OC.stop();
++}
++
+ PyObject *eDVBServicePMTHandler::getCaIds(bool pair)
+ {
+ 	ePyObject ret;
+@@ -582,6 +677,22 @@ int eDVBServicePMTHandler::getProgramInfo(program &program)
+ 						}
+ 						prev_audio = 0;
+ 					}
++					case 0x05: /* ITU-T Rec. H.222.0 | ISO/IEC 13818-1 private sections */
++					{
++						for (DescriptorConstIterator desc = (*es)->getDescriptors()->begin();
++							desc != (*es)->getDescriptors()->end(); ++desc)
++						{
++							switch ((*desc)->getTag())
++							{
++							case APPLICATION_SIGNALLING_DESCRIPTOR:
++								program.aitPid = (*es)->getPid();
++								m_AIT.begin(eApp, eDVBAITSpec(program.aitPid), m_demux);
++								break;
++							}
++						}
++						break;
++					}
++
+ 					default:
+ 						break;
+ 					}
+@@ -911,6 +1022,9 @@ void eDVBServicePMTHandler::free()
+ 		m_pvr_channel->setCueSheet(0);
+ 	}
+ 
++	m_OC.stop();
++	m_AIT.stop();
++
+ 	m_PMT.stop();
+ 	m_PAT.stop();
+ 	m_service = 0;
+diff --git a/lib/dvb/pmt.h b/lib/dvb/pmt.h
+index 4be8000..5942498 100644
+--- a/lib/dvb/pmt.h
++++ b/lib/dvb/pmt.h
+@@ -21,6 +21,26 @@
+ class eDVBCAService;
+ class eDVBScan;
+ 
++#include <dvbsi++/application_information_section.h>
++class OCSection : public LongCrcSection
++{
++	protected:
++		void *data;
++
++	public:
++		OCSection(const uint8_t * const buffer)
++		: LongCrcSection(buffer)
++		{
++			data = malloc(getSectionLength());
++			memcpy(data, buffer, getSectionLength());
++		}
++		~OCSection()
++		{
++			free(data);
++		}
++		void *getData() { return data; }
++};
++
+ struct channel_data: public Object
+ {
+ 	ePtr<eDVBChannel> m_channel;
+@@ -95,11 +115,19 @@ class eDVBServicePMTHandler: public Object
+ 	void SDTScanEvent(int);
+ 	ePtr<eConnection> m_scan_event_connection;
+ 
++	eAUTable<eTable<ApplicationInformationSection> > m_AIT;
++	eAUTable<eTable<OCSection> > m_OC;
++
+ 	void PMTready(int error);
+ 	void PATready(int error);
+ 	
+ 	int m_pmt_pid;
+ 	
++	void AITready(int error);
++	void OCready(int error);
++	int m_dsmcc_pid;
++	std::string m_HBBTVUrl;
++	
+ 	int m_use_decode_demux;
+ 	uint8_t m_decode_demux_num;
+ 	ePtr<eTimer> m_no_pat_entry_delay;
+@@ -128,6 +156,8 @@ public:
+ 		eventSOF,          // seek pre start
+ 		eventEOF,          // a file playback did end
+ 		
++		eventHBBTVInfo, /* HBBTV information was detected in the AIT */
++		
+ 		eventMisconfiguration, // a channel was not found in any list, or no frontend was found which could provide this channel
+ 	};
+ #ifndef SWIG
+@@ -196,6 +226,7 @@ public:
+ 		int pcrPid;
+ 		int pmtPid;
+ 		int textPid;
++		int aitPid;
+ 		bool isCrypted() { return !caids.empty(); }
+ 		PyObject *createPythonObject();
+ 	};
+@@ -213,6 +244,8 @@ public:
+ 	void resetCachedProgram() { m_have_cached_program = false; }
+ 	void sendEventNoPatEntry();
+ 
++	void getHBBTVUrl(std::string &ret) { ret = m_HBBTVUrl; }
++
+ 	/* deprecated interface */
+ 	int tune(eServiceReferenceDVB &ref, int use_decode_demux, eCueSheet *sg=0, bool simulate=false, eDVBService *service = 0);
+ 
+diff --git a/lib/dvb/specs.h b/lib/dvb/specs.h
+index 6be938c..d6ddde4 100644
+--- a/lib/dvb/specs.h
++++ b/lib/dvb/specs.h
+@@ -165,4 +165,44 @@ public:
+ 	}
+ };
+ 
++#include <dvbsi++/application_information_section.h>
++
++struct eDVBAITSpec
++{
++	eDVBTableSpec m_spec;
++public:
++	eDVBAITSpec(int pid)
++	{
++		m_spec.pid     = pid;
++		m_spec.tid     = ApplicationInformationSection::TID;
++		m_spec.timeout = ApplicationInformationSection::TIMEOUT;
++		m_spec.flags   = eDVBTableSpec::tfAnyVersion |
++			eDVBTableSpec::tfHaveTID | eDVBTableSpec::tfCheckCRC |
++			eDVBTableSpec::tfHaveTimeout;
++	}
++	operator eDVBTableSpec &()
++	{
++		return m_spec;
++	}
++};
++
++struct eDVBDSMCCDLDataSpec
++{
++	eDVBTableSpec m_spec;
++public:
++	eDVBDSMCCDLDataSpec(int pid)
++	{
++		m_spec.pid     = pid;
++		m_spec.tid     = TID_DSMCC_DL_DATA;
++		m_spec.timeout = 20000;
++		m_spec.flags   = eDVBTableSpec::tfAnyVersion |
++			eDVBTableSpec::tfHaveTID | eDVBTableSpec::tfCheckCRC |
++			eDVBTableSpec::tfHaveTimeout;
++	}
++	operator eDVBTableSpec &()
++	{
++		return m_spec;
++	}
++};
++
+ #endif
+diff --git a/lib/python/Components/Converter/ServiceInfo.py b/lib/python/Components/Converter/ServiceInfo.py
+index e2fa12c..b39aaa1 100644
+--- a/lib/python/Components/Converter/ServiceInfo.py
++++ b/lib/python/Components/Converter/ServiceInfo.py
+@@ -20,7 +20,7 @@ class ServiceInfo(Converter, object):
+ 	SID = 14
+ 	FRAMERATE = 15
+ 	TRANSFERBPS = 16
+-	
++	HAS_HBBTV = 17	
+ 
+ 	def __init__(self, type):
+ 		Converter.__init__(self, type)
+@@ -42,6 +42,7 @@ class ServiceInfo(Converter, object):
+ 				"Sid": (self.SID, (iPlayableService.evUpdatedInfo,)),
+ 				"Framerate": (self.FRAMERATE, (iPlayableService.evVideoSizeChanged,iPlayableService.evUpdatedInfo,)),
+ 				"TransferBPS": (self.TRANSFERBPS, (iPlayableService.evUpdatedInfo,)),
++				"HasHBBTV": (self.HAS_HBBTV, (iPlayableService.evUpdatedInfo,iPlayableService.evHBBTVInfo,)),
+ 			}[type]
+ 
+ 	def getServiceInfoString(self, info, what, convert = lambda x: "%d" % x):
+@@ -82,6 +83,9 @@ class ServiceInfo(Converter, object):
+ 		elif self.type == self.SUBSERVICES_AVAILABLE:
+ 			subservices = service.subServices()
+ 			return subservices and subservices.getNumberOfSubservices() > 0
++		elif self.type == self.HAS_HBBTV:
++			return info.getInfoString(iServiceInformation.sHBBTVUrl) != ""
++
+ 
+ 	boolean = property(getBoolean)
+ 	
+diff --git a/lib/python/Components/Sources/CurrentService.py b/lib/python/Components/Sources/CurrentService.py
+index 2501c17..133f863 100644
+--- a/lib/python/Components/Sources/CurrentService.py
++++ b/lib/python/Components/Sources/CurrentService.py
+@@ -15,7 +15,8 @@ class CurrentService(PerServiceBase, Source):
+ 				iPlayableService.evUpdatedInfo: self.serviceEvent,
+ 				iPlayableService.evUpdatedEventInfo: self.serviceEvent,
+ 				iPlayableService.evCuesheetChanged: self.serviceEvent,
+-				iPlayableService.evVideoSizeChanged: self.serviceEvent
++				iPlayableService.evVideoSizeChanged: self.serviceEvent,
++				iPlayableService.evHBBTVInfo: self.serviceEvent
+ 			}, with_event=True)
+ 		self.navcore = navcore
+ 
+diff --git a/lib/python/Plugins/Extensions/HbbTV/Makefile.am b/lib/python/Plugins/Extensions/HbbTV/Makefile.am
+new file mode 100644
+index 0000000..18e39a1
+--- /dev/null
++++ b/lib/python/Plugins/Extensions/HbbTV/Makefile.am
+@@ -0,0 +1,9 @@
++installdir = $(pkglibdir)/python/Plugins/Extensions/HbbTV
++
++SUBDIRS = meta 
++
++install_PYTHON = \
++	__init__.py \
++	plugin.py 
++
++
+diff --git a/lib/python/Plugins/Extensions/HbbTV/__init__.py b/lib/python/Plugins/Extensions/HbbTV/__init__.py
+new file mode 100644
+index 0000000..a103e92
+--- /dev/null
++++ b/lib/python/Plugins/Extensions/HbbTV/__init__.py
+@@ -0,0 +1 @@
++#dumy
+diff --git a/lib/python/Plugins/Extensions/HbbTV/meta/Makefile.am b/lib/python/Plugins/Extensions/HbbTV/meta/Makefile.am
+new file mode 100644
+index 0000000..4b556b3
+--- /dev/null
++++ b/lib/python/Plugins/Extensions/HbbTV/meta/Makefile.am
+@@ -0,0 +1,3 @@
++installdir = $(datadir)/meta
++
++dist_install_DATA = plugin_hbbtv.xml
+diff --git a/lib/python/Plugins/Extensions/HbbTV/meta/plugin_hbbtv.xml b/lib/python/Plugins/Extensions/HbbTV/meta/plugin_hbbtv.xml
+new file mode 100644
+index 0000000..830b46e
+--- /dev/null
++++ b/lib/python/Plugins/Extensions/HbbTV/meta/plugin_hbbtv.xml
+@@ -0,0 +1,21 @@
++<default>
++	  <prerequisites>
++                    <tag type="Network" />
++	  </prerequisites>
++          <info>
++                    <author>kos</author>
++                    <name>HbbTV</name>
++                    <packagename>enigma2-plugin-extensions-hbbtv</packagename>
++                    <shortdescription>this is hbbtv plugin</shortdescription>
++                    <description>this is hbbtv plugin</description>
++          </info>
++	  <files type="package"> <!-- without version, without .ipk -->
++		<file type="package" name="enigma2-plugin-extensions-hbbtv" />
++                <file type="package" name="libgmp3" />
++                <file type="package" name="libmpfr1" />
++                <file type="package" name="tslib-conf" />
++                <file type="package" name="libts-1.0-0" />
++                <file type="package" name="libsysfs2" />
++                <file type="package" name="directfb" />
++  	  </files>
++</default>
+diff --git a/lib/python/Plugins/Extensions/HbbTV/plugin.py b/lib/python/Plugins/Extensions/HbbTV/plugin.py
+new file mode 100644
+index 0000000..4ae2590
+--- /dev/null
++++ b/lib/python/Plugins/Extensions/HbbTV/plugin.py
+@@ -0,0 +1,861 @@
++from Plugins.Plugin import PluginDescriptor
++
++from Screens.Screen import Screen
++from Screens.InfoBar import InfoBar
++from Screens.ChoiceBox import ChoiceBox
++from Screens.MessageBox import MessageBox
++from Screens.InfoBarGenerics import InfoBarNotifications
++from Screens.VirtualKeyBoard import VirtualKeyBoard
++
++from Components.Button import Button
++from Components.Label import Label
++from Components.Sources.StaticText import StaticText
++from Components.ActionMap import NumberActionMap, ActionMap
++from Components.ServiceEventTracker import ServiceEventTracker
++from Components.MenuList import MenuList
++from Components.Label import Label, MultiColorLabel
++from Components.ConfigList import ConfigListScreen
++from Components.config import config, ConfigSubsection, ConfigPosition, getConfigListEntry, ConfigBoolean, ConfigInteger, ConfigText, ConfigSelection, configfile, getCharValue
++
++from enigma import eTimer, eConsoleAppContainer, getDesktop, eServiceReference, iPlayableService, iServiceInformation, RT_HALIGN_LEFT, RT_HALIGN_RIGHT, RT_HALIGN_CENTER, RT_VALIGN_CENTER, getPrevAsciiCode
++
++
++import os, struct, threading, stat, select, time
++
++strIsEmpty = lambda x: x is None or len(x) == 0
++
++CORSAIR_PATH = "/usr/local/hbb-browser"
++
++_magic   = 0xBBADBEE
++_header  = '!IiII'
++_headlen = struct.calcsize(_header)
++_command_server = None
++_g_command_util = None
++def _unpack(packed_data):
++	global _magic
++	global _header
++	global _headlen
++	if strIsEmpty(packed_data):
++		return None
++	(m, o, l, s) = struct.unpack(_header, packed_data[:_headlen])
++	#print (m, o, l)
++	if m != _magic:
++		return None
++	d = packed_data[_headlen:_headlen+l]
++	return (o,d,s)
++
++def _pack(opcode, params=None, special=0):
++	global _magic
++	global _header
++	global _headlen
++	if strIsEmpty(params):
++		params = ''
++	packed_data = struct.pack(_header, _magic, opcode, len(params), special)
++	#print len(packed_data)
++	return packed_data + params
++
++class HbbTVPlayer(Screen, InfoBarNotifications):
++	skin = 	"""
++		<screen name="HbbTVPlayer" flags="wfNoBorder" position="0,0" size="0,0" title="HbbTV Player" backgroundColor="transparent">
++		</screen>
++		"""
++	PLAYER_IDLE	= 0
++	PLAYER_PLAYING 	= 1
++	PLAYER_PAUSED 	= 2
++
++	def __init__(self, session, service):
++		Screen.__init__(self, session)
++		InfoBarNotifications.__init__(self)
++
++		self.session = session
++		self.service = service
++
++		global _g_command_util
++		self._command_util = _g_command_util
++
++		self["actions"] = ActionMap(["MinuteInputActions", "ColorActions", "InputActions", "InfobarChannelSelection", "EPGSelectActions"], {
++			"ok"	: self._on_keyok,
++			"cancel": self._on_keycancel,
++			"up"	: self._on_keyup,
++			"down"	: self._on_keydown,
++			"left"	: self._on_keyleft,
++			"right"	: self._on_keyright,
++			"red"	: self._on_keyred,
++			"green"	: self._on_keygreen,
++			"yellow": self._on_keyyellow,
++			"blue"	: self._on_keyblue,
++		}, -2)
++
++		self.__event_tracker = ServiceEventTracker(screen = self, eventmap = {
++			iPlayableService.evSeekableStatusChanged: self.__seekableStatusChanged,
++			iPlayableService.evStart: self.__serviceStarted,
++		})
++
++		self.state = self.PLAYER_PLAYING
++		self.lastseekstate = self.PLAYER_PLAYING
++		self.__seekableStatusChanged()
++
++		self.onClose.append(self.__onClose)
++		self.doPlay()
++
++	def _send_command(self, command, key=''):
++		params = None
++		if command == 'control_key':
++			params = str(self._command_util.getKeyData(key))
++			if params is None:
++				return
++		self._command_util.doSend(command, params)
++
++	def __onClose(self):
++		self.session.nav.stopService()
++
++	def __seekableStatusChanged(self):
++		service = self.session.nav.getCurrentService()
++		if service is not None:
++			seek = service.seek()
++			if seek is None or not seek.isCurrentlySeekable():
++				self.setSeekState(self.PLAYER_PLAYING)
++
++	def __serviceStarted(self):
++		self.state = self.PLAYER_PLAYING
++		self.__seekableStatusChanged()
++
++
++	def setSeekState(self, wantstate):
++		service = self.session.nav.getCurrentService()
++		if service is None:
++			print "No Service found"
++			return
++
++		pauseable = service.pause()
++		if pauseable is not None:
++			if wantstate == self.PLAYER_PAUSED:
++				pauseable.pause()
++				self.state = self.PLAYER_PAUSED
++				if not self.shown:
++					self.show()
++			elif wantstate == self.PLAYER_PLAYING:
++				pauseable.unpause()
++				self.state = self.PLAYER_PLAYING
++		else:
++			self.state = self.PLAYER_PLAYING
++
++	def _on_keyok(self):
++		self._send_command('control_key', 'key_ok')
++	def _on_keycancel(self):
++		self._send_command('control_back')
++		self.close()
++	def _on_keyup(self):
++		self._send_command('control_key', 'key_up')
++	def _on_keydown(self):
++		self._send_command('control_key', 'key_down')
++	def _on_keyleft(self):
++		self._send_command('control_key', 'key_left')
++	def _on_keyright(self):
++		self._send_command('control_key', 'key_right')
++	def _on_keyred(self):
++		self._send_command('control_key', 'key_red')
++	def _on_keygreen(self):
++		self._send_command('control_key', 'key_green')
++	def _on_keyyellow(self):
++		self._send_command('control_key', 'key_yellow')
++	def _on_keyblue(self):
++		self._send_command('control_key', 'key_blue')
++
++	def doPlay(self):
++		self.state = self.PLAYER_PLAYING
++		self.session.nav.playService(self.service)
++
++	def playpauseService(self):
++		if self.state == self.PLAYER_PLAYING:
++			self.setSeekState(self.PLAYER_PAUSED)
++		elif self.state == self.PLAYER_PAUSED:
++			self.setSeekState(self.PLAYER_PLAYING)
++
++class BrowserCommandServer:
++	global _magic
++	global _header
++	global _headlen
++	_fd = None
++	_server_thread = None
++	_terminated = True
++	_buff_size = 4096
++
++	def __init__(self):
++		self._opcode_map = {
++			0x01 : self._url_stream
++		}
++		self.session = None
++		self._before_service = None
++
++	def open(self, session, filename):
++		self._session = session
++		try:
++			os.unlink(filename)
++		except: pass
++		#if(os.stat(filename) < 0):
++		os.mknod(filename, stat.S_IFIFO|0666, 0);
++		self._fd = os.open(filename, os.O_RDONLY|os.O_NDELAY);
++		if self._fd < 0:
++			print "Could not open pipe to controller plugin, UI will probably not work correctly"
++			self._fd = None
++		        return False;
++		return True
++
++	def close(self):
++		if self._fd is not None:
++			os.close(self._fd)
++
++	def start(self):
++		if self._fd is None:
++			print "fd is none!!"
++			return
++		self._terminated = False
++		self._server_thread = threading.Thread(target=self._run)
++		self._server_thread.start()
++		print "command server started!!"
++
++	def stop(self):
++		self._terminated = True
++
++	def _run(self):
++		while not self._terminated:
++			try:
++				packed_data = os.read(self._fd, self._buff_size)
++				if packed_data is not None and len(packed_data) > 0:
++					self._handler(packed_data)
++					continue
++				time.sleep(1)
++			except Exception, ErrMsg:
++				print ErrMsg
++				pass
++
++	def _handler(self, data):
++		unpacked_data  = _unpack(data)
++		if unpacked_data is None:
++			return
++		(opcode, params, special) = unpacked_data
++		print ">> recv : [%d] - [%s]" %(opcode, params)
++		try:
++			self._opcode_map[opcode](params)
++		except: pass
++
++	def _url_stream(self, url):
++		#print "Stream URL Data :", url
++		#if strIsEmpty(rul):
++		#	print "Stream URL is empty!!"
++		#	return
++		self._before_service = self._session.nav.getCurrentlyPlayingServiceReference()
++		self._session.openWithCallback(self._cb_finished_stream, HbbTVPlayer, eServiceReference(4097, 0, url))
++
++	def _cb_finished_stream(self, data=None):
++		if self._before_service is not None:
++			self._session.nav.playService(self._before_service)
++			self._before_service = None
++
++
++class BrowserCommandUtil:
++	global _magic
++	global _header
++	global _headlen
++	_fd = None
++	_opcode_map = {
++		 "control_back"	  : 0x01
++		,"control_forward": 0x02
++		,"control_stop"	  : 0x03
++		,"control_reload" : 0x04
++		,"control_openurl": 0x05
++		,"control_exit"	  : 0x06
++		,"control_key"	  : 0x07
++		,"control_ascii"  : 0x08
++	}
++	_keycode_map = {
++		 "key_f12"	: 61538
++		,"key_red"	: 61506
++		,"key_green"	: 61507
++		,"key_yellow"	: 61508
++		,"key_blue"	: 61509
++		,"key_left"	: 57387
++		,"key_right"	: 57388
++		,"key_down"	: 57386
++		,"key_up"	: 57385
++		,"key_0"	: 63003
++		,"key_1"	: 63004
++		,"key_2"	: 63005
++		,"key_3"	: 63006
++		,"key_4"	: 63007
++		,"key_5"	: 63008
++		,"key_6"	: 63009
++		,"key_7"	: 63010
++		,"key_8"	: 63011
++		,"key_9"	: 63012
++		,"key_ok"	: 61451
++		,"key_sh_left"	: 61531
++		,"key_sh_right"	: 61532
++		,"key_backspace": 70000
++	}
++
++	def isConnected(self):
++		if self._fd is None:
++			return False
++		return True
++
++	def doConnect(self, filename):
++		if not os.path.exists(filename):
++			print "file not exists :", filename
++			return False
++		try:
++			self._fd = os.open(filename, os.O_WRONLY|os.O_NONBLOCK)
++			if self._fd is None:
++				print "fail to open file :", filename
++				return False
++		except Exception, ErrMsg:
++			print ErrMsg
++			self._fd = None
++			return False
++		print "connected!! to ", filename
++		return True
++
++	def doDisconnect(self):
++		if self._fd is None:
++			return
++		os.close(self._fd)
++		self._fd = None
++
++	def doSend(self, command, params=None, special=0):
++		if self._fd is None:
++			print "connected pipe was not exists!!"
++			return False
++		data = ''
++		try:
++			data = _pack(self._opcode_map[command], params, special)
++			if data is None:
++				return False
++			os.write(self._fd, data)
++		except:	return False
++		return True
++
++	def getKeyData(self, hash):
++		try:
++			return self._keycode_map[hash]
++		except: pass
++		return None
++
++class BlankWindow(Screen):
++	skin = 	"""
++		<screen name="BlankWindow" position="0,0" size="1280,720" backgroundColor="transparent" flags="wfNoBorder" title="BlankWindow">
++		</screen>
++		"""
++	def __init__(self, session):
++		Screen.__init__(self, session)
++		self._timer_close = eTimer()
++		self._timer_close.callback.append(self._cb_close)
++		self._timer_close.start(2000)
++
++	def _cb_close(self):
++		self.close()
++
++class OperaBrowserController(Screen):
++	skin = 	"""
++		<screen name="OperaBrowserController" position="0,0" size="1280,720" backgroundColor="transparent" flags="wfNoBorder" title="OperaBrowser">
++		</screen>
++		"""
++	def __init__(self, session, url):
++		self._url     = url
++		self._session = session
++
++		Screen.__init__(self, session)
++		self["actions"] = ActionMap(["MinuteInputActions", "ColorActions", "InputActions", "InfobarChannelSelection", "EPGSelectActions"], {
++			"ok"	: self._on_keyok,
++			"cancel": self._on_keycancel,
++			"up"	: self._on_keyup,
++			"down"	: self._on_keydown,
++			"left"	: self._on_keyleft,
++			"right"	: self._on_keyright,
++			"red"	: self._on_keyred,
++			"green"	: self._on_keygreen,
++			"yellow": self._on_keyyellow,
++			"blue"	: self._on_keyblue,
++			"info"	: self._on_keyinfo,
++			"historyBack" : self._on_keyback,
++			"historyNext" : self._on_keynext,
++		}, -2)
++		self["NumberActions"] = NumberActionMap( ["NumberActions"], {
++			"0"	: self._on_keynumber,
++			"1"	: self._on_keynumber,
++			"2"	: self._on_keynumber,
++			"3"	: self._on_keynumber,
++			"4"	: self._on_keynumber,
++			"5"	: self._on_keynumber,
++			"6"	: self._on_keynumber,
++			"7"	: self._on_keynumber,
++			"8"	: self._on_keynumber,
++			"9"	: self._on_keynumber,
++		})
++
++		self._opera_container = eConsoleAppContainer()
++		self._opera_container.dataAvail.append(self._cb_opera_container_dataAvail)
++		self._opera_container.appClosed.append(self._cb_opera_container_appClosed)
++
++		try:
++			os.unlink('/tmp/.sock.hbbtv.cmd')
++		except: pass
++
++		global CORSAIR_PATH
++		command = 'cd %s; ./run-browser --url:%s &' %(CORSAIR_PATH, self._url)
++		print "COMMAND >>", command
++		self._opera_container.execute(command)
++
++		global _g_command_util
++		#_g_command_util = BrowserCommandUtil()
++		self._command_util = _g_command_util
++
++		'''
++		if not self._command_util.doConnect('/tmp/.sock.hbbtv.cmd'):
++			print "fail to connect command server!!"
++		print "------------->> OK!!"
++		'''
++
++	def _cb_opera_container_dataAvail(self, data):
++		print data
++
++	def _cb_opera_container_appClosed(self, ret):
++		print ret
++		self._on_keycancel()
++
++	def _on_keynext(self):
++		self.sendCommand('control_forward')
++	def _on_keyback(self):
++		self.sendCommand('control_back')
++	def _on_keyup(self):
++		self.sendKeyCommand('key_up')
++	def _on_keydown(self):
++		self.sendKeyCommand('key_down')
++	def _on_keyleft(self):
++		self.sendKeyCommand('key_left')
++	def _on_keyright(self):
++		self.sendKeyCommand('key_right')
++	def _on_keyok(self):
++		self.sendKeyCommand('key_ok')
++	def _on_keyred(self):
++		self.sendKeyCommand('key_red')
++	def _on_keygreen(self):
++		self.sendKeyCommand('key_green')
++	def _on_keyyellow(self):
++		self.sendKeyCommand('key_yellow')
++	def _on_keyblue(self):
++		self.sendKeyCommand('key_blue')
++	def _on_keynumber(self, number):
++		self.sendKeyCommand('key_%d'%(number))
++	def _on_keyinfo(self):
++		if strIsEmpty(self._url):
++			return
++		self.sendCommand('control_openurl', self._url)
++
++	def _on_keycancel(self):
++		self.sendCommand('control_openurl', '/usr/local/hbb-browser/index.html')
++		time.sleep(1)
++		self.sendCommand('control_exit')
++		#self._opera_container.kill()
++		self._command_util.doDisconnect()
++		self.session.openWithCallback(self._cb_close, BlankWindow)
++
++	def _cb_close(self):
++		self.close()
++		#print "---------------->> closed!!"
++
++	def sendKeyCommand(self, command):
++		params = str(self._command_util.getKeyData(command))
++		if params is None:
++			return False
++		return self.sendCommand('control_key', params)
++
++	def sendCommand(self, command, params=None):
++		if not self._command_util.isConnected():
++			self._command_util.doConnect('/tmp/.sock.hbbtv.cmd')
++			#return False
++		self._command_util.doSend(command, params)
++		return True
++
++class HbbTVHelper(Screen):
++	skin = 	"""<screen position="0,0" size="0,0"></screen>"""
++	def __init__(self, session):
++		Screen.__init__(self, session)
++		self._session = session
++		self._timer_infobar = eTimer()
++		self._timer_infobar.callback.append(self._cb_registrate_infobar)
++		self._timer_infobar.start(1000)
++
++		self._excuted_browser = False
++
++		global _g_command_util
++		_g_command_util = BrowserCommandUtil()
++
++		global _command_server
++		self._cmd_server = _command_server
++		self._cmd_server.open(session, '/tmp/.sock.hbbtv.url')
++		
++	def _cb_registrate_infobar(self):
++		if InfoBar.instance:
++			self._timer_infobar.stop()
++			if self._cb_hbbtv_activated not in InfoBar.instance.onHBBTVActivation:
++				InfoBar.instance.onHBBTVActivation.append(self._cb_hbbtv_activated)
++
++	def _cb_hbbtv_activated(self):
++		url = self.getHbbTVUrl()
++		if strIsEmpty(url):
++			print "can't get url of hbbtv!!"
++			return
++		print "success to get url of hbbtv!! >>", url
++		if self._excuted_browser:
++			print "already excuted opera browser!!"
++			return
++		self._cmd_server.start()
++		self.session.openWithCallback(self._cb_closed_browser, OperaBrowserController, url)
++		self._excuted_browser = True
++
++	def _cb_closed_browser(self):
++		self._excuted_browser = False
++		self._cmd_server.stop()
++
++	def getHbbTVUrl(self):
++		try:
++			service = self._session.nav.getCurrentService()
++			info    = service and service.info()
++			return info.getInfoString(iServiceInformation.sHBBTVUrl)
++		except Exception, ErrMsg:
++			print ErrMsg
++			pass
++		return None
++
++class OperaBrowserMain(Screen):
++	MENUBAR_ITEM_WIDTH  = 150
++	MENUBAR_ITEM_HEIGHT = 30
++	SUBMENULIST_WIDTH   = 200
++	SUBMENULIST_HEIGHT  = 25
++	SUBMENULIST_NEXT    = 2
++
++	skin =	"""
++		<screen name="BrowserMain" position="44,25" size="1210,680" backgroundColor="transparent" flags="wfNoBorder" title="BrowserMain">
++			<widget name="topArea" zPosition="-1" position="0,0" size="1280,30" font="Regular;20" valign="center" halign="center" backgroundColor="#000000" />
++			<widget name="menuitemFile" position="0,0" size="150,30" font="Regular;20" valign="center" halign="center" backgroundColor="#000000" foregroundColors="#9f1313,#a08500" />
++			<widget name="menuitemHelp" position="150,0" size="150,30" font="Regular;20" valign="center" halign="center" backgroundColor="#000000" foregroundColors="#9f1313,#a08500" />
++			<widget name="menulist" position="0,%d" size="%d,150" backgroundColor="#000000" zPosition="10" scrollbarMode="showOnDemand" />
++			<widget name="submenulist" position="%d,%d" size="%d,150" backgroundColor="#000000" zPosition="10" scrollbarMode="showOnDemand" />
++			<widget name="bottomArea" position="0,600" size="1280,80" font="Regular;20" valign="center" halign="center" backgroundColor="#000000" />
++	        </screen>
++		""" % (MENUBAR_ITEM_HEIGHT, SUBMENULIST_WIDTH, SUBMENULIST_WIDTH+SUBMENULIST_NEXT, MENUBAR_ITEM_HEIGHT, SUBMENULIST_WIDTH)
++
++	MENUITEMS_LIST =[[('Open Location', None), ('Exit', None)],
++			 [('About', None)]]
++	def __init__(self, session):
++		Screen.__init__(self, session)
++		self["actions"] = ActionMap(["MinuteInputActions", "ColorActions", "InputActions", "InfobarChannelSelection", "EPGSelectActions", "InputAsciiActions", "KeyboardInputActions"], {
++			 "cancel"      : self.keyCancel
++			,"ok"          : self.keyOK
++			,"left"        : self.keyLeft
++			,"right"       : self.keyRight
++			,"up"          : self.keyUp
++			,"down"        : self.keyDown
++			,"menu"        : self.keyCancel
++			,"gotAsciiCode": self.gotAsciiCode
++			,"historyBack" : self.keyLeft
++			,"historyNext" : self._on_keynext
++			,"deleteBackward":self._on_keyback
++		}, -2)
++		self["NumberActions"] = NumberActionMap( ["NumberActions"], {
++			"0"	: self._on_keynumber,
++			"1"	: self._on_keynumber,
++			"2"	: self._on_keynumber,
++			"3"	: self._on_keynumber,
++			"4"	: self._on_keynumber,
++			"5"	: self._on_keynumber,
++			"6"	: self._on_keynumber,
++			"7"	: self._on_keynumber,
++			"8"	: self._on_keynumber,
++			"9"	: self._on_keynumber,
++		})
++
++		self.menubarCurrentIndex = 0
++		self.lvMenuItems = []
++		self.lvSubMenuItems = []
++
++		self["topArea"]    = Label()
++		self["bottomArea"] = Label()
++
++		self["menuitemFile"] = MultiColorLabel()
++		self["menuitemHelp"] = MultiColorLabel()
++
++		self["menulist"] = MenuList(self.setListOnView())
++		self["submenulist"] = MenuList(self.setSubListOnView())
++
++		self.toggleMainScreenFlag = True
++		self.toggleListViewFlag = False
++		self.toggleSubListViewFlag = False
++		self.currentListView = self["menulist"]
++
++		self.onLayoutFinish.append(self.layoutFinished)
++
++		self._opera_command_mode = False
++
++		global _g_command_util
++		self._command_util = _g_command_util
++
++	def layoutFinished(self):
++		self["menuitemFile"].setText("File")
++		self["menuitemHelp"].setText("Help")
++
++		self["menulist"].hide()
++		self["submenulist"].hide()
++
++		self["bottomArea"].setText("Here is bottom area!!!!!!!!")
++		self.setTitle("BrowserMain")
++		self.selectMenuitem()
++
++	def gotAsciiCode(self):
++		if not self._opera_command_mode:
++			return
++		asciicode = getPrevAsciiCode()
++		if asciicode == 28:
++			self.keyOK()
++			return
++		charvalue = getCharValue(asciicode)
++		if charvalue is None:
++			return
++		try:
++			temp = str(charvalue)
++			self.sendCommand('control_ascii', temp, 0)
++		except Exception, ErrMsg: 
++			pass
++
++	def selectMenuitem(self):
++		tmp = [self["menuitemFile"], self["menuitemHelp"]]
++		self["menuitemFile"].setForegroundColorNum(0)
++		self["menuitemHelp"].setForegroundColorNum(0)
++		tmp[self.menubarCurrentIndex].setForegroundColorNum(1)
++
++	def popupCloseAll(self):
++		self.keyLeft()
++		self.keyLeft()
++		self.keyUp()
++		self.keyCancel()
++
++	def setListOnView(self):
++		self.lvMenuItems = self.MENUITEMS_LIST[self.menubarCurrentIndex]	
++		return self.lvMenuItems
++
++	def setSubListOnView(self):
++		self.lvSubMenuItems = []
++		xl = self["menulist"].getCurrent()[1]
++		if xl is None: return []
++		for x in xl:
++			self.lvSubMenuItems.append((x,None))
++		return self.lvSubMenuItems
++
++	def toggleMainScreen(self):
++		if not self.toggleMainScreenFlag:
++			self.show()
++		else:	self.hide()
++		self.toggleMainScreenFlag = not self.toggleMainScreenFlag
++
++	def toggleListView(self):
++		if not self.toggleListViewFlag:
++			self["menulist"].show()
++		else:	self["menulist"].hide()
++		self.toggleListViewFlag = not self.toggleListViewFlag
++
++	def toggleSubListView(self):
++		#print "------------------>> LEFT", self.toggleListViewFlag
++		if not self.toggleSubListViewFlag:
++			self["submenulist"].show()
++		else:	self["submenulist"].hide()
++		self.toggleSubListViewFlag = not self.toggleSubListViewFlag
++
++	def setCurrentListView(self, listViewIdx):
++		if listViewIdx == 0:
++			self.currentListView = None
++		elif listViewIdx == 1:
++			self.currentListView = self["menulist"]
++		elif listViewIdx == 2:
++			self.currentListView = self["submenulist"]
++
++	def _cmd_on_OpenLocation(self):
++		#self.session.open(MessageBox, 'Clicked!! Open Location', type = MessageBox.TYPE_INFO)
++		self.session.openWithCallback(self.cbKeyText, VirtualKeyBoard, title=("Please enter URL here"), text='http://google.com')
++	def _cmd_on_About(self):
++		self.session.open(MessageBox, 'Opera Web-Browser Launcher Plugin v0.1(beta)', type = MessageBox.TYPE_INFO)
++	def _cmd_on_Exit(self):
++		self.close()
++
++	def cbKeyText(self, data=None):
++		if strIsEmpty(data):
++			return
++		self.popupCloseAll()
++		#print "---------------------------->> URL :", data
++		self._opera_container = eConsoleAppContainer()
++		self._opera_container.dataAvail.append(self._cb_opera_container_dataAvail)
++		self._opera_container.appClosed.append(self._cb_opera_container_appClosed)
++
++		try:
++			os.unlink('/tmp/.sock.hbbtv.cmd')
++		except: pass
++
++		global CORSAIR_PATH
++		command = 'cd %s; ./run-browser --url:%s &' %(CORSAIR_PATH, data)
++		print "COMMAND >>", command
++		self._opera_command_mode = True
++		self._opera_container.execute(command)
++
++	def _cb_opera_container_dataAvail(self, data):
++		print data
++
++	def _cb_opera_container_appClosed(self, ret):
++		print ret
++		self.keyCancel()
++
++	def doCommand(self, command):
++		cmd_map = {
++			 'Exit'          :self._cmd_on_Exit
++			,'About'         :self._cmd_on_About
++			,'Open Location' :self._cmd_on_OpenLocation
++		}
++		try:
++			cmd_map[command]()
++		except: pass
++	def _on_keynext(self):
++		self.sendCommand('control_forward')
++	def _on_keyback(self):
++		self.sendCommand('control_back')
++	def keyOK(self):
++		if self._opera_command_mode:
++			self.sendKeyCommand('key_ok')
++			return
++		if not self.toggleListViewFlag:
++			self.keyDown()
++			return
++		if self.currentListView.getCurrent()[1] is None:
++			self.doCommand(self.currentListView.getCurrent()[0])
++			#self.session.open(MessageBox, _(self.currentListView.getCurrent()[0]), type = MessageBox.TYPE_INFO)
++			return
++		self.keyRight()
++
++	def updateSelectedMenuitem(self, status):
++		if self.menubarCurrentIndex == 0 and status < 0:
++			self.menubarCurrentIndex = 1
++		elif self.menubarCurrentIndex == 1 and status > 0:
++			self.menubarCurrentIndex = 0
++		else:	self.menubarCurrentIndex += status
++		self.selectMenuitem()
++
++	def keyLeft(self):
++		#print "------------------>> LEFT", self.toggleSubListViewFlag
++		if self._opera_command_mode:
++			self.sendKeyCommand('key_left')
++			return
++
++		if not self.toggleMainScreenFlag:
++			return
++		if not self.toggleListViewFlag:
++			self.updateSelectedMenuitem(-1)
++			return
++		if self.toggleSubListViewFlag:
++			self.setCurrentListView(1)
++			self.toggleSubListView()
++			return
++		if self.currentListView.getSelectedIndex():
++			self.currentListView.pageUp()
++
++	def keyBackSpace(self):
++		if self._opera_command_mode:
++			self.sendKeyCommand('key_backspace')
++
++	def keyRight(self):
++		#print "------------------>> RIGHT"
++		if self._opera_command_mode:
++			self.sendKeyCommand('key_right')
++			return
++		if not self.toggleMainScreenFlag:
++			return
++		if not self.toggleListViewFlag:
++			self.updateSelectedMenuitem(1)
++			return
++		if self.currentListView is None:
++			return
++		if self.currentListView.getCurrent()[1] is not None:
++			parentSelectedIndex = self.currentListView.getSelectedIndex()
++			self.setCurrentListView(2)
++			self.currentListView.setList(self.setSubListOnView())
++			self.currentListView.resize(self.SUBMENULIST_WIDTH, self.SUBMENULIST_HEIGHT*len(self.lvSubMenuItems)+5)
++			self.currentListView.move(self.MENUBAR_ITEM_WIDTH*self.menubarCurrentIndex + self.SUBMENULIST_WIDTH+self.SUBMENULIST_NEXT,self.MENUBAR_ITEM_HEIGHT+(parentSelectedIndex*self.SUBMENULIST_HEIGHT))
++			self.toggleSubListView()
++
++	def keyDown(self):
++		if self._opera_command_mode:
++			self.sendKeyCommand('key_down')
++			return
++		if not self.toggleMainScreenFlag:
++			return
++		if self.currentListView is None:
++			return
++		if not self.toggleListViewFlag:
++			self.currentListView.setList(self.setListOnView())
++			self.currentListView.resize(self.SUBMENULIST_WIDTH, self.SUBMENULIST_HEIGHT*len(self.lvMenuItems)+5)
++			self.currentListView.move(self.MENUBAR_ITEM_WIDTH*self.menubarCurrentIndex+1,self.MENUBAR_ITEM_HEIGHT)
++			self.toggleListView()
++			return
++		self.currentListView.down()
++		print "----->> DOWN"
++
++	def keyUp(self):
++		if self._opera_command_mode:
++			self.sendKeyCommand('key_up')
++			return
++		if not self.toggleMainScreenFlag:
++			return
++		if self.currentListView is None:
++			return
++		if self.currentListView == self["menulist"]:
++			if self.currentListView.getSelectedIndex() == 0:
++				self.toggleListView()
++				return
++		self.currentListView.up()
++
++	def keyCancel(self):
++		if self._opera_command_mode:
++			self.sendCommand('control_openurl', '/home/root/index.html')
++			time.sleep(2)
++			self.sendCommand('control_exit')
++			self._command_util.doDisconnect()
++			self._opera_command_mode = False
++			return
++		self.toggleMainScreen()
++
++	def _on_keynumber(self, number):
++		self.sendKeyCommand('key_%d'%(number))
++
++	def sendKeyCommand(self, command, special=0):
++		params = str(self._command_util.getKeyData(command))
++		if params is None:
++			return False
++		return self.sendCommand('control_key', params, special)
++
++	def sendCommand(self, command, params=None, special=0):
++		if not self._command_util.isConnected():
++			self._command_util.doConnect('/tmp/.sock.hbbtv.cmd')
++			#return False
++		self._command_util.doSend(command, params, special)
++		return True
++
++def session_start_main(session, **kwargs):
++	global _command_server
++	_command_server = BrowserCommandServer()
++	session.open(HbbTVHelper)
++
++def plugin_start_main(session, **kwargs):
++	session.open(OperaBrowserMain)
++
++def Plugins(**kwargs):
++	return [PluginDescriptor(name="HbbTV", description="hbbtv", where=PluginDescriptor.WHERE_SESSIONSTART, needsRestart=True, fnc=session_start_main),
++		PluginDescriptor(name="Opera Launcher", description="This is opera launcher(beta)!!", where=PluginDescriptor.WHERE_PLUGINMENU, needsRestart=True, fnc=plugin_start_main)]
++
++
+diff --git a/lib/python/Plugins/Extensions/Makefile.am b/lib/python/Plugins/Extensions/Makefile.am
+index c5806a3..0daed1f 100755
+--- a/lib/python/Plugins/Extensions/Makefile.am
++++ b/lib/python/Plugins/Extensions/Makefile.am
+@@ -1,7 +1,7 @@
+ installdir = $(pkglibdir)/python/Plugins/Extensions
+ 
+ SUBDIRS = TuxboxPlugins CutListEditor PicturePlayer MediaScanner MediaPlayer GraphMultiEPG SocketMMI DVDBurn Modem WebBrowser \
+-	VuplusEvent StreamTV DLNABrowser DLNAServer 
++	VuplusEvent StreamTV DLNABrowser DLNAServer HbbTV
+ 
+ if HAVE_LIBDDVD
+ SUBDIRS += DVDPlayer
+diff --git a/lib/python/Screens/InfoBar.py b/lib/python/Screens/InfoBar.py
+index 860022a..ed8acf6 100755
+--- a/lib/python/Screens/InfoBar.py
++++ b/lib/python/Screens/InfoBar.py
+@@ -11,7 +11,7 @@ from enigma import iPlayableService
+ profile("LOAD:InfoBarGenerics")
+ from Screens.InfoBarGenerics import InfoBarShowHide, \
+ 	InfoBarNumberZap, InfoBarChannelSelection, InfoBarMenu, InfoBarRdsDecoder, \
+-	InfoBarEPG, InfoBarSeek, InfoBarInstantRecord, \
++	InfoBarEPG, InfoBarSeek, InfoBarInstantRecord, InfoBarRedButton, \
+ 	InfoBarAudioSelection, InfoBarAdditionalInfo, InfoBarNotifications, InfoBarDish, InfoBarUnhandledKey, \
+ 	InfoBarSubserviceSelection, InfoBarShowMovies, InfoBarTimeshift,  \
+ 	InfoBarServiceNotifications, InfoBarPVRState, InfoBarCueSheetSupport, InfoBarSimpleEventView, \
+@@ -28,7 +28,7 @@ from Screens.HelpMenu import HelpableScreen
+ 
+ class InfoBar(InfoBarBase, InfoBarShowHide,
+ 	InfoBarNumberZap, InfoBarChannelSelection, InfoBarMenu, InfoBarEPG, InfoBarRdsDecoder,
+-	InfoBarInstantRecord, InfoBarAudioSelection, 
++	InfoBarInstantRecord, InfoBarAudioSelection, InfoBarRedButton,
+ 	HelpableScreen, InfoBarAdditionalInfo, InfoBarNotifications, InfoBarDish, InfoBarUnhandledKey,
+ 	InfoBarSubserviceSelection, InfoBarTimeshift, InfoBarSeek,
+ 	InfoBarSummarySupport, InfoBarTimeshiftState, InfoBarTeletextPlugin, InfoBarExtensions,
+@@ -54,7 +54,7 @@ class InfoBar(InfoBarBase, InfoBarShowHide,
+ 		for x in HelpableScreen, \
+ 				InfoBarBase, InfoBarShowHide, \
+ 				InfoBarNumberZap, InfoBarChannelSelection, InfoBarMenu, InfoBarEPG, InfoBarRdsDecoder, \
+-				InfoBarInstantRecord, InfoBarAudioSelection, InfoBarUnhandledKey, \
++				InfoBarInstantRecord, InfoBarAudioSelection, InfoBarRedButton, InfoBarUnhandledKey, \
+ 				InfoBarAdditionalInfo, InfoBarNotifications, InfoBarDish, InfoBarSubserviceSelection, \
+ 				InfoBarTimeshift, InfoBarSeek, InfoBarSummarySupport, InfoBarTimeshiftState, \
+ 				InfoBarTeletextPlugin, InfoBarExtensions, InfoBarPiP, InfoBarSubtitleSupport, InfoBarJobman, \
+diff --git a/lib/python/Screens/InfoBarGenerics.py b/lib/python/Screens/InfoBarGenerics.py
+index 6ca65e3..a924ad6 100755
+--- a/lib/python/Screens/InfoBarGenerics.py
++++ b/lib/python/Screens/InfoBarGenerics.py
+@@ -1844,6 +1844,25 @@ class InfoBarSubserviceSelection:
+ 		else:
+ 			del self.selectedSubservice
+ 
++class InfoBarRedButton:
++	def __init__(self):
++		self["RedButtonActions"] = HelpableActionMap(self, "InfobarRedButtonActions",
++			{
++				"activateRedButton": (self.activateRedButton, _("Red button...")),
++			})
++		self.onHBBTVActivation = [ ]
++		self.onRedButtonActivation = [ ]
++
++	def activateRedButton(self):
++		service = self.session.nav.getCurrentService()
++		info = service and service.info()
++		if info and info.getInfoString(iServiceInformation.sHBBTVUrl) != "":
++			for x in self.onHBBTVActivation:
++				x()
++		elif False: # TODO: other red button services
++			for x in self.onRedButtonActivation:
++				x()
++
+ class InfoBarAdditionalInfo:
+ 	def __init__(self):
+ 
+diff --git a/lib/service/iservice.h b/lib/service/iservice.h
+index 7f58249..dffea52 100644
+--- a/lib/service/iservice.h
++++ b/lib/service/iservice.h
+@@ -359,6 +359,8 @@ public:
+ 
+ 		sTransferBPS,
+ 
++		sHBBTVUrl,
++
+ 		sUser = 0x100
+ 	};
+ 	enum {
+@@ -836,6 +838,7 @@ public:
+ 		evBuffering,
+ 
+ 		evStopped,
++		evHBBTVInfo,
+ 
+ 		evUser = 0x100
+ 	};
+diff --git a/lib/service/servicedvb.cpp b/lib/service/servicedvb.cpp
+index 383b38e..71f885e 100644
+--- a/lib/service/servicedvb.cpp
++++ b/lib/service/servicedvb.cpp
+@@ -1720,6 +1720,13 @@ std::string eDVBServicePlay::getInfoString(int w)
+ 		return m_dvb_service->m_provider_name;
+ 	case sServiceref:
+ 		return m_reference.toString();
++	case sHBBTVUrl:
++	{
++		std::string url;
++		eDVBServicePMTHandler &h = m_timeshift_active ? m_service_handler_timeshift : m_service_handler;
++		h.getHBBTVUrl(url);
++		return url;
++	}
+ 	default:
+ 		break;
+ 	}
