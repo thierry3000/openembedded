@@ -26,3 +26,4 @@ do_install() {
 }
 
 FILES_${PN} = "${PLUGINPATH}"
+PACKAGES = ${PN}
