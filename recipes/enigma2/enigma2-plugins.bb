@@ -10,7 +10,7 @@ SRCDATE="20110215"
 BRANCH="master"
 PV = "experimental-git${SRCDATE}"
 
-PR = "r4"
+PR = "r5"
 SRC_URI="git://code.vuplus.com/git/dvbapp-plugin.git;protocol=git;branch=${BRANCH};tag=${SRCREV}"
 
 EXTRA_OECONF = " \
@@ -42,6 +42,7 @@ S = "${WORKDIR}/git"
 
 DEPENDS = "python-pyopenssl python-gdata streamripper python-mutagen python-daap"
 DEPENDS += "enigma2"
+DEPENDS += "enigma2-plugin-extensions-openwebif"
 
 
 def modify_po():
