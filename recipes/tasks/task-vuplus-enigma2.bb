@@ -1,7 +1,7 @@
 DESCRIPTION = "Vuplus: E2 Task for the Vuplus Distribution"
 SECTION = "vuplus/base"
 LICENSE = "MIT"
-PR = "r19"
+PR = "r20"
 
 inherit task
 
@@ -35,6 +35,7 @@ RDEPENDS_task-vuplus-enigma2 = "\
   enigma2-plugin-extensions-streamtv \
   enigma2-plugin-extensions-dlnaserver \
   enigma2-plugin-extensions-dlnabrowser \
+  enigma2-plugin-extensions-remotestreamconvert \
 "
 
 RRECOMMENDS_task-vuplus-enigma2 = "\
