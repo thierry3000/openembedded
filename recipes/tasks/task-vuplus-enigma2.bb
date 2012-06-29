@@ -36,6 +36,7 @@ RDEPENDS_task-vuplus-enigma2 = "\
   enigma2-plugin-extensions-dlnaserver \
   enigma2-plugin-extensions-dlnabrowser \
   enigma2-plugin-extensions-remotestreamconvert \
+  enigma2-plugin-systemplugins-zappingmodeselection \
 "
 
 RRECOMMENDS_task-vuplus-enigma2 = "\
