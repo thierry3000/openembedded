@@ -1,7 +1,7 @@
 DESCRIPTION = "Vuplus: E2 Task for the Vuplus Distribution"
 SECTION = "vuplus/base"
 LICENSE = "MIT"
-PR = "r20"
+PR = "r21"
 
 inherit task
 
@@ -37,6 +37,7 @@ RDEPENDS_task-vuplus-enigma2 = "\
   enigma2-plugin-extensions-dlnabrowser \
   enigma2-plugin-extensions-remotestreamconvert \
   enigma2-plugin-systemplugins-zappingmodeselection \
+  enigma2-plugin-extensions-addstreamurl \
 "
 
 RRECOMMENDS_task-vuplus-enigma2 = "\
