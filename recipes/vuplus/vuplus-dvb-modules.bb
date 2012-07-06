@@ -7,10 +7,10 @@ KV = "${@base_contains('PREFERRED_VERSION_linux-${MACHINE}', '2.6.18', '2.6.18',
 
 PV = "${KV}"
 
-SRCDATE_bm750 = "20120228"
-SRCDATE_vusolo = "20120228"
-SRCDATE_vuuno = "20120228"
-SRCDATE_vuultimo = "20120228"
+SRCDATE_bm750 = "20120628"
+SRCDATE_vusolo = "20120628"
+SRCDATE_vuuno = "20120628"
+SRCDATE_vuultimo = "20120628"
 
 MODULES_NAME_bm750 = "procmk\ndvb-bcm7335\nbrcmfb"
 MODULES_NAME_vusolo = "procmk\ndvb-bcm7325\nbrcmfb"
