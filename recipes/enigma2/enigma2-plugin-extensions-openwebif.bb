@@ -9,7 +9,7 @@ RDEPENDS_${PN} = "python-cheetah python-json python-unixadmin python-misc"
 inherit gitpkgv
 PV = "0.1+git${SRCPV}"
 PKGV = "0.1+git${GITPKGV}"
-PR = "r0.71"
+PR = "r0.72"
 
 require openplugins.inc
 
