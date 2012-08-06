@@ -7,10 +7,10 @@ inherit gitpkgv
 
 PKGV = "2.4+git${GITPKGV}"
 PV = "2.4+git${SRCPV}"
-PR = "r1"
+PR = "r2"
 
 BRANCH=""
-SRCREV=""
+SRCREV="7340f6dbc6b3c8e552baab2e5a891c2de75cddcc"
 
 SRC_URI = "git://git.ffmpeg.org/rtmpdump;protocol=git;branch=${BRANCH};tag=${SRCREV}"
 
