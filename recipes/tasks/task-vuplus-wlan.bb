@@ -33,9 +33,9 @@ WLAN_USB_MODULES = "\
 "
 
 WLAN_USB_MODULES_LEGACY = "\
-  zd1211b \
-  wlan-rt73 \
-  r8712u \
+#  zd1211b \
+#  wlan-rt73 \
+#  r8712u \
   rt3070 \
   r8192cu \
 "
@@ -58,12 +58,13 @@ RDEPENDS_${PN}_append_vuultimo = "\
 RDEPENDS_${PN}_append_vu7425 = "\
   ${@base_contains('PREFERRED_VERSION_linux-vuvu7425', '2.6.18', '${WLAN_USB_MODULES_LEGACY}', '${WLAN_CRYPTO_MODULES} ${WLAN_USB_MODULES}', d)} \
 "
-RDEPENDS_${PN}_append_vuduo2 = "\
-  ${@base_contains('PREFERRED_VERSION_linux-vuduo2', '2.6.18', '${WLAN_USB_MODULES_LEGACY}', '${WLAN_CRYPTO_MODULES} ${WLAN_USB_MODULES}', d)} \
-"
-RDEPENDS_${PN}_append_vusolo2 = "\
-  ${@base_contains('PREFERRED_VERSION_linux-vusolo2', '2.6.18', '${WLAN_USB_MODULES_LEGACY}', '${WLAN_CRYPTO_MODULES} ${WLAN_USB_MODULES}', d)} \
-"
+#RDEPENDS_${PN}_append_vuduo2 = "\
+#  ${@base_contains('PREFERRED_VERSION_linux-vuduo2', '2.6.18', '${WLAN_USB_MODULES_LEGACY}', '${WLAN_CRYPTO_MODULES} ${WLAN_USB_MODULES}', d)} \
+#"
+
+RDEPENDS_${PN}_append_vuduo2 = '${WLAN_USB_MODULES_LEGACY}'
+RDEPENDS_${PN}_append_vusolo2 = '${WLAN_USB_MODULES_LEGACY}'
+
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 

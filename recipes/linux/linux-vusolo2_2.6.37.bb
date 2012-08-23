@@ -13,9 +13,11 @@ MODULE = "linux-2.6.37"
 SRC_URI += "file://stblinux-2.6.37-2.8.tar.bz2 \
         file://dvb-core.patch;patch=1;pnum=1 \
 	file://fix_cpu_proc.patch;patch=1;pnum=1 \
-	file://brcm_disable_enet1.patch;patch=1;pnum=1 \
         file://${MACHINE}_defconfig \
 	"
+
+#	file://brcm_disable_enet1.patch;patch=1;pnum=1 \
+#	file://brcm_nand_timing.patch;patch=1;pnum=1 \
 
 
 #S = "${WORKDIR}/git"

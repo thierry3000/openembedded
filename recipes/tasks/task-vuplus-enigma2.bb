@@ -54,6 +54,18 @@ RDEPENDS_task-vuplus-enigma2_append_bm750 = "\
   vuplus-webbrowser-utils \
   enigma2-plugin-extensions-webbrowser \
 "
+RDEPENDS_task-vuplus-enigma2_append_vuduo2 = "\
+  duo2lcd4linux \
+  enigma2-plugin-systemplugins-remotecontrolcode \
+  enigma2-plugin-systemplugins-hdmicec \
+  enigma2-plugin-extensions-openwebif \
+"
+
+RDEPENDS_task-vuplus-enigma2_append_vusolo2 = "\
+  enigma2-plugin-extensions-openwebif \
+  enigma2-plugin-systemplugins-remotecontrolcode \
+  enigma2-plugin-systemplugins-hdmicec \
+"
 
 RDEPENDS_task-vuplus-enigma2_append_vuuno = "\
   vuplus-blindscan-utils \

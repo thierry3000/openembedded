@@ -65,11 +65,13 @@ FILES_${PN}-dev += "\
   ${libdir}/directfb-${RV}/systems/*.la \
   ${libdir}/directfb-${RV}/inputdrivers/*.la \
   ${libdir}/directfb-${RV}/interfaces/*/*.la \
+  ${libdir}/directfb-${RV}/gfxdrivers/*.la \
   ${libdir}/directfb-${RV}/wm/*.la \
 "
 
 FILES_${PN} += "\
   ${libdir}/directfb-${RV}/systems/*.so \
+  ${libdir}/directfb-${RV}/gfxdrivers/*.so \
   ${libdir}/directfb-${RV}/inputdrivers/*.so \
   ${libdir}/directfb-${RV}/interfaces/*/*.so \
   ${libdir}/directfb-${RV}/wm/*.so \

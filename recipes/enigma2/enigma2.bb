@@ -120,7 +120,7 @@ SRC_URI = "git://code.vuplus.com/git/dvbapp.git;protocol=http;branch=${BRANCH};t
 	   file://enigma2_vuplus_mediaplayer_subtitle.patch;patch=1;pnum=1 \
            file://enigma2_vuplus_remove_dreambox_enigma.patch;patch=1;pnum=1 \
            file://enigma2_vuplus_vfd_mode.patch;patch=1;pnum=1 \
-	   file://enigma2-hbbtv_20120604.patch;patch=1;pnum=1 \
+	   file://enigma2-hbbtv_20120610.patch;patch=1;pnum=1 \
            file://MyriadPro-Regular.otf \
            file://MyriadPro-Semibold.otf \
            file://MyriadPro-SemiboldIt.otf \

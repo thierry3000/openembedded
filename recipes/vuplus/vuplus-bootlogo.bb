@@ -7,13 +7,15 @@ IMAGES_VERSION = "1"
 BINARY_VERSION = "7"
 
 PV = "${BINARY_VERSION}.${IMAGES_VERSION}"
-PR = "r5"
+PR = "r6"
 
 KERNEL_VERSION = "${@base_contains('PREFERRED_VERSION_linux-${MACHINE}', '2.6.18', '2.6.18', '3.1.1', d)}"
 
 SRC_URI = "file://bootlogo.mvi file://backdrop.mvi file://bootlogo_wait.mvi file://switchoff.mvi"
 SRC_URI_append_vuuno = " file://splash_cfe_auto.bin"
 SRC_URI_append_vuultimo = " file://splash_cfe_auto.bin"
+SRC_URI_append_vuduo2 = " file://initrd_cfe_auto.bin file://splash_cfe_auto.bin"
+SRC_URI_append_vusolo2 = " file://initrd_cfe_auto.bin file://splash_cfe_auto.bin"
 
 S = "${WORKDIR}/"
 
@@ -44,7 +46,27 @@ do_install_vuultimo() {
                 install -m 0755 ${S}/$i.mvi ${D}/usr/share/$i.mvi;
                 ln -sf /usr/share/$i.mvi ${D}/boot/$i.mvi;
         done;
+        install -m 0755 ${S}/vmlinuz.initrd ${D}/boot/vmlinuz.initrd
         install -m 0755 ${S}/splash_cfe_auto.bin ${D}/boot/splash_cfe_auto.bin
+}
+do_install_vuduo2() {
+	install -d ${D}/boot
+        install -d ${D}/usr/share
+        for i in ${MVI}; do
+                install -m 0755 ${S}/$i.mvi ${D}/usr/share/$i.mvi;
+                ln -sf /usr/share/$i.mvi ${D}/boot/$i.mvi;
+        done;
+        install -m 0755 ${S}/initrd_cfe_auto.bin ${D}/boot/initrd_cfe_auto.bin
+        install -m 0755 ${S}/splash_cfe_auto.bin ${D}/boot/splash_cfe_auto.bin
+}
+do_install_vusolo2() {
+	install -d ${D}/boot
+        install -d ${D}/usr/share
+        for i in ${MVI}; do
+                install -m 0755 ${S}/$i.mvi ${D}/usr/share/$i.mvi;
+                ln -sf /usr/share/$i.mvi ${D}/boot/$i.mvi;
+        done;
+        install -m 0755 ${S}/initrd_cfe_auto.bin ${D}/boot/initrd_cfe_auto.bin
 }
 
 pkg_preinst() {
