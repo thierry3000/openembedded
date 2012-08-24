@@ -1,5 +1,5 @@
 diff --git a/configure.ac b/configure.ac
-index f11245a..87be088 100644
+index aac8f11..cbb73e3 100644
 --- a/configure.ac
 +++ b/configure.ac
 @@ -134,6 +134,16 @@ data/skin_default/menu/Makefile
@@ -2998,10 +2998,10 @@ index 0000000..9d4f458
 +	*.png
 diff --git a/data/Vu_HD/skin.xml b/data/Vu_HD/skin.xml
 new file mode 100644
-index 0000000..ccf3ae3
+index 0000000..faac709
 --- /dev/null
 +++ b/data/Vu_HD/skin.xml
-@@ -0,0 +1,3377 @@
+@@ -0,0 +1,3384 @@
 +<skin>
 +	<!-- VU+ skin (skin.xml)  -->
 +	<output id="0">
@@ -3230,6 +3230,13 @@ index 0000000..ccf3ae3
 +		</widget>
 +		<widget source="RecordingPossible" render="FixedLabel" text="Record" position="100,125" zPosition="1" size="130,22" font="Regular;20" foregroundColor="#1c1c1c" backgroundColor="#d2dee2" transparent="1">
 +			<convert type="ConditionalShowHide" />
++		</widget>
++		<!-- Red button, Hbbtv (only if record is not on red, for now) -->
++		<widget source="HbbtvApplication" render="Pixmap" pixmap="Vu_HD/buttons/red.png" position="60,122" zPosition="1" size="25,25" alphatest="on">
++			<convert type="ConditionalShowHide" />
++		</widget>
++		<widget source="HbbtvApplication" render="Label" position="100,125" zPosition="1" size="130,22" font="Regular;20" foregroundColor="#1c1c1c" backgroundColor="#d9dee2" transparent="1">
++			<convert type="HbbtvApplicationInfo">Name</convert>
 +		</widget>
 +		<!-- Green button (is subservices available?) -->
 +		<ePixmap pixmap="Vu_HD/buttons/button_off.png" position="250,122" size="25,25" alphatest="blend" />
