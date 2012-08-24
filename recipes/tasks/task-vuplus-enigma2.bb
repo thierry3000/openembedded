@@ -1,7 +1,7 @@
 DESCRIPTION = "Vuplus: E2 Task for the Vuplus Distribution"
 SECTION = "vuplus/base"
 LICENSE = "MIT"
-PR = "r21"
+PR = "r22"
 
 inherit task
 
@@ -60,8 +60,7 @@ RRECOMMENDS_task-vuplus-enigma2 = "\
 
 RDEPENDS_task-vuplus-enigma2_append_bm750 = "\
   enigma2-plugin-systemplugins-fancontrol \
-  vuplus-webbrowser-utils \
-  enigma2-plugin-extensions-webbrowser \
+  enigma2-plugin-extensions-hbbtv \
 "
 
 RDEPENDS_task-vuplus-enigma2_append_vuuno = "\
@@ -69,8 +68,7 @@ RDEPENDS_task-vuplus-enigma2_append_vuuno = "\
   enigma2-plugin-systemplugins-blindscan \
   enigma2-plugin-systemplugins-manualfancontrol \
   enigma2-plugin-systemplugins-remotecontrolcode \
-  vuplus-webbrowser-utils \
-  enigma2-plugin-extensions-webbrowser \
+  enigma2-plugin-extensions-hbbtv \
 "
 RDEPENDS_task-vuplus-enigma2_append_vuultimo = "\
   enigma2-plugin-systemplugins-firmwareupgrade \
@@ -78,8 +76,7 @@ RDEPENDS_task-vuplus-enigma2_append_vuultimo = "\
   enigma2-plugin-systemplugins-manualfancontrol \
   enigma2-plugin-systemplugins-remotecontrolcode \
   enigma2-plugin-systemplugins-ledbrightnesssetup \
-  vuplus-webbrowser-utils \
-  enigma2-plugin-extensions-webbrowser \
+  enigma2-plugin-extensions-hbbtv \
 "
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
