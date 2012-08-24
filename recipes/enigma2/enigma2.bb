@@ -4,7 +4,7 @@ DEPENDS = "jpeg libungif libmad libpng libsigc++-1.2 gettext-native \
 	dreambox-dvbincludes freetype libdvbsi++ python swig-native \
 	libfribidi libxmlccwrap libdreamdvd gstreamer gst-plugin-dvbmediasink \
 	gst-plugins-bad gst-plugins-good gst-plugins-ugly python-wifi wvdial wvstreams ppp usbmodeswitch usbmodeswitch-data \
-	hostap-daemon bridge-utils djmount minidlna mpfr gmp tslib opera-hbbtv"
+	hostap-daemon bridge-utils djmount minidlna mpfr gmp tslib opera-hbbtv util-linux-ng ntfs-3g dosfstools "
 RDEPENDS = "python-codecs python-core python-lang python-re python-threading \
 	python-xml python-fcntl gst-plugin-decodebin gst-plugin-decodebin2 python-stringold \
 	python-pickle gst-plugin-app gst-plugin-fragmented \
@@ -72,6 +72,7 @@ RDEPENDS_enigma2-plugin-extensions-streamtv = "librtmp0 gst-plugin-rtmp "
 RDEPENDS_enigma2-plugin-extensions-dlnabrowser = "djmount fuse-utils libfuse2 libupnp3 kernel-module-fuse "
 RDEPENDS_enigma2-plugin-extensions-dlnaserver = "minidlna libexif12 libavformat52 libavutil50 libavcodec52 libgsm1 libmp3lame0 libschroedinger-1.0-0 libtheora0 liboil"
 RDEPENDS_enigma2-plugin-extensions-hbbtv = "tslib-conf libts-1.0-0 libsysfs2 libgmp3 libmpfr1 opera-hbbtv"
+RDEPENDS_enigma2-plugin-systemplugins-devicemanager = "util-linux-ng-blkid ntfs-3g dosfstools"
 
 PN = "enigma2"
 PR = "r40"
@@ -116,7 +117,6 @@ SRCREV_vuplus = ""
 #SRC_URI_append_dm7025 = " file://7025_pvr_device_compatibility.diff;patch=1;pnum=1"
 
 # enigma2_vuplus_mediaplayer.patch is for trick-play in media player
-
 
 SRC_URI = "git://code.vuplus.com/git/dvbapp.git;protocol=http;branch=${BRANCH};tag=${SRCREV} \
            file://enigma2_vuplus_skin.patch;patch=1;pnum=1 \

@@ -38,6 +38,7 @@ RDEPENDS_task-vuplus-enigma2 = "\
   enigma2-plugin-extensions-remotestreamconvert \
   enigma2-plugin-systemplugins-zappingmodeselection \
   enigma2-plugin-extensions-addstreamurl \
+  enigma2-plugin-systemplugins-devicemanager \
 "
 
 RRECOMMENDS_task-vuplus-enigma2 = "\
