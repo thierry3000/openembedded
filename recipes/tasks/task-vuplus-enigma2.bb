@@ -1,7 +1,7 @@
 DESCRIPTION = "Vuplus: E2 Task for the Vuplus Distribution"
 SECTION = "vuplus/base"
 LICENSE = "MIT"
-PR = "r11"
+PR = "r22"
 
 inherit task
 
@@ -29,6 +29,15 @@ RDEPENDS_task-vuplus-enigma2 = "\
   enigma2-meta \
   enigma2-plugins-meta \
   enigma2-skins-meta \   
+  enigma2-plugin-systemplugins-crashreport \
+  enigma2-plugin-systemplugins-3gmodemmanager \
+  enigma2-plugin-extensions-streamtv \
+  enigma2-plugin-extensions-dlnaserver \
+  enigma2-plugin-extensions-dlnabrowser \
+  enigma2-plugin-extensions-remotestreamconvert \
+  enigma2-plugin-systemplugins-zappingmodeselection \
+  enigma2-plugin-extensions-addstreamurl \
+  enigma2-plugin-systemplugins-devicemanager \
 "
 
 
@@ -42,17 +51,18 @@ RRECOMMENDS_task-vuplus-enigma2 = "\
   enigma2-plugin-extensions-mediaplayer \
   enigma2-plugin-extensions-hbbtv \
   enigma2-plugin-extensions-pictureplayer \
+  enigma2-plugin-extensions-vuplusevent \
   enigma2-plugin-systemplugins-skinselector \
   enigma2-plugin-systemplugins-ui3dsetup \
   enigma2-plugin-systemplugins-uipositionsetup \
   enigma2-plugin-systemplugins-hdmicec \
+  enigma2-plugin-systemplugins-wirelessaccesspoint \
   ${@base_contains("MACHINE_FEATURES", "wifi", "task-vuplus-wlan", "", d)} \
 "
 
 RDEPENDS_task-vuplus-enigma2_append_bm750 = "\
   enigma2-plugin-systemplugins-fancontrol \
-  vuplus-webbrowser-utils \
-  enigma2-plugin-extensions-webbrowser \
+  enigma2-plugin-extensions-hbbtv \
 "
 RDEPENDS_task-vuplus-enigma2_append_vuduo2 = "\
   duo2lcd4linux \
@@ -73,8 +83,7 @@ RDEPENDS_task-vuplus-enigma2_append_vuuno = "\
   enigma2-plugin-systemplugins-blindscan \
   enigma2-plugin-systemplugins-manualfancontrol \
   enigma2-plugin-systemplugins-remotecontrolcode \
-  vuplus-webbrowser-utils \
-  enigma2-plugin-extensions-webbrowser \
+  enigma2-plugin-extensions-hbbtv \
 "
 RDEPENDS_task-vuplus-enigma2_append_vuultimo = "\
   vuplus-blindscan-utils \
@@ -83,8 +92,7 @@ RDEPENDS_task-vuplus-enigma2_append_vuultimo = "\
   enigma2-plugin-systemplugins-manualfancontrol \
   enigma2-plugin-systemplugins-remotecontrolcode \
   enigma2-plugin-systemplugins-ledbrightnesssetup \
-  vuplus-webbrowser-utils \
-  enigma2-plugin-extensions-webbrowser \
+  enigma2-plugin-extensions-hbbtv \
 "
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"

@@ -5,15 +5,17 @@ DEPENDS = "jpeg libungif libmad libpng libsigc++-1.2 gettext-native \
 	libfribidi libxmlccwrap libdreamdvd gstreamer gst-plugin-dvbmediasink \
 	gst-plugins-bad gst-plugins-good gst-plugins-ugly python-wifi \
 	directfb mpfr gmp tslib opera-hbbtv"
+	gst-plugins-bad gst-plugins-good gst-plugins-ugly python-wifi wvdial wvstreams ppp usbmodeswitch usbmodeswitch-data \
+	hostap-daemon bridge-utils djmount minidlna mpfr gmp tslib opera-hbbtv util-linux-ng ntfs-3g dosfstools "
 RDEPENDS = "python-codecs python-core python-lang python-re python-threading \
 	python-xml python-fcntl gst-plugin-decodebin gst-plugin-decodebin2 python-stringold \
-	python-pickle gst-plugin-app \
+	python-pickle gst-plugin-app gst-plugin-fragmented \
 	gst-plugin-id3demux gst-plugin-mad gst-plugin-ogg gst-plugin-playbin \
 	gst-plugin-typefindfunctions gst-plugin-audioconvert gst-plugin-audioresample \
 	gst-plugin-wavparse python-netclient gst-plugin-mpegstream \
 	gst-plugin-flac gst-plugin-dvbmediasink gst-plugin-mpegdemux gst-plugin-dvdsub \
 	gst-plugin-souphttpsrc gst-plugin-mpegaudioparse gst-plugin-subparse \
-	gst-plugin-apetag gst-plugin-icydemux gst-plugin-autodetect \
+	gst-plugin-apetag gst-plugin-icydemux gst-plugin-autodetect gst-plugin-flv \
 	glibc-gconv-iso8859-15 ethtool"
 
 GST_RTSP_RDEPENDS = "gst-plugin-udp gst-plugin-rtsp gst-plugin-rtp gst-plugin-rtpmanager"
@@ -67,10 +69,18 @@ DESCRIPTION_append_enigma2-plugin-systemplugins-wirelesslansetup = "configure wi
 RDEPENDS_enigma2-plugin-systemplugins-wirelesslansetup = "wpa-supplicant wireless-tools python-wifi"
 DESCRIPTION_append_enigma2-plugin-systemplugins-networkwizard = "provides easy step by step network configuration"
 RDEPENDS_enigma2-plugin-extensions-webbrowser = "python-gdata libqtwebkite4 vuplus-webbrowser-utils qt4-embedded-fonts qt4-embedded-plugin-imageformat-gif qt4-embedded-plugin-imageformat-ico qt4-embedded-plugin-imageformat-jpeg qt4-embedded-plugin-imageformat-mng qt4-embedded-plugin-imageformat-svg qt4-embedded-plugin-imageformat-tiff qt4-embedded-plugin-iconengine-svgicon "
-RDEPENDS_enigma2-plugin-extensions-hbbtv = "tslib-conf libts-1.0-0 libsysfs2 directfb libgmp3 libmpfr1 opera-hbbtv"
+DESCRIPTION_append_enigma2-plugin-systemplugins-crashreport = "automatically send crashlogs to Vu+"
+RDEPENDS_enigma2-plugin-systemplugins-crashreport = "twisted-mail twisted-names python-compression python-mime python-email"
+RDEPENDS_enigma2-plugin-systemplugins-3gmodemmanager = "ppp usbmodeswitch usbmodeswitch-data wvdial wvstreams libwvutils4.6 libwvstreams-extras libuniconf4.6"
+RDEPENDS_enigma2-plugin-systemplugins-wirelessaccesspoint = "hostap-daemon bridge-utils"
+RDEPENDS_enigma2-plugin-extensions-streamtv = "librtmp0 gst-plugin-rtmp "
+RDEPENDS_enigma2-plugin-extensions-dlnabrowser = "djmount fuse-utils libfuse2 libupnp3 kernel-module-fuse "
+RDEPENDS_enigma2-plugin-extensions-dlnaserver = "minidlna libexif12 libavformat52 libavutil50 libavcodec52 libgsm1 libmp3lame0 libschroedinger-1.0-0 libtheora0 liboil"
+RDEPENDS_enigma2-plugin-extensions-hbbtv = "tslib-conf libts-1.0-0 libsysfs2 libgmp3 libmpfr1 opera-hbbtv"
+RDEPENDS_enigma2-plugin-systemplugins-devicemanager = "util-linux-ng-blkid ntfs-3g dosfstools"
 
 PN = "enigma2"
-PR = "r1"
+PR = "r41"
 
 SRCDATE = "20110922"
 SRCREV = "5e19a3f8a5e8ce8a4e2cb2b601a1b8ef3554e4be"
@@ -112,7 +122,6 @@ SRCREV_vuplus = ""
 #SRC_URI_append_dm7025 = " file://7025_pvr_device_compatibility.diff;patch=1;pnum=1"
 
 # enigma2_vuplus_mediaplayer.patch is for trick-play in media player
-
 
 SRC_URI = "git://code.vuplus.com/git/dvbapp.git;protocol=http;branch=${BRANCH};tag=${SRCREV} \
            file://enigma2_vuplus_skin.patch;patch=1;pnum=1 \

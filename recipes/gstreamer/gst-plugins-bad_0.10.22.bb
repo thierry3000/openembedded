@@ -1,12 +1,12 @@
 require gst-plugins.inc
 
-PR = "${INC_PR}.1"
+PR = "${INC_PR}.2"
 
 do_configure_prepend() {
     sed -i -e s:docs::g Makefile.am
 }
 
-DEPENDS += "gst-plugins-base"
+DEPENDS += "gst-plugins-base librtmp"
 
 EXTRA_OECONF_opendreambox += "--disable-apexsink --disable-dvdnav --disable-cdaudio --disable-mpeg2enc --disable-mplex --disable-librfb"
 EXTRA_OECONF_vuplus += "--disable-apexsink --disable-dvdnav --disable-cdaudio --disable-mpeg2enc --disable-mplex --disable-librfb"

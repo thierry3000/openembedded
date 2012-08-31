@@ -5,10 +5,9 @@ MAINTAINER = "Felix Domke <tmbinc@elitdvb.net>"
 SRC_URI = "git://git.opendreambox.org/git/obi/libdvbsi++.git;protocol=git"
 
 SRCREV = "49b0c78a0b0db3efd0a49c4cf2fc1c7f4bf21c15"
-
 PV = "1.0+git${SRCPV}"
 PKGV = "1.0+git${GITPKGV}"
-PR = "r0"
+PR = "r1"
 
 S = "${WORKDIR}/git"
 
