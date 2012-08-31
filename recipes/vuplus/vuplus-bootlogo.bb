@@ -67,6 +67,7 @@ do_install_vusolo2() {
                 ln -sf /usr/share/$i.mvi ${D}/boot/$i.mvi;
         done;
         install -m 0755 ${S}/initrd_cfe_auto.bin ${D}/boot/initrd_cfe_auto.bin
+        install -m 0755 ${S}/splash_cfe_auto.bin ${D}/boot/splash_cfe_auto.bin
 }
 
 pkg_preinst() {
