@@ -3,8 +3,6 @@ MAINTAINER = "Felix Domke <tmbinc@elitedvb.net>"
 DEPENDS = "jpeg libungif libmad libpng libsigc++-1.2 gettext-native \
 	dreambox-dvbincludes freetype libdvbsi++ python swig-native \
 	libfribidi libxmlccwrap libdreamdvd gstreamer gst-plugin-dvbmediasink \
-	gst-plugins-bad gst-plugins-good gst-plugins-ugly python-wifi \
-	directfb mpfr gmp tslib opera-hbbtv"
 	gst-plugins-bad gst-plugins-good gst-plugins-ugly python-wifi wvdial wvstreams ppp usbmodeswitch usbmodeswitch-data \
 	hostap-daemon bridge-utils djmount minidlna mpfr gmp tslib opera-hbbtv util-linux-ng ntfs-3g dosfstools "
 RDEPENDS = "python-codecs python-core python-lang python-re python-threading \
@@ -129,7 +127,6 @@ SRC_URI = "git://code.vuplus.com/git/dvbapp.git;protocol=http;branch=${BRANCH};t
 	   file://enigma2_vuplus_mediaplayer_subtitle.patch;patch=1;pnum=1 \
            file://enigma2_vuplus_remove_dreambox_enigma.patch;patch=1;pnum=1 \
            file://enigma2_vuplus_vfd_mode.patch;patch=1;pnum=1 \
-	   file://enigma2-hbbtv_20120610.patch;patch=1;pnum=1 \
            file://MyriadPro-Regular.otf \
            file://MyriadPro-Semibold.otf \
            file://MyriadPro-SemiboldIt.otf \
