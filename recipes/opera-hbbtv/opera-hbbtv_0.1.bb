@@ -1,7 +1,7 @@
 DESCRIPTION = "opera-hbbtv"
 PRIORITY = "required"
 
-SRC_DATE = 20120906
+SRC_DATE = 20120907
 
 PR = "r0_${SRC_DATE}"
 SRC_URI = "http://code.vuplus.com/download/build.fc3abf29fb03f797e78f907928125638/embedded/opera-sdk-build-package/opera-hbbtv_${SRC_DATE}.tar.gz"
