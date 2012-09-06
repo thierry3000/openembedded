@@ -4,7 +4,7 @@ LICENSE = "proprietary"
 MAINTAINER = "tmbinc@elitedvb.net"
 
 PR = "r4"
-PR_vuplus = "r7"
+PR_vuplus = "r8"
 
 SRC_URI = "file://*"
 
