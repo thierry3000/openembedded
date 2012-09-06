@@ -49,7 +49,6 @@ RRECOMMENDS_task-vuplus-enigma2 = "\
   python-twisted-protocols \
   python-twisted-web \
   enigma2-plugin-extensions-mediaplayer \
-  enigma2-plugin-extensions-hbbtv \
   enigma2-plugin-extensions-pictureplayer \
   enigma2-plugin-extensions-vuplusevent \
   enigma2-plugin-systemplugins-skinselector \
@@ -65,11 +64,11 @@ RDEPENDS_task-vuplus-enigma2_append_bm750 = "\
   enigma2-plugin-extensions-hbbtv \
 "
 RDEPENDS_task-vuplus-enigma2_append_vuduo2 = "\
-  duo2lcd4linux \
   enigma2-plugin-systemplugins-remotecontrolcode \
   enigma2-plugin-systemplugins-hdmicec \
   enigma2-plugin-extensions-openwebif \
   enigma2-plugin-extensions-hbbtv \
+  duo2lcd4linux \
 "
 
 RDEPENDS_task-vuplus-enigma2_append_vusolo2 = "\
