@@ -3,7 +3,7 @@ DESCRIPTION = "Fetch channels from remote bouquets and make them available local
 
 RDEPENDS_${PN} = "python-shell"
 
-PR="r0"
+PR="r1"
 
 require openplugins.inc
 
