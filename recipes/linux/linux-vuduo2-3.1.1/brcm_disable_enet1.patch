@@ -1,8 +1,8 @@
 diff --git a/arch/mips/brcmstb/Kconfig b/arch/mips/brcmstb/Kconfig
-index 6cdb475..dfe9d63 100644
+index 86ba4c6..8bde45e 100644
 --- a/arch/mips/brcmstb/Kconfig
 +++ b/arch/mips/brcmstb/Kconfig
-@@ -272,7 +272,6 @@ config BCM7425B0
+@@ -293,7 +293,6 @@ config BCM7425B0
  	select BRCM_UARTC_IS_16550
  	select BRCM_HAS_PCIE
  	select BRCM_HAS_GENET_0
@@ -10,7 +10,7 @@ index 6cdb475..dfe9d63 100644
  	select BRCM_MOCA_ON_GENET_1
  	select BRCM_GENET_V3
  	select BRCM_HAS_NOR
-@@ -987,15 +986,6 @@ config BRCM_HAS_GENET_0
+@@ -1008,15 +1007,6 @@ config BRCM_HAS_GENET_0
  	bool
  	select BRCM_HAS_GENET
  

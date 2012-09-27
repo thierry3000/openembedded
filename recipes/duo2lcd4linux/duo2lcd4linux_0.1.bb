@@ -9,7 +9,7 @@ RDEPENDS = python-codecs python-datetime python-textutils python-imaging
 
 S = "${WORKDIR}/LCD4linux"
 
-PR = "r0"
+PR = "r1"
 
 do_install() {
         install -d  ${D}/usr/lib/enigma2/python/Plugins/Extensions/LCD4linux

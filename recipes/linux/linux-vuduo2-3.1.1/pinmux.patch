@@ -1,8 +1,8 @@
 diff --git a/arch/mips/brcmstb/board.c b/arch/mips/brcmstb/board.c
-index 706c3c4..4cc0a4c 100644
+index 6825ef1..f64b8bd 100644
 --- a/arch/mips/brcmstb/board.c
 +++ b/arch/mips/brcmstb/board.c
-@@ -604,6 +604,10 @@ void board_pinmux_setup(void)
+@@ -567,6 +567,10 @@ void board_pinmux_setup(void)
  
  	PINMUX(18, sgpio_00, 1);	/* MoCA I2C */
  	PINMUX(19, sgpio_01, 1);

@@ -121,7 +121,9 @@ SRCREV_vuplus = ""
 
 # enigma2_vuplus_mediaplayer.patch is for trick-play in media player
 
-SRC_URI = "git://code.vuplus.com/git/dvbapp.git;protocol=http;branch=${BRANCH};tag=${SRCREV} \
+#SRC_URI = "git://code.vuplus.com/git/dvbapp.git;protocol=http;branch=${BRANCH};tag=${SRCREV} \
+
+SRC_URI = "git://192.168.102.66/dvbapp_factory.git;protocol=http;branch=vuplus_experimental_factorytest \
            file://enigma2_vuplus_skin.patch;patch=1;pnum=1 \
            file://enigma2_vuplus_mediaplayer.patch;patch=1;pnum=1 \
 	   file://enigma2_vuplus_mediaplayer_subtitle.patch;patch=1;pnum=1 \

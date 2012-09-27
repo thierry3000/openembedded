@@ -69,6 +69,9 @@ RDEPENDS_task-vuplus-enigma2_append_vuduo2 = "\
   enigma2-plugin-extensions-openwebif \
   enigma2-plugin-extensions-hbbtv \
   duo2lcd4linux \
+  vuplus-blindscan-utils \
+  enigma2-plugin-systemplugins-firmwareupgrade \
+  enigma2-plugin-systemplugins-manualfancontrol \
 "
 
 RDEPENDS_task-vuplus-enigma2_append_vusolo2 = "\
@@ -76,6 +79,8 @@ RDEPENDS_task-vuplus-enigma2_append_vusolo2 = "\
   enigma2-plugin-systemplugins-remotecontrolcode \
   enigma2-plugin-systemplugins-hdmicec \
   enigma2-plugin-extensions-hbbtv \
+  enigma2-plugin-systemplugins-firmwareupgrade \
+  enigma2-plugin-systemplugins-manualfancontrol \
 "
 
 RDEPENDS_task-vuplus-enigma2_append_vuuno = "\

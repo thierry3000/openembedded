@@ -8,12 +8,14 @@ KV_vusolo2 = "${@base_contains('PREFERRED_VERSION_linux-${MACHINE}', '2.6.18', '
 
 PV = "${KV}"
 
+inherit module
+
 SRCDATE_bm750 = "20120824"
 SRCDATE_vusolo = "20120824"
 SRCDATE_vuuno = "20120824"
 SRCDATE_vuultimo = "20120824"
-SRCDATE_vuduo2 = "20120829"
-SRCDATE_vusolo2 = "20120829"
+SRCDATE_vuduo2 = "20120913"
+SRCDATE_vusolo2 = "20120918"
 
 MODULES_NAME_bm750 = "procmk\ndvb-bcm7335\nbrcmfb"
 MODULES_NAME_vusolo = "procmk\ndvb-bcm7325\nbrcmfb"
@@ -56,9 +58,9 @@ do_install() {
 }
 
 do_install_vusolo2() {
-        install -d ${D}/lib/modules/2.6.37-2.8/extra
+        install -d ${D}/lib/modules/${KERNEL_VERSION}/extra
         for f in *.ko; do
-                install -m 0644 ${WORKDIR}/$f ${D}/lib/modules/2.6.37-2.8/extra/$f;
+                install -m 0644 ${WORKDIR}/$f ${D}/lib/modules/${KERNEL_VERSION}/extra/$f;
         done
 	install -d ${D}/etc/modutils
 	echo -e "${MODULES_NAME}" > ${D}/etc/modutils/vuplus-dvb-modules
@@ -66,9 +68,9 @@ do_install_vusolo2() {
 }
 
 do_install_vuduo2() {
-        install -d ${D}/lib/modules/2.6.37-2.8/extra
+        install -d ${D}/lib/modules/${KERNEL_VERSION}/extra
         for f in *.ko; do
-                install -m 0644 ${WORKDIR}/$f ${D}/lib/modules/2.6.37-2.8/extra/$f;
+                install -m 0644 ${WORKDIR}/$f ${D}/lib/modules/${KERNEL_VERSION}/extra/$f;
         done
 	install -d ${D}/etc/modutils
 	echo -e "${MODULES_NAME}" > ${D}/etc/modutils/vuplus-dvb-modules
@@ -80,6 +82,9 @@ pkg_postinst_vuplus-dvb-modules () {
                 depmod -ae
         fi
         true
+}
+
+do_compile () {
 }
 
 
