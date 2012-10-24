@@ -10,7 +10,7 @@ PR = "r29"
 #deprecated
 FILESPATHPKG = "initscripts-${PV}:initscripts:files"
 
-BOOTUP = "${@base_contains('PREFERRED_VERSION_linux-${MACHINE}', '3.1.1', 'bootup_3.1', 'bootup', d)}"
+BOOTUP = "${@base_contains('PREFERRED_VERSION_linux-${MACHINE}', '2.6.18', 'bootup', 'bootup_3.1', d)}"
 
 
 SRC_URI = "file://halt \

@@ -5,6 +5,7 @@ LICENSE = "proprietary"
 
 KV = "${@base_contains('PREFERRED_VERSION_linux-${MACHINE}', '2.6.18', '2.6.18', '3.1.1', d)}"
 KV_vusolo2 = "${@base_contains('PREFERRED_VERSION_linux-${MACHINE}', '2.6.18', '2.6.18', '2.6.37', d)}"
+KV_vuduo2 = "${@base_contains('PREFERRED_VERSION_linux-${MACHINE}', '2.6.18', '2.6.18', '2.6.37', d)}"
 
 PV = "${KV}"
 
@@ -14,8 +15,8 @@ SRCDATE_bm750 = "20120824"
 SRCDATE_vusolo = "20120824"
 SRCDATE_vuuno = "20120824"
 SRCDATE_vuultimo = "20120824"
-SRCDATE_vuduo2 = "20120913"
-SRCDATE_vusolo2 = "20120918"
+SRCDATE_vuduo2 = "20121017"
+SRCDATE_vusolo2 = "20121023"
 
 MODULES_NAME_bm750 = "procmk\ndvb-bcm7335\nbrcmfb"
 MODULES_NAME_vusolo = "procmk\ndvb-bcm7325\nbrcmfb"

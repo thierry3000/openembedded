@@ -3,7 +3,7 @@
 if lsmod | grep -q 'brcmfb'; then      
         echo driver is installed  
 else                           
-	for mod in procmk dvb-bcm7413 brcmfb fpga_directc; do
+	for mod in procmk dvb-bcm7356 brcmfb fpga_directc; do
 		modprobe $mod
 	done
 fi

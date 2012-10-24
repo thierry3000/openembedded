@@ -31,7 +31,6 @@ RDEPENDS_append_bm750 = " ${GST_BASE_RDEPENDS} ${GST_DVD_RDEPENDS} gst-plugin-av
 RDEPENDS_append_vusolo = " ${GST_BASE_RDEPENDS} ${GST_DVD_RDEPENDS} gst-plugin-avi"
 RDEPENDS_append_vuuno = " ${GST_BASE_RDEPENDS} ${GST_DVD_RDEPENDS} gst-plugin-avi"
 RDEPENDS_append_vuultimo = " ${GST_BASE_RDEPENDS} ${GST_DVD_RDEPENDS} gst-plugin-avi"
-RDEPENDS_append_vu7425 = " ${GST_BASE_RDEPENDS} ${GST_DVD_RDEPENDS} gst-plugin-avi"
 RDEPENDS_append_vuduo2 = " ${GST_BASE_RDEPENDS} ${GST_DVD_RDEPENDS} gst-plugin-avi"
 RDEPENDS_append_vusolo2 = " ${GST_BASE_RDEPENDS} ${GST_DVD_RDEPENDS} gst-plugin-avi"
 RDEPENDS_append_dm7020hd = " ${GST_BASE_RDEPENDS} ${GST_DVD_RDEPENDS} gst-plugin-avi"
@@ -139,17 +138,13 @@ SRC_URI = "git://192.168.102.66/dvbapp_factory.git;protocol=http;branch=vuplus_e
 
 SRC_URI_append_bm750 = " file://enigma2_vuplus_textvfd.patch;patch=1;pnum=1"
 SRC_URI_append_vuuno = " file://enigma2_vuplus_textvfd.patch;patch=1;pnum=1"
+SRC_URI_append_vusolo2 = " file://enigma2_vuplus_textvfd.patch;patch=1;pnum=1"
 
 SRC_URI_append_vusolo = " file://enigma2_vuplus_misc.patch;patch=1;pnum=1"
 
 SRC_URI_append = " ${@base_contains("MACHINE_FEATURES", "vuwlan", "file://enigma2_vuplus_networksetup.patch;patch=1;pnum=1", "", d)}"
 
 SRC_URI_append_vuultimo = " \
-           file://analog.ttf \
-           file://skin_user.xml \
-           file://vfd_icons \
-"
-SRC_URI_append_vu7425 = " \
            file://analog.ttf \
            file://skin_user.xml \
            file://vfd_icons \

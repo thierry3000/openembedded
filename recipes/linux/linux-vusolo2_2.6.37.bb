@@ -7,10 +7,8 @@ SRCREV = ""
 
 MODULE = "linux-2.6.37"
 
-#SRC_URI += "git:///home/shcheong/work/stb/sw/7356/refsw/linux/stblinux-2.6.37_org;protocol=file;branch=master;tag=${SRCREV} \
-#        file://${MACHINE}_defconfig \
-#        "
-SRC_URI += "file://stblinux-2.6.37-3.1.tar.bz2 \
+
+SRC_URI += "http://archive.vuplus.com/download/kernel/stblinux-2.6.37-3.1.tar.bz2 \
         file://dvb-core.patch;patch=1;pnum=1 \
 	file://fix_cpu_proc.patch;patch=1;pnum=1 \
 	file://bcmgenet_oobctrl.patch;patch=1;pnum=1 \
@@ -18,11 +16,11 @@ SRC_URI += "file://stblinux-2.6.37-3.1.tar.bz2 \
         file://${MACHINE}_defconfig \
 	"
 
-#	file://brcm_disable_enet1.patch;patch=1;pnum=1 \
 #	file://brcm_nand_timing.patch;patch=1;pnum=1 \
+#        file://brcm_pinmux.patch;patch=1;pnum=1 \
 
 
-#S = "${WORKDIR}/git"
+
 S = "${WORKDIR}/stblinux-2.6.37"
 
 inherit kernel
