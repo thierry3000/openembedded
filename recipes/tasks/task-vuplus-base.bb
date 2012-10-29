@@ -1,7 +1,7 @@
 DESCRIPTION = "Vuplus: Base Task for the Vuplus Distribution"
 SECTION = "vuplus/base"
 LICENSE = "MIT"
-PR = "r9"
+PR = "r10"
 
 inherit task
 
@@ -64,6 +64,8 @@ VUPLUS_BASE_RECOMMENDS_append_vuuno = " vuplus-fpga-update"
 VUPLUS_BASE_RECOMMENDS_append_vuultimo = " vuplus-fpga-update"
 
 VUPLUS_BASE_OPTIONAL_RECOMMENDS = "\
+  djmount \
+  minidlna \
   gdbserver \
   hddtemp \
   joe \
