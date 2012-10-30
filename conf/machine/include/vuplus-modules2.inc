@@ -17,7 +17,6 @@ KERNEL_WIFI_MODULES = " \
 	kernel-module-prism2-usb \
 	kernel-module-rt73usb \
 	kernel-module-rt2500usb \
-	kernel-module-r8192u-usb \
 	kernel-module-rtl8192cu \
 	kernel-module-rtl8187 \
 	kernel-module-r8712u \
@@ -57,7 +56,6 @@ KERNEL_DVB_MODULES = " \
 	kernel-module-stv0299 kernel-module-dvb-usb-opera \
 	kernel-module-stv090x kernel-module-dvb-usb-technisat-usb2 \
 	kernel-module-tda826x kernel-module-tda10086 kernel-module-tda827x kernel-module-lnbp21 kernel-module-dvb-usb-ttusb2 \
-	kernel-module-dvb-ttusb-budget \
 	kernel-module-dvb-usb-nova-t-usb2 \
 	kernel-module-mt352 kernel-module-dvb-usb-umt-010 \
 	kernel-module-dvb-usb-vp702x \

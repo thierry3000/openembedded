@@ -4,8 +4,8 @@ PRIORITY = "required"
 LICENSE = "proprietary"
 
 KV = "${@base_contains('PREFERRED_VERSION_linux-${MACHINE}', '2.6.18', '2.6.18', '3.1.1', d)}"
-KV_vusolo2 = "${@base_contains('PREFERRED_VERSION_linux-${MACHINE}', '2.6.18', '2.6.18', '2.6.37', d)}"
-KV_vuduo2 = "${@base_contains('PREFERRED_VERSION_linux-${MACHINE}', '2.6.18', '2.6.18', '2.6.37', d)}"
+KV_vusolo2 = "${@base_contains('PREFERRED_VERSION_linux-${MACHINE}', '2.6.37', '2.6.37', '3.3.6', d)}"
+KV_vuduo2 = "${@base_contains('PREFERRED_VERSION_linux-${MACHINE}', '2.6.37', '2.6.37', '3.3.6', d)}"
 
 PV = "${KV}"
 
@@ -15,8 +15,8 @@ SRCDATE_bm750 = "20120824"
 SRCDATE_vusolo = "20120824"
 SRCDATE_vuuno = "20120824"
 SRCDATE_vuultimo = "20120824"
-SRCDATE_vuduo2 = "20121017"
-SRCDATE_vusolo2 = "20121023"
+SRCDATE_vuduo2 = "20121025"
+SRCDATE_vusolo2 = "20121030"
 
 MODULES_NAME_bm750 = "procmk\ndvb-bcm7335\nbrcmfb"
 MODULES_NAME_vusolo = "procmk\ndvb-bcm7325\nbrcmfb"
@@ -27,10 +27,6 @@ MODULES_NAME_vusolo2 = "procmk\ndvb-bcm7356\nbrcmfb\nfpga_directc"
 
 RDEPENDS_2.6.18 = "initscripts-vuplus kernel (${KV}) kernel-module-firmware-class kernel-module-input kernel-module-evdev kernel-module-i2c-core kernel-module-snd kernel-module-snd-pcm"
 RDEPENDS_3.1 = "initscripts-vuplus kernel (${KV})" 
-
-RDEPENDS = "\
-  ${@base_contains('PREFERRED_VERSION_linux-${MACHINE}', '2.6.18', '${RDEPENDS_2.6.18}', '${RDEPENDS_3.1}', d)} \
-"
 
 RDEPENDS = "\
   ${@base_contains('PREFERRED_VERSION_linux-${MACHINE}', '2.6.18', '${RDEPENDS_2.6.18}', '${RDEPENDS_3.1}', d)} \
