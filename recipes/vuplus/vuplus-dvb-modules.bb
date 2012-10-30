@@ -11,10 +11,10 @@ PV = "${KV}"
 
 inherit module
 
-SRCDATE_bm750 = "20120824"
-SRCDATE_vusolo = "20120824"
-SRCDATE_vuuno = "20120824"
-SRCDATE_vuultimo = "20120824"
+SRCDATE_bm750 = "20121025"
+SRCDATE_vusolo = "20121025"
+SRCDATE_vuuno = "20121025"
+SRCDATE_vuultimo = "20121025"
 SRCDATE_vuduo2 = "20121025"
 SRCDATE_vusolo2 = "20121030"
 
