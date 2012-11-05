@@ -16,7 +16,6 @@ SRC_URI += "http://archive.vuplus.com/download/kernel/stblinux-2.6.37-3.1.tar.bz
         file://${MACHINE}_defconfig \
 	"
 
-#	file://brcm_nand_timing.patch;patch=1;pnum=1 \
 #        file://brcm_pinmux.patch;patch=1;pnum=1 \
 
 

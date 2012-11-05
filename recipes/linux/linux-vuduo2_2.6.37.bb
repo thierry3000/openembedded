@@ -6,7 +6,6 @@ SRCREV = "r0"
 
 MODULE = "linux-2.6.37"
 
-#	file://brcm_nand_timing.patch;patch=1;pnum=1 \
 
 SRC_URI += " http://archive.vuplus.com/download/kernel/stblinux-2.6.37-3.1.tar.bz2 \
 	file://dvb-core.patch;patch=1;pnum=1 \
