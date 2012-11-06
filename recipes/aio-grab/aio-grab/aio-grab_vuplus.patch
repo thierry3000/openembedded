@@ -1,5 +1,5 @@
 diff --git a/main.c b/main.c
-index ffff998..632a153 100644
+index ffff998..4bf7327 100644
 --- a/main.c
 +++ b/main.c
 @@ -86,8 +86,8 @@ void (*resize)(unsigned char *source, unsigned char *dest, int xsource, int ysou
@@ -8,12 +8,12 @@ index ffff998..632a153 100644
  
 -enum {UNKNOWN,PALLAS,VULCAN,XILLEON,BRCM7401,BRCM7400,BRCM7405};
 -char *stb_name[]={"unknown","Pallas","Vulcan","Xilleon","Brcm7401","Brcm7400","Brcm7405"};
-+enum {UNKNOWN,PALLAS,VULCAN,XILLEON,BRCM7401,BRCM7400,BRCM7405,BRCM7335,BRCM7325};
-+char *stb_name[]={"unknown","Pallas","Vulcan","Xilleon","Brcm7401","Brcm7400","Brcm7405","Brcm7335","Brcm7325"};
++enum {UNKNOWN,PALLAS,VULCAN,XILLEON,BRCM7401,BRCM7400,BRCM7405,BRCM7335,BRCM7325,BRCM7346,BRCM7425};
++char *stb_name[]={"unknown","Pallas","Vulcan","Xilleon","Brcm7401","Brcm7400","Brcm7405","Brcm7335","Brcm7325","Brcm7346","Brcm7425"};
  int stb_type=UNKNOWN;
  
  // main program
-@@ -139,6 +139,31 @@ int main(int argc, char **argv) {
+@@ -139,6 +139,53 @@ int main(int argc, char **argv) {
  				stb_type=BRCM7405;
  		}
  		pclose(pipe);
@@ -39,31 +39,116 @@ index ffff998..632a153 100644
 +					stb_type=BRCM7405;
 +					break;
 +				}
++                                else if (strstr(upcase(buf),"7356"))
++                                {
++                                        stb_type=BRCM7346;
++                                        break;
++                                }
++                                else if (strstr(upcase(buf),"7346"))
++                                {
++                                        stb_type=BRCM7346;
++                                        break;
++                                }
++
++                                else if (strstr(upcase(buf),"7424"))
++                                {
++                                        stb_type=BRCM7425;
++                                        break;
++                                }
++                                else if (strstr(upcase(buf),"7425"))
++                                {
++                                        stb_type=BRCM7425;
++                                        break;
++                                }
++
 +			}
 +		}
 +		pclose(pipe);
  	}
  
  	if (stb_type == UNKNOWN)
-@@ -491,7 +516,7 @@ void getvideo(unsigned char *video, int *xres, int *yres)
+@@ -491,15 +538,27 @@ void getvideo(unsigned char *video, int *xres, int *yres)
  	char buf[256];
  	FILE *pipe;
  
 -	if (stb_type == BRCM7401 || stb_type == BRCM7400 || stb_type == BRCM7405)
-+	if (stb_type == BRCM7401 || stb_type == BRCM7400 || stb_type == BRCM7405 || stb_type == BRCM7335 || stb_type == BRCM7325)
++	if (stb_type == BRCM7401 || stb_type == BRCM7400 || stb_type == BRCM7405 || stb_type == BRCM7335 || stb_type == BRCM7325 || stb_type == BRCM7346 || stb_type == BRCM7425)
  	{
  		// grab brcm7401 pic from decoder memory
  		
-@@ -530,7 +555,7 @@ void getvideo(unsigned char *video, int *xres, int *yres)
+-		if(!(memory = (unsigned char*)mmap(0, 100, PROT_READ, MAP_SHARED, mem_fd, 0x10100000)))
++		if(stb_type == BRCM7401 || stb_type == BRCM7400 || stb_type == BRCM7405 || stb_type == BRCM7335 || stb_type == BRCM7325)
+ 		{
+-			printf("Mainmemory: <Memmapping failed>\n");
+-			return;
++			if(!(memory = (unsigned char*)mmap(0, 100, PROT_READ, MAP_SHARED, mem_fd, 0x10100000)))
++			{
++				printf("Mainmemory: <Memmapping failed>\n");
++				return;
++			}
++		}
++		else
++		{
++			if(!(memory = (unsigned char*)mmap(0, 100, PROT_READ, MAP_SHARED, mem_fd, 0x10600000)))
++			{
++				printf("Mainmemory: <Memmapping failed>\n");
++				return;
++			}
+ 		}
++	
+ 
+ 		unsigned char data[100];
+ 
+@@ -509,17 +568,31 @@ void getvideo(unsigned char *video, int *xres, int *yres)
+ 		memcpy(data,memory,100); 
+ 		//vert_start=data[0x1B]<<8|data[0x1A];
+ 		//vert_end=data[0x19]<<8|data[0x18];
+-		stride=data[0x15]<<8|data[0x14];	
+-		ofs=(data[0x28]<<8|data[0x27])>>4;
+-		ofs2=(data[0x2c]<<8|data[0x2b])>>4;
+-		adr=(data[0x1f]<<24|data[0x1e]<<16|data[0x1d]<<8|data[0x1c])&0xFFFFFF00;
+-		adr2=(data[0x23]<<24|data[0x22]<<16|data[0x21]<<8|data[0x20])&0xFFFFFF00;
+-		offset=adr2-adr;
++		if(stb_type == BRCM7401 || stb_type == BRCM7400 || stb_type == BRCM7405 || stb_type == BRCM7335 || stb_type == BRCM7325)
++		{
++			stride=data[0x15]<<8|data[0x14];	
++			ofs=(data[0x28]<<8|data[0x27])>>4;
++			ofs2=(data[0x2c]<<8|data[0x2b])>>4;
++			adr=(data[0x1f]<<24|data[0x1e]<<16|data[0x1d]<<8|data[0x1c])&0xFFFFFF00;
++			adr2=(data[0x23]<<24|data[0x22]<<16|data[0x21]<<8|data[0x20])&0xFFFFFF00;
++			offset=adr2-adr;
++		}
++                else
++                {
++                        stride=data[0x15]<<8|data[0x14];
++                        ofs=(data[0x3c]<<8|data[0x3b])>>4;
++                        ofs2=(data[0x40]<<8|data[0x3f])>>4;
++                        adr=(data[0x1f]<<24|data[0x1e]<<16|data[0x1d]<<8|data[0x1c])&0xFFFFFF00;
++                        adr2=(data[0x37]<<24|data[0x36]<<16|data[0x35]<<8|data[0x34])&0xFFFFFF00;
++                        offset=adr2-adr;
++
++                }
++
+ 		
+ 		munmap(memory, 100);
+ 
+-		// printf("Stride: %d Res: %d\n",stride,res);
+-		// printf("Adr: %X Adr2: %X OFS: %d %d\n",adr,adr2,ofs,ofs2);
++		printf("Stride: %d Res: %d\n",stride,res);
++		printf("Adr: %X Adr2: %X OFS: %d %d\n",adr,adr2,ofs,ofs2);
+ 
+ 		pipe=popen("cat /proc/stb/vmpeg/0/yres","r");
+ 		while (fgets(buf,sizeof(buf),pipe))
+@@ -530,7 +603,7 @@ void getvideo(unsigned char *video, int *xres, int *yres)
  		chroma = (unsigned char *)malloc(stride*(ofs2+64));	
  
  		// grabbing luma & chroma plane from the decoder memory
 -		if (stb_type == BRCM7401 || stb_type == BRCM7405)
-+		if (stb_type == BRCM7401 || stb_type == BRCM7405 || stb_type == BRCM7325)
++		if (stb_type == BRCM7401 || stb_type == BRCM7405 || stb_type == BRCM7325 || stb_type == BRCM7346 || stb_type == BRCM7425)
  		{
  			// on dm800/dm500hd we have direct access to the decoder memory
  			if(!(memory_tmp = (unsigned char*)mmap(0, offset + stride*(ofs2+64), PROT_READ, MAP_SHARED, mem_fd, adr)))
-@@ -543,7 +568,7 @@ void getvideo(unsigned char *video, int *xres, int *yres)
+@@ -543,7 +616,7 @@ void getvideo(unsigned char *video, int *xres, int *yres)
  							// and hope we get a good timing. dont ask me why, but every DM800 i tested so far produced a good
  							// result with a 50ms delay
  			
@@ -72,7 +157,7 @@ index ffff998..632a153 100644
  		{
  			// on dm8000 we have to use dma, so dont change anything here until you really know what you are doing !
  			
-@@ -553,7 +578,7 @@ void getvideo(unsigned char *video, int *xres, int *yres)
+@@ -553,7 +626,7 @@ void getvideo(unsigned char *video, int *xres, int *yres)
  				return;
  			}
  			volatile unsigned long *mem_dma;
@@ -81,21 +166,21 @@ index ffff998..632a153 100644
  			{
  				printf("Mainmemory: <Memmapping failed>\n");
  				return;
-@@ -595,7 +620,7 @@ void getvideo(unsigned char *video, int *xres, int *yres)
+@@ -595,7 +668,7 @@ void getvideo(unsigned char *video, int *xres, int *yres)
  		int chr_luma_stride = 0x40;
   		int sw=1;
  
 -		if (stb_type == BRCM7405)
-+		if (stb_type == BRCM7405 || stb_type == BRCM7325)
++		if (stb_type == BRCM7405 || stb_type == BRCM7325 || stb_type == BRCM7346 || stb_type == BRCM7425)
  			chr_luma_stride *= 2;
  
  		xsub=chr_luma_stride;
-@@ -630,9 +655,9 @@ void getvideo(unsigned char *video, int *xres, int *yres)
+@@ -630,9 +703,9 @@ void getvideo(unsigned char *video, int *xres, int *yres)
  			}
  		}
  
 -		if (stb_type == BRCM7401 || stb_type == BRCM7405)
-+		if (stb_type == BRCM7401 || stb_type == BRCM7405 || stb_type == BRCM7325)
++		if (stb_type == BRCM7401 || stb_type == BRCM7405 || stb_type == BRCM7325 || stb_type == BRCM7346 || stb_type == BRCM7425)
  			munmap(memory_tmp, offset + stride*(ofs2+64));
 -		else if (stb_type == BRCM7400)
 +		else if (stb_type == BRCM7400 || stb_type == BRCM7335)
