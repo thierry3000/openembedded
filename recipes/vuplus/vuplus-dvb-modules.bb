@@ -32,10 +32,12 @@ RDEPENDS = "\
   ${@base_contains('PREFERRED_VERSION_linux-${MACHINE}', '2.6.18', '${RDEPENDS_2.6.18}', '${RDEPENDS_3.1}', d)} \
 "
 
-PR = "r19-${SRCDATE}"
+PR = "r20-${SRCDATE}"
 
 #hack
 DEPENDS = " module-init-tools"
+DEPENDS_append_vusolo2 = " virtual/kernel"
+DEPENDS_append_duo2 = " virtual/kernel"
 RDEPENDS_append_vuplus = " module-init-tools-depmod"
 
 SRC_URI = "http://archive.vuplus.com/download/drivers/beta/private/vuplus-dvb-modules-${MACHINE}-${PV}-${PREFERRED_GCC_VERSION}-${SRCDATE}.tar.gz "
