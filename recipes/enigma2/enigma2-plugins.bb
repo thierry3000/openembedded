@@ -10,7 +10,7 @@ SRCDATE="20110215"
 BRANCH="master"
 PV = "experimental-git${SRCDATE}"
 
-PR = "r5"
+PR = "r6"
 SRC_URI="git://code.vuplus.com/git/dvbapp-plugin.git;protocol=git;branch=${BRANCH};tag=${SRCREV}"
 
 EXTRA_OECONF = " \
@@ -22,7 +22,7 @@ EXTRA_OECONF = " \
 
 SRC_URI_append_vuplus = " \
 	   file://enigma2_plugins_mytube_tpm.patch;patch=1;pnum=1 \
-	   file://enigma2_plugins_20110810.patch;patch=1;pnum=1 \
+	   file://enigma2_plugins_20121113.patch;patch=1;pnum=1 \
 	   file://enigma2_plugins_webinterface_tpm.patch;patch=1;pnum=1 \
 	   file://enigma2_plugins_ac3lipsync_dolby.patch;patch=1;pnum=1 \
 	   file://enigma2_plugins_autoresolution_fix.patch;patch=1;pnum=1 \
