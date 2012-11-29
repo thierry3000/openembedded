@@ -6,10 +6,13 @@ PR = "r0"
 
 DEFAULT_PREFERENCE = "-1"
 
+DVB_PATCH = "${@base_contains('PREFERRED_VERSION_linux-${MACHINE}', '3.3.6', 'dvbapi-5.5.patch', 'dvbapi-5.3.patch', d)}"
+
 SRC_URI = "${KERNELORG_MIRROR}/pub/linux/kernel/v2.6/linux-${PV}.tar.bz2 \
            file://0001-implement-TIF_RESTORE_SIGMASK-support-and-enable-the.patch;patch=1 \
-           file://dvbapi-5.3.patch;patch=1;pnum=1 \
+           file://${DVB_PATCH};patch=1;pnum=1 \
 	  "
+
 S = "${WORKDIR}/linux-${PV}"
 
 set_arch() {

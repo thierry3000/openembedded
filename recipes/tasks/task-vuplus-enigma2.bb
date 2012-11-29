@@ -20,7 +20,6 @@ PACKAGES = "\
 RPROVIDES_task-vuplus-enigma2 = "task-vuplus-ui"
 DESCRIPTION_task-vuplus-enigma2 = "Vuplus: Enigma2 Dependencies"
 RDEPENDS_task-vuplus-enigma2 = "\
-  vuplus-blindscan-utils \
   enigma2 \
   enigma2-defaultservices \
   enigma2-plugin-extensions-mediascanner \
@@ -40,6 +39,7 @@ RDEPENDS_task-vuplus-enigma2 = "\
   enigma2-plugin-extensions-addstreamurl \
   enigma2-plugin-systemplugins-devicemanager \
 "
+
 
 RRECOMMENDS_task-vuplus-enigma2 = "\
   aio-grab \
@@ -63,8 +63,29 @@ RDEPENDS_task-vuplus-enigma2_append_bm750 = "\
   enigma2-plugin-systemplugins-fancontrol \
   enigma2-plugin-extensions-hbbtv \
 "
+RDEPENDS_task-vuplus-enigma2_append_vuduo2 = "\
+  enigma2-plugin-systemplugins-remotecontrolcode \
+  enigma2-plugin-systemplugins-hdmicec \
+  enigma2-plugin-extensions-openwebif \
+  enigma2-plugin-extensions-hbbtv \
+  duo2lcd4linux \
+  vuplus-blindscan-utils \
+  enigma2-plugin-systemplugins-firmwareupgrade \
+  enigma2-plugin-systemplugins-manualfancontrol \
+"
+
+RDEPENDS_task-vuplus-enigma2_append_vusolo2 = "\
+  enigma2-plugin-extensions-openwebif \
+  enigma2-plugin-systemplugins-remotecontrolcode \
+  enigma2-plugin-systemplugins-hdmicec \
+  enigma2-plugin-extensions-hbbtv \
+  enigma2-plugin-systemplugins-firmwareupgrade \
+  enigma2-plugin-systemplugins-manualfancontrol \
+  enigma2-plugin-systemplugins-adsm \
+"
 
 RDEPENDS_task-vuplus-enigma2_append_vuuno = "\
+  vuplus-blindscan-utils \
   enigma2-plugin-systemplugins-fpgaupgrade \
   enigma2-plugin-systemplugins-blindscan \
   enigma2-plugin-systemplugins-manualfancontrol \
@@ -72,6 +93,7 @@ RDEPENDS_task-vuplus-enigma2_append_vuuno = "\
   enigma2-plugin-extensions-hbbtv \
 "
 RDEPENDS_task-vuplus-enigma2_append_vuultimo = "\
+  vuplus-blindscan-utils \
   enigma2-plugin-systemplugins-firmwareupgrade \
   enigma2-plugin-systemplugins-blindscan \
   enigma2-plugin-systemplugins-manualfancontrol \

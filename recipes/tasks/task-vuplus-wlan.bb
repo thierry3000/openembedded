@@ -1,7 +1,7 @@
 DESCRIPTION = "Vuplus: W-LAN Task for the Vuplus Distribution"
 SECTION = "vuplus/base"
 LICENSE = "MIT"
-PR = "r9"
+PR = "r10"
 
 inherit task
 
@@ -36,9 +36,9 @@ WLAN_USB_MODULES = "\
 "
 
 WLAN_USB_MODULES_LEGACY = "\
-  zd1211b \
-  wlan-rt73 \
-  r8712u \
+#  zd1211b \
+#  wlan-rt73 \
+#  r8712u \
   rt3070 \
   r8192cu \
 "
@@ -58,6 +58,9 @@ RDEPENDS_${PN}_append_vuuno = "\
 RDEPENDS_${PN}_append_vuultimo = "\
   ${@base_contains('PREFERRED_VERSION_linux-vuultimo', '2.6.18', '${WLAN_USB_MODULES_LEGACY}', '${WLAN_CRYPTO_MODULES} ${WLAN_USB_MODULES}', d)} \
 "
+
+RDEPENDS_${PN}_append_vuduo2 = '${WLAN_USB_MODULES}'
+RDEPENDS_${PN}_append_vusolo2 = '${WLAN_USB_MODULES}'
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 

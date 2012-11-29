@@ -38,6 +38,8 @@ do_stage() {
 
 do_install() {
         oe_runmake 'DESTDIR=${D}' install
+	install -d ${D}${sysconfdir}
+	install -m 755 ${WORKDIR}/directfbrc ${D}${sysconfdir}
 }
 
 

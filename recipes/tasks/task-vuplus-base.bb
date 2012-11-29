@@ -63,6 +63,9 @@ VUPLUS_BASE_RECOMMENDS = "\
 VUPLUS_BASE_RECOMMENDS_append_vuuno = " vuplus-fpga-update"
 VUPLUS_BASE_RECOMMENDS_append_vuultimo = " vuplus-fpga-update"
 
+#VUPLUS_BASE_RECOMMENDS_append_vuduo2 = " vuplus-manual"
+VUPLUS_BASE_RECOMMENDS_append_vusolo2 = " vuplus-manual"
+
 VUPLUS_BASE_OPTIONAL_RECOMMENDS = "\
   djmount \
   minidlna \
