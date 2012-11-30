@@ -46,7 +46,6 @@ do_install_vuultimo() {
                 install -m 0755 ${S}/$i.mvi ${D}/usr/share/$i.mvi;
                 ln -sf /usr/share/$i.mvi ${D}/boot/$i.mvi;
         done;
-        install -m 0755 ${S}/vmlinuz.initrd ${D}/boot/vmlinuz.initrd
         install -m 0755 ${S}/splash_cfe_auto.bin ${D}/boot/splash_cfe_auto.bin
 }
 do_install_vuduo2() {
