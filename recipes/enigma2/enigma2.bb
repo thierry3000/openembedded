@@ -77,7 +77,7 @@ RDEPENDS_enigma2-plugin-extensions-hbbtv = "tslib-conf libts-1.0-0 libsysfs2 lib
 RDEPENDS_enigma2-plugin-systemplugins-devicemanager = "util-linux-ng-blkid ntfs-3g dosfstools"
 
 PN = "enigma2"
-PR = "r59"
+PR = "r60"
 
 SRCDATE = "20110922"
 SRCREV = "5e19a3f8a5e8ce8a4e2cb2b601a1b8ef3554e4be"
@@ -151,6 +151,11 @@ SRC_URI_append_vuultimo = " \
            file://vfd_icons \
 "
 
+SRC_URI_append_vuduo2 = " \
+           file://skin_user.xml \
+           file://vfd_icons \
+"
+
 def change_po():
         import os
         try:
@@ -218,6 +223,12 @@ EXTRA_OECONF = " \
 
 do_install_append_vuultimo() {
         install -m 0755 ${WORKDIR}/analog.ttf ${D}/usr/share/fonts/
+        install -m 0755 ${WORKDIR}/skin_user.xml ${D}/usr/share/enigma2/defaults/
+        install -d ${D}/usr/share/enigma2/vfd_icons/
+        install -m 0755 ${WORKDIR}/vfd_icons/*.png ${D}/usr/share/enigma2/vfd_icons/
+}
+
+do_install_append_vuduo2() {
         install -m 0755 ${WORKDIR}/skin_user.xml ${D}/usr/share/enigma2/defaults/
         install -d ${D}/usr/share/enigma2/vfd_icons/
         install -m 0755 ${WORKDIR}/vfd_icons/*.png ${D}/usr/share/enigma2/vfd_icons/
