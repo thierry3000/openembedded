@@ -1,0 +1,42 @@
+diff --git a/lib/python/Plugins/SystemPlugins/WirelessAccessPoint/plugin.py b/lib/python/Plugins/SystemPlugins/WirelessAccessPoint/plugin.py
+index ff6849d..1416e31 100755
+--- a/lib/python/Plugins/SystemPlugins/WirelessAccessPoint/plugin.py
++++ b/lib/python/Plugins/SystemPlugins/WirelessAccessPoint/plugin.py
+@@ -523,9 +523,12 @@ class WirelessAccessPoint(Screen,ConfigListScreen):
+ 		sysctlList = {}
+ 		for line in sysctlLines:
+ 			line = line.strip()
+-			(key,value) = line.split("=")
+-			key=key.strip()
+-			value=value.strip()
++			try:
++				(key,value) = line.split("=")
++				key=key.strip()
++				value=value.strip()
++			except:
++				continue
+ 			sysctlList[key] = value
+ 		sysctlList["net.ipv4.ip_forward"] = str(setValue)
+ 		fp = file(sysctlPath, "w")
+diff --git a/lib/python/Screens/ChoiceBox.py b/lib/python/Screens/ChoiceBox.py
+old mode 100644
+new mode 100755
+index 7c8b142..bd22582
+--- a/lib/python/Screens/ChoiceBox.py
++++ b/lib/python/Screens/ChoiceBox.py
+@@ -121,12 +121,9 @@ class ChoiceBox(Screen):
+ 		pos = 0
+ 		summarytext = ""
+ 		for entry in self.summarylist:
+-			if pos > curpos-2 and pos < curpos+5:
+-				if pos == curpos:
+-					summarytext += ">"
+-				else:
+-					summarytext += entry[0]
+-				summarytext += ' ' + entry[1] + '\n'
++			if pos == curpos:
++				summarytext += entry[0]+' ' + entry[1]
++				break
+ 			pos += 1
+ 		self["summary_list"].setText(summarytext)
+ 

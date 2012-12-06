@@ -152,6 +152,7 @@ SRC_URI_append_vuultimo = " \
 "
 
 SRC_URI_append_vuduo2 = " \
+           file://enigma2_choicebox_duo2.patch;patch=1;pnum=1 \
            file://skin_user.xml \
            file://vfd_icons \
 "
