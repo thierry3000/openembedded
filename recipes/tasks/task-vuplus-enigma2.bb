@@ -1,7 +1,7 @@
 DESCRIPTION = "Vuplus: E2 Task for the Vuplus Distribution"
 SECTION = "vuplus/base"
 LICENSE = "MIT"
-PR = "r22"
+PR = "r23"
 
 inherit task
 
@@ -81,7 +81,7 @@ RDEPENDS_task-vuplus-enigma2_append_vusolo2 = "\
   enigma2-plugin-extensions-hbbtv \
   enigma2-plugin-systemplugins-firmwareupgrade \
   enigma2-plugin-systemplugins-manualfancontrol \
-  enigma2-plugin-systemplugins-adsm \
+  enigma2-plugin-systemplugins-autoshutdown \
 "
 
 RDEPENDS_task-vuplus-enigma2_append_vuuno = "\

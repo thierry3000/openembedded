@@ -1,0 +1,22 @@
+diff --git a/src/plugin.py b/src/plugin.py
+index 4bb7533..4f90dae 100644
+--- a/src/plugin.py
++++ b/src/plugin.py
+@@ -27,7 +27,7 @@ from __init__ import _
+ 
+ config.autoshutdown = ConfigSubsection()
+ config.autoshutdown.time = ConfigInteger(default = 120, limits = (1, 1440))
+-config.autoshutdown.inactivetime = ConfigInteger(default = 60, limits = (1, 1440))
++config.autoshutdown.inactivetime = ConfigInteger(default = 300, limits = (1, 1440))
+ config.autoshutdown.autostart = ConfigEnableDisable(default=True)
+ config.autoshutdown.enableinactivity = ConfigEnableDisable(default=True)
+ config.autoshutdown.inactivityaction = ConfigSelection(default = "standby", choices = [("standby", _("Standby")), ("deepstandby", _("Deepstandby"))])
+@@ -263,7 +263,7 @@ class AutoShutDownConfiguration(Screen, ConfigListScreen):
+ 			config.autoshutdown.time.setValue(120)
+ 			config.autoshutdown.autostart.setValue(1)
+ 			config.autoshutdown.enableinactivity.setValue(1)
+-			config.autoshutdown.inactivetime.setValue(60)
++			config.autoshutdown.inactivetime.setValue(300)
+ 			config.autoshutdown.inactivityaction.setValue("standby")
+ 			config.autoshutdown.epgrefresh.setValue(1)
+ 			config.autoshutdown.plugin.setValue(1)
