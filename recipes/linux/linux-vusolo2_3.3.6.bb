@@ -3,7 +3,7 @@ LICENSE = "GPL"
 
 KV = "2.6.37"
 
-PR = "r2"
+PR = "r3"
 SRCREV = ""
 
 MODULE = "linux-2.6.37"
