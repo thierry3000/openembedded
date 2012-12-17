@@ -13,6 +13,8 @@ PR = "r0.73"
 
 require openplugins.inc
 
+SRC_URI += "file://openwebif_8001_8002.patch;patch=1;pnum=1"
+
 # Just a quick hack to "compile" it
 do_compile() {
 	cheetah-compile -R --nobackup ${S}/plugin

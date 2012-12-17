@@ -72,6 +72,9 @@ RDEPENDS_task-vuplus-enigma2_append_vuduo2 = "\
   vuplus-blindscan-utils \
   enigma2-plugin-systemplugins-firmwareupgrade \
   enigma2-plugin-systemplugins-manualfancontrol \
+  enigma2-plugin-systemplugins-autoshutdown \
+  enigma2-plugin-systemplugins-transcodingsetup \
+  enigma2-transtreamproxy \
 "
 
 RDEPENDS_task-vuplus-enigma2_append_vusolo2 = "\
@@ -82,6 +85,8 @@ RDEPENDS_task-vuplus-enigma2_append_vusolo2 = "\
   enigma2-plugin-systemplugins-firmwareupgrade \
   enigma2-plugin-systemplugins-manualfancontrol \
   enigma2-plugin-systemplugins-autoshutdown \
+  enigma2-plugin-systemplugins-transcodingsetup \
+  enigma2-transtreamproxy \
 "
 
 RDEPENDS_task-vuplus-enigma2_append_vuuno = "\
