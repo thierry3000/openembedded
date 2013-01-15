@@ -3,7 +3,7 @@ LICENSE = "GPL"
 
 KV = "3.3.6"
 
-PR = "r4"
+PR = "r5"
 SRCREV = ""
 
 MODULE = "linux-3.3.6"
@@ -14,6 +14,7 @@ SRC_URI += "http://archive.vuplus.com/download/kernel/stblinux-3.3.6-1.2.tar.bz2
         file://brcm_mtd_mac.patch;patch=1;pnum=1 \
         file://dvb_core_5.5.patch;patch=1;pnum=1 \
         file://brcm_remove_entire_mtd.patch;patch=1;pnum=1 \
+        file://dvb_backport.patch;patch=1;pnum=1 \
         file://${MACHINE}_defconfig \
 	"
 
