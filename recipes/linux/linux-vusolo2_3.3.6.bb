@@ -22,12 +22,13 @@ S = "${WORKDIR}/linux"
 
 inherit kernel
 
-FILES_kernel-image = "/boot/vmlinux.gz /boot/autoexec.bat"
-
 export OS = "Linux"
 KERNEL_IMAGETYPE = "vmlinux"
 KERNEL_OUTPUT = "vmlinux"
 KERNEL_OBJECT_SUFFIX = "ko"
+KERNEL_IMAGEDEST = "tmp"
+
+FILES_kernel-image = "/${KERNEL_IMAGEDEST}/vmlinux.gz /${KERNEL_IMAGEDEST}/autoexec.bat"
 
 
 do_configure_prepend() {
