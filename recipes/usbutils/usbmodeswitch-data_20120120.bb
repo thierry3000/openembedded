@@ -1,7 +1,8 @@
 DESCRIPTION = "tool to switch multidevice usb modes"
 LICENSE = "GPL"
 
-PV="20120120"
+PV="20121109"
+PR="r1"
 SRC_URI=" \
 	http://www.draisberghof.de/usb_modeswitch/usb-modeswitch-data-${PV}.tar.bz2 \
 	file://usb-modeswitch-data_20120215.patch;patch=1\

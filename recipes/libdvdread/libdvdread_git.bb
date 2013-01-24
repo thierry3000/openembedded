@@ -3,12 +3,11 @@ HOMEPAGE="http://git.debian-maintainers.org"
 DESCRIPTION="DVD read multimeda library"
 LICENSE = "GPL"
 
-PV = "4.1.3+git"
-PR = "r9"
+PR = "r10"
 # tag debian/4.1.3-9
-SRCREV = "8d2745c6e61cbcf70112d5bb0d15685090e20af1"
+SRCREV = "7384dde8097da5a5154d7f47340f75ac42a974e6"
 
-SRC_URI = "git://git.debian-maintainers.org/git/daniel/libdvdread.git;protocol=git;branch=debian;tag=${SRCREV}"
+SRC_URI = "git://sources.progress-linux.org/git/users/daniel/packages/libdvdread.git;protocol=git;branch=debian;tag=${SRCREV}"
 S = "${WORKDIR}/git"
 
 inherit autotools pkgconfig
