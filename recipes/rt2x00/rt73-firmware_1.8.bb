@@ -1,9 +1,9 @@
 DESCRIPTION = "Firmware for rt73 based USB wifi adaptors"
 LICENSE = "unknown"
 
-PR = "r1"
+PR = "r2"
 
-SRC_URI = "http://www.ralinktech.com.tw/data/RT71W_Firmware_V${PV}.zip"
+SRC_URI = "ftp://ftp.pl.scene.org/vol/rzm1/linux-gentoo/distfiles/RT71W_Firmware_V1.8.zip "
 
 S = "${WORKDIR}/RT71W_Firmware_V${PV}"
 

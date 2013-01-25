@@ -2,13 +2,13 @@ DEPENDS = "dreambox-dvbincludes"
 DESCRIPTION = "DVBsnoop by rasc@users.sourceforge.net"
 MAINTAINER = "Felix Domke <tmbinc@elitdvb.net>"
 
-SRC_URI = "cvs://anoncvs@cvs.tuxbox.org/cvs/tuxbox;module=apps/dvb/dvbsnoop;method=ext \
+SRC_REV = "f120ec1ab0469b0dc3944adf7c5950c0bbef0832"
+
+SRC_URI = "git://git.code.sf.net/p/tuxbox-cvs/apps;protocol=git;tag=${SRC_REV} \
            file://acinclude.m4"
 	   
-SRCDATE = "20081001"
-PR = "r0"
-PV = "0.0+cvs${SRCDATE}"
-S = "${WORKDIR}/dvbsnoop"
+PR = "r2"
+S = "${WORKDIR}/git/dvb/dvbsnoop"
 
 inherit autotools pkgconfig
 

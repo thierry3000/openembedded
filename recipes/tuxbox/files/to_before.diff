@@ -1,0 +1,1207 @@
+diff --git a/Makefile.am b/Makefile.am
+index 675715c..f151242 100644
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -1,17 +1,8 @@
+ AUTOMAKE_OPTIONS = gnu
+ 
+ SUBDIRS = \
++	libavs \
+ 	liblcddisplay \
+-	liblircdclient
+-
+-if ENABLE_TUXTXT
+-SUBDIRS += \
++	liblircdclient \
+ 	libtuxtxt
+-endif
+-
+-if !BOXTYPE_GENERIC
+-if !BOXTYPE_TRIPLE
+-SUBDIRS += \
+-	libavs
+-endif
+-endif
++	
+diff --git a/configure.ac b/configure.ac
+index b31ac93..f00e59f 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -3,7 +3,6 @@ AM_INIT_AUTOMAKE(libs,0.0.1)
+ 
+ TUXBOX_APPS
+ TUXBOX_APPS_DIRECTORY
+-TUXBOX_BOXTYPE
+ 
+ AC_PROG_CC
+ AC_PROG_CXX
+@@ -11,22 +10,23 @@ AC_DISABLE_STATIC
+ AM_PROG_LIBTOOL
+ AC_HEADER_STDC
+ 
+-if test "$BOXTYPE" != "tripledragon"; then
+-	TUXBOX_APPS_DRIVER
+-	TUXBOX_APPS_DVB
+-fi
++TUXBOX_APPS_DRIVER
++TUXBOX_APPS_DVB
+ TUXBOX_APPS_LIB_CONFIG(FREETYPE,freetype-config)
+ TUXBOX_APPS_LIB_PKGCONFIG(PNG,libpng)
+ 
+-if test "$BOXTYPE" = "dbox2"; then
+-	TUXBOX_APPS_LIB_PKGCONFIG(TUXBOX,tuxbox)
++AC_ARG_WITH(boxtype,
++	[  --with-boxtype=NAME box type [[dbox2,dm7000,dm500,dm56x0,dm600pvr...]]],
++	[BOXTYPE="$withval"],[BOXTYPE="dbox2"])
++	
++AC_SUBST(BOXTYPE)
++AC_SUBST(LIBTUXBOX_LIBS)
++if test "$BOXTYPE" = "dbox2" ; then
++	LIBTUXBOX_LIBS=-ltuxbox
++else
++	LIBTUXBOX_LIBS=
+ fi
+ 
+-AC_ARG_ENABLE(tuxtxt,
+-        AS_HELP_STRING(--disable-tuxtxt,[disable Tuxtxt]),
+-        ,[enable_tuxtxt=yes])
+-AM_CONDITIONAL(ENABLE_TUXTXT,test "$enable_tuxtxt" != "no")
+-
+ AC_OUTPUT([
+ Makefile
+ libavs/Makefile
+diff --git a/libavs/libavs.c b/libavs/libavs.c
+index 3c8e424..481ddb5 100644
+--- a/libavs/libavs.c
++++ b/libavs/libavs.c
+@@ -19,6 +19,25 @@
+  *   along with this program; if not, write to the Free Software
+  *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+  *
++ *
++ *   $Log: libavs.c,v $
++ *   Revision 1.4  2002/08/21 09:14:52  obi
++ *   no more compile warnings
++ *
++ *   Revision 1.3  2002/03/06 14:00:35  gillem
++ *   - more work on avslib
++ *
++ *   Revision 1.2  2002/03/06 08:54:06  gillem
++ *   - some fixes
++ *   - add testavs
++ *
++ *   Revision 1.1  2002/03/04 16:10:11  gillem
++ *   - initial release
++ *
++ *
++ *
++ *   $Revision: 1.4 $
++ *
+  */
+ 
+ #include <fcntl.h>
+diff --git a/libavs/libavs.h b/libavs/libavs.h
+index 220c6b7..912e743 100644
+--- a/libavs/libavs.h
++++ b/libavs/libavs.h
+@@ -19,6 +19,22 @@
+  *   along with this program; if not, write to the Free Software
+  *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+  *
++ *
++ *   $Log: libavs.h,v $
++ *   Revision 1.3  2002/03/06 14:00:35  gillem
++ *   - more work on avslib
++ *
++ *   Revision 1.2  2002/03/06 08:53:55  gillem
++ *   - some fixes
++ *   - add testavs
++ *
++ *   Revision 1.1  2002/03/04 16:10:11  gillem
++ *   - initial release
++ *
++ *
++ *
++ *   $Revision: 1.3 $
++ *
+  */
+ 
+ #ifndef _LIBAVS_H_
+diff --git a/liblcddisplay/Makefile.am b/liblcddisplay/Makefile.am
+index 1ba18d0..276c388 100644
+--- a/liblcddisplay/Makefile.am
++++ b/liblcddisplay/Makefile.am
+@@ -9,9 +9,6 @@ AM_CXXFLAGS = \
+ 	@FREETYPE_CFLAGS@ \
+ 	@PNG_CFLAGS@
+ 
+-liblcddisplay_la_LIBADD = \
+-	@FREETYPE_LIBS@ \
+-	@PNG_LIBS@
+-
+ pkgconfigdir = $(libdir)/pkgconfig
+ pkgconfig_DATA = tuxbox-lcddisplay.pc
++
+diff --git a/liblcddisplay/fontrenderer.cpp b/liblcddisplay/fontrenderer.cpp
+index bad477b..7b39def 100644
+--- a/liblcddisplay/fontrenderer.cpp
++++ b/liblcddisplay/fontrenderer.cpp
+@@ -26,10 +26,14 @@
+ */
+ 
+ #include <config.h>
++
++#include "fontrenderer.h"
++
+ #include <stdio.h>
+ #include <string.h>
+ 
+-#include "fontrenderer.h"
++#include <ft2build.h>
++#include FT_FREETYPE_H
+ 
+ FT_Error LcdFontRenderClass::myFTC_Face_Requester(FTC_FaceID  face_id,
+                             FT_Library  library,
+@@ -52,7 +56,6 @@ LcdFontRenderClass::LcdFontRenderClass(CLCDDisplay * fb)
+ 	}
+ 	printf("\n");
+ 	font=0;
+-	pthread_mutex_init(&render_mutex, NULL);
+ }
+ 
+ LcdFontRenderClass::~LcdFontRenderClass()
+@@ -75,12 +78,12 @@ void LcdFontRenderClass::InitFontCache()
+ 		printf(" error.\n");
+ 		return;
+ 	}
+-	if (FTC_SBitCache_New(cacheManager, &sbitsCache))
++	if (FTC_SBit_Cache_New(cacheManager, &sbitsCache))
+ 	{
+ 		printf(" sbit failed!\n");
+ 		return;
+ 	}
+-	if (FTC_ImageCache_New(cacheManager, &imageCache))
++	if (FTC_Image_Cache_New(cacheManager, &imageCache))
+ 	{
+ 		printf(" imagecache failed!\n");
+ 	}
+@@ -111,29 +114,15 @@ FTC_FaceID LcdFontRenderClass::getFaceID(const char *family, const char *style)
+ 		if ((!strcmp(f->family, family)) && (!strcmp(f->style, style)))
+ 			return (FTC_FaceID)f;
+ 	}
+-	for (fontListEntry *f=font; f; f=f->next)
+-	{
+-		if (!strcmp(f->family, family))
+-			return (FTC_FaceID)f;
+-	}
+ 	return 0;
+ }
+ 
+-std::string LcdFontRenderClass::getFamily(const char *const filename) const
++FT_Error LcdFontRenderClass::getGlyphBitmap(FTC_Image_Desc *font, FT_ULong glyph_index, FTC_SBit *sbit)
+ {
+-	for (fontListEntry *f = font; f; f = f->next)
+-	{
+-		if (!strcmp(f->filename, filename))
+-			return std::string(f->family);
+-	}
+-	return "";
+-}
+-
+-FT_Error LcdFontRenderClass::getGlyphBitmap(FTC_ImageType font, FT_ULong glyph_index, FTC_SBit *sbit) {
+-	return FTC_SBitCache_Lookup(sbitsCache, font, glyph_index, sbit, NULL);
++	return FTC_SBit_Cache_Lookup(sbitsCache, font, glyph_index, sbit);
+ }
+ 
+-const char * LcdFontRenderClass::AddFont(const char * const filename)
++const char * const LcdFontRenderClass::AddFont(const char * const filename)
+ {
+ 	printf("[LCDFONT] adding font %s...", filename);
+ 	fflush(stdout);
+@@ -144,7 +133,6 @@ const char * LcdFontRenderClass::AddFont(const char * const filename)
+ 	if ((error=FT_New_Face(library, filename, 0, &face)))
+ 	{
+ 		printf(" failed: %i\n", error);
+-		delete n;
+ 		return NULL;
+ 	}
+ 	n->filename = strdup(filename);
+@@ -160,9 +148,9 @@ const char * LcdFontRenderClass::AddFont(const char * const filename)
+ 
+ LcdFontRenderClass::fontListEntry::~fontListEntry()
+ {
+-	free(filename);
+-	free(family);
+-	free(style);
++	delete[] filename;
++	delete[] family;
++	delete[] style;
+ }
+ 
+ LcdFont *LcdFontRenderClass::getFont(const char *family, const char *style, int size)
+@@ -177,10 +165,11 @@ LcdFont::LcdFont(CLCDDisplay * fb, LcdFontRenderClass *render, FTC_FaceID faceid
+ {
+ 	framebuffer=fb;
+ 	renderer=render;
+-	font.face_id=faceid;
+-	font.width  = isize;
+-	font.height = isize;
+-	font.flags  = FT_LOAD_TARGET_MONO;
++	font.font.face_id=faceid;
++	font.font.pix_width  = isize;
++	font.font.pix_height = isize;
++	font.image_type = ftc_image_mono;
++	font.image_type |= ftc_image_flag_autohinted;
+ }
+ 
+ FT_Error LcdFont::getGlyphBitmap(FT_ULong glyph_index, FTC_SBit *sbit)
+@@ -236,19 +225,9 @@ int UTF8ToUnicode(const char * &text, const bool utf8_encoded) // returns -1 on
+ void LcdFont::RenderString(int x, int y, const int width, const char * text, const int color, const int selected, const bool utf8_encoded)
+ {
+ 	int err;
+-	pthread_mutex_lock(&renderer->render_mutex);
+-
+-	FTC_ScalerRec scaler;
+-
+-	scaler.face_id = font.face_id;
+-	scaler.width   = font.width;
+-	scaler.height  = font.height;
+-	scaler.pixel   = true;
+-
+-	if ((err = FTC_Manager_LookupSize(renderer->cacheManager, &scaler, &size)) != 0)
++	if ((err=FTC_Manager_Lookup_Size(renderer->cacheManager, &font.font, &face, &size))!=0)
+ 	{ 
+ 		printf("FTC_Manager_Lookup_Size failed! (%d)\n",err);
+-		pthread_mutex_unlock(&renderer->render_mutex);
+ 		return;
+ 	}
+ 	int left=x, step_y=(size->metrics.height >> 6 )*3/4 + 4;
+@@ -261,7 +240,7 @@ void LcdFont::RenderString(int x, int y, const int width, const char * text, con
+ 		//if ((x + size->metrics.x_ppem > (left+width)) || (*text=='\n'))
+ 		if (x + size->metrics.x_ppem > (left+width))
+ 		{ //width clip
+-			break;
++			return;
+ 		}
+ 		if (*text=='\n')
+ 		{
+@@ -274,7 +253,7 @@ void LcdFont::RenderString(int x, int y, const int width, const char * text, con
+ 		if (unicode_value == -1)
+ 			break;
+ 
+-		int index = FT_Get_Char_Index(size->face, unicode_value);
++		int index = FT_Get_Char_Index(face, unicode_value);
+ 
+ 		if (!index)
+ 		  continue;
+@@ -306,26 +285,15 @@ void LcdFont::RenderString(int x, int y, const int width, const char * text, con
+ 		ry++;
+ 		}
+ 
+-		x+=glyph->xadvance+1;
+-	}
+-	pthread_mutex_unlock(&renderer->render_mutex);
++    x+=glyph->xadvance+1;
++    }
+ }
+ 
+ int LcdFont::getRenderWidth(const char * text, const bool utf8_encoded)
+ {
+-	pthread_mutex_lock(&renderer->render_mutex);
+-	FT_Error err;
+-	FTC_ScalerRec scaler;
+-	scaler.face_id = font.face_id;
+-	scaler.width   = font.width;
+-	scaler.height  = font.height;
+-	scaler.pixel   = true;
+-
+-	err = FTC_Manager_LookupSize(renderer->cacheManager, &scaler, &size);
+-	if (err != 0)
++	if (FTC_Manager_Lookup_Size(renderer->cacheManager, &font.font, &face, &size)<0)
+ 	{ 
+-		printf("FTC_Manager_Lookup_Size failed! (0x%x)\n", err);
+-		pthread_mutex_unlock(&renderer->render_mutex);
++		printf("FTC_Manager_Lookup_Size failed!\n");
+ 		return -1;
+ 	}
+ 	int x=0;
+@@ -338,7 +306,7 @@ int LcdFont::getRenderWidth(const char * text, const bool utf8_encoded)
+ 		if (unicode_value == -1)
+ 			break;
+ 
+-		int index = FT_Get_Char_Index(size->face, unicode_value);
++		int index=FT_Get_Char_Index(face, unicode_value);
+ 
+ 		if (!index)
+ 			continue;
+@@ -350,7 +318,6 @@ int LcdFont::getRenderWidth(const char * text, const bool utf8_encoded)
+     
+ 		x+=glyph->xadvance+1;
+ 	}
+-	pthread_mutex_unlock(&renderer->render_mutex);
+ 	return x;
+ }
+ 
+diff --git a/liblcddisplay/fontrenderer.h b/liblcddisplay/fontrenderer.h
+index b828741..751221f 100644
+--- a/liblcddisplay/fontrenderer.h
++++ b/liblcddisplay/fontrenderer.h
+@@ -39,12 +39,15 @@
+ 
+ #include <asm/types.h>
+ 
++
++
+ class LcdFontRenderClass;
+ class LcdFont
+ {
+         CLCDDisplay             *framebuffer;
+-        FTC_ImageTypeRec        font;
++        FTC_Image_Desc  font;
+         LcdFontRenderClass *renderer;
++        FT_Face                 face;
+         FT_Size                 size;
+ 
+         FT_Error getGlyphBitmap(FT_ULong glyph_index, FTC_SBit *sbit);
+@@ -72,15 +75,14 @@ class LcdFontRenderClass
+ 
+ 	FT_Library		library;
+ 	FTC_Manager		cacheManager;        /* the cache manager               */
+-	FTC_ImageCache	imageCache;          /* the glyph image cache           */
+-	FTC_SBitCache	sbitsCache;          /* the glyph small bitmaps cache   */
++	FTC_Image_Cache	imageCache;          /* the glyph image cache           */
++	FTC_SBit_Cache	sbitsCache;          /* the glyph small bitmaps cache   */
+ 
+ 	FTC_FaceID getFaceID(const char *family, const char *style);
+-	FT_Error getGlyphBitmap(FTC_ImageType font, FT_ULong glyph_index, FTC_SBit *sbit);
++	FT_Error getGlyphBitmap(FTC_Image_Desc *font, FT_ULong glyph_index, FTC_SBit *sbit);
+ 
+ 	public:
+-		pthread_mutex_t render_mutex;
+-		const char * AddFont(const char * const filename);
++		const char * const AddFont(const char * const filename);
+ 		void InitFontCache();
+ 
+ 		FT_Error FTC_Face_Requester(FTC_FaceID  face_id,
+@@ -94,7 +96,6 @@ class LcdFontRenderClass
+ 
+ 		//FT_Face getFace(const char *family, const char *style);
+ 		LcdFont *getFont(const char *family, const char *style, int size);
+-		std::string getFamily(const char *const filename) const;
+ 		LcdFontRenderClass(CLCDDisplay *fb);
+ 		~LcdFontRenderClass();
+ 
+diff --git a/liblcddisplay/lcddisplay.cpp b/liblcddisplay/lcddisplay.cpp
+index e000ec5..27a41e3 100644
+--- a/liblcddisplay/lcddisplay.cpp
++++ b/liblcddisplay/lcddisplay.cpp
+@@ -24,15 +24,13 @@
+ 	Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ */
+ 
+-#include <config.h>
+ #include "lcddisplay.h"
+ 
+ #include <png.h>
+ 
+ #include <stdint.h> /* uint8_t */
+ #include <fcntl.h>
+-#include <cstdio>
+-#include <cstdlib>
++#include <stdio.h>
+ #include <unistd.h>
+ #include <sys/ioctl.h>
+ #include <sys/types.h>
+@@ -43,11 +41,10 @@ CLCDDisplay::CLCDDisplay()
+ {
+ 	paused=0;
+ 	available = false;
+-#ifndef HAVE_GENERIC_HARDWARE
+ 	//open device
+-	if ((fd = open(LCD_DEVICE, O_RDWR)) < 0)
++	if((fd = open("/dev/dbox/lcd0",O_RDWR)) < 0)
+ 	{
+-		perror("LCD (" LCD_DEVICE ")");
++		perror("LCD (/dev/dbox/lcd0)");
+ 		return;
+ 	}
+ 
+@@ -59,20 +56,15 @@ CLCDDisplay::CLCDDisplay()
+ 	}
+ 	
+ 	//graphic (binary) mode 
+-#ifdef HAVE_TRIPLEDRAGON
+-	if (ioctl(fd, IOC_LCD_WRMODE, LCD_MODE_BIN) < 0)
+-#else
+ 	int i=LCD_MODE_BIN;
+ 	if ( ioctl(fd,LCD_IOCTL_ASC_MODE,&i) < 0 )
+-#endif
+ 	{
+ 		perror("graphic mode failed");
+ 		return;
+ 	}
+ 
+-	available = true;
+-#endif
+ 	iconBasePath = "";
++	available = true;
+ }
+ 
+ bool CLCDDisplay::isAvailable()
+@@ -92,7 +84,6 @@ void CLCDDisplay::pause()
+ 
+ void CLCDDisplay::resume()
+ {
+-#ifndef HAVE_GENERIC_HARDWARE
+ 	//clear the display
+ 	if ( ioctl(fd,LCD_IOCTL_CLEAR) < 0)
+ 	{
+@@ -101,88 +92,18 @@ void CLCDDisplay::resume()
+ 	}
+ 	
+ 	//graphic (binary) mode 
+-#ifdef HAVE_TRIPLEDRAGON
+-	if (ioctl(fd, IOC_LCD_WRMODE, LCD_MODE_BIN) < 0)
+-#else
+ 	int i=LCD_MODE_BIN;
+ 	if ( ioctl(fd,LCD_IOCTL_ASC_MODE,&i) < 0 )
+-#endif
+ 	{
+ 		perror("graphic mode failed");
+ 		return;
+ 	}
+-#endif
++
+ 	paused = 0;
+ }
+ 
+-#ifdef HAVE_TRIPLEDRAGON
+-void CLCDDisplay::convert_data()
+-{
+-	int x, y, xx, xp, yp;
+-	unsigned char pix, bit;
+-
+-	/* 128x64 (8bpp) membuffer -> 16*64 (1bpp) lcdbuffer */
+-	/* TODO: extend skins to 128x64 */
+-
+-	/* the strange offset handling comes from a bug (probably) in the
+-	   TD LCD driver: the MSB (0x80) of the first byte (lcd[0]) written to
+-	   the device actually appears on the lower right, 8 pixels up, so we
+-	   must shift the whole buffer one pixel to the right. This is wrong for
+-	   the column 127 (rightmost), which is shifted up 8 lines.
+-	 */
+-	for (y = 0; y < LCD_LINES; y++) {
+-		for (x = 0; x < LCD_STRIDE; x++) {
+-			pix = 0;
+-			bit = 0x80;
+-
+-			for (xx = x * 8; xx < x * 8 + 8; xx++, bit >>= 1) {
+-				xp = xx - 1;		/* shift the whole buffer one pixel to the right */
+-				yp = y;
+-				if (xp < 0) {		/* rightmost column (column 127) */
+-					xp += LCD_COLS;	/* wraparound */
+-					yp -= 8;	/* shift down 8 lines */
+-					if (yp < 0)	/* wraparound */
+-						yp += LCD_LINES;
+-				}
+-				if (raw[yp][xp] == 1)
+-					pix |= bit;
+-			}
+-/* I was chasing this one for quite some time, so check it for now */
+-#if 1
+-		if (y * LCD_STRIDE + x > LCD_BUFFER_SIZE)
+-			fprintf(stderr, "%s: y (%d) * LCD_STRIDE (%d) + x (%d) (== %d) > LCD_BUFFER_SIZE (%d)\n",
+-				__FUNCTION__, y, LCD_STRIDE, x, y*LCD_STRIDE+x, LCD_BUFFER_SIZE);
+-		else
+-#endif
+-			lcd[y * LCD_STRIDE + x] = pix;
+-		}
+-	}
+-
+-#if 0
+-/* alternative solution, just ignore the rightmost column (which would be the
+-   MSB of the first byte */
+-	for (y=0; y<64; y++){
+-		for (x=0; x<(128/8); x++){
+-			int pix=0, start = 0;
+-			unsigned char bit = 0x80;
+-			int offset=(y*128)+x*8;
+-			if (x == 0) {	/* first column, skip MSB */
+-				start = 1;
+-				bit = 0x40;
+-			} else
+-				offset--;
+-			for (yy=start; yy<8; yy++, bit >>=1) {
+-				pix|=(_buffer[offset++]>=108)?bit:0;
+-			}
+-			raw[y*16+x]=pix;
+-		}
+-	}
+-#endif
+-}
+-#else
+ void CLCDDisplay::convert_data ()
+ {
+-#ifndef HAVE_GENERIC_HARDWARE
+ 	unsigned int x, y, z;
+ 	char tmp;
+ 
+@@ -199,13 +120,10 @@ void CLCDDisplay::convert_data ()
+ 			lcd[y][x] = tmp;
+ 		}
+ 	}
+-#endif
+ }
+-#endif
+ 
+ void CLCDDisplay::update()
+ {
+-#ifndef HAVE_GENERIC_HARDWARE
+ 	convert_data();
+ 	if(paused || !available)
+ 		return;
+@@ -213,7 +131,6 @@ void CLCDDisplay::update()
+ 		if ( write(fd, lcd, LCD_BUFFER_SIZE) < 0) {
+ 			perror("lcdd: CLCDDisplay::update(): write()");
+ 		}
+-#endif
+ }
+ 
+ void CLCDDisplay::draw_point(const int x, const int y, const int state)
+@@ -454,11 +371,7 @@ bool CLCDDisplay::load_png(const char * const filename)
+ 				png_destroy_read_struct(&png_ptr, (png_infopp)NULL, (png_infopp)NULL);
+ 			else
+ 			{
+-#if (PNG_LIBPNG_VER < 10500)
+ 				if (!(setjmp(png_ptr->jmpbuf)))
+-#else
+-				if (!(setjmp(png_jmpbuf(png_ptr))))
+-#endif
+ 				{
+ 					png_init_io(png_ptr,fh);
+ 					
+@@ -468,7 +381,7 @@ bool CLCDDisplay::load_png(const char * const filename)
+ 					if (
+ 						(color_type == PNG_COLOR_TYPE_PALETTE) &&
+ 						(bit_depth  == 1                     ) &&
+-						(width      <= LCD_COLS              ) &&
++						(width      == LCD_COLS              ) &&
+ 						(height     == (LCD_ROWS * 8))
+ 						)
+ 					{
+@@ -484,13 +397,8 @@ bool CLCDDisplay::load_png(const char * const filename)
+ 							for (pass = 0; pass < number_passes; pass++)
+ 							{
+ 								fbptr = (png_byte *)raw;
+-								for (i = 0; i < height; i++, fbptr += LCD_COLS)
+-								{
++								for (i = 0; i < height; i++, fbptr += width)
+ 									png_read_row(png_ptr, fbptr, NULL);
+-									/* if the PNG is smaller, than the display width... */
+-									if (width < LCD_COLS)	/* clear the area right of the PNG */
+-										memset(fbptr + width, 0, LCD_COLS - width);
+-								}
+ 							}
+ 							png_read_end(png_ptr, info_ptr);
+ 						}
+@@ -501,5 +409,5 @@ bool CLCDDisplay::load_png(const char * const filename)
+ 		}
+ 		fclose(fh);
+ 	}
+-	return ret_value;
++	return ret_value;	
+ }
+diff --git a/liblcddisplay/lcddisplay.h b/liblcddisplay/lcddisplay.h
+index 6585c97..1904076 100644
+--- a/liblcddisplay/lcddisplay.h
++++ b/liblcddisplay/lcddisplay.h
+@@ -26,38 +26,7 @@
+ 	Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ */
+ 
+-#ifdef HAVE_GENERIC_HARDWARE
+-// dummy
+-#define LCD_ROWS	8
+-#define LCD_COLS	120
+-#define LCD_PIXEL_OFF	0
+-#define LCD_PIXEL_ON	1
+-#define LCD_PIXEL_INV	2
+-
+-#else
+-#ifndef HAVE_TRIPLEDRAGON
+-/* dreambox is actually compatible to dbox2 wrt. lcd */
+ #include <dbox/lcd-ks0713.h>
+-#define LCD_DEVICE	"/dev/dbox/lcd0"
+-#else
+-#include <tdpanel/lcdstuff.h>
+-#include <tddevices.h>
+-#define LCD_LINES	64
+-#define LCD_ROWS	(LCD_LINES / 8) // compatibility with stupid DBOX LCD driver
+-#define LCD_COLS	128
+-#define LCD_STRIDE	(LCD_COLS / 8)
+-#define LCD_BUFFER_SIZE	(LCD_LINES * LCD_STRIDE)
+-#define LCD_PIXEL_OFF	0
+-#define LCD_PIXEL_ON	1
+-#define LCD_PIXEL_INV	2
+-#define LCD_DEVICE	"/dev/" DEVICE_NAME_LCD
+-#define LCD_MODE_ASC	0
+-#define LCD_MODE_BIN	2
+-// ioctls
+-#define LCD_IOCTL_ASC_MODE	IOC_LCD_WRMODE
+-#define LCD_IOCTL_CLEAR		IOC_LCD_CLEAR
+-#endif
+-#endif
+ 
+ #include <string>
+ 
+@@ -67,11 +36,7 @@ class CLCDDisplay
+ {
+  private:
+ 	raw_display_t raw;
+-#ifdef HAVE_TRIPLEDRAGON
+-	unsigned char lcd[LCD_BUFFER_SIZE];
+-#else
+ 	unsigned char lcd[LCD_ROWS][LCD_COLS];
+-#endif
+ 	int           fd, paused;
+ 	std::string   iconBasePath;
+ 	bool          available;
+diff --git a/liblircdclient/liblircdclient.cpp b/liblircdclient/liblircdclient.cpp
+index 779b0c2..8de4f82 100644
+--- a/liblircdclient/liblircdclient.cpp
++++ b/liblircdclient/liblircdclient.cpp
+@@ -25,12 +25,10 @@
+ 	Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ */
+ 
+-#include <stdio.h>
+ #include <unistd.h>
+ #include <sys/socket.h>
+ #include <sys/un.h>
+ #include <errno.h>
+-#include <cstdlib>
+ 
+ #include "liblircdclient.h"
+ 
+diff --git a/libtuxtxt/Makefile.am b/libtuxtxt/Makefile.am
+index af73a56..6930ad6 100644
+--- a/libtuxtxt/Makefile.am
++++ b/libtuxtxt/Makefile.am
+@@ -8,20 +8,6 @@ libtuxtxt_la_SOURCES = libtuxtxt.c
+ AM_CPPFLAGS = \
+ 	@FREETYPE_CFLAGS@
+ 
+-libtuxtxt_la_LIBADD = \
+-	@FREETYPE_LIBS@
+-
+-if BOXTYPE_DBOX2
+-AM_CPPFLAGS += \
+-	@TUXBOX_CFLAGS@
+-
+-libtuxtxt_la_LIBADD += \
+-	@TUXBOX_LIBS@
+-endif
+-
+ pkgconfigdir = $(libdir)/pkgconfig
+ pkgconfig_DATA = tuxbox-tuxtxt.pc
+ 
+-install-data-local:
+-	$(mkinstalldirs) $(FONTDIR)
+-	cp ${top_srcdir}/../plugins/tuxtxt/font/tuxtxt.otb $(FONTDIR)
+diff --git a/libtuxtxt/libtuxtxt.c b/libtuxtxt/libtuxtxt.c
+index a4f0ac5..6d055db 100644
+--- a/libtuxtxt/libtuxtxt.c
++++ b/libtuxtxt/libtuxtxt.c
+@@ -3,12 +3,18 @@
+  *                                                                            *
+  *             (c) Thomas "LazyT" Loewe 2002-2003 (LazyT@gmx.net)             *
+  *                                                                            *
+- *    TOP-Text Support 2004 by Roland Meier <roland@meier69.de>               *
++ *    TOP-Text Support 2004 by Roland Meier <RolandMeier@Siemens.com>         *
+  *    Info entnommen aus videotext-0.6.19991029,                              *
+  *    Copyright (c) 1994-96 Martin Buck  <martin-2.buck@student.uni-ulm.de>   *
+  *                                                                            *
+  ******************************************************************************/
+ 
++#ifdef DEBUG
++#undef DEBUG
++#endif
++
++#define DEBUG 0
++
+ #include <sys/ioctl.h>
+ #include <fcntl.h>
+ 
+diff --git a/libtuxtxt/tuxbox-tuxtxt.pc.in b/libtuxtxt/tuxbox-tuxtxt.pc.in
+index ccfdcfa..e7585b2 100644
+--- a/libtuxtxt/tuxbox-tuxtxt.pc.in
++++ b/libtuxtxt/tuxbox-tuxtxt.pc.in
+@@ -6,5 +6,5 @@ includedir=@includedir@
+ Name: tuxbox-tuxtxt
+ Description: tuxtxt
+ Version: @VERSION@
+-Libs: -L${libdir} -ltuxtxt @TUXBOX_LIBS@ @FREETYPE_LIBS@
++Libs: -L${libdir} -ltuxtxt @LIBTUXBOX_LIBS@ @FREETYPE_LIBS@
+ Cflags: -I${includedir} -I@DRIVER@/include
+diff --git a/libtuxtxt/tuxtxt_common.h b/libtuxtxt/tuxtxt_common.h
+index 538890f..207fdaa 100644
+--- a/libtuxtxt/tuxtxt_common.h
++++ b/libtuxtxt/tuxtxt_common.h
+@@ -14,23 +14,19 @@
+ #include <unistd.h>
+ #include <sys/time.h>
+ #include "tuxtxt_def.h"
+-#ifdef HAVE_DBOX_HARDWARE
++#ifndef HAVE_DREAMBOX_HARDWARE
+ #include <tuxbox.h>
+ #endif
+ #if TUXTXT_COMPRESS == 1
+ #include <zlib.h>
+ #endif
+ 
+-#ifndef HAVE_TRIPLEDRAGON
+ #if HAVE_DVB_API_VERSION < 3
+ #include <dbox/avia_gt_pig.h>
+ #else
+ #include <linux/input.h>
+ #include <linux/videodev.h>
+ #endif
+-#else
+-#include <tdgfx/stb04gfx.h>
+-#endif
+ 
+ const char *ObjectSource[] =
+ {
+@@ -1687,16 +1683,8 @@ int tuxtxt_start_thread()
+ 
+ 	/* set filter & start demuxer */
+ 	dmx_flt.pid      = tuxtxt_cache.vtxtpid;
+-#ifndef HAVE_TRIPLEDRAGON
+ 	dmx_flt.input    = DMX_IN_FRONTEND;
+ 	dmx_flt.output   = DMX_OUT_TAP;
+-#else
+-	struct UnloaderConfig_t u;
+-	u.unloader_type  = UNLOADER_TYPE_PAYLOAD;
+-	u.threshold      = 64;
+-	dmx_flt.unloader = u;
+-	dmx_flt.output   = OUT_MEMORY;
+-#endif
+ 	dmx_flt.pes_type = DMX_PES_OTHER;
+ 	dmx_flt.flags    = DMX_IMMEDIATE_START;
+ 
+@@ -2833,12 +2821,14 @@ tstPageinfo* tuxtxt_DecodePage(int showl25, // 1=decode Level2.5-graphics
+ 	/* copy page to decode buffer */
+ 	if (tuxtxt_cache.subpagetable[tuxtxt_cache.page] == 0xff) /* not cached: do nothing */
+ 		return NULL;
+-	int tmp_subpage = tuxtxt_cache.zap_subpage_manual ? tuxtxt_cache.subpage : tuxtxt_cache.subpagetable[tuxtxt_cache.page];
+-	pCachedPage = tuxtxt_cache.astCachetable[tuxtxt_cache.page][tmp_subpage];
++	if (tuxtxt_cache.zap_subpage_manual)
++		pCachedPage = tuxtxt_cache.astCachetable[tuxtxt_cache.page][tuxtxt_cache.subpage];
++	else
++		pCachedPage = tuxtxt_cache.astCachetable[tuxtxt_cache.page][tuxtxt_cache.subpagetable[tuxtxt_cache.page]];
+ 	if (!pCachedPage)	/* not cached: do nothing */
+ 		return NULL;
+ 
+-	tuxtxt_decompress_page(tuxtxt_cache.page,tmp_subpage,&page_char[40]);
++	tuxtxt_decompress_page(tuxtxt_cache.page,tuxtxt_cache.subpage,&page_char[40]);
+ 
+ 	memcpy(&page_char[8], pCachedPage->p0, 24); /* header line without timestring */
+ 
+@@ -4022,7 +4012,11 @@ void tuxtxt_setfontwidth(tstRenderInfo* renderinfo,int newwidth)
+ 		int i;
+ 		renderinfo->fontwidth = newwidth;
+ 		if (renderinfo->usettf)
++#if ((defined(FREETYPE_MAJOR)) && (((FREETYPE_MAJOR == 2) && (((FREETYPE_MINOR == 1) && (FREETYPE_PATCH >= 9)) || (FREETYPE_MINOR > 1))) || (FREETYPE_MAJOR > 2)))
+ 			renderinfo->typettf.width  = (FT_UShort) renderinfo->fontwidth * renderinfo->TTFWidthFactor16 / 16;
++#else
++			renderinfo->typettf.font.pix_width  = (FT_UShort) renderinfo->fontwidth * renderinfo->TTFWidthFactor16 / 16;
++#endif
+ 		else
+ 		{
+ 			if (newwidth < 11)
+@@ -4031,7 +4025,11 @@ void tuxtxt_setfontwidth(tstRenderInfo* renderinfo,int newwidth)
+ 				newwidth = 22;
+ 			else
+ 				newwidth = 23;
++#if ((defined(FREETYPE_MAJOR)) && (((FREETYPE_MAJOR == 2) && (((FREETYPE_MINOR == 1) && (FREETYPE_PATCH >= 9)) || (FREETYPE_MINOR > 1))) || (FREETYPE_MAJOR > 2)))
+ 			renderinfo->typettf.width  = renderinfo->typettf.height = (FT_UShort) newwidth;
++#else
++			renderinfo->typettf.font.pix_width  = renderinfo->typettf.font.pix_height = (FT_UShort) newwidth;
++#endif
+ 		}
+ 		for (i = 0; i <= 12; i++)
+ 			renderinfo->axdrcs[i] = (renderinfo->fontwidth * i + 6) / 12;
+@@ -4119,7 +4117,11 @@ void tuxtxt_RenderCharIntern(tstRenderInfo* renderinfo,int Char, tstPageAttr *At
+ 		return;
+ 	}
+ 
++#if ((defined(FREETYPE_MAJOR)) && (((FREETYPE_MAJOR == 2) && (((FREETYPE_MINOR == 1) && (FREETYPE_PATCH >= 9)) || (FREETYPE_MINOR > 1))) || (FREETYPE_MAJOR > 2)))
+ 	if ((error = FTC_SBitCache_Lookup(renderinfo->cache, &renderinfo->typettf, glyph, &renderinfo->sbit, NULL)) != 0)
++#else
++	if ((error = FTC_SBit_Cache_Lookup(renderinfo->cache, &renderinfo->typettf, glyph, &renderinfo->sbit)) != 0)
++#endif
+ 	{
+ #if TUXTXT_DEBUG
+ 		printf("TuxTxt <FTC_SBitCache_Lookup: 0x%x> c%x a%x g%x w%d h%d x%d y%d\n",
+@@ -4150,7 +4152,11 @@ void tuxtxt_RenderCharIntern(tstRenderInfo* renderinfo,int Char, tstPageAttr *At
+ 			Char = G2table[0][0x20+ Attribute->diacrit];
+ 		if ((glyph = FT_Get_Char_Index(renderinfo->face, Char)))
+ 		{
++#if ((defined(FREETYPE_MAJOR)) && (((FREETYPE_MAJOR == 2) && (((FREETYPE_MINOR == 1) && (FREETYPE_PATCH >= 9)) || (FREETYPE_MINOR > 1))) || (FREETYPE_MAJOR > 2)))
+ 			if ((error = FTC_SBitCache_Lookup(renderinfo->cache, &renderinfo->typettf, glyph, &sbit_diacrit, NULL)) == 0)
++#else
++			if ((error = FTC_SBit_Cache_Lookup(renderinfo->cache, &renderinfo->typettf, glyph, &sbit_diacrit)) == 0)
++#endif
+ 			{
+ 					sbitbuffer = localbuffer;
+ 					memcpy(sbitbuffer,renderinfo->sbit->buffer,renderinfo->sbit->pitch*renderinfo->sbit->height);
+@@ -4213,31 +4219,10 @@ void tuxtxt_RenderCharIntern(tstRenderInfo* renderinfo,int Char, tstPageAttr *At
+ 						break;
+ 
+ 					if (*sbitbuffer & Bit) /* bit set -> foreground */
+-					{
+ 						color = fgcolor;
+-						// render border on the left of the char when transparency enabled
+-						if ((p > pstart) && (*(p-1)== bgcolor))
+-						{
+-							for (f = factor-1; f >= 0; f--)
+-								*((p-1) + f*renderinfo->var_screeninfo.xres) = Attribute->bg;
+-						}
+-						// render border on the top of the char when transparency enabled
+-						if ((p > renderinfo->lfb+factor*renderinfo->var_screeninfo.xres) && (*(p-factor*renderinfo->var_screeninfo.xres)== bgcolor))
+-						{
+-							for (f = factor-1; f >= 0; f--)
+-								*((p-factor*renderinfo->var_screeninfo.xres) + f*renderinfo->var_screeninfo.xres) = Attribute->bg;
+-						}
+-					}
+ 					else /* bit not set -> background */
+-					{
+ 						color = bgcolor;
+-						// render border on the right of the char when transparency enabled
+-						if ((p > pstart) && (*(p-1)== fgcolor))
+-						    color = Attribute->bg;
+-						// render border on the bottom of the char when transparency enabled
+-						if ((p > renderinfo->lfb+factor*renderinfo->var_screeninfo.xres) && (*(p-factor*renderinfo->var_screeninfo.xres)== fgcolor))
+-						    color = Attribute->bg;
+-					}
++
+ 					for (f = factor-1; f >= 0; f--)
+ 						*(p + f*renderinfo->var_screeninfo.xres) = color;
+ 					p++;
+@@ -4315,7 +4300,7 @@ void tuxtxt_RenderClearMenuLineBB(tstRenderInfo* renderinfo,char *p, tstPageAttr
+ 
+ void tuxtxt_SwitchScreenMode(tstRenderInfo* renderinfo,int newscreenmode)
+ {
+-#if HAVE_DVB_API_VERSION >= 3 && !defined(HAVE_TRIPLEDRAGON)
++#if HAVE_DVB_API_VERSION >= 3
+ 	struct v4l2_format format;
+ #endif
+ 	/* reset transparency mode */
+@@ -4338,7 +4323,7 @@ void tuxtxt_SwitchScreenMode(tstRenderInfo* renderinfo,int newscreenmode)
+ 	tuxtxt_cache.pageupdate = 1;
+ 
+ 	/* clear back buffer */
+-#ifdef HAVE_DBOX_HARDWARE
++#ifndef HAVE_DREAMBOX_HARDWARE
+ 	renderinfo->clearbbcolor = tuxtxt_color_black;
+ #else
+ 	renderinfo->clearbbcolor = renderinfo->screenmode?tuxtxt_color_transp:tuxtxt_cache.FullScrColor;
+@@ -4363,7 +4348,7 @@ void tuxtxt_SwitchScreenMode(tstRenderInfo* renderinfo,int newscreenmode)
+ 			tx = TV43STARTX;
+ 			ty = TV43STARTY;
+ 			th = TV43HEIGHT;
+-#ifdef BOXMODEL_DM500
++#ifdef HAVE_DREAMBOX_DM500
+ 			tw = renderinfo->var_screeninfo.xres/4; // DM500 seems to only like PIG sizes with same ratio
+ 			th = renderinfo->var_screeninfo.yres/4;
+ #endif
+@@ -4377,7 +4362,7 @@ void tuxtxt_SwitchScreenMode(tstRenderInfo* renderinfo,int newscreenmode)
+ 			tw = TV169FULLWIDTH;
+ 			th = TV169FULLHEIGHT;
+ 			renderinfo->displaywidth= (TV169FULLSTARTX-renderinfo->sx);
+-#ifdef BOXMODEL_DM500
++#ifdef HAVE_DREAMBOX_DM500
+ 			tw = renderinfo->var_screeninfo.xres/2; // DM500 seems to only like PIG sizes with same ratio
+ 			th = renderinfo->var_screeninfo.yres/2;
+ #endif
+@@ -4385,7 +4370,6 @@ void tuxtxt_SwitchScreenMode(tstRenderInfo* renderinfo,int newscreenmode)
+ 
+ 		tuxtxt_setfontwidth(renderinfo,fw);
+ 
+-#if !defined HAVE_TRIPLEDRAGON && !defined HAVE_GENERIC_HARDWARE
+ #if HAVE_DVB_API_VERSION < 3
+ 		avia_pig_hide(renderinfo->pig);
+ 		avia_pig_set_pos(renderinfo->pig, tx, ty);
+@@ -4407,31 +4391,21 @@ void tuxtxt_SwitchScreenMode(tstRenderInfo* renderinfo,int newscreenmode)
+ #endif
+ 		ioctl(renderinfo->avs, AVSIOSSCARTPIN8, &fncmodes[renderinfo->screen_mode2]);
+ 		ioctl(renderinfo->saa, SAAIOSWSS, &saamodes[renderinfo->screen_mode2]);
+-#else
+-		char command[64];
+-		sprintf(command, "pzapit --pig %d %d %d %d 1", tx, ty, tw, th);
+-		system(command);
+-#endif
+ 	}
+ 	else /* not split */
+ 	{
+-#ifndef HAVE_TRIPLEDRAGON
+ #if HAVE_DVB_API_VERSION < 3
+ 		avia_pig_hide(renderinfo->pig);
+ #else
+ 		ioctl(renderinfo->pig, VIDIOC_OVERLAY, &renderinfo->screenmode);
+ #endif
+-#else
+-		system("pzapit --pig 0 0 0 0 0");
+-#endif
+ 
+ 		tuxtxt_setfontwidth(renderinfo,renderinfo->fontwidth_normal);
+ 		renderinfo->displaywidth= (renderinfo->ex-renderinfo->sx);
+ 		renderinfo->StartX = renderinfo->sx; //+ (ex-sx - 40*fontwidth) / 2; /* center screen */
+-#if !defined HAVE_TRIPLEDRAGON && !defined HAVE_GENERIC_HARDWARE
++
+ 		ioctl(renderinfo->avs, AVSIOSSCARTPIN8, &fncmodes[renderinfo->screen_mode1]);
+ 		ioctl(renderinfo->saa, SAAIOSWSS, &saamodes[renderinfo->screen_mode1]);
+-#endif
+ 	}
+ }
+ 
+@@ -4639,28 +4613,6 @@ void tuxtxt_CreateLine25(tstRenderInfo* renderinfo)
+ 		tuxtxt_setfontwidth(renderinfo,renderinfo->fontwidth_topmenumain);
+ 	}
+ }
+-
+-#ifdef HAVE_TRIPLEDRAGON
+-void tdfb_attr(void)
+-{
+-	int gfx = open("/dev/stb/tdgfx", O_RDONLY);
+-	if (gfx < 0)
+-	{
+-		perror("/dev/stb/tdgfx");
+-		return;
+-	}
+-	Stb04GFXOsdControl tmpctrl;
+-	if (ioctl(gfx, STB04GFX_OSD_GETCONTROL, &tmpctrl) < 0)
+-		perror("[tuxtxt:tdfb_attr] STB04GFX_OSD_GETCONTROL failed");
+-	tmpctrl.use_global_alpha = 0;
+-	tmpctrl.undefined_Colors_Transparent = 1;
+-	if (ioctl(gfx, STB04GFX_OSD_SETCONTROL, &tmpctrl) < 0)
+-		perror("[tuxtxt:tdfb_attr] STB04GFX_OSD_SETCONTROL failed");
+-	close(gfx);
+-}
+-#endif
+-
+-
+ /******************************************************************************
+  * CopyBB2FB                                                                  *
+  ******************************************************************************/
+@@ -4683,9 +4635,7 @@ void tuxtxt_CopyBB2FB(tstRenderInfo* renderinfo)
+ 			renderinfo->var_screeninfo.yoffset = renderinfo->var_screeninfo.yres;
+ 		if (ioctl(renderinfo->fb, FBIOPAN_DISPLAY, &renderinfo->var_screeninfo) == -1)
+ 			perror("TuxTxt <FBIOPAN_DISPLAY>");
+-#ifdef HAVE_TRIPLEDRAGON
+-		tdfb_attr();
+-#endif
++
+ 		if (renderinfo->StartX > 0 && *renderinfo->lfb != *(renderinfo->lfb + renderinfo->var_screeninfo.xres * renderinfo->var_screeninfo.yres)) /* adapt background of backbuffer if changed */
+ 			tuxtxt_FillBorder(renderinfo,*(renderinfo->lfb + renderinfo->var_screeninfo.xres * renderinfo->var_screeninfo.yoffset));
+ //			 ClearBB(*(lfb + renderinfo->var_screeninfo.xres * renderinfo->var_screeninfo.yoffset));
+@@ -4769,7 +4719,7 @@ void tuxtxt_setcolors(tstRenderInfo* renderinfo,unsigned short *pcolormap, int o
+ 
+ 	unsigned short t = renderinfo->tr0[tuxtxt_color_transp2];
+ 	renderinfo->tr0[tuxtxt_color_transp2] = (renderinfo->trans_mode+7)<<11 | 0x7FF;
+-#ifdef HAVE_DBOX_HARDWARE
++#ifndef HAVE_DREAMBOX_HARDWARE
+ 	/* "correct" semi-transparent for Nokia (GTX only allows 2(?) levels of transparency) */
+ 	if (tuxbox_get_vendor() == TUXBOX_VENDOR_NOKIA)
+ 		renderinfo->tr0[tuxtxt_color_transp2] = 0xFFFF;
+@@ -4805,9 +4755,6 @@ void tuxtxt_setcolors(tstRenderInfo* renderinfo,unsigned short *pcolormap, int o
+ 	if (changed)
+ 		if (ioctl(renderinfo->fb, FBIOPUTCMAP, &colormap_0) == -1)
+ 			perror("TuxTxt <FBIOPUTCMAP>");
+-#ifdef HAVE_TRIPLEDRAGON
+-	tdfb_attr();
+-#endif
+ }
+ 
+ /******************************************************************************
+@@ -4959,7 +4906,7 @@ void tuxtxt_DoRender(tstRenderInfo* renderinfo, int startrow, int national_subse
+ 		if (renderinfo->transpmode || (renderinfo->boxed && !renderinfo->screenmode))
+ 		{
+ 			tuxtxt_FillBorder(renderinfo,tuxtxt_color_transp);//ClearBB(transp);
+-#if !defined HAVE_DREAMBOX_HARDWARE && !defined HAVE_IPBOX_HARDWARE
++#ifndef HAVE_DREAMBOX_HARDWARE
+ 			renderinfo->clearbbcolor = tuxtxt_color_black;
+ #else
+ 			renderinfo->clearbbcolor = tuxtxt_color_transp;
+@@ -5306,11 +5253,15 @@ int tuxtxt_InitRendering(tstRenderInfo* renderinfo,int setTVFormat)
+ 		return 0;
+ 	}
+ 
++#if ((defined(FREETYPE_MAJOR)) && (((FREETYPE_MAJOR == 2) && (((FREETYPE_MINOR == 1) && (FREETYPE_PATCH >= 9)) || (FREETYPE_MINOR > 1))) || (FREETYPE_MAJOR > 2)))
+ 	if ((error = FTC_SBitCache_New(renderinfo->manager, &renderinfo->cache)))
++#else
++	if ((error = FTC_SBit_Cache_New(renderinfo->manager, &renderinfo->cache)))
++#endif
+ 	{
+ 		FTC_Manager_Done(renderinfo->manager);
+ 		FT_Done_FreeType(renderinfo->library);
+-		printf("TuxTxt <FTC_SBitCache_New: 0x%.2X>\n", error);
++		printf("TuxTxt <FTC_SBit_Cache_New: 0x%.2X>\n", error);
+ 		return 0;
+ 	}
+ 
+@@ -5336,23 +5287,43 @@ int tuxtxt_InitRendering(tstRenderInfo* renderinfo,int setTVFormat)
+ 
+ 	if (renderinfo->usettf)
+ 	{
++#if ((defined(FREETYPE_MAJOR)) && (((FREETYPE_MAJOR == 2) && (((FREETYPE_MINOR == 1) && (FREETYPE_PATCH >= 9)) || (FREETYPE_MINOR > 1))) || (FREETYPE_MAJOR > 2)))
+ 		renderinfo->typettf.face_id = (FTC_FaceID) TUXTXTTTFVAR;
+ 		renderinfo->typettf.height = (FT_UShort) renderinfo->fontheight * renderinfo->TTFHeightFactor16 / 16;
++#else
++		renderinfo->typettf.font.face_id = (FTC_FaceID) TUXTXTTTFVAR;
++		renderinfo->typettf.font.pix_height = (FT_UShort) renderinfo->fontheight * renderinfo->TTFHeightFactor16 / 16;
++#endif
+ 	}
+ 	else
+ 	{
++#if ((defined(FREETYPE_MAJOR)) && (((FREETYPE_MAJOR == 2) && (((FREETYPE_MINOR == 1) && (FREETYPE_PATCH >= 9)) || (FREETYPE_MINOR > 1))) || (FREETYPE_MAJOR > 2)))
+ 		renderinfo->typettf.face_id = (FTC_FaceID) TUXTXTOTBVAR;
+ 		renderinfo->typettf.width  = (FT_UShort) 23;
+ 		renderinfo->typettf.height = (FT_UShort) 23;
++#else
++		renderinfo->typettf.font.face_id = (FTC_FaceID) TUXTXTOTBVAR;
++		renderinfo->typettf.font.pix_width  = (FT_UShort) 23;
++		renderinfo->typettf.font.pix_height = (FT_UShort) 23;
++#endif
+ 	}
+ 
++#if ((defined(FREETYPE_MAJOR)) && (((FREETYPE_MAJOR == 2) && (((FREETYPE_MINOR == 1) && (FREETYPE_PATCH >= 9)) || (FREETYPE_MINOR > 1))) || (FREETYPE_MAJOR > 2)))
+ 	renderinfo->typettf.flags = FT_LOAD_MONOCHROME;
+ 	if ((error = FTC_Manager_LookupFace(renderinfo->manager, renderinfo->typettf.face_id, &renderinfo->face)))
+ 	{
+ 		renderinfo->typettf.face_id = (renderinfo->usettf ? (FTC_FaceID) TUXTXTTTF : TUXTXTOTB);
+-		if ((error = FTC_Manager_LookupFace(renderinfo->manager, renderinfo->typettf.face_id, &renderinfo->face)))
++		if ((error = FTC_Manager_Lookup_Face(renderinfo->manager, renderinfo->typettf.face_id, &renderinfo->face)))
+ 		{
+-			printf("TuxTxt <FTC_Manager_LookupFace failed with Errorcode 0x%.2X>\n", error);
++#else
++	renderinfo->typettf.image_type = ftc_image_mono;
++	if ((error = FTC_Manager_Lookup_Face(renderinfo->manager, renderinfo->typettf.font.face_id, &renderinfo->face)))
++	{
++		renderinfo->typettf.font.face_id = (renderinfo->usettf ? (FTC_FaceID) TUXTXTTTF : TUXTXTOTB);
++		if ((error = FTC_Manager_Lookup_Face(renderinfo->manager, renderinfo->typettf.font.face_id, &renderinfo->face)))
++		{
++#endif
++			printf("TuxTxt <FTC_Manager_Lookup_Face failed with Errorcode 0x%.2X>\n", error);
+ 			FTC_Manager_Done(renderinfo->manager);
+ 			FT_Done_FreeType(renderinfo->library);
+ 			return 0;
+@@ -5437,7 +5408,6 @@ int tuxtxt_InitRendering(tstRenderInfo* renderinfo,int setTVFormat)
+ 		renderinfo->page_atrb[i].doublew = 0;
+ 		renderinfo->page_atrb[i].IgnoreAtBlackBgSubst = 0;
+ 	}
+-#if !defined HAVE_TRIPLEDRAGON && !defined HAVE_GENERIC_HARDWARE
+ 	if (setTVFormat)
+ 	{
+ 		/* open avs */
+@@ -5471,7 +5441,6 @@ int tuxtxt_InitRendering(tstRenderInfo* renderinfo,int setTVFormat)
+ 		FT_Done_FreeType(renderinfo->library);
+ 		return 0;
+ 	}
+-#endif
+ 	return 1;	
+ }
+ /******************************************************************************
+@@ -5480,7 +5449,6 @@ int tuxtxt_InitRendering(tstRenderInfo* renderinfo,int setTVFormat)
+ void tuxtxt_EndRendering(tstRenderInfo* renderinfo)
+ {
+ 	int i;
+-#if  !defined HAVE_TRIPLEDRAGON && !defined HAVE_GENERIC_HARDWARE
+ 	if (renderinfo->pig >= 0)
+ 		close(renderinfo->pig);
+ 	renderinfo->pig = -1;
+@@ -5489,9 +5457,6 @@ void tuxtxt_EndRendering(tstRenderInfo* renderinfo)
+ 		ioctl(renderinfo->avs, AVSIOSSCARTPIN8, &renderinfo->fnc_old);
+ 	if (renderinfo->saa >= 0)
+ 		ioctl(renderinfo->saa, SAAIOSWSS, &renderinfo->saa_old);
+-#else
+-	system("pzapit --pig 0 0 0 0 0");
+-#endif
+ 	/* clear subtitlecache */
+ 	for (i = 0; i < SUBTITLE_CACHESIZE; i++)
+ 	{
+diff --git a/libtuxtxt/tuxtxt_def.h b/libtuxtxt/tuxtxt_def.h
+index e056d34..0240a31 100644
+--- a/libtuxtxt/tuxtxt_def.h
++++ b/libtuxtxt/tuxtxt_def.h
+@@ -2,24 +2,18 @@
+  * definitions for plugin and lib                                             *
+  ******************************************************************************/
+ #ifndef TUXTXT_DEF_H
+-#define TUXTXT_DEF_H
+-
+-#include <config.h>
+ 
+-#if defined HAVE_DREAMBOX_HARDWARE || defined HAVE_IPBOX_HARDWARE
++#define TUXTXT_DEF_H
++#ifdef HAVE_DREAMBOX_HARDWARE
+  #define TUXTXT_COMPRESS 1 // compress page data: 0 no compression, 1 with zlib, 2 with own algorithm
+ #else
+  #define TUXTXT_COMPRESS 2
+ #endif
+ 
++#include <config.h>
+ #include <sys/time.h>
+ #include <pthread.h>
+ 
+-#ifdef HAVE_TRIPLEDRAGON
+-#include <tuxbox/zapit/td-demux-compat.h>
+-#include <tddevices.h>
+-#define DMX "/dev/" DEVICE_NAME_DEMUX "0"
+-#else
+ #if HAVE_DVB_API_VERSION < 3
+  #define dmx_pes_filter_params dmxPesFilterParams
+  #define pes_type pesType
+@@ -30,19 +24,15 @@
+  #include <linux/dvb/dmx.h>
+  #define DMX "/dev/dvb/adapter0/demux0"
+ #endif
+-#endif
+ 
+ #include <ft2build.h>
+ #include FT_FREETYPE_H
+ #include FT_CACHE_H
+ #include FT_CACHE_SMALL_BITMAPS_H
+-
+ #include <linux/fb.h>
+ 
+-#if !defined HAVE_TRIPLEDRAGON && !defined HAVE_GENERIC_HARDWARE
+ #include <dbox/avs_core.h>
+ #include <dbox/saa7126_core.h>
+-#endif
+ 
+ #define FLOFSIZE 4
+ 
+@@ -82,10 +72,8 @@
+ #define hold_mosaic         0x1E
+ #define release_mosaic      0x1F
+ 
+-#if !defined HAVE_TRIPLEDRAGON && !defined HAVE_GENERIC_HARDWARE
+ const int fncmodes[] = {AVS_FNCOUT_EXT43, AVS_FNCOUT_EXT169};
+ const int saamodes[] = {SAA_WSS_43F, SAA_WSS_169F};
+-#endif
+ 
+ typedef enum /* object type */
+ {
+@@ -275,7 +263,11 @@ typedef struct
+ 	tstPageAttr page_atrb[40 * 25];
+ } subtitle_cache;
+ 
++#if ((defined(FREETYPE_MAJOR)) && (((FREETYPE_MAJOR == 2) && (((FREETYPE_MINOR == 1) && (FREETYPE_PATCH >= 9)) || (FREETYPE_MINOR > 1))) || (FREETYPE_MAJOR > 2)))
+ #define FONTTYPE FTC_ImageTypeRec
++#else
++#define FONTTYPE FTC_Image_Desc
++#endif
+ /* struct for all Information needed for Page Rendering */
+ #define aydrcs (renderinfo->axdrcs + 12+1)
+ typedef struct
