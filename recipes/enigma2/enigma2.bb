@@ -77,7 +77,7 @@ RDEPENDS_enigma2-plugin-extensions-hbbtv = "tslib-conf libts-1.0-0 libsysfs2 lib
 RDEPENDS_enigma2-plugin-systemplugins-devicemanager = "util-linux-ng-blkid ntfs-3g dosfstools"
 
 PN = "enigma2"
-PR = "r68"
+PR = "r69"
 
 SRCDATE = "20110922"
 SRCREV = "5e19a3f8a5e8ce8a4e2cb2b601a1b8ef3554e4be"
@@ -152,9 +152,8 @@ SRC_URI_append_vuultimo = " \
 "
 
 SRC_URI_append_vuduo2 = " \
-           file://enigma2_choicebox_duo2.patch;patch=1;pnum=1 \
-           file://skin_user.xml \
-           file://vfd_icons \
+           file://skin_user_vuduo2.xml \
+           file://vfd_icons_vuduo2 \
 "
 
 def change_po():
@@ -230,9 +229,9 @@ do_install_append_vuultimo() {
 }
 
 do_install_append_vuduo2() {
-        install -m 0755 ${WORKDIR}/skin_user.xml ${D}/usr/share/enigma2/defaults/
+        install -m 0755 ${WORKDIR}/skin_user_vuduo2.xml ${D}/usr/share/enigma2/defaults/skin_user.xml
         install -d ${D}/usr/share/enigma2/vfd_icons/
-        install -m 0755 ${WORKDIR}/vfd_icons/*.png ${D}/usr/share/enigma2/vfd_icons/
+        install -m 0755 ${WORKDIR}/vfd_icons_vuduo2/*.png ${D}/usr/share/enigma2/vfd_icons/
 }
 
 python populate_packages_prepend () {
