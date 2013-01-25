@@ -2,16 +2,17 @@ DESCRIPTION = "tuxbox libtuxtxt"
 DEPENDS = "dreambox-dvbincludes libpng freetype"
 MAINTAINER = "Felix Domke <tmbinc@elitdvb.net>"
 
-SRCDATE = "20090130"
-SRCDATE_dm600pvr = "20070307"
-SRCDATE_dm500plus = "20070307"
-SRCDATE_dm7020 = "20070307"
+#SRCDATE = "20090130"
+#SRCDATE_dm600pvr = "20070307"
+#SRCDATE_dm500plus = "20070307"
+#SRCDATE_dm7020 = "20070307"
 
 PN = "libtuxtxt"
-PV = "0.0+cvs${SRCDATE}"
 PR = "r2"
+SRC_REV = "f120ec1ab0469b0dc3944adf7c5950c0bbef0832"
 
-SRC_URI = "cvs://anoncvs@cvs.tuxbox.org/cvs/tuxbox;module=apps/tuxbox/libs;method=ext \
+SRC_URI = "git://git.code.sf.net/p/tuxbox-cvs/apps;protocol=git;tag=${SRC_REV} \
+	file://to_before.diff;patch=1 \
 	file://acinclude.m4 \
 	file://ignorelibs.patch;patch=1"
 
@@ -75,7 +76,7 @@ SRC_URI_append_vusolo2 = " \
 	file://resize_framebuffer.diff;patch=1 \
 	file://allow_different_demux.diff;patch=1"
 
-S = "${WORKDIR}/libs"
+S = "${WORKDIR}/git/tuxbox/libs"
 EXTRA_OECONF = "--with-target=native"
 
 CFLAGS_append = " -DHAVE_DREAMBOX_HARDWARE -DDREAMBOX"

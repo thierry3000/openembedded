@@ -5,16 +5,14 @@ LICENSE = "GPL"
 DEPENDS = "libdvdread"
 RDEPENDS = "libdvdread"
 
-PV = "4.1.3+git"
-PR = "r8"
+PR = "r9"
 
 #debian/4.1.3-7
-SRCREV="850e513d4fea29b40879378b13003cd677e5214b"
+SRCREV="8f2cefe14027e98bb29a8ce69ad06adecf894c17"
 
 EXTRA_OECONF = "--with-dvdread-prefix=${STAGING_LIBDIR}/.."
 
-SRC_URI = "git://git.debian-maintainers.org/git/daniel/libdvdnav.git;protocol=git;branch=debian \
-	file://dvdnav-fix-random-shuffle-titles.patch;patch=1;pnum=1"
+SRC_URI = "git://sources.progress-linux.org/git/users/daniel/packages/libdvdnav.git;protocol=git;branch=debian;tag=${SRCREV} "
 
 S = "${WORKDIR}/git"
 
