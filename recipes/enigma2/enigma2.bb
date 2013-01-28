@@ -77,7 +77,7 @@ RDEPENDS_enigma2-plugin-extensions-hbbtv = "tslib-conf libts-1.0-0 libsysfs2 lib
 RDEPENDS_enigma2-plugin-systemplugins-devicemanager = "util-linux-ng-blkid ntfs-3g dosfstools"
 
 PN = "enigma2"
-PR = "r69"
+PR = "r70"
 
 SRCDATE = "20110922"
 SRCREV = "5e19a3f8a5e8ce8a4e2cb2b601a1b8ef3554e4be"
@@ -134,10 +134,7 @@ SRC_URI = "git://code.vuplus.com/git/dvbapp.git;protocol=http;branch=${BRANCH};t
            file://number_key \
            "
 
-SRC_URI_append_bm750 = " file://enigma2_vuplus_textvfd.patch;patch=1;pnum=1"
-SRC_URI_append_vuuno = " file://enigma2_vuplus_textvfd.patch;patch=1;pnum=1"
 SRC_URI_append_vusolo2 = " \
-	   file://enigma2_vuplus_textvfd.patch;patch=1;pnum=1 \
 	   file://enigma2_vuplus_1080p.patch;patch=1;pnum=1 \
 "
 
