@@ -138,6 +138,32 @@ KERNEL_DVB_MODULES = " \
 	kernel-module-mt2266 \
 	kernel-module-tda827x \
 	kernel-module-smsusb \
+	kernel-module-dvb-usb-az6027 \
+	kernel-module-dvb-usb \
+	kernel-module-dvb-usb-opera \
+	kernel-module-dvb-usb-umt-010 \
+	kernel-module-dvb-usb-gp8psk \
+	kernel-module-dvb-usb-a800 \
+	kernel-module-dvb-usb-dibusb-common \
+	kernel-module-dvb-usb-nova-t-usb2 \
+	kernel-module-dvb-usb-digitv \
+	kernel-module-dvb-usb-pctv452e \
+	kernel-module-dvb-usb-af9005-remote \
+	kernel-module-dvb-usb-dtv5100 \
+	kernel-module-dvb-usb-cxusb \
+	kernel-module-dvb-usb-dw2102 \
+	kernel-module-dvb-usb-vp702x \
+	kernel-module-dvb-usb-cinergyt2 \
+	kernel-module-dvb-usb-dib0700 \
+	kernel-module-dvb-usb-dibusb-mb \
+	kernel-module-dvb-usb-m920x \
+	kernel-module-dvb-usb-friio \
+	kernel-module-dvb-usb-dibusb-mc \
+	kernel-module-dvb-usb-ttusb2 \
+	kernel-module-dvb-usb-vp7045 \
+	kernel-module-dvb-usb-af9005 \
+	kernel-module-dvb-usb-dtt200u \
+	kernel-module-dvb-usb-technisat-usb2 \
 	kernel-module-au0828 \
 	kernel-module-dvb-usb-v2 \
 	kernel-module-dvb-usb-az6007 \
