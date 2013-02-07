@@ -1,7 +1,7 @@
 DESCRIPTION = "Vuplus: Base Task for the Vuplus Distribution"
 SECTION = "vuplus/base"
 LICENSE = "MIT"
-PR = "r10"
+PR = "r11"
 
 inherit task
 
@@ -52,6 +52,8 @@ VUPLUS_BASE_ESSENTIAL = "\
   firmware-dvb-usb-wt220u-zl0353 \
   firmware-drxd-a2 \
 "
+
+VUPLUS_BASE_ESSENTIAL_append_vusolo2 = " procps"
 
 VUPLUS_BASE_RECOMMENDS = "\
   dropbear \
