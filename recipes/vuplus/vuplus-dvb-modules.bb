@@ -16,7 +16,7 @@ SRCDATE_vusolo = "20130207"
 SRCDATE_vuuno = "20130207"
 SRCDATE_vuultimo = "20130207"
 SRCDATE_vuduo2 = "20121116"
-SRCDATE_vusolo2 = "20130207"
+SRCDATE_vusolo2 = "20130218"
 
 MODULES_NAME_bm750 = "procmk\ndvb-bcm7335\nbrcmfb"
 MODULES_NAME_vusolo = "procmk\ndvb-bcm7325\nbrcmfb"
