@@ -1,7 +1,7 @@
 DESCRIPTION = "Vuplus: Base Task for the Vuplus Distribution"
 SECTION = "vuplus/base"
 LICENSE = "MIT"
-PR = "r11"
+PR = "r12"
 
 inherit task
 
@@ -34,6 +34,7 @@ VUPLUS_BASE_ESSENTIAL = "\
   mkfs-jffs2 \
   hdparm \  
   usbtunerhelper \
+  openresolv \
   \
   firmware-dvb-af9005 \
   firmware-dvb-fe-af9013 \

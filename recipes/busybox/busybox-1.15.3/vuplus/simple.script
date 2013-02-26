@@ -20,6 +20,9 @@ fi
 
 case "$1" in
 	deconfig)
+		if [ -x /sbin/resolvconf ]; then
+			/sbin/resolvconf -d "${interface}.udhcpc"
+		fi
 		if ! root_is_nfs ; then
                         if [ $have_bin_ip -eq 1 ]; then
                                 ip addr flush dev $interface
@@ -68,13 +71,21 @@ case "$1" in
 
 		fi
 
-		echo -n > $RESOLV_CONF
-		[ -n "$domain" ] && echo search $domain >> $RESOLV_CONF
-		for i in $dns ; do
-			echo adding dns $i
-			echo nameserver $i >> $RESOLV_CONF
-		done
-		;;
+		# Update resolver configuration file
+                R=""
+                [ -n "$domain" ] && R="domain $domain"
+
+                for i in $dns; do
+                        echo "$0: Adding DNS $i"
+                        R="${R}nameserver $i"
+                done
+
+                if [ -x /sbin/resolvconf ]; then
+                        echo -n "$R" | /sbin/resolvconf -a "${interface}.udhcpc"
+                else
+                        echo -n "$R" > "$RESOLV_CONF"
+                fi
+                ;;
 esac
 
 exit 0

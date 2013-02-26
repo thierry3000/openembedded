@@ -1,5 +1,5 @@
 require busybox.inc
-PR = "${INC_PR}.6"
+PR = "${INC_PR}.7"
 
 SRC_URI = "\
   http://www.busybox.net/downloads/busybox-${PV}.tar.gz \
@@ -53,5 +53,9 @@ do_install_append() {
     install -m 0755 ${WORKDIR}/mdev ${D}${sysconfdir}/init.d/
     if grep "CONFIG_DEVFSD=y" ${WORKDIR}/defconfig; then
         install -m 644 ${WORKDIR}/devfsd.conf ${D}${sysconfdir}
+    fi
+    if grep "CONFIG_UDHCPC=y" ${WORKDIR}/defconfig; then
+        install -d ${D}${sysconfdir}/udhcpc.d
+        install -m 0755 ${WORKDIR}/simple.script ${D}${sysconfdir}/udhcpc.d/50default
     fi
 }

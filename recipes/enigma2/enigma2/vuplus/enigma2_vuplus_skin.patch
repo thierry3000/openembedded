@@ -80,8 +80,8 @@ index 0000000..20f24d9
 +install_DATA = \
 +	*.png
 diff --git a/data/750S/skin.xml b/data/750S/skin.xml
-new file mode 100644
-index 0000000..294cf68
+new file mode 100755
+index 0000000..3148751
 --- /dev/null
 +++ b/data/750S/skin.xml
 @@ -0,0 +1,2852 @@
@@ -505,7 +505,6 @@ index 0000000..294cf68
 +	<!-- Adapter setup -->
 +	<screen name="AdapterSetup" position="110,115" size="500,415" title="Network Setup" >
 +		<ePixmap pixmap="750S/buttons/red.png" position="0,375" size="140,40" alphatest="on" />
-+		<ePixmap pixmap="750S/buttons/blue.png" position="360,375" size="140,40" alphatest="on" />
 +		<widget source="key_red" render="Label" position="20,375" zPosition="1" size="115,40" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" />
 +		<widget source="key_blue" render="Label" position="380,375" zPosition="1" size="115,40" font="Regular;20" halign="center" valign="center" backgroundColor="#18188b" transparent="1" />
 +
@@ -2864,21 +2863,22 @@ index 0000000..294cf68
 +	<screen name="WlanConfig" position="center,120" size="510,400" title="Wireless Network Configuration..." >
 +		<ePixmap pixmap="750S/buttons/red.png" position="10,360" size="140,40" alphatest="on" />
 +		<ePixmap pixmap="750S/buttons/green.png" position="360,360" size="140,40" alphatest="on" />
-+
 +		<widget source="key_red" render="Label" position="15,360" zPosition="1" size="135,40" font="Regular;20" halign="center" valign="center" transparent="1" />
 +		<widget source="key_green" render="Label" position="365,360" zPosition="1" size="135,40" font="Regular;20" halign="center" valign="center" transparent="1" />
-+
-+		<widget name="config" position="10,10" backgroundColor="#371e1c1a" transparent="1" size="480,210" scrollbarMode="showOnDemand" />
-+		<ePixmap pixmap="750S/div-h.png" position="0,225" zPosition="1" size="550,2" />
-+
-+		<eLabel text="IP Address : " position="100,250" size="190,21" font="Regular;19" />
-+		<widget source="ipaddress" render="Label" position="300,250" zPosition="1" size="150,26" font="Regular;20" halign="center" valign="center" />
-+		<eLabel text="NetMask : " position="100,275" size="190,21" font="Regular;19" />
-+		<widget source="netmask" render="Label" position="300,275" zPosition="1" size="150,26" font="Regular;20" halign="center" valign="center" />	
-+		<eLabel text="Gateway : " position="100,300" size="190,21" font="Regular;19" />
-+		<widget source="gateway" render="Label" position="300,300" zPosition="1" size="150,26" font="Regular;20" halign="center" valign="center" />
-+		<widget name="VKeyIcon" pixmap="750S/buttons/key_text.png" position="460,245" zPosition="10" size="35,25" transparent="1" alphatest="on" />                  
-+                <widget name="HelpWindow" pixmap="750S/vkey_icon.png" position="160,350" zPosition="1" size="1,1" transparent="1" alphatest="on" />
++		<widget name="config" position="10,10" backgroundColor="#371e1c1a" transparent="1" size="480,195" scrollbarMode="showOnDemand" />
++		<ePixmap pixmap="750S/div-h.png" position="0,210" zPosition="1" size="550,2" />
++		<widget source="ipaddresstext" render="Label" position="100,220" zPosition="1" size="190,21" font="Regular;19" halign="Left" valign="center" />
++		<widget source="ipaddress" render="Label" position="300,220" zPosition="1" size="150,21" font="Regular;19" halign="Left" valign="center" />
++		<widget source="netmasktext" render="Label" position="100,245" zPosition="1" size="190,21" font="Regular;19" halign="Left" valign="center" />
++		<widget source="netmask" render="Label" position="300,245" zPosition="1" size="150,21" font="Regular;19" halign="Left" valign="center" />
++		<widget source="gatewaytext" render="Label" position="100,270" zPosition="1" size="190,21" font="Regular;19" halign="Left" valign="center" />
++		<widget source="gateway" render="Label" position="300,270" zPosition="1" size="150,21" font="Regular;19" halign="Left" valign="center" />
++		<widget source="DNS1text" render="Label" position="100,295" zPosition="1" size="190,21" font="Regular;19" halign="Left" valign="center" />
++		<widget source="DNS1" render="Label" position="300,295" zPosition="1" size="150,21" font="Regular;19" halign="Left" valign="center" />
++		<widget source="DNS2text" render="Label" position="100,320" zPosition="1" size="190,21" font="Regular;19" halign="Left" valign="center" />
++		<widget source="DNS2" render="Label" position="300,320" zPosition="1" size="150,21" font="Regular;19" halign="Left" valign="center" />
++		<widget name="VKeyIcon" pixmap="750S/buttons/key_text.png" position="460,245" zPosition="10" size="35,25" transparent="1" alphatest="on" />
++		<widget name="HelpWindow" pixmap="750S/vkey_icon.png" position="160,350" zPosition="1" size="1,1" transparent="1" alphatest="on" />
 +	</screen>
 +
 +	<screen name="WlanScanAp" position="center,120" size="510,400" title="Wireless Network AP Scan..." >
@@ -3008,11 +3008,11 @@ index 0000000..9d4f458
 +install_DATA = \
 +	*.png
 diff --git a/data/Vu_HD/skin.xml b/data/Vu_HD/skin.xml
-new file mode 100644
-index 0000000..a78c611
+new file mode 100755
+index 0000000..06205e7
 --- /dev/null
 +++ b/data/Vu_HD/skin.xml
-@@ -0,0 +1,3448 @@
+@@ -0,0 +1,3452 @@
 +<skin>
 +	<!-- VU+ skin (skin.xml)  -->
 +	<output id="0">
@@ -3413,7 +3413,7 @@ index 0000000..a78c611
 +		<ePixmap pixmap="Vu_HD/buttons/red.png" position="45,98" size="25,25" alphatest="blend" />
 +		<ePixmap pixmap="Vu_HD/buttons/button_off.png" position="240,98" size="25,25" alphatest="blend" />
 +		<ePixmap pixmap="Vu_HD/buttons/button_off.png" position="435,98" size="25,25" alphatest="blend" />
-+		<ePixmap pixmap="Vu_HD/buttons/blue.png" position="630,98" size="25,25" alphatest="blend" />
++		<ePixmap pixmap="Vu_HD/buttons/button_off.png" position="630,98" size="25,25" alphatest="blend" />
 +		<widget source="key_red" render="Label" position="66,97" zPosition="1" size="150,25" font="Regular;20" halign="center" valign="center" backgroundColor="darkgrey" foregroundColor="#1c1c1c" transparent="1" />
 +		<widget source="key_blue" render="Label" position="668,97" zPosition="1" size="150,25" font="Regular;20" halign="center" valign="center" backgroundColor="darkgrey" foregroundColor="#1c1c1c" transparent="1" />
 +		<widget name="config" position="160,140" transparent="1" backgroundColor="#27d9dee2" size="500,125" scrollbarMode="showOnDemand" />	
@@ -6328,13 +6328,17 @@ index 0000000..a78c611
 +		<widget source="key_green" render="Label" position="268,97" zPosition="1" size="150,25" font="Regular;20" halign="center" valign="center" backgroundColor="darkgrey" foregroundColor="#1c1c1c" transparent="1" />
 +		<ePixmap pixmap="Vu_HD/border_menu.png" position="120,140" zPosition="-1" size="342,358" transparent="1" alphatest="blend" />
 +		<widget name="config" position="130,150" size="322,338" transparent="1" backgroundColor="#27d9dee2" zPosition="10" scrollbarMode="showOnDemand" />
-+		<eLabel text="IP Address : " position="500,160" size="200,26" font="Semiboldit;22" foregroundColor="#5d5d5d" backgroundColor="#27b5b9bd" transparent="1" />		
-+		<widget source="ipaddress" render="Label" position="530,190" zPosition="1" size="150,26" font="Regular;20" halign="center" valign="center" backgroundColor="#27b5b9bd" foregroundColor="#1c1c1c" transparent="1" />		
-+		<eLabel text="NetMask : " position="500,220" size="200,26" font="Semiboldit;22" foregroundColor="#5d5d5d" backgroundColor="#27b5b9bd" transparent="1" />		
-+		<widget source="netmask" render="Label" position="530,250" zPosition="1" size="150,26" font="Regular;20" halign="center" valign="center" backgroundColor="#27b5b9bd" foregroundColor="#1c1c1c" transparent="1" />		
-+		<eLabel text="Gateway : " position="500,280" size="200,26" font="Semiboldit;22" foregroundColor="#5d5d5d" backgroundColor="#27b5b9bd" transparent="1" />		
-+		<widget source="gateway" render="Label" position="530,310" zPosition="1" size="150,26" font="Regular;20" halign="center" valign="center" backgroundColor="#27b5b9bd" foregroundColor="#1c1c1c" transparent="1" />		
-+		<widget name="VKeyIcon" pixmap="Vu_HD/buttons/key_text.png" position="500,350" zPosition="10" size="35,25" transparent="1" alphatest="on" />
++		<widget source="ipaddresstext" render="Label" position="500,160" zPosition="1" size="200,26" font="Semiboldit;22" foregroundColor="#5d5d5d" backgroundColor="#27b5b9bd" transparent="1" />
++		<widget source="ipaddress" render="Label" position="530,190" zPosition="1" size="150,26" font="Regular;20" valign="center" backgroundColor="#27b5b9bd" foregroundColor="#1c1c1c" transparent="1" />	
++		<widget source="netmasktext" render="Label" position="500,220" zPosition="1" size="200,26" font="Semiboldit;22" foregroundColor="#5d5d5d" backgroundColor="#27b5b9bd" transparent="1" />
++		<widget source="netmask" render="Label" position="530,250" zPosition="1" size="150,26" font="Regular;20" valign="center" backgroundColor="#27b5b9bd" foregroundColor="#1c1c1c" transparent="1" />
++		<widget source="gatewaytext" render="Label" position="500,280" zPosition="1" size="200,26" font="Semiboldit;22" foregroundColor="#5d5d5d" backgroundColor="#27b5b9bd" transparent="1" />
++		<widget source="gateway" render="Label" position="530,310" zPosition="1" size="150,26" font="Regular;20"  valign="center" backgroundColor="#27b5b9bd" foregroundColor="#1c1c1c" transparent="1" />
++		<widget source="DNS1text" render="Label" position="500,350" zPosition="1" size="200,26" font="Semiboldit;22" foregroundColor="#5d5d5d" backgroundColor="#27b5b9bd" transparent="1" />
++		<widget source="DNS1" render="Label" position="530,380" zPosition="1" size="150,26" font="Regular;20" valign="center" backgroundColor="#27b5b9bd" foregroundColor="#1c1c1c" transparent="1" />
++		<widget source="DNS2text" render="Label" position="500,410" zPosition="1" size="200,26" font="Semiboldit;22" foregroundColor="#5d5d5d" backgroundColor="#27b5b9bd" transparent="1" />
++		<widget source="DNS2" render="Label" position="530,440" zPosition="1" size="150,26" font="Regular;20" valign="center" backgroundColor="#27b5b9bd" foregroundColor="#1c1c1c" transparent="1" />
++		<widget name="VKeyIcon" pixmap="Vu_HD/buttons/key_text.png" position="500,480" zPosition="10" size="35,25" transparent="1" alphatest="on" />
 +                <widget name="HelpWindow" pixmap="Vu_HD/vkey_icon.png" position="310,535" zPosition="1" size="1,1" transparent="1" alphatest="on" />
 +	</screen>
 +

@@ -4,7 +4,7 @@ PRIORITY = "required"
 DEPENDS = "makedevs"
 RDEPENDS = "makedevs"
 LICENSE = "GPL"
-PR = "r29"
+PR = "r30"
 
 #FILESPATH = "${@base_set_filespath([ '${FILE_DIRNAME}/${P}', '${FILE_DIRNAME}/initscripts-${PV}', '${FILE_DIRNAME}/files', '${FILE_DIRNAME}' ], d)}"
 #deprecated
@@ -29,6 +29,8 @@ SRC_URI = "file://halt \
 			file://hotplug_br \
 			file://make_mac_sector \
 			file://${BOOTUP} \
+			file://volatiles \
+			file://populate-volatile.sh \
 			"
 
 
@@ -46,7 +48,8 @@ do_install () {
 		   ${D}${sysconfdir}/rc5.d \
 		   ${D}${sysconfdir}/rc6.d \
 		   ${D}/usr/bin \
-		   ${D}${sysconfdir}/default
+		   ${D}${sysconfdir}/default \
+		   ${D}${sysconfdir}/default/volatiles
 
 	install -m 0755    ${WORKDIR}/halt		${D}${sysconfdir}/init.d
 	install -m 0755    ${WORKDIR}/turnoff_power	${D}/usr/bin
@@ -61,6 +64,8 @@ do_install () {
 	install -m 0755    ${WORKDIR}/devpts            ${D}${sysconfdir}/default
 	install -m 0755    ${WORKDIR}/sysfs.sh          ${D}${sysconfdir}/init.d
 	install -m 0755    ${WORKDIR}/var.tar.gz.default ${D}${sysconfdir}/var.tar.gz
+	install -m 0755    ${WORKDIR}/populate-volatile.sh ${D}${sysconfdir}/init.d
+	install -m 0644    ${WORKDIR}/volatiles         ${D}${sysconfdir}/default/volatiles/00_core
 
 #
 # Install device dependent scripts
@@ -86,6 +91,7 @@ do_install () {
 	ln -sf          	../init.d/sysfs.sh      ${D}${sysconfdir}/rcS.d/S02sysfs
 	ln -sf          	../init.d/devpts.sh     ${D}${sysconfdir}/rcS.d/S38devpts.sh
 	ln -sf          	../init.d/bootup        ${D}${sysconfdir}/rcS.d/S05bootup
+	ln -sf          ../init.d/populate-volatile.sh  ${D}${sysconfdir}/rcS.d/S37populate-volatile.sh
 
 }
 
