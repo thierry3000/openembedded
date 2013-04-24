@@ -1,7 +1,7 @@
 DESCRIPTION = "opera-hbbtv"
 PRIORITY = "required"
 
-SRC_DATE = "20130122_0"
+SRC_DATE = "20130425_0"
 
 PR = "r0_${SRC_DATE}"
 SRC_URI = "http://code.vuplus.com/download/build.fc3abf29fb03f797e78f907928125638/embedded/opera-sdk-build-package/opera-hbbtv_${SRC_DATE}.tar.gz"
@@ -23,6 +23,9 @@ do_install() {
 	mv ${S}/dfb/usr/share/* ${D}/usr/share/
 	install -d ${D}/usr/lib/enigma2/python/Plugins/Extensions/HbbTV
 	mv ${S}/plugin/* ${D}/usr/lib/enigma2/python/Plugins/Extensions/HbbTV
+}
+
+do_package_qa() {
 }
 
 PACKAGES = ${PN}
