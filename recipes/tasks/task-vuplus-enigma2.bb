@@ -75,6 +75,7 @@ RDEPENDS_task-vuplus-enigma2_append_vuduo2 = "\
   enigma2-plugin-systemplugins-manualfancontrol \
   enigma2-plugin-systemplugins-autoshutdown \
   enigma2-plugin-systemplugins-transcodingsetup \
+  enigma2-plugin-systemplugins-blindscan \
   enigma2-transtreamproxy \
 "
 
