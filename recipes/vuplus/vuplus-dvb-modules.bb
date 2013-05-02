@@ -5,7 +5,7 @@ LICENSE = "proprietary"
 
 KV = "${@base_contains('PREFERRED_VERSION_linux-${MACHINE}', '2.6.18', '2.6.18', '3.1.1', d)}"
 KV_vusolo2 = "${@base_contains('PREFERRED_VERSION_linux-${MACHINE}', '2.6.37', '2.6.37', '3.3.6', d)}"
-KV_vuduo2 = "${@base_contains('PREFERRED_VERSION_linux-${MACHINE}', '2.6.37', '2.6.37', '3.3.6', d)}"
+KV_vuduo2 = "${@base_contains('PREFERRED_VERSION_linux-${MACHINE}', '2.6.37', '2.6.37', '3.3.8', d)}"
 
 PV = "${KV}"
 
