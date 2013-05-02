@@ -7,14 +7,14 @@ IMAGES_VERSION = "1"
 BINARY_VERSION = "7"
 
 PV = "${BINARY_VERSION}.${IMAGES_VERSION}"
-PR = "r8"
+PR = "r9"
 
 KERNEL_VERSION = "${@base_contains('PREFERRED_VERSION_linux-${MACHINE}', '2.6.18', '2.6.18', '3.1.1', d)}"
 
 SRC_URI = "file://bootlogo.mvi file://backdrop.mvi file://bootlogo_wait.mvi file://switchoff.mvi"
 SRC_URI_append_vuuno = " file://splash_cfe_auto.bin"
 SRC_URI_append_vuultimo = " file://splash_cfe_auto.bin"
-SRC_URI_append_vuduo2 = " file://initrd_cfe_auto.bin file://splash_cfe_auto.bin"
+SRC_URI_append_vuduo2 = " http://archive.vuplus.com/download/kernel/vmlinuz-initrd_${MACHINE}_20130220.tar.gz file://splash_cfe_auto.bin"
 SRC_URI_append_vusolo2 = " http://archive.vuplus.com/download/kernel/vmlinuz-initrd_${MACHINE}_20130212.tar.gz file://splash_cfe_auto.bin"
 
 S = "${WORKDIR}/"

@@ -15,7 +15,7 @@ SRCDATE_bm750 = "20130207"
 SRCDATE_vusolo = "20130207"
 SRCDATE_vuuno = "20130207"
 SRCDATE_vuultimo = "20130207"
-SRCDATE_vuduo2 = "20121116"
+SRCDATE_vuduo2 = "20130502"
 SRCDATE_vusolo2 = "20130218"
 
 MODULES_NAME_bm750 = "procmk\ndvb-bcm7335\nbrcmfb"
@@ -41,7 +41,7 @@ DEPENDS_append_vuduo2 = " virtual/kernel"
 RDEPENDS_append_vuplus = " module-init-tools-depmod"
 
 SRC_URI = "http://archive.vuplus.com/download/drivers/vuplus-dvb-modules-${MACHINE}-${PV}-${PREFERRED_GCC_VERSION}-${SRCDATE}.tar.gz "
-SRC_URI_vuduo2 = "http://archive.vuplus.com/download/drivers/beta/private/vuplus-dvb-modules-${MACHINE}-${PV}-${PREFERRED_GCC_VERSION}-${SRCDATE}.tar.gz "
+SRC_URI_vuduo2 = "http://archive.vuplus.com/download/drivers/beta/vuplus-dvb-modules-${MACHINE}-${PV}-${PREFERRED_GCC_VERSION}-${SRCDATE}.tar.gz "
 
 S = "${WORKDIR}"
 
