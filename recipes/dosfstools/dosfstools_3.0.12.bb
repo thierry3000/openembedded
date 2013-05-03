@@ -8,9 +8,9 @@ SECTION = "base"
 PRIORITY = "optional"
 LICENSE = "GPLv3"
 
-PR = "r1"
+PR = "r3"
 
-SRC_URI = "http://fossies.org/linux/misc/dosfstools-${PV}.tar.gz \
+SRC_URI = "http://daniel-baumann.ch/files/software/dosfstools/dosfstools-${PV}.tar.gz \
 	"
 # output of getconf LFS_CFLAGS
 #
