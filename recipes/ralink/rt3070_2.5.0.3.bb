@@ -5,7 +5,7 @@ SRCNAME = "rt3070"
 
 inherit module
 
-PR = "r0"
+PR = "r1"
 
 SRC_URI = "file://2011_0719_RT3070_RT3370_RT5370_RT5372_Linux_STA_V2.5.0.3_DPO.tar.bz2 \
 		file://makefile_2.5.0.3.patch;patch=1 \

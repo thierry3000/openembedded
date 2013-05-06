@@ -12,7 +12,7 @@ SRC_URI = " \
 
 S = "${WORKDIR}/rtl8192_8188CU_linux_v${PV}"
 
-PR = "r0"
+PR = "r1"
 
 do_compile () {
 	unset CFLAGS CPPFLAGS CXXFLAGS LDFLAGS CC LD CPP

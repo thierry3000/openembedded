@@ -4,19 +4,19 @@ PRIORITY = "required"
 LICENSE = "proprietary"
 
 KV = "${@base_contains('PREFERRED_VERSION_linux-${MACHINE}', '2.6.18', '2.6.18', '3.1.1', d)}"
-KV_vusolo2 = "${@base_contains('PREFERRED_VERSION_linux-${MACHINE}', '2.6.37', '2.6.37', '3.3.6', d)}"
+KV_vusolo2 = "${@base_contains('PREFERRED_VERSION_linux-${MACHINE}', '2.6.37', '2.6.37', '3.3.8', d)}"
 KV_vuduo2 = "${@base_contains('PREFERRED_VERSION_linux-${MACHINE}', '2.6.37', '2.6.37', '3.3.8', d)}"
 
 PV = "${KV}"
 
 inherit module
 
-SRCDATE_bm750 = "20130207"
-SRCDATE_vusolo = "20130207"
-SRCDATE_vuuno = "20130207"
-SRCDATE_vuultimo = "20130207"
-SRCDATE_vuduo2 = "20130503"
-SRCDATE_vusolo2 = "20130218"
+SRCDATE_bm750 = "20130506"
+SRCDATE_vusolo = "20130506"
+SRCDATE_vuuno = "20130506"
+SRCDATE_vuultimo = "20130506"
+SRCDATE_vuduo2 = "20130506"
+SRCDATE_vusolo2 = "20130506"
 
 MODULES_NAME_bm750 = "procmk\ndvb-bcm7335\nbrcmfb"
 MODULES_NAME_vusolo = "procmk\ndvb-bcm7325\nbrcmfb"
@@ -41,7 +41,6 @@ DEPENDS_append_vuduo2 = " virtual/kernel"
 RDEPENDS_append_vuplus = " module-init-tools-depmod"
 
 SRC_URI = "http://archive.vuplus.com/download/drivers/vuplus-dvb-modules-${MACHINE}-${PV}-${PREFERRED_GCC_VERSION}-${SRCDATE}.tar.gz "
-SRC_URI_vuduo2 = "http://archive.vuplus.com/download/drivers/beta/vuplus-dvb-modules-${MACHINE}-${PV}-${PREFERRED_GCC_VERSION}-${SRCDATE}.tar.gz "
 
 S = "${WORKDIR}"
 
