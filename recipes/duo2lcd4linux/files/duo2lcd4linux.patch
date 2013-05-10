@@ -1,0 +1,448 @@
+diff -urN LCD4linux_ori/plugin.py LCD4linux/plugin.py
+--- LCD4linux_ori/plugin.py	2012-08-29 17:06:28.000000000 +0900
++++ LCD4linux/plugin.py	2013-05-10 14:31:45.000000000 +0900
+@@ -49,6 +49,12 @@
+ from urllib import urlencode
+ import xml.etree.cElementTree
+ 
++from threading import Thread
++from fcntl import ioctl
++import socket
++from pngutil import png_util
++pngutil = png_util.PNGUtil()
++
+ # globals
+ DPFrefreshrate="/usr/lib/enigma2/python/Plugins/Extensions/LCD4linux/refreshrate"
+ WetterPath = "/usr/lib/enigma2/python/Plugins/Extensions/LCD4linux/wetter/"
+@@ -80,6 +86,7 @@
+ BilderIndexStandby = 0
+ BilderTime = 0
+ ThreadRunning = 0
++WetterThreadRunning = 0
+ LastDemon = ""
+ DemonPID = ["","","",""]
+ SamsungDevice = None
+@@ -104,7 +111,7 @@
+ ScreenSelect = [("0", _("off")), ("1", _("Screen 1")), ("2", _("Screen 2")), ("3", _("Screen 3")), ("12", _("Screen 1+2")), ("13", _("Screen 1+3")), ("23", _("Screen 2+3")), ("123", _("Screen 1+2+3")), ("4", _("Screen 4")), ("14", _("Screen 1+4")), ("24", _("Screen 2+4")), ("34", _("Screen 3+4")), ("124", _("Screen 1+2+4")), ("134", _("Screen 1+3+4")), ("234", _("Screen 2+3+4")), ("1234", _("Screen 1+2+3+4"))]
+ TimeSelect = [("1", _("5s")), ("2", _("10s")), ("3", _("15s")), ("4", _("20s")), ("6", _("30s")), ("12", _("1min")), ("24", _("2min"), ("60", _("5min")))]
+ LCDSelect = [("1", _("LCD 1")), ("2", _("LCD 2")), ("12", _("LCD 1+2"))]
+-LCDType = [("11", _("Pearl 320x240")), ("12", _("Pearl 240x320")), ("23", _("Samsung SPF-75H 800x480")), ("24", _("Samsung SPF-87H 800x480")), ("25", _("Samsung SPF-87Hold 800x480")), ("26", _("Samsung SPF-83H 800x600")), ("27", _("Samsung SPF-107H 1024x600"))]
++LCDType = [("10", _("Vu LCD 400x240"))]
+ 
+ config.plugins.LCD4linux = ConfigSubsection()
+ config.plugins.LCD4linux.Enable = ConfigYesNo(default = False)
+@@ -116,13 +123,13 @@
+ config.plugins.LCD4linux.ScreenTime3 = ConfigSelection(choices = TimeSelect, default="1")
+ config.plugins.LCD4linux.ScreenTime4 = ConfigSelection(choices = TimeSelect, default="1")
+ config.plugins.LCD4linux.BilderTime = ConfigSelection(choices =  [("0", _("off"))] + TimeSelect, default="0")
+-config.plugins.LCD4linux.Helligkeit = ConfigSlider(default = 5,  limits = (0, 7))
++config.plugins.LCD4linux.Helligkeit = ConfigSlider(default = 4,  limits = (0, 25))
+ config.plugins.LCD4linux.LCDoff = ConfigClock(default = ((5 * 60 + 0) * 60) )
+ config.plugins.LCD4linux.LCDon = ConfigClock(default = ((5 * 60 + 0) * 60) )
+ config.plugins.LCD4linux.Refresh = ConfigSlider(default = 3,  limits = (1, 15))
+ config.plugins.LCD4linux.Delay = ConfigSlider(default = 200,  increment = 50, limits = (50, 2000))
+ config.plugins.LCD4linux.WetterCity = ConfigText(default="Berlin", fixed_size=False)
+-config.plugins.LCD4linux.LCDType1 = ConfigSelection(choices = LCDType, default="11")
++config.plugins.LCD4linux.LCDType1 = ConfigSelection(choices = LCDType, default="10")
+ config.plugins.LCD4linux.LCDType2 = ConfigSelection(choices = [("00", _("off"))] + LCDType, default="00")
+ config.plugins.LCD4linux.LCDRotate1 = ConfigSelection(choices = [("0", _("0")), ("90", _("90")), ("180", _("180"))], default="0")
+ config.plugins.LCD4linux.LCDRotate2 = ConfigSelection(choices = [("0", _("0")), ("90", _("90")), ("180", _("180"))], default="0")
+@@ -206,15 +213,6 @@
+ config.plugins.LCD4linux.WetterLCD = ConfigSelection(choices = LCDSelect, default="1")
+ config.plugins.LCD4linux.WetterPos = ConfigSlider(default = 50,  increment = 2, limits = (0, 600))
+ config.plugins.LCD4linux.WetterType = ConfigSelection(choices = [("1", _("4 Days small")), ("2", _("4 Days big")), ("3", _("Current big")), ("4", _("Current full"))], default="1")
+-config.plugins.LCD4linux.OSCAM = ConfigSelection(choices = ScreenSelect, default="0")
+-config.plugins.LCD4linux.OSCAMLCD = ConfigSelection(choices = LCDSelect, default="1")
+-config.plugins.LCD4linux.OSCAMFile = ConfigText(default="/tmp/.oscam/oscam.lcd", fixed_size=False)
+-config.plugins.LCD4linux.OSCAMSize = ConfigSlider(default = 10,  increment = 1, limits = (9, 20))
+-config.plugins.LCD4linux.OSCAMPos = ConfigSlider(default = 20,  increment = 2, limits = (0, 600))
+-config.plugins.LCD4linux.OSCAMAlign = ConfigSelection(choices = [("0", _("left")), ("2", _("right"))], default="0")
+-config.plugins.LCD4linux.OSCAMSplit = ConfigYesNo(default = False)
+-config.plugins.LCD4linux.OSCAMColor = ConfigSelection(choices = Farbe, default="white")
+-config.plugins.LCD4linux.OSCAMBackColor = ConfigSelection(choices = [("0", _("off"))] + Farbe, default="black")
+ config.plugins.LCD4linux.WetterCity = ConfigText(default="Berlin", fixed_size=False)
+ config.plugins.LCD4linux.Text = ConfigSelection(choices = ScreenSelect, default="0")
+ config.plugins.LCD4linux.TextLCD = ConfigSelection(choices = LCDSelect, default="1")
+@@ -278,9 +276,9 @@
+ config.plugins.LCD4linux.MPClockAlign = ConfigSelection(choices = [("0", _("left")), ("1", _("center")), ("2", _("right"))], default="1")
+ config.plugins.LCD4linux.MPClockSplit = ConfigYesNo(default = False)
+ config.plugins.LCD4linux.MPClockColor = ConfigSelection(choices = Farbe, default="white")
+-config.plugins.LCD4linux.Standby = ConfigSelection(choices = [("0", _("off")), ("1", _("on"))], default="1")
++config.plugins.LCD4linux.Standby = ConfigSelection(choices = [("0", _("off")), ("1", _("on"))], default="0")
+ config.plugins.LCD4linux.StandbyScreenMax = ConfigSelection(choices = [("1", _("Screen 1")), ("2", _("Screen 1-2")), ("3", _("Screen 1-3"))], default="1")
+-config.plugins.LCD4linux.StandbyHelligkeit = ConfigSlider(default = 1,  limits = (0, 7))
++config.plugins.LCD4linux.StandbyHelligkeit = ConfigSlider(default = 3,  limits = (0, 25))
+ config.plugins.LCD4linux.StandbyLCDoff = ConfigClock(default = ((5 * 60 + 0) * 60) )
+ config.plugins.LCD4linux.StandbyLCDon = ConfigClock(default = ((5 * 60 + 0) * 60) )
+ config.plugins.LCD4linux.StandbyClock = ConfigSelection(choices = ScreenSelect, default="1")
+@@ -300,14 +298,6 @@
+ config.plugins.LCD4linux.StandbyWetterLCD = ConfigSelection(choices = LCDSelect, default="1")
+ config.plugins.LCD4linux.StandbyWetterPos = ConfigSlider(default = 50,  increment = 2, limits = (0, 600))
+ config.plugins.LCD4linux.StandbyWetterType = ConfigSelection(choices = [("1", _("4 Days small")), ("2", _("4 Days big")), ("3", _("Current big")), ("4", _("Current full"))], default="1")
+-config.plugins.LCD4linux.StandbyOSCAM = ConfigSelection(choices = ScreenSelect, default="0")
+-config.plugins.LCD4linux.StandbyOSCAMLCD = ConfigSelection(choices = LCDSelect, default="1")
+-config.plugins.LCD4linux.StandbyOSCAMSize = ConfigSlider(default = 10,  increment = 1, limits = (9, 20))
+-config.plugins.LCD4linux.StandbyOSCAMPos = ConfigSlider(default = 20,  increment = 2, limits = (0, 600))
+-config.plugins.LCD4linux.StandbyOSCAMAlign = ConfigSelection(choices = [("0", _("left")), ("2", _("right"))], default="0")
+-config.plugins.LCD4linux.StandbyOSCAMSplit = ConfigYesNo(default = False)
+-config.plugins.LCD4linux.StandbyOSCAMColor = ConfigSelection(choices = Farbe, default="white")
+-config.plugins.LCD4linux.StandbyOSCAMBackColor = ConfigSelection(choices = [("0", _("off"))] + Farbe, default="black")
+ config.plugins.LCD4linux.StandbyText = ConfigSelection(choices = ScreenSelect, default="0")
+ config.plugins.LCD4linux.StandbyTextLCD = ConfigSelection(choices = LCDSelect, default="1")
+ config.plugins.LCD4linux.StandbyTextFile = ConfigText(default="/tmp/lcd4linux.txt", fixed_size=False)
+@@ -421,9 +411,12 @@
+ 		return ""
+ 
+ def writeHelligkeit(hell):
+-	f = open(PICbright, "w")
+-	f.write(str(hell) + "\r\n")
+-	f.close()
++	hell = int(hell) * 10
++	if hell >= 250:
++		hell = 255
++	led_fd = open("/dev/lcd2",'w')
++	ioctl(led_fd, 0x10, hell)
++	led_fd.close()
+ 	
+ def getBilder():
+ 	global Bilder
+@@ -754,16 +747,6 @@
+ 				self.list2.append(getConfigListEntry(_("- which LCD"), config.plugins.LCD4linux.WetterLCD))
+ 				self.list2.append(getConfigListEntry(_("- Position"), config.plugins.LCD4linux.WetterPos))
+ 				self.list2.append(getConfigListEntry(_("- Weather Type"), config.plugins.LCD4linux.WetterType))
+-			self.list2.append(getConfigListEntry(_("Show oscam.lcd"), config.plugins.LCD4linux.OSCAM))
+-			if config.plugins.LCD4linux.OSCAM.value != "0":
+-				self.list2.append(getConfigListEntry(_("- which LCD"), config.plugins.LCD4linux.OSCAMLCD))
+-				self.list2.append(getConfigListEntry(_("- File"), config.plugins.LCD4linux.OSCAMFile))
+-				self.list2.append(getConfigListEntry(_("- Font Size"), config.plugins.LCD4linux.OSCAMSize))
+-				self.list2.append(getConfigListEntry(_("- Position"), config.plugins.LCD4linux.OSCAMPos))
+-				self.list2.append(getConfigListEntry(_("- Alignment"), config.plugins.LCD4linux.OSCAMAlign))
+-				self.list2.append(getConfigListEntry(_("- Split Screen"), config.plugins.LCD4linux.OSCAMSplit))
+-				self.list2.append(getConfigListEntry(_("- Color"), config.plugins.LCD4linux.OSCAMColor))
+-				self.list2.append(getConfigListEntry(_("- Background Color"), config.plugins.LCD4linux.OSCAMBackColor))
+ 			self.list2.append(getConfigListEntry(_("Show Textfile") , config.plugins.LCD4linux.Text))
+ 			if config.plugins.LCD4linux.Text.value != "0":
+ 				self.list2.append(getConfigListEntry(_("- which LCD"), config.plugins.LCD4linux.TextLCD))
+@@ -870,15 +853,6 @@
+ 				self.list4.append(getConfigListEntry(_("- which LCD"), config.plugins.LCD4linux.StandbyWetterLCD))
+ 				self.list4.append(getConfigListEntry(_("- Position"), config.plugins.LCD4linux.StandbyWetterPos))
+ 				self.list4.append(getConfigListEntry(_("- Weather Type"), config.plugins.LCD4linux.StandbyWetterType))
+-			self.list4.append(getConfigListEntry(_("Standby - Show oscam.lcd"), config.plugins.LCD4linux.StandbyOSCAM))
+-			if config.plugins.LCD4linux.StandbyOSCAM.value != "0":
+-				self.list4.append(getConfigListEntry(_("- which LCD"), config.plugins.LCD4linux.StandbyOSCAMLCD))
+-				self.list4.append(getConfigListEntry(_("- Font Size"), config.plugins.LCD4linux.StandbyOSCAMSize))
+-				self.list4.append(getConfigListEntry(_("- Position"), config.plugins.LCD4linux.StandbyOSCAMPos))
+-				self.list4.append(getConfigListEntry(_("- Alignment"), config.plugins.LCD4linux.StandbyOSCAMAlign))
+-				self.list4.append(getConfigListEntry(_("- Split Screen"), config.plugins.LCD4linux.StandbyOSCAMSplit))
+-				self.list4.append(getConfigListEntry(_("- Color"), config.plugins.LCD4linux.StandbyOSCAMColor))
+-				self.list4.append(getConfigListEntry(_("- Background Color"), config.plugins.LCD4linux.StandbyOSCAMBackColor))
+ 			self.list4.append(getConfigListEntry(_("Standby - Show Textfile"), config.plugins.LCD4linux.StandbyText))
+ 			if config.plugins.LCD4linux.StandbyText.value != "0":
+ 				self.list4.append(getConfigListEntry(_("- which LCD"), config.plugins.LCD4linux.StandbyTextLCD))
+@@ -1014,23 +988,24 @@
+ 		return str(self["config"].getCurrent()[1].getText())
+ 
+ 	def LCDrestart(self):
+-		global SamsungDevice
+-		global SamsungDevice2
+-		DemonRestart()
+-		SamsungDevice = None
+-		SamsungDevice2 = None
+-		getSamsungDevice()
++		pass
++#		global SamsungDevice
++#		global SamsungDevice2
++#		DemonRestart()
++#		SamsungDevice = None
++#		SamsungDevice2 = None
++#		getSamsungDevice()
+ 
+ 	def save(self):
+ 		global ConfigMode
+ 		global ConfigStandby
+ 		global isMediaPlayer
+ 		getBilder()
+-		if config.plugins.LCD4linux.Refresh.isChanged():
+-			f = open(DPFrefreshrate, "w")
+-			f.write(str(config.plugins.LCD4linux.Refresh.value * 1000) + "\r\n")
+-			f.close()
+-			self.LCDrestart()
++#		if config.plugins.LCD4linux.Refresh.isChanged():
++#			f = open(DPFrefreshrate, "w")
++#			f.write(str(config.plugins.LCD4linux.Refresh.value * 1000) + "\r\n")
++#			f.close()
++#			self.LCDrestart()
+ 
+ 		self["config"].setList(self.list1)
+ 		for x in self["config"].list:
+@@ -1101,6 +1076,7 @@
+ 		self.KeyTime = 0
+ 		self.StandbyChanged = False
+ 		self.DataMinute = ""
++		self.WetterCheckMin = ""
+ 		self.ref = ""
+ 
+ 		self.StatusTimer = eTimer()
+@@ -1131,16 +1107,17 @@
+ 		self.timerlist = ""
+ 		self.pluginlist = ""
+ 
++		self.pngutilconnect = pngutil.connect()
++
+ #####		self.onShow.append(self.ServiceChange)
+ #		config.misc.standbyCounter.addNotifier(self.restartTimer(self), initial_call = False)
+ 		getBilder()
+ 		self.StatusTimer.startLongTimer(5)
+-		self.Demon()
+-		self.SamsungStart()
++#		self.Demon()
++#		self.SamsungStart()
+ 		
+ 	def updateStatus(self):
+ 		print "[LCD4linux] update"
+-
+ #		global DataMinute
+ #		global ScreenActive
+ 		global BilderTime
+@@ -1200,20 +1177,25 @@
+ #		print BilderTime, OSDon,self.StandbyChanged,Standby.inStandby
+ 		if strftime("%M")!=self.DataMinute or BilderTime == 1 or self.StandbyChanged != Standby.inStandby or ConfigMode or (ScreenActive != SaveScreenActive) or isVideoPlaying > 2 or OSDon == 3:
+ 			print "[LCD4linux] Data-Build"
+-			if config.plugins.LCD4linux.LCDType1.value[0] == "1" or config.plugins.LCD4linux.LCDType2.value[0] == "1":
+-				if strftime("%M")!=self.DataMinute:
+-					if DemonCheck():
+-						self.Demon()
+-					if SamsungCheck():
+-						self.SamsungStart()
++#			if config.plugins.LCD4linux.LCDType1.value[0] == "1" or config.plugins.LCD4linux.LCDType2.value[0] == "1":
++#				if strftime("%M")!=self.DataMinute:
++#					if DemonCheck():
++#						self.Demon()
++#					if SamsungCheck():
++#						self.SamsungStart()
+ 			self.DataMinute = strftime("%M")
+ 			self.StandbyChanged = Standby.inStandby 
+ 			self.restartTimer()
+ 			if config.plugins.LCD4linux.StandbyWetter.value != "0" or config.plugins.LCD4linux.Wetter.value != "0":
+-				if strftime("%M") == "15" or strftime("%M") == "45" or wwwWetter.find("forecast_information") < 1:
+-					self.downloadWetter()
++				if strftime("%M") != self.WetterCheckMin:
++					self.WetterCheckMin = strftime("%M")
++					if strftime("%M") == "15" or strftime("%M") == "45" or wwwWetter.find("forecast_information") < 1:
++						self.downloadWetter()
+ 		if ConfigMode == True:
+-			self.StatusTimer.startLongTimer(2)
++			if config.plugins.LCD4linux.Bild.value.find(ScreenActive) >= 0:
++				self.StatusTimer.startLongTimer(5)
++			else:
++				self.StatusTimer.startLongTimer(2)
+ 		else:
+ 			self.StatusTimer.startLongTimer(5)
+ 
+@@ -1377,15 +1359,43 @@
+ 					ScreenActive = "1"
+ 		ScreenTime += 1
+ 
++	def cannotConnect(self, port = 80, url = "74.125.71.94", timeout = 5):
++		try:
++			sock = socket.create_connection((url, port), timeout)
++#			print "Can be connected to [%s:%d]."%(url,port)
++		except Exception, ErrMsg:
++			print "Can't be connected to [%s:%d]. (%s)"%(url, port, ErrMsg)
++			print "    >> Cause: ",ErrMsg
++			return True
++		else:
++#			print "    >> sock close, sock : ",sock
++			if sock is not None:
++				print "socket close : ",sock.close()
++		return False
++
+ 	def downloadWetter(self):
++		global WetterThreadRunning
++		if WetterThreadRunning > 0:
++			print "[LCD4linux] downloadWetter already running"
++			return
++		WetterThreadRunning += 1
++		t = Thread(target=self.downloadWetterThread)
++		t.start()
++
++	def downloadWetterThread(self):
++		if self.cannotConnect(80, "74.125.71.94", 1): # www.google.de
++			self.downloadWetterThreadEnd()
++			return
+ 		print "[LCD4linux] Wetterdownloadstart"
+ 		self.feedurl = "http://www.google.com/ig/api?weather=%s&oe=utf-8&hl=%s" % (config.plugins.LCD4linux.WetterCity.value,language.getLanguage()[:2])
+ #		self.feedurl = "http://www.google.com/ig/api?weather=%s&oe=utf-8&hl=%s" % (config.plugins.LCD4linux.WetterCity.value,"de")
+ 		getPage(self.feedurl).addCallback(self.downloadListCallback).addErrback(self.downloadListError)
++		self.downloadWetterThreadEnd()
+ 
+ 	def downloadListError(self, error=""):
+ 		print str(error)
+ #		self.session.open(MessageBox, "Error downloading Feed:\n%s" % str(error), type=MessageBox.TYPE_ERROR)
++		self.downloadWetterThreadEnd()
+ 
+ 	def downloadListCallback(self, page=""):
+ 		global wwwWetter
+@@ -1394,6 +1404,13 @@
+ 		wwwWetter=codecs.decode(wwwWetter, 'UTF-8')
+ 		if os.path.isfile(PICwetter):
+ 			os.system("rm -f %s" % PICwetter)
++#		print "	>> downloadListCallback updated.."
++		self.downloadWetterThreadEnd()
++		self.restartTimer()
++
++	def downloadWetterThreadEnd(self):
++		global WetterThreadRunning
++		WetterThreadRunning = 0
+ 
+ def LCD4linuxPICThread(self,session):
+ 	global ThreadRunning
+@@ -1465,7 +1482,9 @@
+ 	return event_begin, event_end, duration, event_name
+ 
+ def getResolution(t):
+-	if t[1] == "1":
++	if t[1] == "0":
++		MAX_W,MAX_H = 400,240
++	elif t[1] == "1":
+ 		MAX_W,MAX_H = 320,240
+ 	elif t[1] == "2":
+ 		MAX_W,MAX_H = 240,320
+@@ -1533,6 +1552,9 @@
+ # Google Wetter
+ 	def putWetter(ConfigPos, ConfigType, draw, im):
+ 		global WetterType
++		global WetterThreadRunning
++		if WetterThreadRunning:
++			return
+ 		if os.path.isfile(PICwetter) and ConfigType == WetterType:
+ 			pil_image = Image.open(PICwetter)
+ 			im.paste(pil_image,(0,ConfigPos))
+@@ -1977,51 +1999,6 @@
+ 		lx = getSplit(ConfigSplit,ConfigAlign,MAX_W,w)
+ 		draw.text((lx, ConfigPos), i, font=font, fill=ConfigColor)
+ 
+-# show OSCAM
+-	def putOSCAM(ConfigPos, ConfigSize, ConfigColor, ConfigBackColor, ConfigAlign, ConfigSplit, draw, im):
+-		MAX_W,MAX_H = im.size
+-		OSCAMrunning = False
+-		if ConfigSplit == True:
+-			MAX_W = int(MAX_W/2)
+-		POSX = getSplit(ConfigSplit,ConfigAlign,MAX_W,MAX_W)
+-		if os.path.isfile(config.plugins.LCD4linux.OSCAMFile.value):
+-			current_h=ConfigPos
+-			if time()-os.path.getmtime(config.plugins.LCD4linux.OSCAMFile.value) < 30:
+-				OSCAMrunning = True
+-				font = ImageFont.truetype(FONT, ConfigSize, encoding='unic')
+-				p=[160,12.8,3.2,2,1.78,1.6,1.45,1.33]
+-
+-				f = open(config.plugins.LCD4linux.OSCAMFile.value,"r")
+-				for line in f.readlines():
+-					line = line.replace('\xc2\x86', '').replace('\xc2\x87', '').replace('\n','').decode("utf-8", "ignore").encode("utf-8") or ""
+-					line = codecs.decode(line, 'UTF-8')
+-					w,h = draw.textsize(line, font=font)
+-					if ConfigBackColor !="0":
+-						if line.find(" Label ") > 0:
+-							draw.rectangle((POSX, current_h, POSX+MAX_W, current_h+h),fill=ConfigColor)
+-						else:
+-							draw.rectangle((POSX, current_h, POSX+MAX_W, current_h+h),fill=ConfigBackColor)
+-					if line.find("|") >0:
+-						ll = line.split("|")
+-						if len(ll)==4:
+-							p=[160,10.67,2.91,1.14,1.03]
+-						elif len(ll)==5:
+-							p=[160,10.67,2.91,1.78,1.14,1.03]
+-						else:	
+-							p=[160,10.67,2.91,1.78,1.6,1.45,1.33,1.14,1.03]
+-						for x in range(len(ll)):
+-							if line.find(" Label ") > 0:
+-								draw.text((POSX+int(MAX_W/p[x]), current_h), ll[x].strip(), font=font, fill=ConfigBackColor)
+-							else:
+-								draw.text((POSX+int(MAX_W/p[x]), current_h), ll[x].strip(), font=font, fill=ConfigColor)
+-						current_h+=h
+-				f.close()
+-		if OSCAMrunning == False:
+-			font = ImageFont.truetype(FONT, ConfigSize+13, encoding='unic')
+-			w,h = draw.textsize(codecs.decode(_("OSCAM not running"), 'UTF-8'), font=font)
+-			draw.rectangle((POSX, ConfigPos, POSX+MAX_W, ConfigPos+h),fill=ConfigBackColor)
+-			draw.text((POSX+(MAX_W-w)/2, ConfigPos), codecs.decode(_("OSCAM not running"), 'UTF-8'), font=font, fill=ConfigColor)
+-
+ # show Title
+ 	def putTitle(ConfigPos, ConfigSize, ConfigLines, ConfigColor, ConfigAlign, ConfigSplit, draw, im):
+ 		MAX_W,MAX_H = im.size
+@@ -2157,12 +2134,6 @@
+ 					putBild(config.plugins.LCD4linux.StandbyBildPos.value, config.plugins.LCD4linux.StandbyBildSize.value, config.plugins.LCD4linux.StandbyBildAlign.value, ShowPicture, im)
+ 				if config.plugins.LCD4linux.StandbyBildLCD.value.find("2") >= 0 and config.plugins.LCD4linux.LCDType2.value != "00":
+ 					putBild(config.plugins.LCD4linux.StandbyBildPos.value, config.plugins.LCD4linux.StandbyBildSize.value, config.plugins.LCD4linux.StandbyBildAlign.value, ShowPicture, im2)
+-# show OSCAM
+-			if config.plugins.LCD4linux.StandbyOSCAM.value.find(ScreenActive) >= 0:
+-				if config.plugins.LCD4linux.StandbyOSCAMLCD.value.find("1") >= 0:
+-					putOSCAM(config.plugins.LCD4linux.StandbyOSCAMPos.value, config.plugins.LCD4linux.StandbyOSCAMSize.value, config.plugins.LCD4linux.StandbyOSCAMColor.value, config.plugins.LCD4linux.StandbyOSCAMBackColor.value, config.plugins.LCD4linux.StandbyOSCAMAlign.value, config.plugins.LCD4linux.StandbyOSCAMSplit.value, draw, im)
+-				if config.plugins.LCD4linux.StandbyOSCAMLCD.value.find("2") >= 0 and config.plugins.LCD4linux.LCDType2.value != "00":
+-					putOSCAM(config.plugins.LCD4linux.StandbyOSCAMPos.value, config.plugins.LCD4linux.StandbyOSCAMSize.value, config.plugins.LCD4linux.StandbyOSCAMColor.value, config.plugins.LCD4linux.StandbyOSCAMBackColor.value, config.plugins.LCD4linux.StandbyOSCAMAlign.value, config.plugins.LCD4linux.StandbyOSCAMSplit.value, draw2, im2)
+ # show Textfile
+ 			if config.plugins.LCD4linux.StandbyText.value.find(ScreenActive) >= 0:
+ 				if config.plugins.LCD4linux.StandbyTextLCD.value.find("1") >= 0:
+@@ -2324,12 +2295,6 @@
+ 				putBild(config.plugins.LCD4linux.BildPos.value, config.plugins.LCD4linux.BildSize.value, config.plugins.LCD4linux.BildAlign.value, ShowPicture, im)
+ 			if config.plugins.LCD4linux.BildLCD.value.find("2") >= 0 and config.plugins.LCD4linux.LCDType2.value != "00":
+ 				putBild(config.plugins.LCD4linux.BildPos.value, config.plugins.LCD4linux.BildSize.value, config.plugins.LCD4linux.BildAlign.value, ShowPicture, im2)
+-# show OSCAM
+-		if config.plugins.LCD4linux.OSCAM.value.find(ScreenActive) >= 0:
+-			if config.plugins.LCD4linux.OSCAMLCD.value.find("1") >= 0:
+-				putOSCAM(config.plugins.LCD4linux.OSCAMPos.value, config.plugins.LCD4linux.OSCAMSize.value, config.plugins.LCD4linux.OSCAMColor.value, config.plugins.LCD4linux.OSCAMBackColor.value, config.plugins.LCD4linux.OSCAMAlign.value, config.plugins.LCD4linux.OSCAMSplit.value, draw, im)
+-			if config.plugins.LCD4linux.OSCAMLCD.value.find("2") >= 0 and config.plugins.LCD4linux.LCDType2.value != "00":
+-				putOSCAM(config.plugins.LCD4linux.OSCAMPos.value, config.plugins.LCD4linux.OSCAMSize.value, config.plugins.LCD4linux.OSCAMColor.value, config.plugins.LCD4linux.OSCAMBackColor.value, config.plugins.LCD4linux.OSCAMAlign.value, config.plugins.LCD4linux.OSCAMSplit.value, draw2, im2)
+ # show Textfile
+ 		if config.plugins.LCD4linux.Text.value.find(ScreenActive) >= 0:
+ 			if config.plugins.LCD4linux.TextLCD.value.find("1") >= 0:
+@@ -2366,43 +2331,13 @@
+ 		im.save(PICtmp+".png", "PNG")
+ 		if os.path.isfile(PICtmp+".png"):
+ 			os.rename(PICtmp+".png",PIC+".png")
+-	else:
+-		if SamsungDevice is not None:
+-			print "[LCD4linux] writing to Samsung Device"
+-			output = StringIO.StringIO()
+-			im.save(output, "JPEG")
+-			pic = output.getvalue()
+-			output.close()
+-			try:
+-				Photoframe.write_jpg2frame(SamsungDevice, pic)
+-			except:
+-				print "[LCD4linux] Samsung 1 write error"
+-		im.save(PICtmp+".jpg", "JPEG")
+-		if os.path.isfile(PICtmp+".jpg"):
+-			os.rename(PICtmp+".jpg",PIC+".jpg")
+-	if config.plugins.LCD4linux.LCDType2.value != "00":
+-		if config.plugins.LCD4linux.LCDRotate2.value != "0":
+-			im2=im2.rotate(int(config.plugins.LCD4linux.LCDRotate2.value))
+-		if config.plugins.LCD4linux.LCDType2.value[0] == "1":
+-			im2.save(PIC2tmp+".png", "PNG")
+-			if os.path.isfile(PIC2tmp+".png"):
+-				os.rename(PIC2tmp+".png",PIC2+".png")
+-		else:
+-			if SamsungDevice2 is not None:
+-				print "[LCD4linux] writing to Samsung2 Device"
+-				output = StringIO.StringIO()
+-				im2.save(output, "JPEG")
+-				pic = output.getvalue()
+-				output.close()
+-				try:
+-					Photoframe.write_jpg2frame(SamsungDevice2, pic)       
+-				except:
+-					print "[LCD4linux] Samsung 2 write error"
+-			im2.save(PIC2tmp+".jpg", "JPEG")
+-			if os.path.isfile(PIC2tmp+".jpg"):
+-				os.rename(PIC2tmp+".jpg",PIC2+".jpg")
++	if self.pngutilconnect == 0:
++		print "[LCD4linux] RunTime:", time() - tt
++		return
++	pngutiltime = time()
++	pngutil.send(PIC+".png")
++	print "[LCD4linux] time(write to lcd) : ",time()-pngutiltime
+ 	print "[LCD4linux] RunTime:", time() - tt
+-	 
+ 	return
+ 	
+ def main(session,**kwargs):

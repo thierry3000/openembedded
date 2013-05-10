@@ -92,6 +92,7 @@ static int read_png_file(char* file_name)
 	}
 
         png_read_image(png_ptr, row_pointers);
+	png_destroy_read_struct(&png_ptr, &info_ptr, NULL);
         fclose(fp);
 	return 1;
 }
