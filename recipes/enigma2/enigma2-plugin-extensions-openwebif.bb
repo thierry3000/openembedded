@@ -9,7 +9,7 @@ RDEPENDS_${PN} = "python-cheetah python-json python-unixadmin python-misc python
 inherit gitpkgv
 PV = "0.1+git${SRCPV}"
 PKGV = "0.1+git${GITPKGV}"
-PR = "r0.77"
+PR = "r0.78"
 
 require openplugins.inc
 
@@ -30,9 +30,9 @@ do_install() {
 python do_package_prepend () {
 	boxtypes = [
 		('bm750', 'duo.jpg', 'vu_normal.png'),
-		('vuduo2', 'duo2.jpg', 'vu_ultimo.png'),
+		('vuduo2', 'duo2.jpg', 'vu_normal.png'),
 		('vusolo', 'solo.jpg', 'vu_normal.png'),
-		('vusolo2', 'solo2.jpg', 'vu_ultimo.png'),
+		('vusolo2', 'solo2.jpg', 'vu_normal.png'),
 		('vuultimo', 'ultimo.jpg', 'vu_ultimo.png'),
 		('vuuno', 'uno.jpg', 'vu_normal.png'),
 	]
