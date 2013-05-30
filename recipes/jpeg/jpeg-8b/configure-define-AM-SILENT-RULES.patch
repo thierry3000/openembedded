@@ -1,0 +1,12 @@
+diff --git a/configure.ac b/configure.ac
+index 96da13b..5ae02cc 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -26,6 +26,7 @@ AM_INIT_AUTOMAKE([-Wall -Werror ansi2knr no-dist foreign])
+ # Make --enable-silent-rules the default.
+ # To get verbose build output you may configure
+ # with --disable-silent-rules or use "make V=1".
++m4_ifndef([AM_SILENT_RULES], [m4_define([AM_SILENT_RULES],[])])
+ AM_SILENT_RULES([yes])
+ 
+ # This is required when using the de-ANSI-fication feature.

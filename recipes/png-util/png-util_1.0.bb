@@ -1,6 +1,6 @@
 DESCRIPTION = "PNG Assistant"
 LICENSE = "GPLv2"
-PR = "r1"
+PR = "r2"
 
 DEPENDS = "swig-native libpng python"
 
