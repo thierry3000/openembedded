@@ -3,6 +3,7 @@ LICENSE = "${PN}"
 HOMEPAGE = "http://www.remotesensing.org/libtiff/"
 DEPENDS = "zlib jpeg lzo"
 PV = "3.8.2+4.0.0beta2"
+PR = "r1"
 
 SRC_URI = "ftp://ftp.remotesensing.org/pub/libtiff/tiff-4.0.0beta2.tar.gz"
 S = "${WORKDIR}/${PN}-4.0.0beta2"

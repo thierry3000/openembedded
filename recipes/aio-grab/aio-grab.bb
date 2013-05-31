@@ -1,7 +1,7 @@
 DESCRIPTION="AiO screen grabber for dreambox stbs"
 LICENSE = "GPL"
 
-PR = "r1"
+PR = "r2"
 PV = "0.8+cvs${SRCDATE}"
 SRCDATE = "20101123"
 
