@@ -2,11 +2,11 @@ DESCRIPTION = "LCD4Linux is a small program that grabs information from the kern
 LICENSE = "GPLv2"
 
 DEPENDS = "virtual/libusb0 ncurses readline virtual/libx11"
-DEPENDS_vuplus = "virtual/libusb0 ncurses readline jpeg"
+DEPENDS_vuplus = "libusb ncurses readline jpeg"
 RDEPENDS_vuplus = "jpeg"
 
 PV = "0.11.0-SVN"
-PR = "r1"
+PR = "r2"
 
 EXTRA_OECONF = " --with-glib-prefix=${STAGING_LIBDIR}/.. \
 		--with-glib-exec-prefix=${STAGING_LIBDIR}/.. \
