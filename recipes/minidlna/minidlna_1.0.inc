@@ -4,7 +4,7 @@ DESCRIPTION = "MiniDLNA (aka ReadyDLNA) is server software with the aim of being
 HOMEPAGE = "http://minidlna.sourceforge.net/"
 LICENSE = "GPL"
 SECTION = "net"
-DEPENDS = "libexif ffmpeg"
+DEPENDS = "ffmpeg jpeg flac sqlite libvorbis libogg libid3tag libexif"
 
 INC_PR = "r2"
 
