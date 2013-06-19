@@ -2258,7 +2258,7 @@ CONFIG_HAVE_ARCH_KGDB=y
 # CONFIG_TEST_KSTRTOX is not set
 CONFIG_EARLY_PRINTK=y
 CONFIG_CMDLINE_BOOL=y
-CONFIG_CMDLINE="boot -elf -z flash0.kernel: 'ubiroot rootflags=sync bmem=192M@64M bmem=458M@512M memc1=590M libata.force=1:1.5Gbps'"
+CONFIG_CMDLINE="libata.force=1:1.5Gbps"
 # CONFIG_CMDLINE_OVERRIDE is not set
 # CONFIG_DEBUG_STACKOVERFLOW is not set
 # CONFIG_RUNTIME_DEBUG is not set
