@@ -1,7 +1,7 @@
 DESCRIPTION = "opera-hbbtv"
 PRIORITY = "required"
 
-SRC_DATE = "20130502_0"
+SRC_DATE = "20130618_0"
 
 DEPENDS = "jpeg"
 
