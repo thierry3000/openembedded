@@ -1,5 +1,5 @@
 diff --git a/src/streamproxy.c b/src/streamproxy.c
-index 03d1fac..60ddddc 100644
+index 03d1fac..f999982 100644
 --- a/src/streamproxy.c
 +++ b/src/streamproxy.c
 @@ -8,6 +8,7 @@
@@ -61,7 +61,7 @@ index 03d1fac..60ddddc 100644
  	
  	while (1)
  	{
-@@ -116,22 +142,30 @@ int main(int argc, char **argv)
+@@ -116,22 +142,33 @@ int main(int argc, char **argv)
  			FD_SET(demux_fd, &r);
  		
  		if (select(5, &r, 0, 0, 0) < 0)
@@ -86,14 +86,18 @@ index 03d1fac..60ddddc 100644
  			static unsigned char buffer[BSIZE];
  			int r = read(demux_fd, buffer, BSIZE);
 -			if (r < 0)
+-				break;
 +			if (r < 0 )
 +			{
- 				break;
++				if(errno == EOVERFLOW)
++					continue;
++				else
++					break;
 +			}
  			write(1, buffer, r);
  		}
  	}
-@@ -153,6 +187,7 @@ bad_gateway:
+@@ -153,6 +190,7 @@ bad_gateway:
  int handle_upstream(void)
  {
  	char buffer[MAX_LINE_LENGTH];
@@ -101,7 +105,7 @@ index 03d1fac..60ddddc 100644
  	int n = read(upstream, buffer, MAX_LINE_LENGTH);
  	if (n == 0)
  		return 1;
-@@ -165,6 +200,7 @@ int handle_upstream(void)
+@@ -165,6 +203,7 @@ int handle_upstream(void)
  	
  	char *c = buffer;
  	
@@ -109,7 +113,7 @@ index 03d1fac..60ddddc 100644
  	while (n)
  	{
  		char *next_line;
-@@ -203,6 +239,9 @@ int handle_upstream(void)
+@@ -203,6 +242,9 @@ int handle_upstream(void)
  
  int handle_upstream_line(void)
  {
@@ -119,7 +123,7 @@ index 03d1fac..60ddddc 100644
  	switch (upstream_state)
  	{
  	case 0:
-@@ -229,104 +268,137 @@ int handle_upstream_line(void)
+@@ -229,104 +271,137 @@ int handle_upstream_line(void)
  		if (response_line[0] == '+') {
  					/* parse (and possibly open) demux */
  			int demux = atoi(response_line + 1);
