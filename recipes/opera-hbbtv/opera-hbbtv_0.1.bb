@@ -6,11 +6,25 @@ SRC_DATE = "20130618_0"
 DEPENDS = "jpeg"
 
 PR = "r2_${SRC_DATE}"
-SRC_URI = "http://code.vuplus.com/download/build.fc3abf29fb03f797e78f907928125638/embedded/opera-sdk-build-package/opera-hbbtv_${SRC_DATE}.tar.gz"
+SRC_URI = ""
 
 INHIBIT_PACKAGE_STRIP = "1"
-
 S = "${WORKDIR}/opera-hbbtv"
+
+SRC_FILE = "opera-hbbtv_${SRC_DATE}.tar.gz"
+do_fetch() {
+	if [ ! -e ${DL_DIR}/${SRC_FILE} -a -e /etc/vuplus_browser.pwd ]; then
+sshpass -f /etc/vuplus_browser.pwd sftp guestuser@code.vuplus.com << +
+get ${SRC_FILE}
+bye
++
+	fi
+	cp -av ${DL_DIR}/${SRC_FILE} ${WORKDIR}/
+}
+
+do_unpack() {
+	tar xvfz ${SRC_FILE}
+}
 
 do_compile() {
 }
