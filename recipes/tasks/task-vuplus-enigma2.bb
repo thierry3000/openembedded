@@ -1,7 +1,7 @@
 DESCRIPTION = "Vuplus: E2 Task for the Vuplus Distribution"
 SECTION = "vuplus/base"
 LICENSE = "MIT"
-PR = "r26"
+PR = "r27"
 
 inherit task
 
@@ -78,6 +78,7 @@ RDEPENDS_task-vuplus-enigma2_append_vuduo2 = "\
   enigma2-plugin-systemplugins-transcodingsetup \
   enigma2-plugin-systemplugins-blindscan \
   enigma2-transtreamproxy \
+  enigma2-plugin-systemplugins-wolsetup \
 "
 
 RDEPENDS_task-vuplus-enigma2_append_vusolo2 = "\
