@@ -58,7 +58,7 @@ pkg_preinst_kernel-image () {
 
 pkg_postinst_kernel-image () {
         if [ -d /proc/stb ];
-        then flash_eraseall /dev/mtd1; nandwrite /dev/mtd1 /boot/vmlinux.gz -p; 
+        then flash_erase /dev/mtd1 0 0; nandwrite /dev/mtd1 /boot/vmlinux.gz -p; 
         fi  
         [ -d /proc/stb ] && mount -o ro,remount /boot
         true

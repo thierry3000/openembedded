@@ -5,4 +5,4 @@ SRC_URI += "file://remove_genet1.patch;patch=1;pnum=1 \
         file://brcm_s3_wol.patch;patch=1;pnum=1 \
 	"
 
-PR = "r3"
+PR = "r4"
