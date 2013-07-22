@@ -1,7 +1,7 @@
 DESCRIPTION = "Vuplus: E2 Task for the Vuplus Distribution"
 SECTION = "vuplus/base"
 LICENSE = "MIT"
-PR = "r27"
+PR = "r28"
 
 inherit task
 
@@ -72,6 +72,7 @@ RDEPENDS_task-vuplus-enigma2_append_vuduo2 = "\
   duo2lcd4linux \
   lcd4linuxsupport \
   vuplus-blindscan-utils \
+  vuplus-checkvfd \
   enigma2-plugin-systemplugins-firmwareupgrade \
   enigma2-plugin-systemplugins-manualfancontrol \
   enigma2-plugin-systemplugins-autoshutdown \
