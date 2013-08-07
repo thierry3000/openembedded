@@ -1,7 +1,7 @@
 DESCRIPTION = "Vuplus: Base Task for the Vuplus Distribution"
 SECTION = "vuplus/base"
 LICENSE = "MIT"
-PR = "r14"
+PR = "r15"
 
 inherit task
 
@@ -80,6 +80,7 @@ VUPLUS_BASE_OPTIONAL_RECOMMENDS = "\
   ppp \
   smartmontools \
   avahi-daemon \
+  curlftpfs \
 "
 
 RDEPENDS_${PN} = "\

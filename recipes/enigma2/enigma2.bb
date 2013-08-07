@@ -76,8 +76,10 @@ RDEPENDS_enigma2-plugin-extensions-dlnaserver = "minidlna libexif12 libavformat5
 RDEPENDS_enigma2-plugin-extensions-hbbtv = "tslib-conf libts-1.0-0 libsysfs2 libgmp3 libmpfr1 opera-hbbtv"
 RDEPENDS_enigma2-plugin-systemplugins-devicemanager = "util-linux-ng-blkid ntfs-3g dosfstools"
 
+RDEPENDS_enigma2-plugin-systemplugins-netdrive = "curlftpfs kernel-module-fuse libfuse2"
+
 PN = "enigma2"
-PR = "r90"
+PR = "r91"
 
 SRCDATE = "20110922"
 SRCREV = "5e19a3f8a5e8ce8a4e2cb2b601a1b8ef3554e4be"
