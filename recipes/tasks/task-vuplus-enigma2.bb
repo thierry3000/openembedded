@@ -1,7 +1,7 @@
 DESCRIPTION = "Vuplus: E2 Task for the Vuplus Distribution"
 SECTION = "vuplus/base"
 LICENSE = "MIT"
-PR = "r28"
+PR = "r29"
 
 inherit task
 
@@ -39,6 +39,7 @@ RDEPENDS_task-vuplus-enigma2 = "\
   enigma2-plugin-extensions-addstreamurl \
   enigma2-plugin-systemplugins-devicemanager \
   enigma2-plugin-systemplugins-videomode \
+  enigma2-plugin-systemplugins-netdrive \
 "
 
 
