@@ -81,10 +81,10 @@ index 0000000..20f24d9
 +	*.png
 diff --git a/data/750S/skin.xml b/data/750S/skin.xml
 new file mode 100644
-index 0000000..3148751
+index 0000000..541df3d
 --- /dev/null
 +++ b/data/750S/skin.xml
-@@ -0,0 +1,2852 @@
+@@ -0,0 +1,2892 @@
 +<skin>
 +	<!-- VU+ skin (skin.xml)  -->
 +	<output id="0">
@@ -198,34 +198,74 @@ index 0000000..3148751
 +			<convert type="ValueRange">1,1</convert>
 +			<convert type="ConditionalShowHide" />
 +		</widget>
-+		<widget source="session.FrontendInfo" render="Pixmap" position="350,32" size="8,9" pixmap="750S/nim_active.png" alphatest="on">
++		<widget source="session.FrontendInfo" render="Pixmap" position="290,9" size="8,9" pixmap="750S/nim_active.png" alphatest="on">
 +			<convert type="FrontendInfo">NUMBER</convert>
 +			<convert type="ValueRange">2,2</convert>
 +			<convert type="ConditionalShowHide" />
 +		</widget>
-+		<widget source="session.FrontendInfo" render="Pixmap" position="350,45" size="8,9" pixmap="750S/nim_active.png" alphatest="on">
++		<widget source="session.FrontendInfo" render="Pixmap" position="290,9" size="8,9" pixmap="750S/nim_active.png" alphatest="on">
 +			<convert type="FrontendInfo">NUMBER</convert>
 +			<convert type="ValueRange">3,3</convert>
 +			<convert type="ConditionalShowHide" />
 +		</widget>
-+		<widget source="session.TunerInfo" render="FixedLabel" text="A" position="265,6" size="20,13" font="Regular;18" backgroundColor="#4e5a74" transparent="1">
-+			<convert type="TunerInfo">TunerUseMask</convert>
-+			<convert type="ValueBitTest">1</convert>
++		<widget source="session.FrontendInfo" render="Pixmap" position="290,9" size="8,9" pixmap="750S/nim_active.png" alphatest="on">
++			<convert type="FrontendInfo">NUMBER</convert>
++			<convert type="ValueRange">4,4</convert>
 +			<convert type="ConditionalShowHide" />
 +		</widget>
-+		<widget source="session.TunerInfo" render="FixedLabel" text="B" position="277,6" size="20,13" font="Regular;18" backgroundColor="#4e5a74" transparent="1">
++		<widget source="session.FrontendInfo" render="Pixmap" position="290,9" size="8,9" pixmap="750S/nim_active.png" alphatest="on">
++			<convert type="FrontendInfo">NUMBER</convert>
++			<convert type="ValueRange">5,5</convert>
++			<convert type="ConditionalShowHide" />
++		</widget>
++		<widget source="session.FrontendInfo" render="Pixmap" position="290,9" size="8,9" pixmap="750S/nim_active.png" alphatest="on">
++			<convert type="FrontendInfo">NUMBER</convert>
++			<convert type="ValueRange">6,6</convert>
++			<convert type="ConditionalShowHide" />
++		</widget>
++		<widget source="session.FrontendInfo" render="Pixmap" position="290,9" size="8,9" pixmap="750S/nim_active.png" alphatest="on">
++			<convert type="FrontendInfo">NUMBER</convert>
++			<convert type="ValueRange">7,7</convert>
++			<convert type="ConditionalShowHide" />
++		</widget>
++		<widget source="session.TunerInfo" render="FixedLabel" text="A" position="193,6" size="20,13" font="Regular;18" backgroundColor="#4e5a74" transparent="1">
++			<convert type="TunerInfo">TunerUseMask</convert>
++			<convert type="ValueBitTest">1</convert>
++			<convert type="ConditionalShowHide" />			
++		</widget>
++		<widget source="session.TunerInfo" render="FixedLabel" text="B" position="205,6" size="20,13" font="Regular;18" backgroundColor="#4e5a74" transparent="1">
 +			<convert type="TunerInfo">TunerUseMask</convert>
 +			<convert type="ValueBitTest">2</convert>
 +			<convert type="ConditionalShowHide" />
 +		</widget>
-+		<widget source="session.TunerInfo" render="FixedLabel" text="C" position="265,30" size="20,13" font="Regular;18" backgroundColor="#4e5a74" transparent="1">
++		<widget source="session.TunerInfo" render="FixedLabel" text="C" position="217,6" size="20,13" font="Regular;18" backgroundColor="#4e5a74" transparent="1">
 +			<convert type="TunerInfo">TunerUseMask</convert>
 +			<convert type="ValueBitTest">4</convert>
 +			<convert type="ConditionalShowHide" />
 +		</widget>
-+		<widget source="session.TunerInfo" render="FixedLabel" text="D" position="265,43" size="20,13" font="Regular;18" backgroundColor="#4e5a74" transparent="1">
++		<widget source="session.TunerInfo" render="FixedLabel" text="D" position="229,6" size="20,13" font="Regular;18" backgroundColor="#4e5a74" transparent="1">
 +			<convert type="TunerInfo">TunerUseMask</convert>
 +			<convert type="ValueBitTest">8</convert>
++			<convert type="ConditionalShowHide" />
++		</widget>
++		<widget source="session.TunerInfo" render="FixedLabel" text="E" position="241,6" size="20,13" font="Regular;18" backgroundColor="#4e5a74" transparent="1">
++			<convert type="TunerInfo">TunerUseMask</convert>
++			<convert type="ValueBitTest">16</convert>
++			<convert type="ConditionalShowHide" />
++		</widget>
++		<widget source="session.TunerInfo" render="FixedLabel" text="F" position="253,6" size="20,13" font="Regular;18" backgroundColor="#4e5a74" transparent="1">
++			<convert type="TunerInfo">TunerUseMask</convert>
++			<convert type="ValueBitTest">32</convert>
++			<convert type="ConditionalShowHide" />
++		</widget>
++		<widget source="session.TunerInfo" render="FixedLabel" text="G" position="265,6" size="20,13" font="Regular;18" backgroundColor="#4e5a74" transparent="1">
++			<convert type="TunerInfo">TunerUseMask</convert>
++			<convert type="ValueBitTest">64</convert>
++			<convert type="ConditionalShowHide" />
++		</widget>
++		<widget source="session.TunerInfo" render="FixedLabel" text="H" position="277,6" size="20,13" font="Regular;18" backgroundColor="#4e5a74" transparent="1">
++			<convert type="TunerInfo">TunerUseMask</convert>
++			<convert type="ValueBitTest">128</convert>
 +			<convert type="ConditionalShowHide" />
 +		</widget>
 +		<ePixmap pixmap="750S/icons/clock.png" position="568,4" zPosition="1" size="16,16" alphatest="on" />
@@ -3009,10 +3049,10 @@ index 0000000..9d4f458
 +	*.png
 diff --git a/data/Vu_HD/skin.xml b/data/Vu_HD/skin.xml
 new file mode 100644
-index 0000000..fa1e2e4
+index 0000000..b6e4235
 --- /dev/null
 +++ b/data/Vu_HD/skin.xml
-@@ -0,0 +1,3454 @@
+@@ -0,0 +1,3510 @@
 +<skin>
 +	<!-- VU+ skin (skin.xml)  -->
 +	<output id="0">
@@ -3130,25 +3170,45 @@ index 0000000..fa1e2e4
 +			<convert type="ConditionalShowHide" />
 +		</widget>
 +		-->
-+		<eLabel text="Tuner" position="845,125" size="60,20" font="Regular;20" backgroundColor="#d9dee2" foregroundColor="#1c1c1c" transparent="1" />
-+		<widget source="session.TunerInfo" render="FixedLabel" text="A" position="905,125" size="30,20" font="Semibold;20" foregroundColor="#5c5c5c" backgroundColor="#d9dee2" transparent="1">
++		<eLabel text="Tuner" position="815,125" size="60,20" font="Regular;20" backgroundColor="#d9dee2" foregroundColor="#1c1c1c" transparent="1" />
++		<widget source="session.TunerInfo" render="FixedLabel" text="A" position="875,125" size="30,20" font="Semibold;20" foregroundColor="#5c5c5c" backgroundColor="#d9dee2" transparent="1">
 +			<convert type="TunerInfo">TunerUseMask</convert>
 +			<convert type="ValueBitTest">1</convert>
 +			<convert type="ConditionalShowHide" />
 +		</widget>
-+		<widget source="session.TunerInfo" render="FixedLabel" text="B" position="917,125" size="30,20" font="Semibold;20" foregroundColor="#5c5c5c" backgroundColor="#d9dee2" transparent="1">
++		<widget source="session.TunerInfo" render="FixedLabel" text="B" position="887,125" size="30,20" font="Semibold;20" foregroundColor="#5c5c5c" backgroundColor="#d9dee2" transparent="1">
 +			<convert type="TunerInfo">TunerUseMask</convert>
 +			<convert type="ValueBitTest">2</convert>
 +			<convert type="ConditionalShowHide" />
 +		</widget>
-+		<widget source="session.TunerInfo" render="FixedLabel" text="C" position="929,125" size="30,20" font="Semibold;20" foregroundColor="#1c1c1c" backgroundColor="#d9dee2" transparent="1">
++		<widget source="session.TunerInfo" render="FixedLabel" text="C" position="899,125" size="30,20" font="Semibold;20" foregroundColor="#5c5c5c" backgroundColor="#d9dee2" transparent="1">
 +			<convert type="TunerInfo">TunerUseMask</convert>
 +			<convert type="ValueBitTest">4</convert>
 +			<convert type="ConditionalShowHide" />
 +		</widget>
-+		<widget source="session.TunerInfo" render="FixedLabel" text="D" position="941,125" size="30,20" font="Semibold;20" foregroundColor="#1c1c1c" backgroundColor="#d9dee2" transparent="1">
++		<widget source="session.TunerInfo" render="FixedLabel" text="D" position="911,125" size="30,20" font="Semibold;20" foregroundColor="#5c5c5c" backgroundColor="#d9dee2" transparent="1">
 +			<convert type="TunerInfo">TunerUseMask</convert>
 +			<convert type="ValueBitTest">8</convert>
++			<convert type="ConditionalShowHide" />
++		</widget>
++		<widget source="session.TunerInfo" render="FixedLabel" text="E" position="923,125" size="30,20" font="Semibold;20" foregroundColor="#5c5c5c" backgroundColor="#d9dee2" transparent="1">
++			<convert type="TunerInfo">TunerUseMask</convert>
++			<convert type="ValueBitTest">16</convert>
++			<convert type="ConditionalShowHide" />
++		</widget>
++		<widget source="session.TunerInfo" render="FixedLabel" text="F" position="935,125" size="30,20" font="Semibold;20" foregroundColor="#5c5c5c" backgroundColor="#d9dee2" transparent="1">
++			<convert type="TunerInfo">TunerUseMask</convert>
++			<convert type="ValueBitTest">32</convert>
++			<convert type="ConditionalShowHide" />
++		</widget>
++		<widget source="session.TunerInfo" render="FixedLabel" text="G" position="945,125" size="30,20" font="Semibold;20" foregroundColor="#5c5c5c" backgroundColor="#d9dee2" transparent="1">
++			<convert type="TunerInfo">TunerUseMask</convert>
++			<convert type="ValueBitTest">64</convert>
++			<convert type="ConditionalShowHide" />
++		</widget>
++		<widget source="session.TunerInfo" render="FixedLabel" text="H" position="957,125" size="30,20" font="Semibold;20" foregroundColor="#5c5c5c" backgroundColor="#d9dee2" transparent="1">
++			<convert type="TunerInfo">TunerUseMask</convert>
++			<convert type="ValueBitTest">128</convert>
 +			<convert type="ConditionalShowHide" />
 +		</widget>
 +		<ePixmap pixmap="Vu_HD/icons/clock.png" position="862,18" zPosition="1" size="20,20" alphatest="blend" />
@@ -3156,14 +3216,44 @@ index 0000000..fa1e2e4
 +			<convert type="ClockToText">Format:%H:%M</convert>
 +		</widget>
 +		<!-- tuners in use? -->
-+		<widget source="session.FrontendInfo" render="FixedLabel" position="905,125" size="30,20" text="A" font="Semibold;20" foregroundColor="#1c1c1c" backgroundColor="#d9dee2" transparent="1">
++		<widget source="session.FrontendInfo" render="FixedLabel" position="875,125" size="30,20" text="A" font="Semibold;20" foregroundColor="#1c1c1c" backgroundColor="#d9dee2" transparent="1">
 +			<convert type="FrontendInfo">NUMBER</convert>
 +			<convert type="ValueRange">0,0</convert>
 +			<convert type="ConditionalShowHide" />
 +		</widget>
-+		<widget source="session.FrontendInfo" render="FixedLabel" position="917,125" size="30,20" text="B" font="Semibold;20" foregroundColor="#1c1c1c" backgroundColor="#d9dee2" transparent="1">
++		<widget source="session.FrontendInfo" render="FixedLabel" position="887,125" size="30,20" text="B" font="Semibold;20" foregroundColor="#1c1c1c" backgroundColor="#d9dee2" transparent="1">
 +			<convert type="FrontendInfo">NUMBER</convert>
 +			<convert type="ValueRange">1,1</convert>
++			<convert type="ConditionalShowHide" />
++		</widget>
++		<widget source="session.FrontendInfo" render="FixedLabel" position="899,125" size="30,20" text="C" font="Semibold;20" foregroundColor="#1c1c1c" backgroundColor="#d9dee2" transparent="1">
++			<convert type="FrontendInfo">NUMBER</convert>
++			<convert type="ValueRange">2,2</convert>
++			<convert type="ConditionalShowHide" />
++		</widget>
++		<widget source="session.FrontendInfo" render="FixedLabel" position="911,125" size="30,20" text="D" font="Semibold;20" foregroundColor="#1c1c1c" backgroundColor="#d9dee2" transparent="1">
++			<convert type="FrontendInfo">NUMBER</convert>
++			<convert type="ValueRange">3,3</convert>
++			<convert type="ConditionalShowHide" />
++		</widget>
++		<widget source="session.FrontendInfo" render="FixedLabel" position="923,125" size="30,20" text="E" font="Semibold;20" foregroundColor="#1c1c1c" backgroundColor="#d9dee2" transparent="1">
++			<convert type="FrontendInfo">NUMBER</convert>
++			<convert type="ValueRange">4,4</convert>
++			<convert type="ConditionalShowHide" />
++		</widget>
++		<widget source="session.FrontendInfo" render="FixedLabel" position="935,125" size="30,20" text="F" font="Semibold;20" foregroundColor="#1c1c1c" backgroundColor="#d9dee2" transparent="1">
++			<convert type="FrontendInfo">NUMBER</convert>
++			<convert type="ValueRange">5,5</convert>
++			<convert type="ConditionalShowHide" />
++		</widget>
++		<widget source="session.FrontendInfo" render="FixedLabel" position="945,125" size="30,20" text="G" font="Semibold;20" foregroundColor="#1c1c1c" backgroundColor="#d9dee2" transparent="1">
++			<convert type="FrontendInfo">NUMBER</convert>
++			<convert type="ValueRange">6,6</convert>
++			<convert type="ConditionalShowHide" />
++		</widget>
++		<widget source="session.FrontendInfo" render="FixedLabel" position="957,125" size="30,20" text="H" font="Semibold;20" foregroundColor="#1c1c1c" backgroundColor="#d9dee2" transparent="1">
++			<convert type="FrontendInfo">NUMBER</convert>
++			<convert type="ValueRange">7,7</convert>
 +			<convert type="ConditionalShowHide" />
 +		</widget>
 +		<!--
@@ -6445,13 +6535,19 @@ index 0000000..fa1e2e4
 +	</screen>
 +
 +	<!-- TranscodingSetup Plugin -->
-+	<screen name="TranscodingSetup" position="center,center" size="560,320" >
-+		<ePixmap pixmap="skin_default/buttons/red.png" position="30,10" size="140,40" alphatest="on" />
-+		<ePixmap pixmap="skin_default/buttons/green.png" position="210,10" size="140,40" alphatest="on" />
-+		<ePixmap pixmap="skin_default/buttons/yellow.png" position="390,10" size="140,40" alphatest="on" />
-+		<widget source="key_red" render="Label" position="30,10" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" foregroundColor="#ffffff" transparent="1" />
-+		<widget source="key_green" render="Label" position="210,10" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" backgroundColor="#1f771f" foregroundColor="#ffffff" transparent="1" />
-+		<widget source="key_yellow" render="Label" position="390,10" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" backgroundColor="#a08500" foregroundColor="#ffffff" transparent="1" />
++	<screen name="TranscodingSetup" position="center,center" size="560,270" title="Transcoding Setup" >
++		<ePixmap pixmap="skin_default/buttons/red.png" position="110,10" size="140,40" alphatest="on" />
++		<ePixmap pixmap="skin_default/buttons/green.png" position="310,10" size="140,40" alphatest="on" />
++		<widget source="key_red" render="Label" position="110,10" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" foregroundColor="#ffffff" transparent="1" />
++		<widget source="key_green" render="Label" position="310,10" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" backgroundColor="#1f771f" foregroundColor="#ffffff" transparent="1" />
++		<widget name="config" zPosition="2" position="5,70" size="550,70" scrollbarMode="showOnDemand" transparent="1" />
++		<widget source="text" render="Label" position="20,140" size="520,130" font="Regular;18" halign="center" valign="center" />
++	</screen>
++	<screen name="TranscodingSetup_ext" position="center,center" size="560,320" title="Transcoding Setup" >
++		<ePixmap pixmap="skin_default/buttons/red.png" position="110,10" size="140,40" alphatest="on" />
++		<ePixmap pixmap="skin_default/buttons/green.png" position="310,10" size="140,40" alphatest="on" />
++		<widget source="key_red" render="Label" position="110,10" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" foregroundColor="#ffffff" transparent="1" />
++		<widget source="key_green" render="Label" position="310,10" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" backgroundColor="#1f771f" foregroundColor="#ffffff" transparent="1" />
 +		<widget name="config" zPosition="2" position="5,70" size="550,120" scrollbarMode="showOnDemand" transparent="1" />
 +		<widget source="text" render="Label" position="20,190" size="520,130" font="Regular;18" halign="center" valign="center" />
 +	</screen>
