@@ -4,11 +4,13 @@ LICENSE = "GPLv2"
 
 
 PV = "1.0+git${SRCPV}"
-PR = "r1"
+PR = "r2"
 SRC_REV = ""
 
-SRC_URI = "git://openpli.git.sourceforge.net/gitroot/openpli/vtuner;protocol=git;tag=${SRC_REV} \
-	file://${PN}.sh "
+SRC_URI = " \
+	git://code.vuplus.com/git/vtuner.git;protocol=git;tag=${SRC_REV} \
+	file://${PN}.sh \
+	"
 
 S = "${WORKDIR}/git"
 
