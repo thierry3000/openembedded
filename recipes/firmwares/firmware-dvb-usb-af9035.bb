@@ -1,9 +1,11 @@
 require linux-firmware.inc
 
-SRCREV = "46c66487a85cd05a4acbd5eb4828f72783d1be4c"
+SRCREV = "f640c0ec14a7075eed9901808e313db1623fdcc0"
+
+PR = "r1"
 
 do_install() {
         install -d ${D}${base_libdir}/firmware
-        install -m 0644 dvb-usb-af9035-01.fw ${D}/${base_libdir}/firmware/
+        install -m 0644 dvb-usb-af9035-*.fw ${D}/${base_libdir}/firmware/
 }
 
