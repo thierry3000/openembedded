@@ -1,4 +1,6 @@
 DESCRIPTION = "opera-hbbtv"
+LICENSE = "proprietary"
+
 PRIORITY = "required"
 
 SRC_DATE = "20130820_0"
