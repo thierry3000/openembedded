@@ -1,8 +1,9 @@
 DESCRIPTION = "Configuration files for online package repositories aka feeds"
-PR = "r7"
+PR = "r8"
 
 DISTRO_FEED_PREFIX ?= "official"
-DISTRO_FEED_URI ?= "http://archive.vuplus.com/openembedded/${DISTRO_VERSION}/vuplus/feeds/stable"
+#DISTRO_FEED_URI ?= "http://archive.vuplus.com/openembedded/${DISTRO_VERSION}/vuplus/feeds/stable"
+DISTRO_FEED_URI ?= "http://code.vuplus.com/packages/openembedded/${DISTRO_VERSION}/vuplus/feeds/stable"
 
 do_compile() {
     mkdir -p ${S}/${sysconfdir}/opkg
