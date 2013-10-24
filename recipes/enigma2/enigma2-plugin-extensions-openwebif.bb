@@ -9,12 +9,11 @@ RDEPENDS_${PN} = "python-cheetah python-json python-unixadmin python-misc python
 inherit gitpkgv
 PV = "0.1+git${SRCPV}"
 PKGV = "0.1+git${GITPKGV}"
-PR = "r0.81"
+PR = "r0.83"
 
 require openplugins.inc
 
-SRC_URI = " git://github.com/E2OpenPlugins/e2openplugin-${MODULE}.git;protocol=git;tag=4d262f9176cfecf4ecd2344c4dacdbdd25f2d088 \
-	    file://openwebif-filestreamproxy-support.patch;patch=1;pnum=1 "
+SRC_URI = " git://github.com/E2OpenPlugins/e2openplugin-${MODULE}.git;protocol=git " 
 
 # Just a quick hack to "compile" it
 do_compile() {
