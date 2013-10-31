@@ -3,8 +3,8 @@ PRIORITY = "required"
 LICENSE = "GPLv3"
 LIC_FILES_CHKSUM = "file://COPYING;md5=d32239bcb673463ab874e80d47fae504"
 
-PR = "r0"
-SRCREV="4601bc13bc6f08e124d60f7c004ff2e1cacdfc31"
+PR = "r1"
+SRCREV="e6d6277466860e4dd779f566cead24a360a87d43"
 
 SRC_URI = "git://code.vuplus.com/git/filestreamproxy.git;protocol=git;branch=master;tag=${SRCREV}"
 
