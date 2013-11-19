@@ -1,7 +1,7 @@
 DESCRIPTION = "Vuplus: W-LAN Task for the Vuplus Distribution"
 SECTION = "vuplus/base"
 LICENSE = "MIT"
-PR = "r10"
+PR = "r11"
 
 inherit task
 
