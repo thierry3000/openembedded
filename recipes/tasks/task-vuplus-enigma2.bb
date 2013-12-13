@@ -1,7 +1,7 @@
 DESCRIPTION = "Vuplus: E2 Task for the Vuplus Distribution"
 SECTION = "vuplus/base"
 LICENSE = "MIT"
-PR = "r31"
+PR = "r32"
 
 inherit task
 
@@ -61,9 +61,14 @@ RRECOMMENDS_task-vuplus-enigma2 = "\
   ${@base_contains("MACHINE_FEATURES", "wifi", "task-vuplus-wlan", "", d)} \
 "
 
+RDEPENDS_task-vuplus-enigma2_append_vusolo = "\
+  enigma2-plugin-systemplugins-audioeffect \
+"
+
 RDEPENDS_task-vuplus-enigma2_append_bm750 = "\
   enigma2-plugin-systemplugins-fancontrol \
   enigma2-plugin-extensions-hbbtv \
+  enigma2-plugin-systemplugins-audioeffect \
 "
 RDEPENDS_task-vuplus-enigma2_append_vuduo2 = "\
   enigma2-plugin-systemplugins-remotecontrolcode \
@@ -81,6 +86,7 @@ RDEPENDS_task-vuplus-enigma2_append_vuduo2 = "\
   enigma2-plugin-systemplugins-blindscan \
   enigma2-transtreamproxy \
   enigma2-plugin-systemplugins-wolsetup \
+  enigma2-plugin-systemplugins-audioeffect \
 "
 
 RDEPENDS_task-vuplus-enigma2_append_vusolo2 = "\
@@ -93,6 +99,7 @@ RDEPENDS_task-vuplus-enigma2_append_vusolo2 = "\
   enigma2-plugin-systemplugins-autoshutdown \
   enigma2-plugin-systemplugins-transcodingsetup \
   enigma2-transtreamproxy \
+  enigma2-plugin-systemplugins-audioeffect \
 "
 
 RDEPENDS_task-vuplus-enigma2_append_vuuno = "\
