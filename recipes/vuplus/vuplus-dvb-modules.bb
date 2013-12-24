@@ -11,12 +11,12 @@ PV = "${KV}"
 
 inherit module
 
-SRCDATE_bm750 = "20131212"
-SRCDATE_vusolo = "20131212"
-SRCDATE_vuuno = "20131217"
-SRCDATE_vuultimo = "20131217"
-SRCDATE_vuduo2 = "20131217"
-SRCDATE_vusolo2 = "20131212"
+SRCDATE_bm750 = "20131224"
+SRCDATE_vusolo = "20131224"
+SRCDATE_vuuno = "20131224"
+SRCDATE_vuultimo = "20131224"
+SRCDATE_vuduo2 = "20131224"
+SRCDATE_vusolo2 = "20131224"
 
 MODULES_NAME_bm750 = "procmk\ndvb-bcm7335\nbrcmfb"
 MODULES_NAME_vusolo = "procmk\ndvb-bcm7325\nbrcmfb"
