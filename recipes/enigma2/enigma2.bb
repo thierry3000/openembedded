@@ -79,7 +79,7 @@ RDEPENDS_enigma2-plugin-systemplugins-devicemanager = "util-linux-ng-blkid ntfs-
 RDEPENDS_enigma2-plugin-systemplugins-netdrive = "curlftpfs kernel-module-fuse libfuse2"
 
 PN = "enigma2"
-PR = "r115"
+PR = "r116"
 
 SRCDATE = "20110922"
 SRCREV = "5e19a3f8a5e8ce8a4e2cb2b601a1b8ef3554e4be"
