@@ -3,7 +3,7 @@ LICENSE = "proprietary"
 
 PRIORITY = "required"
 
-SRC_DATE = "20140109_0"
+SRC_DATE = "20140116_0"
 
 DEPENDS = "jpeg"
 
