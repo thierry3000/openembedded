@@ -5,14 +5,13 @@ SRCNAME = "rt3070"
 
 inherit module
 
-PR = "r1"
+PR = "r2"
 
 SRC_URI = "file://2011_0719_RT3070_RT3370_RT5370_RT5372_Linux_STA_V2.5.0.3_DPO.tar.bz2 \
 		file://makefile_2.5.0.3.patch;patch=1 \
 		file://config_2.5.0.3.patch;patch=1 \
+		file://change_device_name_wlan_from_ra.patch;patch=1 \
 	"
-
-FILES_${PN} += " /lib/firmware/rt2870.bin"
 
 S = "${WORKDIR}/2011_0719_RT3070_RT3370_RT5370_RT5372_Linux_STA_V${PV}_DPO"
 
@@ -20,11 +19,13 @@ EXTRA_OEMAKE = "LINUX_SRC=${STAGING_KERNEL_DIR}"
 
 do_install() {
 	install -d ${D}${base_libdir}/modules/${KERNEL_VERSION}/drivers/net/wireless
-	install -d ${D}${sysconfdir}/Wireless/RT2870STA
+	install -d ${D}${sysconfdir}/modprobe.d
 	install -m 0644 ${S}/*sta${KERNEL_OBJECT_SUFFIX} ${D}${base_libdir}/modules/${KERNEL_VERSION}/drivers/net/wireless
-	install -m 0644 ${S}/RT2870STA.dat ${D}${sysconfdir}/Wireless/RT2870STA/
-  install -d ${D}/lib/firmware
-  install -m 0644 ${S}/common/rt2870.bin ${D}/lib/firmware/
+	touch ${D}${sysconfdir}/modprobe.d/blacklist-wlan.conf
+	echo "blacklist rt2800usb" >> ${D}${sysconfdir}/modprobe.d/blacklist-wlan.conf
+	echo "blacklist rt2800lib" >> ${D}${sysconfdir}/modprobe.d/blacklist-wlan.conf
+
 }
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
+

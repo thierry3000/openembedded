@@ -21,7 +21,7 @@ KERNEL_WIFI_MODULES = " \
 	kernel-module-r8712u \
 	kernel-module-w35und \
 	kernel-module-zd1211rw \
-	${@base_contains("MACHINE_FEATURES", "rt3070-legacy", "", "kernel-module-rt2800usb", d)} \
+	${@base_contains("MACHINE_FEATURES", "ralink-kmod", "kernel-module-rt2800usb", " ", d)} \
 	kernel-module-llc \
         kernel-module-stp \
         kernel-module-bridge \
