@@ -13,10 +13,10 @@ inherit module
 
 SRCDATE_bm750 = "20140310"
 SRCDATE_vusolo = "20140310"
-SRCDATE_vuuno = "20140310"
-SRCDATE_vuultimo = "20140310"
-SRCDATE_vuduo2 = "20140316"
-SRCDATE_vusolo2 = "20140316"
+SRCDATE_vuuno = "20140318"
+SRCDATE_vuultimo = "20140318"
+SRCDATE_vuduo2 = "20140318"
+SRCDATE_vusolo2 = "20140318"
 
 MODULES_NAME_bm750 = "procmk\ndvb-bcm7335\nbrcmfb"
 MODULES_NAME_vusolo = "procmk\ndvb-bcm7325\nbrcmfb"
