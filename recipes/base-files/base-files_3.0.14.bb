@@ -1,9 +1,9 @@
 DESCRIPTION = "Miscellaneous files for the base system."
 SECTION = "base"
 PRIORITY = "required"
-PR = "r95"
+PR = "r96"
 PR_dm7025 = "r92"
-PR_vusolo = "r97"
+PR_vusolo = "r98"
 LICENSE = "GPL"
 
 FSTAB_dm7025 = "${@base_contains('PREFERRED_VERSION_linux-dm7025', '2.6.12.6', 'fstab_old', 'fstab', d)}"
