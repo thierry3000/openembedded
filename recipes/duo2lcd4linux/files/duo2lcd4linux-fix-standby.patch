@@ -1,0 +1,83 @@
+diff --git a/plugin.py b/plugin.py
+index 6fed789..a2a46cb 100644
+--- a/plugin.py
++++ b/plugin.py
+@@ -839,12 +839,12 @@ class LCDdisplayConfig(ConfigListScreen,Screen):
+ 			self["config"].setList(self.list3)
+ 		elif self.mode == "standby":
+ 			self.list4 = []
+-			self.list4.append(getConfigListEntry(_("Standby - LCD Display"), config.plugins.LCD4linux.Standby))
++			self.list4.append(getConfigListEntry(_("Idle Server Mode - LCD Display"), config.plugins.LCD4linux.Standby))
+ 			self.list4.append(getConfigListEntry(_("- Screens used for Changing"), config.plugins.LCD4linux.StandbyScreenMax))
+ 			self.list4.append(getConfigListEntry(_("- Brightnes"), config.plugins.LCD4linux.StandbyHelligkeit))
+ 			self.list4.append(getConfigListEntry(_("- Backlight Off (disable set Off=On)"), config.plugins.LCD4linux.StandbyLCDoff))
+ 			self.list4.append(getConfigListEntry(_("- Backlight On"), config.plugins.LCD4linux.StandbyLCDon))
+-			self.list4.append(getConfigListEntry(_("Standby - Clock"), config.plugins.LCD4linux.StandbyClock))
++			self.list4.append(getConfigListEntry(_("Idle Server Mode - Clock"), config.plugins.LCD4linux.StandbyClock))
+ 			if config.plugins.LCD4linux.StandbyClock.value != "0":
+ 				self.list4.append(getConfigListEntry(_("- which LCD"), config.plugins.LCD4linux.StandbyClockLCD))
+ 				self.list4.append(getConfigListEntry(_("- Type"), config.plugins.LCD4linux.StandbyClockType))
+@@ -853,19 +853,19 @@ class LCDdisplayConfig(ConfigListScreen,Screen):
+ 				self.list4.append(getConfigListEntry(_("- Alignment"), config.plugins.LCD4linux.StandbyClockAlign))
+ 				self.list4.append(getConfigListEntry(_("- Split Screen"), config.plugins.LCD4linux.StandbyClockSplit))
+ 				self.list4.append(getConfigListEntry(_("- Color"), config.plugins.LCD4linux.StandbyClockColor))
+-			self.list4.append(getConfigListEntry(_("Standby - Show next Timer Event"), config.plugins.LCD4linux.StandbyTimer))
++			self.list4.append(getConfigListEntry(_("Idle Server Mode - Show next Timer Event"), config.plugins.LCD4linux.StandbyTimer))
+ 			if config.plugins.LCD4linux.StandbyTimer.value != "0":
+ 				self.list4.append(getConfigListEntry(_("- which LCD"), config.plugins.LCD4linux.StandbyTimerLCD))
+ 				self.list4.append(getConfigListEntry(_("- Font Size"), config.plugins.LCD4linux.StandbyTimerSize))
+ 				self.list4.append(getConfigListEntry(_("- Position"), config.plugins.LCD4linux.StandbyTimerPos))
+ 				self.list4.append(getConfigListEntry(_("- Color"), config.plugins.LCD4linux.StandbyTimerColor))
+-			self.list4.append(getConfigListEntry(_("Standby - Weather"), config.plugins.LCD4linux.StandbyWetter))
++			self.list4.append(getConfigListEntry(_("Idle Server Mode - Weather"), config.plugins.LCD4linux.StandbyWetter))
+ 			if config.plugins.LCD4linux.StandbyWetter.value != "0":
+ 				self.list4.append(getConfigListEntry(_("- which LCD"), config.plugins.LCD4linux.StandbyWetterLCD))
+ 				self.list4.append(getConfigListEntry(_("- Position X"), config.plugins.LCD4linux.StandbyWetterPosX))
+ 				self.list4.append(getConfigListEntry(_("- Position Y"), config.plugins.LCD4linux.StandbyWetterPosY))
+ 				self.list4.append(getConfigListEntry(_("- Weather Type"), config.plugins.LCD4linux.StandbyWetterType))
+-			self.list4.append(getConfigListEntry(_("Standby - Show Textfile"), config.plugins.LCD4linux.StandbyText))
++			self.list4.append(getConfigListEntry(_("Idle Server Mode - Show Textfile"), config.plugins.LCD4linux.StandbyText))
+ 			if config.plugins.LCD4linux.StandbyText.value != "0":
+ 				self.list4.append(getConfigListEntry(_("- which LCD"), config.plugins.LCD4linux.StandbyTextLCD))
+ 				self.list4.append(getConfigListEntry(_("- File"), config.plugins.LCD4linux.StandbyTextFile))
+@@ -874,7 +874,7 @@ class LCDdisplayConfig(ConfigListScreen,Screen):
+ 				self.list4.append(getConfigListEntry(_("- Alignment"), config.plugins.LCD4linux.StandbyTextAlign))
+ 				self.list4.append(getConfigListEntry(_("- Color"), config.plugins.LCD4linux.StandbyTextColor))
+ 				self.list4.append(getConfigListEntry(_("- Background Color"), config.plugins.LCD4linux.StandbyTextBackColor))
+-			self.list4.append(getConfigListEntry(_("Standby - Show Textfile 2"), config.plugins.LCD4linux.StandbyText2))
++			self.list4.append(getConfigListEntry(_("Idle Server Mode - Show Textfile 2"), config.plugins.LCD4linux.StandbyText2))
+ 			if config.plugins.LCD4linux.StandbyText2.value != "0":
+ 				self.list4.append(getConfigListEntry(_("- which LCD"), config.plugins.LCD4linux.StandbyText2LCD))
+ 				self.list4.append(getConfigListEntry(_("- File"), config.plugins.LCD4linux.StandbyText2File))
+@@ -883,7 +883,7 @@ class LCDdisplayConfig(ConfigListScreen,Screen):
+ 				self.list4.append(getConfigListEntry(_("- Alignment"), config.plugins.LCD4linux.StandbyText2Align))
+ 				self.list4.append(getConfigListEntry(_("- Color"), config.plugins.LCD4linux.StandbyText2Color))
+ 				self.list4.append(getConfigListEntry(_("- Background Color"), config.plugins.LCD4linux.StandbyText2BackColor))
+-			self.list4.append(getConfigListEntry(_("Standby - Show HTTP Text") , config.plugins.LCD4linux.StandbyHTTP))
++			self.list4.append(getConfigListEntry(_("Idle Server Mode - Show HTTP Text") , config.plugins.LCD4linux.StandbyHTTP))
+ 			if config.plugins.LCD4linux.StandbyHTTP.value != "0":
+ 				self.list4.append(getConfigListEntry(_("- which LCD"), config.plugins.LCD4linux.StandbyHTTPLCD))
+ 				self.list4.append(getConfigListEntry(_("- URL"), config.plugins.LCD4linux.StandbyHTTPURL))
+@@ -892,7 +892,7 @@ class LCDdisplayConfig(ConfigListScreen,Screen):
+ 				self.list4.append(getConfigListEntry(_("- Alignment"), config.plugins.LCD4linux.StandbyHTTPAlign))
+ 				self.list4.append(getConfigListEntry(_("- Color"), config.plugins.LCD4linux.StandbyHTTPColor))
+ 				self.list4.append(getConfigListEntry(_("- Background Color"), config.plugins.LCD4linux.StandbyHTTPBackColor))
+-			self.list4.append(getConfigListEntry(_("Standby - Show Picture") , config.plugins.LCD4linux.StandbyBild))
++			self.list4.append(getConfigListEntry(_("Idle Server Mode - Show Picture") , config.plugins.LCD4linux.StandbyBild))
+ 			if config.plugins.LCD4linux.StandbyBild.value != "0":
+ 				self.list4.append(getConfigListEntry(_("- which LCD"), config.plugins.LCD4linux.StandbyBildLCD))
+ 				self.list4.append(getConfigListEntry(_("- File or Path"), config.plugins.LCD4linux.StandbyBildFile))
+@@ -913,11 +913,11 @@ class LCDdisplayConfig(ConfigListScreen,Screen):
+ 			self.mode = "media"
+ 			self.setTitle("LCD4linux Display-Mode MediaPlayer")
+ #			self["config"].setList(self.list3)
+-			self["key_blue"].setText("Set Standby >>")
++			self["key_blue"].setText("Set Idle Mode >>")
+ 			self.SetList()
+ 		elif self.mode == "media":
+ 			self.mode = "standby"
+-			self.setTitle("LCD4linux Display-Mode Standby")
++			self.setTitle("LCD4linux Display-Mode Idle Server Mode")
+ #			self["config"].setList(self.list4)
+ 			self["key_blue"].setText("Set Global >>")
+ 			self.SetList()

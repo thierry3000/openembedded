@@ -1,0 +1,31 @@
+diff --git a/src/plugin.py b/src/plugin.py
+index 4bb7533..61ba253 100644
+--- a/src/plugin.py
++++ b/src/plugin.py
+@@ -30,7 +30,7 @@ config.autoshutdown.time = ConfigInteger(default = 120, limits = (1, 1440))
+ config.autoshutdown.inactivetime = ConfigInteger(default = 60, limits = (1, 1440))
+ config.autoshutdown.autostart = ConfigEnableDisable(default=True)
+ config.autoshutdown.enableinactivity = ConfigEnableDisable(default=True)
+-config.autoshutdown.inactivityaction = ConfigSelection(default = "standby", choices = [("standby", _("Standby")), ("deepstandby", _("Deepstandby"))])
++config.autoshutdown.inactivityaction = ConfigSelection(default = "standby", choices = [("standby", _("Idle Server Mode")), ("deepstandby", _("Standby"))])
+ config.autoshutdown.inactivitymessage = ConfigYesNo(default=True)
+ config.autoshutdown.messagetimeout = ConfigInteger(default = 5, limits = (1, 60))
+ config.autoshutdown.epgrefresh = ConfigYesNo(default=True)
+@@ -99,7 +99,7 @@ class AutoShutDownActions:
+ 		if config.autoshutdown.inactivitymessage.value == True:
+ 			self.asdkeyaction = None
+ 			if config.autoshutdown.inactivityaction.value == "standby":
+-				self.asdkeyaction = _("Go to standby")
++				self.asdkeyaction = _("Go to idle server mode")
+ 			elif config.autoshutdown.inactivityaction.value == "deepstandby":
+ 				self.asdkeyaction = _("Power off STB")
+ 			session.openWithCallback(shutdownactions.actionEndKeyTimer, MessageBox, _("AutoShutDown: %s ?") % self.asdkeyaction, MessageBox.TYPE_YESNO, timeout=config.autoshutdown.messagetimeout.value)
+@@ -207,7 +207,7 @@ class AutoShutDownConfiguration(Screen, ConfigListScreen):
+ 		self.list = []
+ 		self.list.append(getConfigListEntry(_("Enable AutoShutDown:"), config.autoshutdown.autostart))
+ 		if config.autoshutdown.autostart.value == True:
+-			self.list.append(getConfigListEntry(_("Time in standby for power off (min):"), config.autoshutdown.time))
++			self.list.append(getConfigListEntry(_("Time in idle server mode for power off (min):"), config.autoshutdown.time))
+ 		self.list.append(getConfigListEntry(_("Enable action after inactivity:"), config.autoshutdown.enableinactivity))
+ 		if config.autoshutdown.enableinactivity.value == True:
+ 			self.list.append(getConfigListEntry(_("Time for inactivity (min):"), config.autoshutdown.inactivetime))

@@ -2,8 +2,8 @@ DESCRIPTION = "vuplus web manual"
 SECTION = "base"
 PRIORITY = "required"
 
-SRC_DATE = "20140328_p0"
-SRC_DATE_vuduo2 = "20140328_p0"
+SRC_DATE = "20140409_p0"
+SRC_DATE_vuduo2 = "20140409_p0"
 
 IMAGE_DIR = "image"
 IMAGE_DIR_vuduo2 = "Vu+-Duo2-User-Manual_english_D0610-web-images"
