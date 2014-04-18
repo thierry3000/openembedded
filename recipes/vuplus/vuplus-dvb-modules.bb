@@ -14,8 +14,8 @@ inherit module
 SRCDATE_bm750 = "20140310"
 SRCDATE_vusolo = "20140310"
 SRCDATE_vuuno = "20140318"
-SRCDATE_vuultimo = "20140318"
-SRCDATE_vuduo2 = "20140403"
+SRCDATE_vuultimo = "20140418"
+SRCDATE_vuduo2 = "20140418"
 SRCDATE_vusolo2 = "20140403"
 
 MODULES_NAME_bm750 = "procmk\ndvb-bcm7335\nbrcmfb"
