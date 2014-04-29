@@ -51,9 +51,18 @@ index 03e582c..ccdd6d3 100755
  		</menu>
  </menu>
 diff --git a/data/setup.xml b/data/setup.xml
-index 442fe13..0c25644 100755
+index 442fe13..719e94a 100755
 --- a/data/setup.xml
 +++ b/data/setup.xml
+@@ -63,7 +63,7 @@
+ 			<item level="2" text="Composition of the recording filenames">config.recording.filename_composition</item>
+ 		</setup>
+ 		<setup key="harddisk" title="Harddisk setup" >
+-			<item level="0" text="Harddisk standby after">config.usage.hdd_standby</item>
++			<item level="0" text="Harddisk idle mode after">config.usage.hdd_standby</item>
+ 		</setup>
+ 		<setup key="network" title="Network setup">
+ 			<item text="Use DHCP">config.network.dhcp</item>
 @@ -93,7 +93,7 @@
  		<setup key="lcd" title="Display Setup" requires="FrontpanelDisplay">
  			<item level="0" text="Brightness">config.lcd.bright</item>
@@ -79,9 +88,20 @@ index 0ea65cd..2baadf9 100644
  	config.ParentalControl.setuppinactive = ConfigYesNo(default = False)
  	config.ParentalControl.type = ConfigSelection(default = "blacklist", choices = [(LIST_WHITELIST, _("whitelist")), (LIST_BLACKLIST, _("blacklist"))])
 diff --git a/lib/python/Components/UsageConfig.py b/lib/python/Components/UsageConfig.py
-index b98be60..6584b7c 100644
+old mode 100644
+new mode 100755
+index b98be60..a00132d
 --- a/lib/python/Components/UsageConfig.py
 +++ b/lib/python/Components/UsageConfig.py
+@@ -23,7 +23,7 @@ def InitUsageConfig():
+ 	config.usage.show_infobar_on_skip = ConfigYesNo(default = True)
+ 	config.usage.show_infobar_on_event_change = ConfigYesNo(default = True)
+ 	config.usage.hdd_standby = ConfigSelection(default = "600", choices = [
+-		("0", _("no standby")), ("10", "10 " + _("seconds")), ("30", "30 " + _("seconds")),
++		("0", _("no idle mode")), ("10", "10 " + _("seconds")), ("30", "30 " + _("seconds")),
+ 		("60", "1 " + _("minute")), ("120", "2 " + _("minutes")),
+ 		("300", "5 " + _("minutes")), ("600", "10 " + _("minutes")), ("1200", "20 " + _("minutes")),
+ 		("1800", "30 " + _("minutes")), ("3600", "1 " + _("hour")), ("7200", "2 " + _("hours")),
 @@ -56,12 +56,12 @@ def InitUsageConfig():
  	config.usage.on_long_powerpress = ConfigSelection(default = "show_menu", choices = [
  		("show_menu", _("show shutdown menu")),
@@ -97,6 +117,19 @@ index b98be60..6584b7c 100644
  
  
  	config.usage.alternatives_priority = ConfigSelection(default = "0", choices = [
+diff --git a/lib/python/Plugins/SystemPlugins/DeviceManager/plugin.py b/lib/python/Plugins/SystemPlugins/DeviceManager/plugin.py
+index 86aa991..e702068 100755
+--- a/lib/python/Plugins/SystemPlugins/DeviceManager/plugin.py
++++ b/lib/python/Plugins/SystemPlugins/DeviceManager/plugin.py
+@@ -85,7 +85,7 @@ class DeviceManagerConfiguration(Screen, ConfigListScreen):
+ 	def createConfigList(self):
+ 		self.list = []
+ 		self.list.append(getConfigListEntry(_("Enable mount check for HDD : "), config.plugins.devicemanager.mountcheck_enable))
+-		self.list.append(getConfigListEntry(_("Harddisk standby after : "), config.usage.hdd_standby))
++		self.list.append(getConfigListEntry(_("Harddisk idle mode after : "), config.usage.hdd_standby))
+ 		self.list.append(getConfigListEntry(_("Mount known devices automatically : "), config.plugins.devicemanager.hotplug_enable))
+ 
+ 	def keySave(self):
 diff --git a/lib/python/Plugins/SystemPlugins/Fancontrol/meta/plugin_fancontrol.xml b/lib/python/Plugins/SystemPlugins/Fancontrol/meta/plugin_fancontrol.xml
 index b766e34..f208ec0 100644
 --- a/lib/python/Plugins/SystemPlugins/Fancontrol/meta/plugin_fancontrol.xml
