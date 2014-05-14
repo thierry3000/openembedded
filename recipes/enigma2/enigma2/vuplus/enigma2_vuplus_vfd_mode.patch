@@ -1,10 +1,10 @@
 diff --git a/configure.ac b/configure.ac
-index 27beb1e..8e007e1 100644
+index ef30e71..96742b5 100644
 --- a/configure.ac
 +++ b/configure.ac
-@@ -46,6 +46,28 @@ AC_CHECK_LIB([xmlccwrap], [exit], [LIBXMLCCWRAP_LIBS="-lxmlccwrap"], [AC_MSG_ERR
- AC_SUBST(LIBXMLCCWRAP_LIBS)
- AC_LANG_POP
+@@ -65,6 +65,28 @@ if test x"$setrighthalfvfdskin" != xno ; then
+ fi
+ AM_CONDITIONAL(SET_RIGHT_HALF_VFD_SKIN, test x"$setrighthalfvfdskin" != xno)
  
 +
 +AC_ARG_WITH(display-text-vfd,
@@ -32,7 +32,7 @@ index 27beb1e..8e007e1 100644
  	AS_HELP_STRING([--with-libsdl],[use libsdl, yes or no]),
  	[with_libsdl=$withval],[with_libsdl=no])
 diff --git a/lib/gdi/glcddc.cpp b/lib/gdi/glcddc.cpp
-index 8ac8cd3..74f6afd 100755
+index 07bd910..74f6afd 100755
 --- a/lib/gdi/glcddc.cpp
 +++ b/lib/gdi/glcddc.cpp
 @@ -34,13 +34,23 @@ void gLCDDC::exec(const gOpcode *o)
@@ -52,7 +52,7 @@ index 8ac8cd3..74f6afd 100755
  	case gOpcode::flush:
 +#if defined(DISPLAY_GRAPHICVFD) && !defined(DISPLAY_TEXTVFD)
  //		if (update)
--#ifndef BUILD_VUPLUS /* ikseong  */
+-#ifndef BUILD_VUPLUS
  			lcd->update();
  #else
 -			;
@@ -63,21 +63,21 @@ index 8ac8cd3..74f6afd 100755
  		gDC::exec(o);
  		break;
 diff --git a/lib/gdi/lcd.cpp b/lib/gdi/lcd.cpp
-index a5ac351..74bc3e0 100755
+index 04ed7e2..7464d1f 100755
 --- a/lib/gdi/lcd.cpp
 +++ b/lib/gdi/lcd.cpp
-@@ -183,9 +183,7 @@ eDBoxLCD *eDBoxLCD::getInstance()
+@@ -189,9 +189,7 @@ eDBoxLCD *eDBoxLCD::getInstance()
  
  void eDBoxLCD::update()
  {
--#ifdef BUILD_VUPLUS /* ikseong  */
+-#ifdef BUILD_VUPLUS
 -	return ;
 -#endif
 +#if defined(DISPLAY_GRAPHICVFD) && !defined(DISPLAY_TEXTVFD)
  	if (lcdfd >= 0)
  	{
  		if (!is_oled || is_oled == 2)
-@@ -227,5 +225,20 @@ void eDBoxLCD::update()
+@@ -233,5 +231,20 @@ void eDBoxLCD::update()
  			write(lcdfd, raw, 64*64);
  		}
  	}
@@ -99,7 +99,7 @@ index a5ac351..74bc3e0 100755
 +}
 +#endif /*defined(DISPLAY_TEXTVFD)*/
 diff --git a/lib/gdi/lcd.h b/lib/gdi/lcd.h
-index e7b4c2c..80a56f2 100644
+index e7b4c2c..80a56f2 100755
 --- a/lib/gdi/lcd.h
 +++ b/lib/gdi/lcd.h
 @@ -36,6 +36,9 @@ public:

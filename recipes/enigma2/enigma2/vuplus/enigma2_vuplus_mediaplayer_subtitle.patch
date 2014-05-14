@@ -1,8 +1,8 @@
 diff --git a/lib/service/servicemp3.cpp b/lib/service/servicemp3.cpp
-index 7ce34c1..e620225 100755
+index ae4611c..99bb50d 100755
 --- a/lib/service/servicemp3.cpp
 +++ b/lib/service/servicemp3.cpp
-@@ -235,6 +235,8 @@ eServiceMP3::eServiceMP3(eServiceReference ref)
+@@ -245,6 +245,8 @@ eServiceMP3::eServiceMP3(eServiceReference ref)
  	CONNECT(m_pump.recv_msg, eServiceMP3::gstPoll);
  	m_aspect = m_width = m_height = m_framerate = m_progressive = -1;
  
@@ -11,7 +11,7 @@ index 7ce34c1..e620225 100755
  	m_cur_rate=1.0;
  	m_state = stIdle;
  	eDebug("eServiceMP3::construct!");
-@@ -572,6 +574,7 @@ RESULT eServiceMP3::seekTo(pts_t to)
+@@ -595,6 +597,7 @@ RESULT eServiceMP3::seekTo(pts_t to)
  	RESULT ret = -1;
  
  	if (m_gst_playbin) {
@@ -19,7 +19,7 @@ index 7ce34c1..e620225 100755
  		eSingleLocker l(m_subs_to_pull_lock); // this is needed to dont handle incomming subtitles during seek!
  		if (!(ret = seekToImpl(to)))
  		{
-@@ -580,6 +583,13 @@ RESULT eServiceMP3::seekTo(pts_t to)
+@@ -603,6 +606,13 @@ RESULT eServiceMP3::seekTo(pts_t to)
  			m_decoder_time_valid_state = 0;
  			m_subs_to_pull = 0;
  		}
@@ -33,7 +33,7 @@ index 7ce34c1..e620225 100755
  	}
  
  	return ret;
-@@ -593,6 +603,7 @@ RESULT eServiceMP3::trickSeek(gdouble ratio)
+@@ -616,6 +626,7 @@ RESULT eServiceMP3::trickSeek(gdouble ratio)
  	if (!ratio)
  		return seekRelative(0, 0);
  
@@ -41,7 +41,7 @@ index 7ce34c1..e620225 100755
  	eSingleLocker l(m_subs_to_pull_lock);
  
  	GstEvent *s_event;
-@@ -632,6 +643,13 @@ RESULT eServiceMP3::trickSeek(gdouble ratio)
+@@ -655,6 +666,13 @@ RESULT eServiceMP3::trickSeek(gdouble ratio)
  	m_decoder_time_valid_state = 0;
  	m_subs_to_pull = 0;
  	m_cur_rate=ratio;
@@ -55,7 +55,7 @@ index 7ce34c1..e620225 100755
  	return 0;
  }
  
-@@ -1572,10 +1590,17 @@ eAutoInitPtr<eServiceFactoryMP3> init_eServiceFactoryMP3(eAutoInitNumbers::servi
+@@ -1650,10 +1668,17 @@ eAutoInitPtr<eServiceFactoryMP3> init_eServiceFactoryMP3(eAutoInitNumbers::servi
  
  void eServiceMP3::gstCBsubtitleAvail(GstElement *appsink, gpointer user_data)
  {
@@ -77,7 +77,7 @@ index 7ce34c1..e620225 100755
  }
  
  void eServiceMP3::gstTextpadHasCAPS(GstPad *pad, GParamSpec * unused, gpointer user_data)
-@@ -1651,6 +1676,11 @@ void eServiceMP3::pullSubtitle()
+@@ -1729,6 +1754,11 @@ void eServiceMP3::pullSubtitle()
  		{
  			GstBuffer *buffer;
  			{
@@ -90,10 +90,10 @@ index 7ce34c1..e620225 100755
  				--m_subs_to_pull;
  				g_signal_emit_by_name (sink, "pull-buffer", &buffer);
 diff --git a/lib/service/servicemp3.h b/lib/service/servicemp3.h
-index 07eb321..f6282bf 100755
+index cb5b048..7e3f6a6 100644
 --- a/lib/service/servicemp3.h
 +++ b/lib/service/servicemp3.h
-@@ -266,6 +266,8 @@ private:
+@@ -270,6 +270,8 @@ private:
  	std::string m_useragent;
  	RESULT trickSeek(gdouble ratio);
  	double m_cur_rate;

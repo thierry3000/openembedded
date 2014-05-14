@@ -1,5 +1,5 @@
 diff --git a/lib/python/Plugins/Extensions/MediaPlayer/plugin.py b/lib/python/Plugins/Extensions/MediaPlayer/plugin.py
-index 75fba2d..da5ebd4 100644
+index 3fe66af..d366e6e 100755
 --- a/lib/python/Plugins/Extensions/MediaPlayer/plugin.py
 +++ b/lib/python/Plugins/Extensions/MediaPlayer/plugin.py
 @@ -7,7 +7,7 @@ from Screens.HelpMenu import HelpableScreen
@@ -20,7 +20,7 @@ index 75fba2d..da5ebd4 100644
  	ALLOW_SUSPEND = True
  	ENABLE_RESUME_SUPPORT = True
  
-@@ -201,6 +201,10 @@ class MediaPlayer(Screen, InfoBarBase, InfoBarSeek, InfoBarAudioSelection, InfoB
+@@ -199,6 +199,10 @@ class MediaPlayer(Screen, InfoBarBase, InfoBarSeek, InfoBarAudioSelection, InfoB
  
  		InfoBarSeek.__init__(self, actionmap = "MediaPlayerSeekActions")
  
@@ -31,7 +31,7 @@ index 75fba2d..da5ebd4 100644
  		self.onClose.append(self.delMPTimer)
  		self.onClose.append(self.__onClose)
  
-@@ -234,6 +238,14 @@ class MediaPlayer(Screen, InfoBarBase, InfoBarSeek, InfoBarAudioSelection, InfoB
+@@ -232,6 +236,14 @@ class MediaPlayer(Screen, InfoBarBase, InfoBarSeek, InfoBarAudioSelection, InfoB
  				iPlayableService.evUser+13: self["coverArt"].embeddedCoverArt
  			})
  
@@ -46,7 +46,7 @@ index 75fba2d..da5ebd4 100644
  	def doNothing(self):
  		pass
  
-@@ -762,6 +774,7 @@ class MediaPlayer(Screen, InfoBarBase, InfoBarSeek, InfoBarAudioSelection, InfoB
+@@ -759,6 +771,7 @@ class MediaPlayer(Screen, InfoBarBase, InfoBarSeek, InfoBarAudioSelection, InfoB
  			self.playlist.updateList()
  			if len(self.playlist) == 1:
  				self.changeEntry(0)
@@ -55,7 +55,7 @@ index 75fba2d..da5ebd4 100644
  	def addPlaylistParser(self, parser, extension):
  		self.playlistparsers[extension] = parser
 diff --git a/lib/python/Screens/InfoBarGenerics.py b/lib/python/Screens/InfoBarGenerics.py
-index 07fbac8..6ca65e3 100755
+index 80cc196..7abb2ee 100755
 --- a/lib/python/Screens/InfoBarGenerics.py
 +++ b/lib/python/Screens/InfoBarGenerics.py
 @@ -957,14 +957,17 @@ class InfoBarSeek:
@@ -130,12 +130,10 @@ index 07fbac8..6ca65e3 100755
  		elif self.isStateForward(seekstate):
  			speed = seekstate[1]
 diff --git a/lib/service/servicemp3.cpp b/lib/service/servicemp3.cpp
-old mode 100644
-new mode 100755
-index be55d0c..7ce34c1
+index e79be09..ae4611c 100755
 --- a/lib/service/servicemp3.cpp
 +++ b/lib/service/servicemp3.cpp
-@@ -235,6 +235,7 @@ eServiceMP3::eServiceMP3(eServiceReference ref)
+@@ -245,6 +245,7 @@ eServiceMP3::eServiceMP3(eServiceReference ref)
  	CONNECT(m_pump.recv_msg, eServiceMP3::gstPoll);
  	m_aspect = m_width = m_height = m_framerate = m_progressive = -1;
  
@@ -143,7 +141,7 @@ index be55d0c..7ce34c1
  	m_state = stIdle;
  	eDebug("eServiceMP3::construct!");
  
-@@ -517,6 +518,9 @@ RESULT eServiceMP3::unpause()
+@@ -540,6 +541,9 @@ RESULT eServiceMP3::unpause()
  	if (!m_gst_playbin || m_state != stRunning)
  		return -1;
  
@@ -153,7 +151,7 @@ index be55d0c..7ce34c1
  	gst_element_set_state(m_gst_playbin, GST_STATE_PLAYING);
  
  	return 0;
-@@ -552,7 +556,7 @@ RESULT eServiceMP3::seekToImpl(pts_t to)
+@@ -575,7 +579,7 @@ RESULT eServiceMP3::seekToImpl(pts_t to)
  {
  		/* convert pts to nanoseconds */
  	gint64 time_nanoseconds = to * 11111LL;
@@ -162,7 +160,7 @@ index be55d0c..7ce34c1
  		GST_SEEK_TYPE_SET, time_nanoseconds,
  		GST_SEEK_TYPE_NONE, GST_CLOCK_TIME_NONE))
  	{
-@@ -589,19 +593,23 @@ RESULT eServiceMP3::trickSeek(gdouble ratio)
+@@ -612,19 +616,23 @@ RESULT eServiceMP3::trickSeek(gdouble ratio)
  	if (!ratio)
  		return seekRelative(0, 0);
  
@@ -189,7 +187,7 @@ index be55d0c..7ce34c1
  
  	if ( ratio >= 0 )
  	{
-@@ -619,7 +627,11 @@ RESULT eServiceMP3::trickSeek(gdouble ratio)
+@@ -642,7 +650,11 @@ RESULT eServiceMP3::trickSeek(gdouble ratio)
  		eDebug("eServiceMP3::trickSeek failed");
  		return -1;
  	}
@@ -203,12 +201,10 @@ index be55d0c..7ce34c1
  }
  
 diff --git a/lib/service/servicemp3.h b/lib/service/servicemp3.h
-old mode 100644
-new mode 100755
-index f3cc6dd..07eb321
+index 41aec13..cb5b048 100644
 --- a/lib/service/servicemp3.h
 +++ b/lib/service/servicemp3.h
-@@ -265,6 +265,7 @@ private:
+@@ -269,6 +269,7 @@ private:
  	gint m_aspect, m_width, m_height, m_framerate, m_progressive;
  	std::string m_useragent;
  	RESULT trickSeek(gdouble ratio);

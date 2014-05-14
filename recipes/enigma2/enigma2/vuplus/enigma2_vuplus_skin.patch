@@ -1,5 +1,5 @@
 diff --git a/configure.ac b/configure.ac
-index c0601c7..b2f460d 100644
+index 332fc7a..ef30e71 100644
 --- a/configure.ac
 +++ b/configure.ac
 @@ -134,6 +134,16 @@ data/skin_default/menu/Makefile
@@ -81,10 +81,10 @@ index 0000000..20f24d9
 +	*.png
 diff --git a/data/750S/skin.xml b/data/750S/skin.xml
 new file mode 100644
-index 0000000..541df3d
+index 0000000..242a848
 --- /dev/null
 +++ b/data/750S/skin.xml
-@@ -0,0 +1,2892 @@
+@@ -0,0 +1,2894 @@
 +<skin>
 +	<!-- VU+ skin (skin.xml)  -->
 +	<output id="0">
@@ -2933,14 +2933,16 @@ index 0000000..541df3d
 +		<widget source="key_green" render="Label" position="190,360" zPosition="1" size="135,40" font="Regular;20" halign="center" valign="center" transparent="1" />
 +		<widget source="key_blue" render="Label" position="365,360" zPosition="1" size="135,40" font="Regular;20" halign="center" valign="center" transparent="1" />
 +
-+		<widget name="menulist" position="20,20" size="230,260" backgroundColor="#371e1c1a" transparent="1" zPosition="10" scrollbarMode="showOnDemand" />
++		<widget name="aplist" position="20,20" size="230,275" backgroundColor="#371e1c1a" transparent="1" zPosition="10" scrollbarMode="showOnDemand" />
 +
-+		<widget source="Address" render="Label" position="265,70" zPosition="1" size="240,30" font="Regular;18" halign="center" valign="center" />
-+		<widget source="ESSID" render="Label" position="265,100" zPosition="1" size="240,30" font="Regular;18" halign="center" valign="center" />
++		<widget source="ESSID" render="Label" position="265,70" zPosition="1" size="240,30" font="Regular;18" halign="center" valign="center" />
++		<widget source="Address" render="Label" position="265,100" zPosition="1" size="240,30" font="Regular;18" halign="center" valign="center" />
 +		<widget source="Protocol" render="Label" position="265,130" zPosition="1" size="240,30" font="Regular;18" halign="center" valign="center" />
-+		<widget source="Frequency" render="Label" position="265,160" zPosition="1" size="240,40" font="Regular;18" halign="center" valign="center" />
-+		<widget source="Encryption key" render="Label" position="265,200" zPosition="1" size="240,30" font="Regular;18" halign="center" valign="center" />
-+		<widget source="BitRate" render="Label" position="265,220" zPosition="1" size="240,60" font="Regular;18" halign="center" valign="center" />
++		<widget source="Frequency" render="Label" position="265,160" zPosition="1" size="240,30" font="Regular;18" halign="center" valign="center" />
++		<widget source="Channel" render="Label" position="265,190" zPosition="1" size="240,30" font="Regular;18" halign="center" valign="center" />
++		<widget source="Encryption key" render="Label" position="265,220" zPosition="1" size="240,30" font="Regular;18" halign="center" valign="center" />
++		<widget source="BitRate" render="Label" position="265,250" zPosition="1" size="240,30" font="Regular;18" halign="center" valign="center" />
++		<widget source="Status" render="Label" position="115,310" zPosition="1" size="300,30" font="Regular;18" halign="center" valign="center" />
 +	</screen>
 +
 +	<screen name="Wlanstatus" position="center,120" size="510,400" title="Wireless Network Status..." >
@@ -3049,10 +3051,10 @@ index 0000000..9d4f458
 +	*.png
 diff --git a/data/Vu_HD/skin.xml b/data/Vu_HD/skin.xml
 new file mode 100644
-index 0000000..3e35405
+index 0000000..c82df12
 --- /dev/null
 +++ b/data/Vu_HD/skin.xml
-@@ -0,0 +1,3492 @@
+@@ -0,0 +1,3494 @@
 +<skin>
 +	<!-- VU+ skin (skin.xml)  -->
 +	<output id="0">
@@ -6447,13 +6449,15 @@ index 0000000..3e35405
 +		<widget source="key_green" render="Label" position="268,97" zPosition="1" size="150,25" font="Regular;20" halign="center" valign="center" backgroundColor="darkgrey" foregroundColor="#1c1c1c" transparent="1" />
 +		<widget source="key_blue" render="Label" position="665,97" zPosition="1" size="150,25" font="Regular;20" halign="center" valign="center" backgroundColor="darkgrey" foregroundColor="#1c1c1c" transparent="1" />
 +		<ePixmap pixmap="Vu_HD/border_menu.png" position="120,140" zPosition="-1" size="342,358" transparent="1" alphatest="blend" />
-+		<widget name="menulist" position="130,150" size="322,338" transparent="1" backgroundColor="#27d9dee2" zPosition="10" scrollbarMode="showOnDemand" />
-+		<widget source="Address" render="Label" position="490,220" zPosition="1" size="300,30" font="Regular;20" halign="center" valign="center" backgroundColor="#27b5b9bd" foregroundColor="#1c1c1c" transparent="1" />
-+		<widget source="ESSID" render="Label" position="490,250" zPosition="1" size="300,30" font="Regular;20" halign="center" valign="center" backgroundColor="#27b5b9bd" foregroundColor="#1c1c1c" transparent="1" />
++		<widget name="aplist" position="130,150" size="322,338" transparent="1" backgroundColor="#27d9dee2" zPosition="10" scrollbarMode="showOnDemand" />
++		<widget source="ESSID" render="Label" position="490,220" zPosition="1" size="300,30" font="Regular;20" halign="center" valign="center" backgroundColor="#27b5b9bd" foregroundColor="#1c1c1c" transparent="1" />
++		<widget source="Address" render="Label" position="490,250" zPosition="1" size="300,30" font="Regular;20" halign="center" valign="center" backgroundColor="#27b5b9bd" foregroundColor="#1c1c1c" transparent="1" />
 +		<widget source="Protocol" render="Label" position="490,280" zPosition="1" size="300,30" font="Regular;20" halign="center" valign="center" backgroundColor="#27b5b9bd" foregroundColor="#1c1c1c" transparent="1" />	
 +		<widget source="Frequency" render="Label" position="490,310" zPosition="1" size="300,30" font="Regular;20" halign="center" valign="center" backgroundColor="#27b5b9bd" foregroundColor="#1c1c1c" transparent="1" />
-+		<widget source="Encryption key" render="Label" position="490,340" zPosition="1" size="300,30" font="Regular;20" halign="center" valign="center" backgroundColor="#27b5b9bd" foregroundColor="#1c1c1c" transparent="1" />
-+		<widget source="BitRate" render="Label" position="490,370" zPosition="1" size="300,60" font="Regular;20" halign="center" valign="center" backgroundColor="#27b5b9bd" foregroundColor="#1c1c1c" transparent="1" />
++		<widget source="Channel" render="Label" position="490,340" zPosition="1" size="300,30" font="Regular;20" halign="center" valign="center" backgroundColor="#27b5b9bd" foregroundColor="#1c1c1c" transparent="1" />
++		<widget source="Encryption key" render="Label" position="490,370" zPosition="1" size="300,30" font="Regular;20" halign="center" valign="center" backgroundColor="#27b5b9bd" foregroundColor="#1c1c1c" transparent="1" />
++		<widget source="BitRate" render="Label" position="490,400" zPosition="1" size="300,30" font="Regular;20" halign="center" valign="center" backgroundColor="#27b5b9bd" foregroundColor="#1c1c1c" transparent="1" />
++		<widget source="Status" render="Label" position="252,520" zPosition="1" size="360,30" font="Regular;20" halign="center" valign="center" backgroundColor="#27b5b9bd" foregroundColor="#1c1c1c" transparent="1" />
 +	</screen>
 +
 +	<screen name="Wlanstatus" position="209,48" size="865,623" title="Wireless Network Configuration..." flags="wfNoBorder" backgroundColor="transparent">
@@ -6559,15 +6563,15 @@ index 2f7e7c7..f81801a 100644
 +	MyriadPro-Semibold.otf \
 +	MyriadPro-SemiboldIt.otf
 diff --git a/data/skin.xml b/data/skin.xml
-index ccd8eb7..9233610 100755
+index bbf4dd0..b99bdce 100755
 --- a/data/skin.xml
 +++ b/data/skin.xml
-@@ -150,11 +150,10 @@
+@@ -148,10 +148,10 @@
  			<convert type="ConditionalShowHide" />
  		</widget>
  		<!-- Audio icon (is there multichannel audio?) -->
--<!--	ikseong		
- 		<widget source="session.CurrentService" render="Pixmap" pixmap="skin_default/icons/icon_dolby.png" position="645,48" zPosition="1" size="26,16" alphatest="on">
+-<!--	<widget source="session.CurrentService" render="Pixmap" pixmap="skin_default/icons/icon_dolby.png" position="645,48" zPosition="1" size="26,16" alphatest="on">
++		<widget source="session.CurrentService" render="Pixmap" pixmap="skin_default/icons/icon_dolby.png" position="645,48" zPosition="1" size="26,16" alphatest="on">
  			<convert type="ServiceInfo">IsMultichannel</convert>
  			<convert type="ConditionalShowHide" />
 -		</widget>	-->
@@ -6652,29 +6656,28 @@ index fd33298..d8c1982 100644
  	png_destroy_read_struct(&png_ptr, &info_ptr,&end_info);
  	fclose(fp);
 diff --git a/lib/python/Screens/ChannelSelection.py b/lib/python/Screens/ChannelSelection.py
-index 688fe50..7bc66dc 100755
+index 688fe50..86a8e0c 100755
 --- a/lib/python/Screens/ChannelSelection.py
 +++ b/lib/python/Screens/ChannelSelection.py
 @@ -2,6 +2,8 @@ from Tools.Profile import profile
  
  from Screen import Screen
  from Components.Button import Button
-+#	ikseong
++
 +from Components.Label import Label
  from Components.ServiceList import ServiceList
  from Components.ActionMap import NumberActionMap, ActionMap, HelpableActionMap
  from Components.MenuList import MenuList
-@@ -731,6 +733,9 @@ class ChannelSelectionBase(Screen):
+@@ -731,6 +733,8 @@ class ChannelSelectionBase(Screen):
  		self["key_yellow"] = Button(_("Provider"))
  		self["key_blue"] = Button(_("Favourites"))
  
-+		#	ikseong
 +		self["etitle"] = Label(_('Channel Selection'))
 +
  		self["list"] = ServiceList()
  		self.servicelist = self["list"]
  
-@@ -876,25 +881,51 @@ class ChannelSelectionBase(Screen):
+@@ -876,25 +880,51 @@ class ChannelSelectionBase(Screen):
  		pos = titleStr.find(']')
  		if pos == -1:
  			pos = titleStr.find(')')
@@ -6692,7 +6695,7 @@ index 688fe50..7bc66dc 100755
 -				if end_ref is not None:
 -					if Len > 2:
 -						titleStr += '/../'
-+		#	ikseong
++
 +		if config.skin.primary_skin.value	=="750S/skin.xml":
 +			if pos != -1:
 +				titleStr = titleStr[:pos+1]
@@ -6745,29 +6748,26 @@ index 688fe50..7bc66dc 100755
  	def moveUp(self):
  		self.servicelist.moveUp()
 diff --git a/lib/python/Screens/FixedMenu.py b/lib/python/Screens/FixedMenu.py
-index 0122346..c877a19 100644
+index 0122346..39b48ac 100644
 --- a/lib/python/Screens/FixedMenu.py
 +++ b/lib/python/Screens/FixedMenu.py
-@@ -20,3 +20,10 @@ class FixedMenu(Screen):
+@@ -20,3 +20,8 @@ class FixedMenu(Screen):
  			})
  
  		self["title"] = StaticText(title)
-+		#	ikseong
 +		self["thistory"] = StaticText(title)
 +		self["title0"] = StaticText('')
 +		self["title1"] = StaticText('')
 +		self["title2"] = StaticText('')
-+		#
 +
 diff --git a/lib/python/Screens/Menu.py b/lib/python/Screens/Menu.py
-index 2a8801c..20403d8 100755
+index 2a8801c..fe5bcf0 100755
 --- a/lib/python/Screens/Menu.py
 +++ b/lib/python/Screens/Menu.py
-@@ -22,6 +22,28 @@ from Screens.Setup import Setup, getSetupTitle
+@@ -22,6 +22,27 @@ from Screens.Setup import Setup, getSetupTitle
  # read the menu
  mdom = xml.etree.cElementTree.parse(resolveFilename(SCOPE_SKIN, 'menu.xml'))
  
-+#	ikseong make menu title
 +class title_History:
 +	def __init__(self):
 +		self.thistory = ''
@@ -6788,22 +6788,20 @@ index 2a8801c..20403d8 100755
 +		self.thistory = result[0] + '> '
 +
 +t_history = title_History()
-+#	
++
  class boundFunction:
  	def __init__(self, fnc, *args):
  		self.fnc = fnc
-@@ -237,9 +259,41 @@ class Menu(Screen):
+@@ -237,9 +258,39 @@ class Menu(Screen):
  		a = a and _(a)
  		if a is None:
  			a = _(parent.get("text", "").encode("UTF-8"))
-+		#	ikseong - enter Main menu
 +		else:
 +			t_history.reset()
 +			
  		self["title"] = StaticText(a)
  		self.menu_title = a
  
-+		#	ikseong make menu title
 +		self["thistory"] = StaticText(t_history.thistory)
 +		history_len = len(t_history.thistory)
 +		self["title0"] = StaticText('')
@@ -6834,24 +6832,20 @@ index 2a8801c..20403d8 100755
  	def keyNumberGlobal(self, number):
  		print "menu keyNumber:", number
  		# Calculate index
-@@ -250,9 +304,15 @@ class Menu(Screen):
+@@ -250,9 +301,11 @@ class Menu(Screen):
  			self.okbuttonClick()
  
  	def closeNonRecursive(self):
-+		#	ikseong for menu title
 +		t_history.reducehistory()
-+		#
  		self.close(False)
  
  	def closeRecursive(self):
-+		#	ikseong for menu title
 +		t_history.reset()
-+		#
  		self.close(True)
  
  	def createSummary(self):
 diff --git a/skin.py b/skin.py
-index 19da203..f191530 100755
+index 19da203..e627ff8 100755
 --- a/skin.py
 +++ b/skin.py
 @@ -50,7 +50,7 @@ def loadSkin(name, scope = SCOPE_SKIN):
@@ -6863,11 +6857,10 @@ index 19da203..f191530 100755
  
  profile("LoadSkin")
  try:
-@@ -133,6 +133,36 @@ def loadPixmap(path, desktop):
+@@ -133,6 +133,34 @@ def loadPixmap(path, desktop):
  		raise SkinError("pixmap file %s not found!" % (path))
  	return ptr
  
-+#	ikseong
 +from enigma import runMainloop, eDVBDB, eTimer, quitMainloop, \
 +	getDesktop, ePythonConfigQuery, eAVSwitch, eServiceEvent
 +pngcache = []
@@ -6889,23 +6882,22 @@ index 19da203..f191530 100755
 +#		print value
 +		ptr = loadPixmap(value, desktop)
 +		pngcache.append((value,ptr))
-+#	ikseong
++
 +try:
 +	if config.skin.primary_skin.value == "750S/skin.xml" or config.skin.primary_skin.value == "Vu_HD/skin.xml":
 +		cachemenu()
 +except:
 +	print "fail cache main menu"
-+#
 +
  def applySingleAttribute(guiObject, desktop, attrib, value, scale = ((1,1),(1,1))):
  	# and set attributes
  	try:
-@@ -151,7 +181,15 @@ def applySingleAttribute(guiObject, desktop, attrib, value, scale = ((1,1),(1,1)
+@@ -151,7 +179,15 @@ def applySingleAttribute(guiObject, desktop, attrib, value, scale = ((1,1),(1,1)
  		elif attrib == 'itemHeight':
  			guiObject.setItemHeight(int(value))
  		elif attrib in ("pixmap", "backgroundPixmap", "selectionPixmap"):
 -			ptr = loadPixmap(value, desktop) # this should already have been filename-resolved.
-+#ikseong
++
 +			global pngcache
 + 			ptr = None
 +			for cvalue, cptr in pngcache:
@@ -6913,7 +6905,7 @@ index 19da203..f191530 100755
 +					ptr=cptr
 +			if ptr is None:
 +				ptr = loadPixmap(value, desktop) # this should already have been filename-resolved.
-+#
++
  			if attrib == "pixmap":
  				guiObject.setPixmap(ptr)
  			elif attrib == "backgroundPixmap":
