@@ -1,7 +1,7 @@
 DESCRIPTION = "Vuplus: E2 Task for the Vuplus Distribution"
 SECTION = "vuplus/base"
 LICENSE = "MIT"
-PR = "r34"
+PR = "r35"
 
 inherit task
 
@@ -39,6 +39,7 @@ RDEPENDS_task-vuplus-enigma2 = "\
   enigma2-plugin-systemplugins-devicemanager \
   enigma2-plugin-systemplugins-videomode \
   enigma2-plugin-systemplugins-netdrive \
+  enigma2-plugin-extensions-openwebif \
 "
 
 
@@ -71,7 +72,6 @@ RDEPENDS_task-vuplus-enigma2_append_bm750 = "\
 RDEPENDS_task-vuplus-enigma2_append_vuduo2 = "\
   enigma2-plugin-systemplugins-remotecontrolcode \
   enigma2-plugin-systemplugins-hdmicec \
-  enigma2-plugin-extensions-openwebif \
   enigma2-plugin-extensions-hbbtv \
   duo2lcd4linux \
   lcd4linuxsupport \
@@ -88,7 +88,6 @@ RDEPENDS_task-vuplus-enigma2_append_vuduo2 = "\
 "
 
 RDEPENDS_task-vuplus-enigma2_append_vusolo2 = "\
-  enigma2-plugin-extensions-openwebif \
   enigma2-plugin-systemplugins-remotecontrolcode \
   enigma2-plugin-systemplugins-hdmicec \
   enigma2-plugin-extensions-hbbtv \
