@@ -10,6 +10,7 @@ LICENSE = "GPLv3"
 
 PR = "r3"
 
+S="${WORKDIR}/dosfstools-3.0.14"
 SRC_URI = "http://daniel-baumann.ch/files/software/dosfstools/dosfstools-${PV}.tar.gz \
 	"
 # output of getconf LFS_CFLAGS
