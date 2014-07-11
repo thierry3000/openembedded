@@ -3,7 +3,7 @@ LICENSE = "proprietary"
 
 PRIORITY = "required"
 
-SRC_DATE = "20140519_1"
+SRC_DATE = "20140711_0"
 
 DEPENDS = "jpeg"
 RDEPENS = "vuplus-dvb-modules"
