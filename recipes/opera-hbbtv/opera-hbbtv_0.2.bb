@@ -3,7 +3,7 @@ LICENSE = "proprietary"
 
 PRIORITY = "required"
 
-SRC_DATE = "20140721_0"
+SRC_DATE = "20140725_0"
 
 DEPENDS = "jpeg"
 RDEPENS = "sysfsutils vuplus-dvb-modules"
